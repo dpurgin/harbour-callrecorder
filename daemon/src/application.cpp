@@ -88,7 +88,6 @@ void Application::onVoiceCallAdded(const QString& objectPath)
 
     if (active())
     {
-
         QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
         d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
     }
