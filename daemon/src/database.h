@@ -12,6 +12,7 @@ class Database
 {
     Q_DISABLE_COPY(Database)
 
+public:
     typedef QHash< QString, QVariant > SqlParameters;
 
 public:
@@ -20,6 +21,7 @@ public:
 
 public:
     bool execute(const QString& statement, const SqlParameters& params = SqlParameters());
+    int insert(const QString& statement, const SqlParameters& params);
     SqlCursor* select(const QString& statement, const SqlParameters& params = SqlParameters());
 
     QString lastError() const;

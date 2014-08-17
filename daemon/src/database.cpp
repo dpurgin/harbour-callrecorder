@@ -91,7 +91,7 @@ Database::Database()
     static QStringList initStatements = QStringList() <<
         "\nPRAGMA foreign_keys = ON;" <<
         "\nCREATE TABLE IF NOT EXISTS PhoneNumbers(ID INTEGER PRIMARY KEY AUTOINCREMENT, LineIdentification TEXT);" <<
-        "\nCREATE TABLE IF NOT EXISTS Records"
+        "\nCREATE TABLE IF NOT EXISTS Events"
         "\n("
         "\n    ID INTEGER PRIMARY KEY AUTOINCREMENT,"
         "\n    PhoneNumberID INTEGER,"
@@ -126,6 +126,16 @@ bool Database::execute(const QString& statement, const SqlParameters& params)
     QSqlQuery query(*d->db.data());    
 
     return d->prepareAndExecute(statement, params, &query);
+}
+
+int Database::insert(const QString& statement, const SqlParameters& params)
+{
+    QSqlQuery query(*d->db.data());
+
+    if (!d->prepareAndExecute(statement, params, &query))
+        return -1;
+
+    return query.lastInsertId().toInt();
 }
 
 QString Database::lastError() const
