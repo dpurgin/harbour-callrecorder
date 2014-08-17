@@ -62,7 +62,8 @@ QAudioDeviceInfo Settings::inputDevice() const
 
 QString Settings::outputLocation() const
 {
-    static QString outputLocation(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    static QString outputLocation(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                                  QLatin1String("/data"));
 
     return outputLocation;
 }
