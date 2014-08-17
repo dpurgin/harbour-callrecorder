@@ -13,19 +13,26 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
     friend class VoiceCallRecorder;
 
     VoiceCallRecorderPrivate()
-        : state(VoiceCallRecorder::Inactive)
+        : audioInputDevice(NULL),
+          callType(VoiceCallRecorder::Incoming),
+          state(VoiceCallRecorder::Inactive)
     {
     }
 
     QScopedPointer< QAudioInput > audioInput;
     QIODevice* audioInputDevice;
-    QScopedPointer< QFile > outputFile;
+
+    VoiceCallRecorder::CallType callType;
 
     QString dbusObjectPath;
+
+    QScopedPointer< QFile > outputFile;
 
     QScopedPointer< QOfonoVoiceCall > qofonoVoiceCall;
 
     VoiceCallRecorder::State state;
+
+    QDateTime timeStamp;
 };
 
 VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
@@ -58,6 +65,29 @@ VoiceCallRecorder::~VoiceCallRecorder()
 
 }
 
+VoiceCallRecorder::CallType VoiceCallRecorder::callType() const
+{
+    return d->callType;
+}
+
+QString VoiceCallRecorder::getOutputLocation(const QDateTime& timeStamp, const QString& lineIdentification, CallType callType) const
+{
+    return (app->settings()->outputLocation() %
+            QLatin1Char('/') %
+            timeStamp.toString(Qt::ISODate) % QLatin1Char('_') %
+            lineIdentification % QLatin1Char('_') %
+            (callType == Incoming? QLatin1String("in"): QLatin1String("out")) %
+            QLatin1String(".raw"));
+
+}
+
+void VoiceCallRecorder::onLineIdentificationChanged(const QString& lineIdentification)
+{
+    qDebug() << __PRETTY_FUNCTION__ << lineIdentification;
+
+    openOutputFile(getOutputLocation(timeStamp(), lineIdentification, callType()));
+}
+
 void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 {
     qDebug() << __PRETTY_FUNCTION__;
@@ -77,58 +107,94 @@ void VoiceCallRecorder::onVoiceCallStateChanged(const QString& state)
     processOfonoState(state);
 }
 
+void VoiceCallRecorder::openOutputFile(const QString& outputLocation)
+{
+    d->outputFile.reset(new QFile(outputLocation));
+
+    if (!d->outputFile->open(QFile::WriteOnly))
+        qDebug() << __PRETTY_FUNCTION__ <<
+                    ": unable to write to " << outputLocation << ": " << d->outputFile->errorString();
+}
+
 void VoiceCallRecorder::processOfonoState(const QString& state)
 {
     qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << state;
 
+    // when the call goes into active state, the sound card's profile is set to voicecall-record
+    // and the actual recording starts
     if (state == QLatin1String("active"))
     {
-        // simple system() call for now
+        // simple shell call for now
         // TODO: replace with normal pulseaudio APIs
         int retval = QProcess::execute("pacmd set-card-profile 0 voicecall-record");
 
         qDebug() << __PRETTY_FUNCTION__ << ": pacmd returns " << retval;
 
-        if (d->audioInput.isNull())
+        if (!d->audioInput.isNull())
         {
-            QString outputLocation(app->settings()->outputLocation() % QLatin1String("/call.wav"));
-
-            qDebug() << __PRETTY_FUNCTION__ << ": writing to " << outputLocation;
-
-            d->audioInput.reset(new QAudioInput(app->settings()->inputDevice(), app->settings()->audioFormat()));
-            connect(d->audioInput.data(), SIGNAL(stateChanged(QAudio::State)),
-                    this, SLOT(onAudioInputStateChanged(QAudio::State)));
-
             d->audioInputDevice = d->audioInput->start();
             connect(d->audioInputDevice, SIGNAL(readyRead()),
                     this, SLOT(onAudioInputDeviceReadyRead()));
 
-            d->outputFile.reset(new QFile(outputLocation));
-
-            if (!d->outputFile->open(QFile::WriteOnly))
-                qDebug() << __PRETTY_FUNCTION__ <<
-                            ": unable to write to " << outputLocation << ": " << d->outputFile->errorString();
+            // if the file is still not open (e.g. line is not identified), open it with unknown line id
+            if (d->outputFile.isNull())
+                openOutputFile(getOutputLocation(timeStamp(), QLatin1String("unknown"), callType()));
         }
         else
             d->audioInput->resume();
 
         setState(Active);
     }
+    // stop recording if the call was disconnected
     else if (state == QLatin1String("disconnected"))
     {
         if (!d->audioInput.isNull())
             d->audioInput->stop();
 
         if (!d->outputFile.isNull())
+        {
             d->outputFile->close();
+
+            // if d->audioInputDevice is NULL, it means the call was never active.
+            // call is not recorded, remove empty file
+            if (!d->audioInputDevice)
+                d->outputFile->remove();
+        }
 
         setState(Inactive);
     }
+    // if a call has just appeared, we arm the recorder before it actually gets into recordable state
     else if (state == QLatin1String("incoming") || state == QLatin1String("dialing"))
     {
+        setCallType(state == QLatin1String("incoming")? Incoming: Outgoing);
+        setTimeStamp(QDateTime::currentDateTime());
+
         // check if this number was called some day
 
 //        static QString selectStatement("SELECT LineIdentification FROM PhoneNumbers WHERE PhoneNumber")
+
+        if (d->audioInput.isNull())
+        {
+            d->audioInput.reset(new QAudioInput(app->settings()->inputDevice(), app->settings()->audioFormat()));
+            connect(d->audioInput.data(), SIGNAL(stateChanged(QAudio::State)),
+                    this, SLOT(onAudioInputStateChanged(QAudio::State)));
+
+            // if line ID exists, open the output file for writing.
+            // defer it to lineIdentificationChanged() otherwise
+            if (!d->qofonoVoiceCall->lineIdentification().isEmpty())
+            {
+                openOutputFile(getOutputLocation(timeStamp(),
+                                                 d->qofonoVoiceCall->lineIdentification(),
+                                                 callType()));
+            }
+            else
+            {
+                connect(d->qofonoVoiceCall.data(), SIGNAL(lineIdentificationChanged(QString)),
+                        this, SLOT(onLineIdentificationChanged(QString)));
+            }
+        }
+        else
+            qWarning() << __PRETTY_FUNCTION__ << ": d->audioInput expected to be NULL but it wasn't!";
 
         setState(Armed);
     }
@@ -141,12 +207,27 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
     }
 }
 
+void VoiceCallRecorder::setCallType(CallType callType)
+{
+    d->callType = callType;
+}
+
 void VoiceCallRecorder::setState(State state)
 {
     d->state = state;
 }
 
+void VoiceCallRecorder::setTimeStamp(const QDateTime& timeStamp)
+{
+    d->timeStamp = timeStamp;
+}
+
 VoiceCallRecorder::State VoiceCallRecorder::state() const
 {
     return d->state;
+}
+
+QDateTime VoiceCallRecorder::timeStamp() const
+{
+    return d->timeStamp;
 }
