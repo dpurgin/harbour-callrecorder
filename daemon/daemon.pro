@@ -20,7 +20,8 @@ SOURCES += \
     src/database.cpp \
     src/phonenumberstablemodel.cpp \
     src/sqlcursor.cpp \
-    src/settings.cpp
+    src/settings.cpp \
+    src/eventstablemodel.cpp
 
 HEADERS += \
     src/application.h \
@@ -29,5 +30,6 @@ HEADERS += \
     src/database.h \
     src/phonenumberstablemodel.h \
     src/sqlcursor.h \
-    src/settings.h
+    src/settings.h \
+    src/eventstablemodel.h
 
