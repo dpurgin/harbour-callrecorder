@@ -169,23 +169,21 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
         setCallType(state == QLatin1String("incoming")? Incoming: Outgoing);
         setTimeStamp(QDateTime::currentDateTime());
 
-        // check if this number was called some day
-
-//        static QString selectStatement("SELECT LineIdentification FROM PhoneNumbers WHERE PhoneNumber")
-
         if (d->audioInput.isNull())
         {
             d->audioInput.reset(new QAudioInput(app->settings()->inputDevice(), app->settings()->audioFormat()));
             connect(d->audioInput.data(), SIGNAL(stateChanged(QAudio::State)),
                     this, SLOT(onAudioInputStateChanged(QAudio::State)));
 
-            // if line ID exists, open the output file for writing.
+            // if line ID exists, open the output file for writing, then add the corresponding event to DB.
             // defer it to lineIdentificationChanged() otherwise
             if (!d->qofonoVoiceCall->lineIdentification().isEmpty())
             {
                 openOutputFile(getOutputLocation(timeStamp(),
                                                  d->qofonoVoiceCall->lineIdentification(),
                                                  callType()));
+
+
             }
             else
             {
