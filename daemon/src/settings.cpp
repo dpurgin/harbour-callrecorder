@@ -4,6 +4,7 @@
 #include <QAudioFormat>
 #include <QDebug>
 #include <QStandardPaths>
+#include <QStringBuilder>
 
 class Settings::SettingsPrivate
 {
