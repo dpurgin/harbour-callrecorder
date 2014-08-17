@@ -12,8 +12,7 @@ class PhoneNumbersTableModel::PhoneNumbersTableModelPrivate
     friend class PhoneNumbersTableModel;
 };
 
-PhoneNumbersTableModel::PhoneNumbersTableModel(QObject *parent)
-    : QAbstractTableModel(parent)
+PhoneNumbersTableModel::PhoneNumbersTableModel()
 {
     qDebug() << __PRETTY_FUNCTION__;
 }
@@ -23,29 +22,37 @@ PhoneNumbersTableModel::~PhoneNumbersTableModel()
     qDebug() << __PRETTY_FUNCTION__;
 }
 
-int PhoneNumbersTableModel::rowCount() const
+int PhoneNumbersTableModel::getIdByLineIdentification(const QString& lineIdentification)
 {
     qDebug() << __PRETTY_FUNCTION__;
 
-    Database* db = app->database();
+    int id = -1;
 
-    static QString selectStatement("SELECT COUNT(ID) AS Cnt FROM PhoneNumbers;");
+    static QString selectStatement("SELECT ID FROM PhoneNumbers WHERE LineIdentification = :lineIdentification;");
 
-    QScopedPointer< SqlCursor > cursor(db->select(selectStatement));
+    Database::SqlParameters params;
+    params.insert(QLatin1String("lineIdentification"), lineIdentification);
 
-    if (cursor.isNull() || !cursor->next())
-        throw CallRecorderException(QLatin1String("Unable to retrieve row count from PhoneNumbers"));
+    QScopedPointer< SqlCursor > cursor(app->database()->select(selectStatement, params));
 
-    return cursor->value("Cnt").toInt();
-}
-
-QVariant PhoneNumbersTableModel::data(const QModelIndex& index, int role) const
-{
-    if (index.row() < rowCount() && index.column() < columnCount())
+    // no data found - insert new row into PhoneNumbers
+    // TODO: process errors when selecting from DB
+    if (cursor.isNull())
     {
+        static QString insertStatement("INSERT INTO PhoneNumbers(LineIdentification) VALUES(:lineIdentification);");
 
+        // TODO: process errors when inserting to DB
+        id = app->database()->insert(insertStatement, params);
+    }
+    // phone number was already contacted
+    else if (cursor->next())
+    {
+        id = cursor->value("ID").toInt();
+    }
+    else
+    {
+        qCritical() << __PRETTY_FUNCTION__ << ": unable to retrieve PhoneNumbers.ID for " << lineIdentification;
     }
 
-    return QVariant();
+    return id;
 }
-

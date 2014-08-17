@@ -4,20 +4,15 @@
 #include <QAbstractTableModel>
 #include <QScopedPointer>
 
-class PhoneNumbersTableModel : public QAbstractTableModel
+class PhoneNumbersTableModel
 {
-    Q_OBJECT
     Q_DISABLE_COPY(PhoneNumbersTableModel)
 
 public:
-    explicit PhoneNumbersTableModel(QObject* parent = 0);
-    virtual ~PhoneNumbersTableModel();
+    explicit PhoneNumbersTableModel();
+    ~PhoneNumbersTableModel();
 
-    QVariant data(const QModelIndex& index, int role) const;
-
-    int rowCount() const;
-    int columnCount() const { return 2; }
-
+    int getIdByLineIdentification(const QString& lineIdentification);
 
 signals:
 
