@@ -94,6 +94,7 @@ Database::Database()
         "\nCREATE TABLE IF NOT EXISTS Events"
         "\n("
         "\n    ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "\n    TimeStamp TEXT,"
         "\n    PhoneNumberID INTEGER,"
         "\n    EventTypeID INTEGER,"
         "\n    RecordingStateID INTEGER,"
