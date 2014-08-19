@@ -21,7 +21,8 @@ SOURCES += \
     src/phonenumberstablemodel.cpp \
     src/sqlcursor.cpp \
     src/settings.cpp \
-    src/eventstablemodel.cpp
+    src/eventstablemodel.cpp \
+    src/model.cpp
 
 HEADERS += \
     src/application.h \
@@ -31,5 +32,6 @@ HEADERS += \
     src/phonenumberstablemodel.h \
     src/sqlcursor.h \
     src/settings.h \
-    src/eventstablemodel.h
+    src/eventstablemodel.h \
+    src/model.h
 
