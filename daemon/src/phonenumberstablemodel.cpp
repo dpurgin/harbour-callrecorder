@@ -31,27 +31,27 @@ int PhoneNumbersTableModel::getIdByLineIdentification(const QString& lineIdentif
     static QString selectStatement("SELECT ID FROM PhoneNumbers WHERE LineIdentification = :lineIdentification;");
 
     Database::SqlParameters params;
-    params.insert(QLatin1String("lineIdentification"), lineIdentification);
+    params.insert(QLatin1String(":lineIdentification"), lineIdentification);
 
     QScopedPointer< SqlCursor > cursor(app->database()->select(selectStatement, params));
 
-    // no data found - insert new row into PhoneNumbers
     // TODO: process errors when selecting from DB
     if (cursor.isNull())
     {
-        static QString insertStatement("INSERT INTO PhoneNumbers(LineIdentification) VALUES(:lineIdentification);");
-
-        // TODO: process errors when inserting to DB
-        id = app->database()->insert(insertStatement, params);
+        qCritical() << __PRETTY_FUNCTION__ << ": unable to retrieve PhoneNumbers.ID for " << lineIdentification;
     }
     // phone number was already contacted
     else if (cursor->next())
     {
         id = cursor->value("ID").toInt();
     }
+    // no data found - insert new row into PhoneNumbers
     else
     {
-        qCritical() << __PRETTY_FUNCTION__ << ": unable to retrieve PhoneNumbers.ID for " << lineIdentification;
+        static QString insertStatement("INSERT INTO PhoneNumbers(LineIdentification) VALUES(:lineIdentification);");
+
+        // TODO: process errors when inserting to DB
+        id = app->database()->insert(insertStatement, params);
     }
 
     return id;
