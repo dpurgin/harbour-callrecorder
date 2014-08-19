@@ -5,6 +5,7 @@
 
 #include "callrecorderexception.h"
 #include "database.h"
+#include "model.h"
 #include "settings.h"
 #include "voicecallrecorder.h"
 
@@ -19,6 +20,8 @@ class Application::ApplicationPrivate
     bool active;
 
     QScopedPointer< Database > database;
+
+    QScopedPointer< Model > model;
 
     QScopedPointer< QOfonoVoiceCallManager > qofonoVoiceCallManager;
 
@@ -52,6 +55,8 @@ Application::Application(int argc, char* argv[])
 
     d->database.reset(new Database());
 
+    d->model.reset(new Model());
+
     d->qofonoVoiceCallManager.reset(new QOfonoVoiceCallManager());
 
     d->qofonoVoiceCallManager->setModemPath(modems.first());
@@ -80,6 +85,11 @@ bool Application::active() const
 Database* Application::database() const
 {
     return d->database.data();
+}
+
+Model* Application::model() const
+{
+    return d->model.data();
 }
 
 void Application::onVoiceCallAdded(const QString& objectPath)

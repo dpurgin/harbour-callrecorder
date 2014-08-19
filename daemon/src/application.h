@@ -7,6 +7,7 @@
 #define app (reinterpret_cast< Application* >(qApp))
 
 class Database;
+class Model;
 class Settings;
 
 class Application : public QCoreApplication
@@ -22,6 +23,7 @@ public:
     void setActive(bool active);
 
     Database* database() const;
+    Model* model() const;
     Settings* settings() const;
 
 signals:   
