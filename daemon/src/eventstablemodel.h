@@ -3,7 +3,7 @@
 
 #include <QDateTime>
 #include <QScopedPointer>
-#include <QVariantHash>
+#include <QVariantMap>
 
 class EventsTableModel
 {
@@ -26,7 +26,8 @@ public:
     EventsTableModel();
     virtual ~EventsTableModel();
 
-    void add(const QDateTime& timeStamp, EventType eventType);
+    int add(const QDateTime& timeStamp, EventType eventType);
+    void update(int id, const QVariantMap& items);
 
 private:
     class EventsTableModelPrivate;
