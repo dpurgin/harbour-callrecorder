@@ -6,6 +6,9 @@
 #include <qofono-qt5/qofonovoicecall.h>
 
 #include "application.h"
+#include "model.h"
+#include "eventstablemodel.h"
+#include "phonenumberstablemodel.h"
 #include "settings.h"
 
 class VoiceCallRecorder::VoiceCallRecorderPrivate
@@ -15,6 +18,7 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
     VoiceCallRecorderPrivate()
         : audioInputDevice(NULL),
           callType(VoiceCallRecorder::Incoming),
+          eventId(-1),
           state(VoiceCallRecorder::Inactive)
     {
     }
@@ -25,6 +29,8 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
     VoiceCallRecorder::CallType callType;
 
     QString dbusObjectPath;
+
+    int eventId;
 
     QScopedPointer< QFile > outputFile;
 
@@ -143,6 +149,14 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
         else
             d->audioInput->resume();
 
+        if (d->eventId != -1)
+        {
+            QVariantMap params;
+            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::InProgress)));
+
+            app->model()->events()->update(d->eventId, params);
+        }
+
         setState(Active);
     }
     // stop recording if the call was disconnected
@@ -159,6 +173,20 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
             // call is not recorded, remove empty file
             if (!d->audioInputDevice)
                 d->outputFile->remove();
+        }
+
+        if (d->eventId != -1)
+        {
+            QVariantMap params;
+            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Done)));
+
+            if (!d->outputFile.isNull())
+            {
+                params.insert(QLatin1String("FileName"), d->outputFile->fileName());
+                params.insert(QLatin1String("FileSize"), d->outputFile->size());
+            }
+
+            app->model()->events()->update(d->eventId, params);
         }
 
         setState(Inactive);
@@ -183,6 +211,17 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
                                                  d->qofonoVoiceCall->lineIdentification(),
                                                  callType()));
 
+                d->eventId = app->model()->events()->add(
+                            timeStamp(),
+                            callType() == Incoming?
+                                EventsTableModel::Incoming :
+                                EventsTableModel::Outgoing);
+
+                QVariantMap params;
+                params.insert(QLatin1String("PhoneNumberID"),
+                              app->model()->phoneNumbers()->getIdByLineIdentification(
+                                  d->qofonoVoiceCall->lineIdentification()));
+                app->model()->events()->update(d->eventId, params);
 
             }
             else
@@ -194,12 +233,35 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
         else
             qWarning() << __PRETTY_FUNCTION__ << ": d->audioInput expected to be NULL but it wasn't!";
 
+        if (d->eventId != -1)
+        {
+            QVariantMap params;
+            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Armed)));
+
+            app->model()->events()->update(d->eventId, params);
+        }
+
         setState(Armed);
     }
     else
     {
+        EventsTableModel::RecordingState recordingState;
+
         if (!d->audioInput.isNull())
+        {
             d->audioInput->suspend();
+            recordingState = EventsTableModel::Suspended;
+        }
+        else
+            recordingState = EventsTableModel::Armed;
+
+        if (d->eventId != -1)
+        {
+            QVariantMap params;
+            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(recordingState)));
+
+            app->model()->events()->update(d->eventId, params);
+        }
 
         setState(Armed);
     }
