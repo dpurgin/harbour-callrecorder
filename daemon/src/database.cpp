@@ -90,7 +90,11 @@ Database::Database()
 
     static QStringList initStatements = QStringList() <<
         "\nPRAGMA foreign_keys = ON;" <<
+
         "\nCREATE TABLE IF NOT EXISTS PhoneNumbers(ID INTEGER PRIMARY KEY AUTOINCREMENT, LineIdentification TEXT);" <<
+
+        "\nINSERT INTO PhoneNumbers(ID, LineIdentification) VALUES(1, '');" <<
+
         "\nCREATE TABLE IF NOT EXISTS Events"
         "\n("
         "\n    ID INTEGER PRIMARY KEY AUTOINCREMENT,"
