@@ -23,18 +23,47 @@ EventsTableModel::~EventsTableModel()
     qDebug() << __PRETTY_FUNCTION__;
 }
 
-int EventsTableModel::add(const QDateTime& timeStamp, EventType eventType)
+int EventsTableModel::add(const QDateTime& timeStamp, int phoneNumberId, EventType eventType, RecordingState recordingState)
 {
-    qDebug() << __PRETTY_FUNCTION__ << timeStamp << eventType;
+    qDebug() << __PRETTY_FUNCTION__ << timeStamp << phoneNumberId << eventType;
 
-    static QString insertStatement("INSERT INTO Events(TimeStamp, EventTypeID) VALUES(:timeStamp, :eventTypeId);");
+    static QString insertStatement(
+                "\nINSERT INTO Events"
+                "\n("
+                "\n    TimeStamp,"
+                "\n    PhoneNumberID,"
+                "\n    EventTypeID,"
+                "\n    RecordingStateID"
+                "\n)"
+                "\nVALUES"
+                "\n("
+                "\n    :timeStamp,"
+                "\n    :phoneNumberId,"
+                "\n    :eventTypeId,"
+                "\n    :recordingStateId"
+                "\n);");
 
     Database::SqlParameters params;
     params.insert(QLatin1String(":timeStamp"), timeStamp);
+    params.insert(QLatin1String(":phoneNumberId"), phoneNumberId);
     params.insert(QLatin1String(":eventTypeId"), static_cast< int >(eventType));
+    params.insert(QLatin1String(":recordingStateId"), static_cast< int >(recordingState));
 
     // TODO: process insert errors
     return app->database()->insert(insertStatement, params);
+}
+
+void EventsTableModel::remove(int id)
+{
+    qDebug() << __PRETTY_FUNCTION__ << id;
+
+    static QString statement("DELETE FROM Events WHERE ID = :id;");
+
+    Database::SqlParameters params;
+    params.insert(QLatin1String(":id"), id);
+
+    // TODO: process errors (maybe?)
+    app->database()->execute(statement, params);
 }
 
 void EventsTableModel::update(int id, const QVariantMap& items)

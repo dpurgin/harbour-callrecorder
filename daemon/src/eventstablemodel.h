@@ -26,7 +26,8 @@ public:
     EventsTableModel();
     virtual ~EventsTableModel();
 
-    int add(const QDateTime& timeStamp, EventType eventType);
+    int add(const QDateTime& timeStamp, int phoneNumberId, EventType eventType, RecordingState recordingState);
+    void remove(int id);
     void update(int id, const QVariantMap& items);
 
 private:
