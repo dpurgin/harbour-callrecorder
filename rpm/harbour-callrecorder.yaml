@@ -20,7 +20,11 @@ Builder: qtc5
 
 # This section specifies build dependencies that are resolved using pkconfig.
 # This is the preferred way of specifying build dependencies for your package.
-#PkgConfigBR:
+PkgConfigBR:
+   - Qt5Core
+   - Qt5Sql
+   - Qt5Multimedia
+   - flac
 #  - sailfishapp >= 1.0.2
 #  - Qt5Core
 #  - Qt5Qml
