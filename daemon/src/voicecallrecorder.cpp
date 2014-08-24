@@ -1,7 +1,10 @@
 #include "voicecallrecorder.h"
 
 #include <QAudioInput>
+#include <QFileInfo>
 #include <QScopedPointer>
+
+#include <FLAC/stream_encoder.h>
 
 #include <qofono-qt5/qofonovoicecall.h>
 
@@ -19,6 +22,7 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
         : audioInputDevice(NULL),
           callType(VoiceCallRecorder::Incoming),
           eventId(-1),
+          flacEncoder(NULL),
           state(VoiceCallRecorder::Inactive)
     {
     }
@@ -32,7 +36,9 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
 
     int eventId;
 
-    QScopedPointer< QFile > outputFile;
+    FLAC__StreamEncoder* flacEncoder;
+
+    QString outputLocation;
 
     QScopedPointer< QOfonoVoiceCall > qofonoVoiceCall;
 
@@ -61,14 +67,115 @@ VoiceCallRecorder::~VoiceCallRecorder()
 {
     qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath;
 
-    // the state() should be Inactive because the QOfonoVoiceCall becomes "disconnected" before
-    // the call is removed from QOfonoVoiceCallManager. If it doesn't, something went wrong
+    // if the call was recorded, the processor for "disconnected" signal should have told us
+    // to finalize FLAC encoder, as readyRead() could still have been called after audioInput->stop()
+    if (state() == WaitingForFinish)
+    {
+        FLAC__stream_encoder_finish(d->flacEncoder);
+        FLAC__stream_encoder_delete(d->flacEncoder);
+
+        // update recording state to Done
+        if (d->eventId != -1)
+        {
+            QFileInfo fi(d->outputLocation);
+
+            QVariantMap params;
+            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Done)));
+            params.insert(QLatin1String("FileName"), fi.fileName());
+            params.insert(QLatin1String("FileSize"), fi.size());
+
+            app->model()->events()->update(d->eventId, params);
+        }
+
+        setState(Inactive);
+    }
+
+    // the state() should be Inactive. If it isn't, something went wrong
     if (state() != Inactive)
         qWarning() << __PRETTY_FUNCTION__ <<
                       QLatin1String(": dbusObjectPath = ") << d->dbusObjectPath <<
                       QLatin1String(", qofonoVoiceCall->state() = ") << d->qofonoVoiceCall->state() <<
                       QLatin1String(", state() = ") << state();
+}
 
+void VoiceCallRecorder::arm()
+{
+    qDebug() << __PRETTY_FUNCTION__;
+
+    const QAudioFormat audioFormat = app->settings()->audioFormat();
+
+    qDebug() << __PRETTY_FUNCTION__ << "Audio format is: " << audioFormat;
+
+    // create audio input device
+    if (d->audioInput.isNull())
+    {
+        d->audioInput.reset(new QAudioInput(app->settings()->inputDevice(), audioFormat));
+        connect(d->audioInput.data(), SIGNAL(stateChanged(QAudio::State)),
+                this, SLOT(onAudioInputStateChanged(QAudio::State)));
+    }
+    else
+        qWarning() << __PRETTY_FUNCTION__ << ": d->audioInput expected to be NULL but it wasn't!";
+
+    // initialize FLAC encoder
+    if (d->flacEncoder == NULL)
+    {
+        d->flacEncoder = FLAC__stream_encoder_new();
+
+        if (d->flacEncoder == NULL)
+            qCritical() << __PRETTY_FUNCTION__ << ": unable to create FLAC encoder!";
+
+        if (!FLAC__stream_encoder_set_channels(d->flacEncoder, audioFormat.channelCount()))
+            qCritical() << __PRETTY_FUNCTION__ <<
+                         ": unable to set FLAC channels: " <<
+                         FLAC__stream_encoder_get_state(d->flacEncoder);
+
+        if (!FLAC__stream_encoder_set_bits_per_sample(d->flacEncoder, audioFormat.sampleSize()))
+            qCritical() << __PRETTY_FUNCTION__ <<
+                         ": unable to set FLAC bits per sample: " <<
+                         FLAC__stream_encoder_get_state(d->flacEncoder);
+
+        if (!FLAC__stream_encoder_set_sample_rate(d->flacEncoder, audioFormat.sampleRate()))
+            qCritical() << __PRETTY_FUNCTION__ <<
+                         ": unable to set FLAC sample rate: " <<
+                         FLAC__stream_encoder_get_state(d->flacEncoder);
+
+        // form output location with file name based on current date, phone number, call direction (in/out).
+        // if line ID does not exist, we should wait for the corresponding signal from Ofono,
+        // but maybe it is always known at this stage. Needs checking.
+        // File name is set to "{timestamp}_{phoneNumber}_{type}.flac"
+        d->outputLocation = (app->settings()->outputLocation() %
+                             QLatin1Char('/') %
+                             timeStamp().toString(Qt::ISODate).replace(QChar(':'), QChar('_')) % QLatin1Char('_') %
+                             d->qofonoVoiceCall->lineIdentification() % QLatin1Char('_') %
+                             (callType() == Incoming? QLatin1String("in"): QLatin1String("out")) %
+                             QLatin1String(".flac"));
+
+        qDebug() << __PRETTY_FUNCTION__ << "Writing to " << d->outputLocation;
+
+        if (!FLAC__stream_encoder_init_file(d->flacEncoder, d->outputLocation.toLatin1().data(), NULL, NULL))
+            qCritical() << __PRETTY_FUNCTION__ <<
+                        ": unable to init FLAC file: " <<
+                        FLAC__stream_encoder_get_state(d->flacEncoder);
+    }
+    else
+        qWarning() << __PRETTY_FUNCTION__ << ": d->flacEncoder expected to be NULL but it wasn't!";
+
+    // add new event to events table
+    if (d->eventId == -1)
+    {
+        d->eventId = app->model()->events()->add(
+                    timeStamp(),                                                // time stamp of recording
+                    app->model()->phoneNumbers()->getIdByLineIdentification(    // phone number ref
+                        d->qofonoVoiceCall->lineIdentification()),
+                    callType() == Incoming?                                     // call type
+                        EventsTableModel::Incoming :
+                        EventsTableModel::Outgoing,
+                    EventsTableModel::Armed);                                   // initial recording state
+    }
+    else
+        qWarning() << __PRETTY_FUNCTION__ << ": d->eventId expected to be -1 but it wasn't!";
+
+    setState(Armed);
 }
 
 VoiceCallRecorder::CallType VoiceCallRecorder::callType() const
@@ -76,29 +183,27 @@ VoiceCallRecorder::CallType VoiceCallRecorder::callType() const
     return d->callType;
 }
 
-QString VoiceCallRecorder::getOutputLocation(const QDateTime& timeStamp, const QString& lineIdentification, CallType callType) const
-{
-    return (app->settings()->outputLocation() %
-            QLatin1Char('/') %
-            timeStamp.toString(Qt::ISODate) % QLatin1Char('_') %
-            lineIdentification % QLatin1Char('_') %
-            (callType == Incoming? QLatin1String("in"): QLatin1String("out")) %
-            QLatin1String(".raw"));
-
-}
-
-void VoiceCallRecorder::onLineIdentificationChanged(const QString& lineIdentification)
-{
-    qDebug() << __PRETTY_FUNCTION__ << lineIdentification;
-
-    openOutputFile(getOutputLocation(timeStamp(), lineIdentification, callType()));
-}
-
 void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 {
     qDebug() << __PRETTY_FUNCTION__;
 
-    d->outputFile->write(d->audioInputDevice->readAll());
+    QByteArray data = d->audioInputDevice->readAll();
+
+    qDebug() << __PRETTY_FUNCTION__ << ": read bytes: " << data.size();
+
+    const qint16* sampleData = reinterpret_cast< const qint16* >(data.constData());
+
+    quint64 sampleCount = data.size() / (app->settings()->audioFormat().sampleSize() / 8);
+
+    qDebug() << __PRETTY_FUNCTION__ << ": sample count: " << sampleCount;
+
+    for (quint64 sampleIdx = 0; sampleIdx < sampleCount; sampleIdx++)
+    {
+        FLAC__int32 sample = static_cast< FLAC__int32 >(sampleData[sampleIdx]);
+
+        if (!FLAC__stream_encoder_process_interleaved(d->flacEncoder, &sample, 1))
+            qDebug() << "Unable to FLAC__stream_encoder_process(): " << FLAC__stream_encoder_get_state(d->flacEncoder);
+    }
 }
 
 void VoiceCallRecorder::onAudioInputStateChanged(QAudio::State state)
@@ -113,22 +218,21 @@ void VoiceCallRecorder::onVoiceCallStateChanged(const QString& state)
     processOfonoState(state);
 }
 
-void VoiceCallRecorder::openOutputFile(const QString& outputLocation)
+void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
 {
-    d->outputFile.reset(new QFile(outputLocation));
+    qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << ofonoState;
 
-    if (!d->outputFile->open(QFile::WriteOnly))
-        qDebug() << __PRETTY_FUNCTION__ <<
-                    ": unable to write to " << outputLocation << ": " << d->outputFile->errorString();
-}
+    // if a call has just appeared, we arm the recorder before it actually gets into recordable state
+    if (ofonoState == QLatin1String("incoming") || ofonoState == QLatin1String("dialing"))
+    {
+        setCallType(ofonoState == QLatin1String("incoming")? Incoming: Outgoing);
+        setTimeStamp(QDateTime::currentDateTime());
 
-void VoiceCallRecorder::processOfonoState(const QString& state)
-{
-    qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << state;
-
-    // when the call goes into active state, the sound card's profile is set to voicecall-record
-    // and the actual recording starts
-    if (state == QLatin1String("active"))
+        arm();
+    }
+    // when the call goes into active state, the sound card's profile is set to voicecall-record.
+    // recording is started or resumed
+    if (ofonoState == QLatin1String("active"))
     {
         // simple shell call for now
         // TODO: replace with normal pulseaudio APIs
@@ -136,19 +240,19 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
 
         qDebug() << __PRETTY_FUNCTION__ << ": pacmd returns " << retval;
 
-        if (!d->audioInput.isNull())
+        // if the recorder was armed, recording was not started yet. start recording and connect to
+        // readyRead() signal to retrieve and encode data
+        if (state() == Armed)
         {
             d->audioInputDevice = d->audioInput->start();
             connect(d->audioInputDevice, SIGNAL(readyRead()),
                     this, SLOT(onAudioInputDeviceReadyRead()));
-
-            // if the file is still not open (e.g. line is not identified), open it with unknown line id
-            if (d->outputFile.isNull())
-                openOutputFile(getOutputLocation(timeStamp(), QLatin1String("unknown"), callType()));
         }
-        else
+        // if the recorder was suspended, just resume the recording
+        else if (state() == Suspended)
             d->audioInput->resume();
 
+        // update event state to InProgress
         if (d->eventId != -1)
         {
             QVariantMap params;
@@ -160,110 +264,43 @@ void VoiceCallRecorder::processOfonoState(const QString& state)
         setState(Active);
     }
     // stop recording if the call was disconnected
-    else if (state == QLatin1String("disconnected"))
+    else if (ofonoState == QLatin1String("disconnected"))
     {
-        if (!d->audioInput.isNull())
+        // stop recording if it was ever started
+        if (state() == Active || state() == Suspended)
+        {
             d->audioInput->stop();
 
-        if (!d->outputFile.isNull())
-        {
-            d->outputFile->close();
+            // we do not call FLAC__stream_encode_finish at this point, as the d->audioInput can still some data
+            // to actually cleanup FLAC, we will process WaitingForFinish in destructor
 
-            // if d->audioInputDevice is NULL, it means the call was never active.
-            // call is not recorded, remove empty file
-            if (!d->audioInputDevice)
-                d->outputFile->remove();
+            setState(WaitingForFinish);
         }
-
-        if (d->eventId != -1)
-        {
-            QVariantMap params;
-            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Done)));
-
-            if (!d->outputFile.isNull())
-            {
-                params.insert(QLatin1String("FileName"), d->outputFile->fileName());
-                params.insert(QLatin1String("FileSize"), d->outputFile->size());
-            }
-
-            app->model()->events()->update(d->eventId, params);
-        }
-
-        setState(Inactive);
-    }
-    // if a call has just appeared, we arm the recorder before it actually gets into recordable state
-    else if (state == QLatin1String("incoming") || state == QLatin1String("dialing"))
-    {
-        setCallType(state == QLatin1String("incoming")? Incoming: Outgoing);
-        setTimeStamp(QDateTime::currentDateTime());
-
-        if (d->audioInput.isNull())
-        {
-            d->audioInput.reset(new QAudioInput(app->settings()->inputDevice(), app->settings()->audioFormat()));
-            connect(d->audioInput.data(), SIGNAL(stateChanged(QAudio::State)),
-                    this, SLOT(onAudioInputStateChanged(QAudio::State)));
-
-            // if line ID exists, open the output file for writing, then add the corresponding event to DB.
-            // defer it to lineIdentificationChanged() otherwise
-            if (!d->qofonoVoiceCall->lineIdentification().isEmpty())
-            {
-                openOutputFile(getOutputLocation(timeStamp(),
-                                                 d->qofonoVoiceCall->lineIdentification(),
-                                                 callType()));
-
-                d->eventId = app->model()->events()->add(
-                            timeStamp(),
-                            callType() == Incoming?
-                                EventsTableModel::Incoming :
-                                EventsTableModel::Outgoing);
-
-                QVariantMap params;
-                params.insert(QLatin1String("PhoneNumberID"),
-                              app->model()->phoneNumbers()->getIdByLineIdentification(
-                                  d->qofonoVoiceCall->lineIdentification()));
-                app->model()->events()->update(d->eventId, params);
-
-            }
-            else
-            {
-                connect(d->qofonoVoiceCall.data(), SIGNAL(lineIdentificationChanged(QString)),
-                        this, SLOT(onLineIdentificationChanged(QString)));
-            }
-        }
+        // if the call was never active, remove the record from Events
         else
-            qWarning() << __PRETTY_FUNCTION__ << ": d->audioInput expected to be NULL but it wasn't!";
-
-        if (d->eventId != -1)
         {
-            QVariantMap params;
-            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Armed)));
+            app->model()->events()->remove(d->eventId);
 
-            app->model()->events()->update(d->eventId, params);
+            setState(Inactive);
         }
-
-        setState(Armed);
     }
-    else
+    // if the call is on hold or waiting, suspend recording if it was active
+    else if (ofonoState == QLatin1String("held") || ofonoState == QLatin1String("waiting"))
     {
-        EventsTableModel::RecordingState recordingState;
-
-        if (!d->audioInput.isNull())
+        if (state() == Active)
         {
             d->audioInput->suspend();
-            recordingState = EventsTableModel::Suspended;
+
+            setState(Suspended);
+
+            if (d->eventId != -1)
+            {
+                QVariantMap params;
+                params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Suspended)));
+
+                app->model()->events()->update(d->eventId, params);
+            }
         }
-        else
-            recordingState = EventsTableModel::Armed;
-
-        if (d->eventId != -1)
-        {
-            QVariantMap params;
-            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(recordingState)));
-
-            app->model()->events()->update(d->eventId, params);
-        }
-
-        setState(Armed);
     }
 }
 

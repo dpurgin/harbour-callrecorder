@@ -6,11 +6,13 @@ INSTALLS += target
 
 TEMPLATE = app
 
-CONFIG += console
+CONFIG += console link_pkgconfig
 
 QT += core dbus sql multimedia
 
 LIBS += -lqofono-qt5
+
+PKGCONFIG += flac
 
 SOURCES += \
     src/application.cpp \

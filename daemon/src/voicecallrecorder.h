@@ -19,9 +19,12 @@ public:
 
     enum State
     {
+        Inactive,
         Armed,
         Active,
-        Inactive
+        Suspended,
+        WaitingForFinish,
+        Finish
     };
 
 public:
@@ -39,13 +42,10 @@ public slots:
 private slots:
     void onAudioInputDeviceReadyRead();
     void onAudioInputStateChanged(QAudio::State state);
-    void onLineIdentificationChanged(const QString& lineIdentification);
     void onVoiceCallStateChanged(const QString& state);
 
 private:
-    QString getOutputLocation(const QDateTime& timeStamp, const QString& lineIdentification, CallType callType) const;
-
-    void openOutputFile(const QString& outputLocation);
+    void arm();
 
     void processOfonoState(const QString& state);
 
