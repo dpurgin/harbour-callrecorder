@@ -152,10 +152,14 @@ void VoiceCallRecorder::arm()
 
         qDebug() << __PRETTY_FUNCTION__ << "Writing to " << d->outputLocation;
 
-        if (!FLAC__stream_encoder_init_file(d->flacEncoder, d->outputLocation.toLatin1().data(), NULL, NULL))
+        FLAC__StreamEncoderInitStatus status = FLAC__stream_encoder_init_file(d->flacEncoder,
+                                                                              d->outputLocation.toLatin1().data(),
+                                                                              NULL,
+                                                                              NULL);
+        if (status != FLAC__STREAM_ENCODER_INIT_STATUS_OK)
             qCritical() << __PRETTY_FUNCTION__ <<
-                        ": unable to init FLAC file: " <<
-                        FLAC__stream_encoder_get_state(d->flacEncoder);
+                        ": unable to init FLAC file: " << status <<
+                        ", current encoder status is " << FLAC__stream_encoder_get_state(d->flacEncoder);
     }
     else
         qWarning() << __PRETTY_FUNCTION__ << ": d->flacEncoder expected to be NULL but it wasn't!";
@@ -197,12 +201,22 @@ void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 
     qDebug() << __PRETTY_FUNCTION__ << ": sample count: " << sampleCount;
 
-    for (quint64 sampleIdx = 0; sampleIdx < sampleCount; sampleIdx++)
-    {
-        FLAC__int32 sample = static_cast< FLAC__int32 >(sampleData[sampleIdx]);
+    FLAC__StreamEncoderState state = FLAC__stream_encoder_get_state(d->flacEncoder);
 
-        if (!FLAC__stream_encoder_process_interleaved(d->flacEncoder, &sample, 1))
-            qDebug() << "Unable to FLAC__stream_encoder_process(): " << FLAC__stream_encoder_get_state(d->flacEncoder);
+    if (state != FLAC__STREAM_ENCODER_OK)
+        qDebug() << __PRETTY_FUNCTION__ << ": FLAC encoder state is not ok: " << state;
+    else
+    {
+        for (quint64 sampleIdx = 0; sampleIdx < sampleCount; sampleIdx++)
+        {
+            FLAC__int32 sample = static_cast< FLAC__int32 >(sampleData[sampleIdx]);
+
+            if (!FLAC__stream_encoder_process_interleaved(d->flacEncoder, &sample, 1))
+            {
+                qDebug() << "Unable to FLAC__stream_encoder_process(): " << FLAC__stream_encoder_get_state(d->flacEncoder);
+                break;
+            }
+        }
     }
 }
 
