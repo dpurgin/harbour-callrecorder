@@ -37,3 +37,5 @@ HEADERS += \
     src/eventstablemodel.h \
     src/model.h
 
+OTHER_FILES += \
+    harbour-callrecorderd.service
