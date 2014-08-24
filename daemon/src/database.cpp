@@ -93,7 +93,7 @@ Database::Database()
 
         "\nCREATE TABLE IF NOT EXISTS PhoneNumbers(ID INTEGER PRIMARY KEY AUTOINCREMENT, LineIdentification TEXT);" <<
 
-        "\nINSERT INTO PhoneNumbers(ID, LineIdentification) VALUES(1, '');" <<
+        "\nINSERT OR IGNORE INTO PhoneNumbers(ID, LineIdentification) VALUES(1, '');" <<
 
         "\nCREATE TABLE IF NOT EXISTS Events"
         "\n("
