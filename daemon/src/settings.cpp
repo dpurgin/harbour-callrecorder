@@ -3,6 +3,7 @@
 #include <QAudioDeviceInfo>
 #include <QAudioFormat>
 #include <QDebug>
+#include <QDir>
 #include <QStandardPaths>
 #include <QStringBuilder>
 
@@ -36,6 +37,7 @@ Settings::Settings()
         qDebug() << __PRETTY_FUNCTION__ << ": fallen back to " << d->inputDevice.deviceName();
     }
 
+    QDir().mkpath(outputLocation());
 }
 
 Settings::~Settings()
