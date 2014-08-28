@@ -1,7 +1,9 @@
 [Unit]
 Description=Call Recorder Daemon
 Requires=ofono.service
-After=ofono.service
+Requires=pulseaudio.service
+Requires=dbus.socket
+After=pre-user-session.target
 
 [Service]
 Type=simple
@@ -10,4 +12,4 @@ User=nemo
 Restart=on-abort
 
 [Install]
-WantedBy=default.target
+WantedBy=user-session.target
