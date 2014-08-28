@@ -4,7 +4,10 @@ TARGET = $${PACKAGE}d
 
 target.path = /usr/bin
 
-INSTALLS += target
+service.files = $${TARGET}.service
+service.path = /usr/lib/systemd/user
+
+INSTALLS += target service
 
 TEMPLATE = app
 

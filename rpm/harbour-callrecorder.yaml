@@ -27,6 +27,7 @@ PkgConfigBR:
    - Qt5Quick
    - Qt5Sql
    - flac
+   - qofono-qt5
    - sailfishapp >= 1.0.2
 
 # Build dependencies without a pkgconfig setup can be listed here
@@ -44,6 +45,7 @@ Files:
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+  - '%{_libdir}/systemd/user/%{name}d.service'
 
 # For more information about yaml and what's supported in Sailfish OS
 # build system, please see https://wiki.merproject.org/wiki/Spectacle
