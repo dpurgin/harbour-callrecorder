@@ -4,4 +4,6 @@ SUBDIRS += \
     daemon \
     ui
 
-OTHER_FILES = rpm/harbour-callrecorder.yaml
+OTHER_FILES = \
+    rpm/harbour-callrecorder.yaml \
+    rpm/harbour-callrecorder.spec
