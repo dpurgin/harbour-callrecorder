@@ -1,4 +1,6 @@
-TARGET = harbour-callrecorderd
+include(../common.pri)
+
+TARGET = $${PACKAGE}d
 
 target.path = /usr/bin
 
@@ -38,4 +40,4 @@ HEADERS += \
     src/model.h
 
 OTHER_FILES += \
-    harbour-callrecorderd.service
+    $${TARGET}.service
