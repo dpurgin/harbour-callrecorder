@@ -23,11 +23,11 @@ SOURCES += \
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
     translations/*.ts \
     qml/harbour-callrecorder.qml \
-    harbour-callrecorder.desktop
+    harbour-callrecorder.desktop \
+    qml/pages/EventsPage.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
