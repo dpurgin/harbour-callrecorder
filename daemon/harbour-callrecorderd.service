@@ -1,6 +1,5 @@
 [Unit]
 Description=Call Recorder Daemon
-Requires=ofono.service
 Requires=pulseaudio.service
 Requires=dbus.socket
 After=pre-user-session.target
@@ -8,7 +7,6 @@ After=pre-user-session.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/harbour-callrecorderd
-User=nemo
 Restart=on-abort
 
 [Install]
