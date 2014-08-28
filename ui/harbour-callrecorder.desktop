@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-callrecorder
+Exec=harbour-callrecorder
+Name=Call Recorder
+# translation example:
+# your app name in German locale (de)
+Name[de]=Call Recorder
+

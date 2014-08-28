@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    daemon
+    daemon \
+    ui
 
 OTHER_FILES = rpm/harbour-callrecorder.yaml
