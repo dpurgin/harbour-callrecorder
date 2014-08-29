@@ -34,6 +34,10 @@
 
 #include <sailfishapp.h>
 
+#include <QScopedPointer>
+
+#include <libcallrecorder/database.h>
+#include <libcallrecorder/eventstablemodel.h>
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +50,20 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    return SailfishApp::main(argc, argv);
+    QScopedPointer< QGuiApplication > app(SailfishApp::application(argc, argv));
+
+    app->setOrganizationName("kz.dpurgin");
+    app->setApplicationName("harbour-callrecorder");
+
+    QScopedPointer< Database > db(new Database());
+
+    QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
+
+    QScopedPointer< QQuickView > view(SailfishApp::createView());
+    view->setSource(SailfishApp::pathTo("qml/main.qml"));
+    view->show();
+    view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
+
+    return app->exec();
 }
 

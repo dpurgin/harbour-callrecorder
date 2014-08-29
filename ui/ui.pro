@@ -16,7 +16,11 @@ TARGET = $${PACKAGE}
 CONFIG += sailfishapp
 PKGCONFIG += flac
 
-QT += core quick qml multimedia
+QT += core quick qml multimedia sql
+
+INCLUDEPATH += ../libcallrecorder/include
+
+LIBS += -L../libcallrecorder -lcallrecorder
 
 SOURCES += \
     src/main.cpp
@@ -25,9 +29,9 @@ OTHER_FILES += \
     qml/cover/CoverPage.qml \
     qml/pages/SecondPage.qml \
     translations/*.ts \
-    qml/harbour-callrecorder.qml \
     harbour-callrecorder.desktop \
-    qml/pages/EventsPage.qml
+    qml/pages/EventsPage.qml \
+    qml/main.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

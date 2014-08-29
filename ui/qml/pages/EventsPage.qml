@@ -29,13 +29,19 @@ Page {
         width: parent.width
         height: parent.height
 
-        model: dummyModel
+        model: eventsModel
 
-        ListModel {
-            id: dummyModel
+        delegate: ListItem {
+            width: parent.width
 
-            ListElement {
-                dummy: true
+            anchors {
+                rightMargin: Theme.paddingLarge
+                leftMargin: Theme.paddingLarge
+            }
+
+            Label {
+                id: phoneNumber
+                text: model.display
             }
         }
 
@@ -47,37 +53,21 @@ Page {
             id: eventsViewPlaceholder
 
             text: qsTr("No calls recorded yet")
-            enabled: true
+            enabled: eventsModel.count == 0
         }
 
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
                 text: qsTr("About")
-                //onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                onClicked: eventsView.fn // pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
             }
         }
 
-//        // Tell SilicaFlickable the height of its content.
-//        contentHeight: column.height
-
-//        // Place our content in a Column.  The PageHeader is always placed at the top
-//        // of the page, followed by our content.
-//        Column {
-//            id: column
-
-//            width: page.width
-//            spacing: Theme.paddingLarge
-//            PageHeader {
-//                title: qsTr("Events")
-//            }
-//            Label {
-//                x: Theme.paddingLarge
-//                text: qsTr("Hello Sailors")
-//                color: Theme.secondaryHighlightColor
-//                font.pixelSize: Theme.fontSizeExtraLarge
-//            }
-//        }
+        function fn()
+        {
+            console.log(eventsModel);
+        }
     }
 }
 
