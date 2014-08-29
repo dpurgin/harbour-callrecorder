@@ -139,6 +139,11 @@ void VoiceCallRecorder::arm()
                          ": unable to set FLAC sample rate: " <<
                          FLAC__stream_encoder_get_state(d->flacEncoder);
 
+        if (!FLAC__stream_encoder_set_compression_level(d->flacEncoder, 8))
+            qCritical() << __PRETTY_FUNCTION__ <<
+                         ": unable to set FLAC compression level: " <<
+                         FLAC__stream_encoder_get_state(d->flacEncoder);
+
         // form output location with file name based on current date, phone number, call direction (in/out).
         // if line ID does not exist, we should wait for the corresponding signal from Ofono,
         // but maybe it is always known at this stage. Needs checking.
