@@ -2,7 +2,11 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     daemon \
-    ui
+    ui \
+    libcallrecorder
+
+daemon.depends = libcallrecorder
+ui.depends = libcallrecorder
 
 OTHER_FILES = \
     rpm/harbour-callrecorder.yaml \
