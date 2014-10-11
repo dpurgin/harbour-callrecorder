@@ -20,6 +20,7 @@
 
 #include <QDebug>
 #include <QSqlError>
+#include <QSqlRecord>
 
 #include "database.h"
 
@@ -52,7 +53,7 @@ EventsTableModel::EventsTableModel(Database* db, QObject* parent)
     if (!select())
         qDebug() << __PRETTY_FUNCTION__ << ": unable to perform select: " << lastError().text();
     else
-        qDebug() << __PRETTY_FUNCTION__ << ": " << rowCount() << " selected";
+        qDebug() << __PRETTY_FUNCTION__ << ": " << rowCount() << " selected";    
 }
 
 EventsTableModel::~EventsTableModel()
@@ -61,8 +62,25 @@ EventsTableModel::~EventsTableModel()
 }
 
 QVariant EventsTableModel::data(const QModelIndex& item, int role) const
-{
-    qDebug() << __PRETTY_FUNCTION__;
+{    
+    qDebug() << __PRETTY_FUNCTION__ << role;
 
-    return QSqlRelationalTableModel::data(index(item.row(), 2));
+    return QSqlRelationalTableModel::data(index(item.row(), role - Qt::UserRole));
+}
+
+QHash< int, QByteArray > EventsTableModel::roleNames() const
+{
+    static QHash< int, QByteArray > roles;
+
+    if (roles.empty())
+    {
+        QSqlRecord rec = record();
+
+        for (int c = 0; c < rec.count(); c++)
+            roles.insert(Qt::UserRole + c, rec.fieldName(c).toUtf8());
+    }
+
+    qDebug() << roles;
+
+    return roles;
 }

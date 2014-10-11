@@ -38,6 +38,8 @@ public:
 
     QVariant data(const QModelIndex& item, int role = Qt::DisplayRole) const;
 
+    QHash< int, QByteArray > roleNames() const;
+
 signals:
 
 public slots:        
