@@ -74,8 +74,6 @@ Page {
 
                     truncationMode: TruncationMode.Fade
                     color: highlighted? Theme.highlightColor: Theme.primaryColor
-
-//                    width: Math.min(implicitWidth, parent.width)
                 }
 
                 Label {
@@ -91,26 +89,6 @@ Page {
                     width: parent.width - primaryName.width
                 }
             }
-
-//            Label {
-//                id: lineIdentification
-
-//                anchors {
-//                    left: icon.right
-//                }
-
-//                text: {
-//                    var repr = model.LineIdentification;
-
-//                    if (people.populated)
-//                    {
-//                        var person = people.personByPhoneNumber(model.LineIdentification);
-//                    }
-
-//                    return repr;
-//                }
-//                color: highlighted? Theme.highlightColor : Theme.primaryColor
-//            }
 
             Label {
                 id: timeStamp
@@ -150,6 +128,12 @@ Page {
                 }
                 color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
             }
+
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
+                    fileName: model.FileName
+                })
+            }
         }
 
         header: PageHeader {
@@ -167,13 +151,10 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("About")
-                onClicked: eventsView.fn // pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                onClicked: {
+                    console.log('About')
+                }
             }
-        }
-
-        function fn()
-        {
-            console.log(eventsModel);
         }
     }
 }
