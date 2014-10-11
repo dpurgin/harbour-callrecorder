@@ -32,16 +32,76 @@ Page {
         model: eventsModel
 
         delegate: ListItem {
+            id: delegate
+
             width: parent.width
 
             anchors {
-                rightMargin: Theme.paddingLarge
-                leftMargin: Theme.paddingLarge
+                left: parent.left
+
+                right: parent.right
+            }
+
+            Image {
+                id: icon
+
+                anchors {
+                    left: parent.left
+                }
+
+                visible: model.EventTypeID == 1
+
+                source: 'image://theme/icon-m-incoming-call'
             }
 
             Label {
-                id: phoneNumber
-                text: model.display
+                id: lineIdentification
+
+                anchors {
+                    left: icon.right
+                }
+
+                text: model.LineIdentification
+                color: highlighted? Theme.highlightColor : Theme.primaryColor
+            }
+
+            Label {
+                id: timeStamp
+
+                anchors {
+                    right: parent.right
+                    rightMargin: Theme.paddingLarge
+                }
+
+                font.pixelSize: Theme.fontSizeExtraSmall
+                text: Format.formatDate(model.TimeStamp, Formatter.TimepointRelativeCurrentDay)
+                color: highlighted? Theme.highlightColor : Theme.primaryColor
+            }
+
+            Label {
+                id: description
+
+                anchors {
+                    top: lineIdentification.bottom
+                    left: icon.right
+                }
+
+                font.pixelSize: Theme.fontSizeExtraSmall
+                text: {
+                    switch (model.RecordingStateID)
+                    {
+                    case 1:
+                        return qsTr('Armed for recording')
+                    case 2:
+                        return qsTr('Recording in progress')
+                    case 3:
+                        return qsTr('Recording suspended')
+                    case 4:
+                        return Format.formatDuration(model.Duration, Formatter.DurationShort) + ' \u2022 ' +
+                                Format.formatFileSize(model.FileSize);
+                    }
+                }
+                color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
             }
         }
 
