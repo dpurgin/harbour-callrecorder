@@ -26,11 +26,11 @@ SOURCES += \
     src/main.cpp
 
 OTHER_FILES += \
-    qml/cover/CoverPage.qml \
-    qml/pages/SecondPage.qml \
-    translations/*.ts \
     harbour-callrecorder.desktop \
+    translations/*.ts \
+    qml/cover/CoverPage.qml \
     qml/pages/EventsPage.qml \
+    qml/pages/EventPage.qml \
     qml/main.qml
 
 # to disable building translations every time, comment out the
