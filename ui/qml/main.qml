@@ -20,10 +20,15 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 
-ApplicationWindow
-{
+import org.nemomobile.contacts 1.0
+
+ApplicationWindow {
     initialPage: Component { EventsPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
+    PeopleModel {
+        id: people
+        filterType: PeopleModel.FilterAll
+        requiredProperty: PeopleModel.PhoneNumberRequired
+    }
 }
-
-

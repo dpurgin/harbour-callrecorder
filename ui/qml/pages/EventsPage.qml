@@ -18,6 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.nemomobile.contacts 1.0
 
 
 Page {
@@ -33,6 +34,8 @@ Page {
 
         delegate: ListItem {
             id: delegate
+
+            property Person person: people.populated? people.personByPhoneNumber(model.LineIdentification): null
 
             width: parent.width
 
@@ -54,16 +57,60 @@ Page {
                 source: 'image://theme/icon-m-incoming-call'
             }
 
-            Label {
-                id: lineIdentification
+            Row {
+                id: otherPartyId
+
+                spacing: Theme.paddingSmall
+                width: parent.width - icon.width - timeStamp.width - Theme.paddingLarge
 
                 anchors {
                     left: icon.right
                 }
 
-                text: model.LineIdentification
-                color: highlighted? Theme.highlightColor : Theme.primaryColor
+                Label {
+                    id: primaryName
+
+                    text: person && person.primaryName.length > 0? person.primaryName : model.LineIdentification
+
+                    truncationMode: TruncationMode.Fade
+                    color: highlighted? Theme.highlightColor: Theme.primaryColor
+
+//                    width: Math.min(implicitWidth, parent.width)
+                }
+
+                Label {
+                    id: secondaryName
+
+                    text: person && person.primaryName.length > 0 && person.secondaryName.length > 0?
+                              person.secondaryName :
+                              ''
+
+                    truncationMode: TruncationMode.Fade
+                    color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
+
+                    width: parent.width - primaryName.width
+                }
             }
+
+//            Label {
+//                id: lineIdentification
+
+//                anchors {
+//                    left: icon.right
+//                }
+
+//                text: {
+//                    var repr = model.LineIdentification;
+
+//                    if (people.populated)
+//                    {
+//                        var person = people.personByPhoneNumber(model.LineIdentification);
+//                    }
+
+//                    return repr;
+//                }
+//                color: highlighted? Theme.highlightColor : Theme.primaryColor
+//            }
 
             Label {
                 id: timeStamp
@@ -82,7 +129,7 @@ Page {
                 id: description
 
                 anchors {
-                    top: lineIdentification.bottom
+                    top: otherPartyId.bottom
                     left: icon.right
                 }
 
