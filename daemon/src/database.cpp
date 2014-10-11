@@ -102,6 +102,7 @@ Database::Database()
         "\n    PhoneNumberID INTEGER,"
         "\n    EventTypeID INTEGER,"
         "\n    RecordingStateID INTEGER,"
+        "\n    Duration INTEGER,"
         "\n    FileName TEXT,"
         "\n    FileSize INTEGER,"
         "\n    FOREIGN KEY(PhoneNumberID) REFERENCES PhoneNumbers(ID)"
