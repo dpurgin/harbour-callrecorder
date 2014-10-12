@@ -30,6 +30,12 @@ Page {
         width: parent.width
         height: parent.height
 
+        header: PageHeader {
+            title: qsTr("Events")
+        }
+
+        VerticalScrollDecorator {}
+
         model: eventsModel
 
         delegate: ListItem {
@@ -142,10 +148,6 @@ Page {
                     })
                 }
             }
-        }
-
-        header: PageHeader {
-            title: qsTr("Events")
         }
 
         ViewPlaceholder {
