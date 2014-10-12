@@ -65,8 +65,6 @@ EventsTableModel::~EventsTableModel()
 
 QVariant EventsTableModel::data(const QModelIndex& item, int role) const
 {    
-    qDebug() << __PRETTY_FUNCTION__ << role;
-
     return QSqlRelationalTableModel::data(index(item.row(), role - Qt::UserRole));
 }
 
