@@ -104,7 +104,7 @@ Page {
                     rightMargin: Theme.paddingLarge
                 }
 
-                height: otherPartyId.height
+                height: timeStampTime.visible? otherPartyId.height: delegate.height
 
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: Theme.fontSizeExtraSmall
@@ -121,6 +121,8 @@ Page {
                     right: timeStampDate.right
                     top: timeStampDate.bottom
                 }
+
+                visible: startOfDay(new Date()).valueOf() != startOfDay(model.TimeStamp).valueOf()
 
                 font.pixelSize: Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
