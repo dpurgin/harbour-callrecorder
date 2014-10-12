@@ -31,4 +31,15 @@ ApplicationWindow {
         filterType: PeopleModel.FilterAll
         requiredProperty: PeopleModel.PhoneNumberRequired
     }
+
+    function startOfDay(dt)
+    {
+        var dtObj = new Date(dt);
+        dtObj.setHours(0);
+        dtObj.setMinutes(0);
+        dtObj.setSeconds(0);
+        dtObj.setMilliseconds(0);
+
+        return dtObj;
+    }
 }
