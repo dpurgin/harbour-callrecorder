@@ -63,7 +63,7 @@ int EventsTableModel::add(const QDateTime& timeStamp, int phoneNumberId, EventTy
                 "\n);");
 
     Database::SqlParameters params;
-    params.insert(QLatin1String(":timeStamp"), timeStamp);
+    params.insert(QLatin1String(":timeStamp"), timeStamp.toUTC()); // insert UTC since sqlite doesn't handle timezones
     params.insert(QLatin1String(":phoneNumberId"), phoneNumberId);
     params.insert(QLatin1String(":eventTypeId"), static_cast< int >(eventType));
     params.insert(QLatin1String(":recordingStateId"), static_cast< int >(recordingState));
