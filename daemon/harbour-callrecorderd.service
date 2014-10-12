@@ -2,7 +2,7 @@
 Description=Call Recorder Daemon
 Requires=pulseaudio.service
 Requires=dbus.socket
-After=pre-user-session.target
+After=pulseaudio.service
 
 [Service]
 Type=simple
