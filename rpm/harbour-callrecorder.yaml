@@ -39,6 +39,7 @@ Requires:
   - sailfishsilica-qt5 >= 0.10.9
   - qt5-qtmultimedia-plugin-audio-pulseaudio
   - qt5-qtmultimedia-plugin-mediaservice-gstmediaplayer
+  - gst-plugins-good
 
 # All installed files
 Files:
