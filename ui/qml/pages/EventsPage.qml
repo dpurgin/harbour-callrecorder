@@ -130,9 +130,17 @@ Page {
             }
 
             onClicked: {
-                pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
-                    fileName: model.FileName
-                })
+                if (model.RecordingStateID == 4)
+                {
+                    pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
+                        timeStamp: model.TimeStamp,
+                        lineIdentification: model.LineIdentification,
+                        eventTypeId: model.EventTypeID,
+                        fileName: model.FileName,
+                        fileSize: model.FileSize,
+                        duration: model.Duration
+                    })
+                }
             }
         }
 
