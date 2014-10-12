@@ -24,7 +24,12 @@ import QtMultimedia 5.0
 Page {
     id: eventPage
 
+    property string timeStamp
+    property string lineIdentification
+    property int eventTypeId
     property string fileName
+    property int fileSize
+    property int duration
 
     MediaPlayer {
         id: mediaPlayer
@@ -41,7 +46,7 @@ Page {
         }
     }
 
-    SilicaFlickable {
+    SilicaFlickable {        
         anchors {
             fill: parent
 
@@ -49,80 +54,156 @@ Page {
             rightMargin: Theme.paddingLarge
         }
 
+        contentHeight: contentColumn.height
+
         Column {
-            id: mediaPlayerControls
+            id: contentColumn
+
+            PageHeader {
+                id: pageHeader
+
+                title: qsTr("Details")
+            }
 
             width: parent.width
 
-            visible: mediaPlayer.error == MediaPlayer.NoError
+            Column {
+                id: detailsColumn
 
-            Slider {
-                id: slider
+                width: parent.width
+                spacing: Theme.paddingLarge
 
-                property bool mediaPlayerChange: false
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    text: eventTypeId == 1? qsTr('Incoming call'): qsTr('Outgoing call')
+                }
+
+                Item {
+                    width: parent.width
+                    height: Theme.paddingLarge * 2
+                }
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    font.pixelSize: Theme.fontSizeExtraLarge
+
+                    color: Theme.highlightColor
+
+                    text: lineIdentification
+                }
+
+                Item {
+                    width: parent.width
+                    height: Theme.paddingLarge * 2
+                }
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    text: Format.formatDate(timeStamp, Formatter.CallTimeRelative)
+                }
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    font.pixelSize: Theme.fontSizeTiny
+
+                    text: Format.formatDuration(duration, Formatter.DurationShort) + ' \u2022 ' + Format.formatFileSize(fileSize)
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: eventPage.height - pageHeader.height - detailsColumn.height - Theme.paddingLarge -
+                        (mediaPlayer.error == MediaPlayer.NoError?
+                             mediaPlayerControls.height:
+                             errorMessageLabel.height)
+            }
+
+            Column {
+                id: mediaPlayerControls
 
                 width: parent.width
 
-                handleVisible: true
+                visible: mediaPlayer.error == MediaPlayer.NoError
 
-                maximumValue: mediaPlayer.duration
+                Slider {
+                    id: slider
 
-                onValueChanged: {
-                    if (!mediaPlayerChange)
-                    {
-                        mediaPlayer.seek(value);
+                    property bool mediaPlayerChange: false
+
+                    width: parent.width
+
+                    handleVisible: true
+
+                    maximumValue: mediaPlayer.duration
+
+                    onValueChanged: {
+                        if (!mediaPlayerChange)
+                        {
+                            mediaPlayer.seek(value);
+                        }
+                        else
+                        {
+                            mediaPlayerChange = false;
+
+                            valueText = Format.formatDuration(value / 1000, Formatter.DurationShort);
+                        }
                     }
-                    else
-                    {
-                        mediaPlayerChange = false;
+                }
 
-                        valueText = Format.formatDuration(value / 1000, Formatter.DurationShort);
+                Row {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    IconButton {
+                        icon.source: 'image://theme/icon-l-left'
+                    }
+
+                    IconButton {
+                        icon.source: mediaPlayer.playbackState == MediaPlayer.PlayingState?
+                                         'image://theme/icon-l-pause':
+                                         'image://theme/icon-l-play'
+
+                        onClicked: mediaPlayer.playbackState == MediaPlayer.PlayingState?
+                                       mediaPlayer.pause():
+                                       mediaPlayer.play()
+                    }
+
+                    IconButton {
+                        icon.source: 'image://theme/icon-l-right'
                     }
                 }
             }
 
-            Row {
+            Label {
+                id: errorMessageLabel
+
+                width: parent.width
+
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                 }
 
-                IconButton {
-                    icon.source: 'image://theme/icon-l-left'
-                }
+                wrapMode: Text.Wrap
+                horizontalAlignment: Text.AlignHCenter
 
-                IconButton {
-                    icon.source: mediaPlayer.playbackState == MediaPlayer.PlayingState?
-                                     'image://theme/icon-l-pause':
-                                     'image://theme/icon-l-play'
+                visible: mediaPlayer.error != MediaPlayer.NoError
 
-                    onClicked: mediaPlayer.playbackState == MediaPlayer.PlayingState?
-                                   mediaPlayer.pause():
-                                   mediaPlayer.play()
-                }
-
-                IconButton {
-                    icon.source: 'image://theme/icon-l-right'
-                }
+                text: mediaPlayer.errorString
             }
         }
-
-        Label {
-            id: errorMessageLabel
-
-            width: parent.width
-
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-            }
-
-            wrapMode: Text.Wrap
-            horizontalAlignment: Text.AlignHCenter
-
-            visible: mediaPlayer.error != MediaPlayer.NoError
-
-            text: mediaPlayer.errorString
-        }
-
     }
 }
 
