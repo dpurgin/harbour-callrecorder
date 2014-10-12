@@ -46,6 +46,8 @@ EventsTableModel::EventsTableModel(Database* db, QObject* parent)
 
     setTable("Events");
 
+    setSort(1, Qt::DescendingOrder);
+
     setRelation(2, QSqlRelation("PhoneNumbers", "ID", "LineIdentification"));
 
     setEditStrategy(QSqlTableModel::OnRowChange);
