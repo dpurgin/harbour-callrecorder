@@ -21,6 +21,7 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
     VoiceCallRecorderPrivate()
         : audioInputDevice(NULL),
           callType(VoiceCallRecorder::Incoming),
+          duration(0),
           eventId(-1),
           flacEncoder(NULL),
           state(VoiceCallRecorder::Inactive)
@@ -34,9 +35,13 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
 
     QString dbusObjectPath;
 
+    quint64 duration; // recording duration
+
     int eventId;
 
     FLAC__StreamEncoder* flacEncoder;
+
+    qint64 lastRecordStart; // stores the last time the recording was started. Need to calculate duration
 
     QString outputLocation;
 
@@ -83,6 +88,7 @@ VoiceCallRecorder::~VoiceCallRecorder()
             params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Done)));
             params.insert(QLatin1String("FileName"), fi.fileName());
             params.insert(QLatin1String("FileSize"), fi.size());
+            params.insert(QLatin1String("Duration"), d->duration / 1000); // duration is stored in seconds
 
             app->model()->events()->update(d->eventId, params);
         }
@@ -254,6 +260,7 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
     if (ofonoState == QLatin1String("active"))
     {
         // simple shell call for now
+        // WARNING: this does not always work!
         // TODO: replace with normal pulseaudio APIs
         int retval = QProcess::execute("pacmd set-card-profile 0 voicecall-record");
 
@@ -280,6 +287,9 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             app->model()->events()->update(d->eventId, params);
         }
 
+        // update 'last record start' timestamp to calculate duration when the recording ents
+        d->lastRecordStart = QDateTime::currentMSecsSinceEpoch();
+
         setState(Active);
     }
     // stop recording if the call was disconnected
@@ -290,10 +300,16 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
         {
             d->audioInput->stop();
 
+            // if the call was active, calculate and add duration
+            // if the call was suspended, the duration has already been added
+            if (state() == Active)
+                d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
+
             // we do not call FLAC__stream_encode_finish at this point, as the d->audioInput can still some data
             // to actually cleanup FLAC, we will process WaitingForFinish in destructor
 
             setState(WaitingForFinish);
+
         }
         // if the call was never active, remove the record from Events
         else
@@ -319,6 +335,9 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
 
                 app->model()->events()->update(d->eventId, params);
             }
+
+            // calculate and add duration now
+            d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
         }
     }
 }
