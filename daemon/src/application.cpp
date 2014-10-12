@@ -42,6 +42,7 @@ class Application::ApplicationPrivate
 
     QScopedPointer< Model > model;
 
+    QScopedPointer< QOfonoManager > qofonoManager;
     QScopedPointer< QOfonoVoiceCallManager > qofonoVoiceCallManager;
 
     QScopedPointer< Settings > settings;
@@ -59,34 +60,28 @@ Application::Application(int argc, char* argv[])
     setApplicationName(QLatin1String("harbour-callrecorder"));
     setOrganizationName(QLatin1String("kz.dpurgin"));
 
-    QScopedPointer< QOfonoManager > qofonoManager(new QOfonoManager());
+    d->qofonoManager.reset(new QOfonoManager());
 
-    if (!qofonoManager->available())
+    if (!d->qofonoManager->available())
         throw CallRecorderException(QLatin1String("Ofono is not available!"));
 
-    // check if modems available
+    // check if modems available    
     // use the first one for now
 
-    QStringList modems = qofonoManager->modems();
+    QStringList modems = d->qofonoManager->modems();
 
     if (modems.length() == 0)
-        throw CallRecorderException(QLatin1String("No modems available!"));
+    {
+        qWarning() << QLatin1String("No modems available! Waiting for modemAdded");
+
+        connect(d->qofonoManager.data(), SIGNAL(modemAdded(QString)),
+                this, SLOT(initVoiceCallManager(QString)));
+    }
+    else
+        initVoiceCallManager(modems.first());
 
     d->database.reset(new Database());
-
     d->model.reset(new Model());
-
-    d->qofonoVoiceCallManager.reset(new QOfonoVoiceCallManager());
-
-    d->qofonoVoiceCallManager->setModemPath(modems.first());
-
-    // connect to voice call signals from Ofono voice call manager
-
-    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callAdded(QString)),
-            this, SLOT(onVoiceCallAdded(QString)));
-    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
-            this, SLOT(onVoiceCallRemoved(QString)));
-
     d->settings.reset(new Settings());
 }
 
@@ -109,6 +104,25 @@ Database* Application::database() const
 Model* Application::model() const
 {
     return d->model.data();
+}
+
+void Application::initVoiceCallManager(const QString& objectPath)
+{
+    qDebug() << __PRETTY_FUNCTION__ << objectPath;
+
+    d->qofonoVoiceCallManager.reset(new QOfonoVoiceCallManager());
+
+    d->qofonoVoiceCallManager->setModemPath(objectPath);
+
+    // connect to voice call signals from Ofono voice call manager
+
+    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callAdded(QString)),
+            this, SLOT(onVoiceCallAdded(QString)));
+    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
+            this, SLOT(onVoiceCallRemoved(QString)));
+
+    // ofono manager is not needed now
+    d->qofonoManager->deleteLater();
 }
 
 void Application::onVoiceCallAdded(const QString& objectPath)

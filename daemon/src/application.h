@@ -49,6 +49,8 @@ signals:
 public slots:
 
 private slots:
+    void initVoiceCallManager(const QString& objectPath);
+
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRemoved(const QString& objectPath);
 
