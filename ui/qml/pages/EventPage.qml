@@ -42,7 +42,12 @@ Page {
     }
 
     SilicaFlickable {
-        anchors.fill: parent
+        anchors {
+            fill: parent
+
+            leftMargin: Theme.paddingLarge
+            rightMargin: Theme.paddingLarge
+        }
 
         Column {
             id: mediaPlayerControls
@@ -109,6 +114,9 @@ Page {
             anchors {
                 horizontalCenter: parent.horizontalCenter
             }
+
+            wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
 
             visible: mediaPlayer.error != MediaPlayer.NoError
 
