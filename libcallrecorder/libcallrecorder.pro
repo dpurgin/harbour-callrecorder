@@ -25,5 +25,7 @@ HEADERS += \
     src/database.h \
     src/callrecorderexception.h \
     src/sqlcursor.h \
-    src/eventstablemodel.h
+    src/eventstablemodel.h \
+    include/libcallrecorder/sqlcursor.h \
+    include/libcallrecorder/callrecorderexception.h
 

@@ -3,8 +3,9 @@
 #include <qofono-qt5/qofonomanager.h>
 #include <qofono-qt5/qofonovoicecallmanager.h>
 
-#include "callrecorderexception.h"
-#include "database.h"
+#include <libcallrecorder/callrecorderexception.h>
+#include <libcallrecorder/database.h>
+
 #include "model.h"
 #include "settings.h"
 #include "voicecallrecorder.h"

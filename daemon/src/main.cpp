@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QScopedPointer>
 
-#include "callrecorderexception.h"
+#include <libcallrecorder/callrecorderexception.h>
 
 int main(int argc, char* argv[])
 {

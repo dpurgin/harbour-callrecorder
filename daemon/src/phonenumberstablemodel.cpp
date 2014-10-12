@@ -2,10 +2,11 @@
 
 #include <QDebug>
 
+#include <libcallrecorder/callrecorderexception.h>
+#include <libcallrecorder/database.h>
+#include <libcallrecorder/sqlcursor.h>
+
 #include "application.h"
-#include "callrecorderexception.h"
-#include "database.h"
-#include "sqlcursor.h"
 
 class PhoneNumbersTableModel::PhoneNumbersTableModelPrivate
 {

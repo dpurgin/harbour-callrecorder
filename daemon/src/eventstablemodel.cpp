@@ -5,7 +5,8 @@
 #include <QStringList>
 
 #include "application.h"
-#include "database.h"
+
+#include <libcallrecorder/database.h>
 
 class EventsTableModel::EventsTableModelPrivate
 {

@@ -15,14 +15,15 @@ CONFIG += console link_pkgconfig
 
 QT += core dbus sql multimedia
 
-LIBS += -lqofono-qt5
+INCLUDEPATH += ../libcallrecorder/include
+
+LIBS += -L../libcallrecorder -lcallrecorder -lqofono-qt5
 
 PKGCONFIG += flac
 
 SOURCES += \
     src/application.cpp \
     src/main.cpp \
-    src/callrecorderexception.cpp \
     src/voicecallrecorder.cpp \
     src/phonenumberstablemodel.cpp \
     src/settings.cpp \
@@ -31,7 +32,6 @@ SOURCES += \
 
 HEADERS += \
     src/application.h \
-    src/callrecorderexception.h \
     src/voicecallrecorder.h \
     src/phonenumberstablemodel.h \
     src/settings.h \
