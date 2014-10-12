@@ -67,7 +67,7 @@ Page {
                 id: otherPartyId
 
                 spacing: Theme.paddingSmall
-                width: parent.width - icon.width - timeStamp.width - Theme.paddingLarge
+                width: parent.width - icon.width - timeStampDate.width - Theme.paddingLarge
 
                 anchors {
                     left: icon.right
@@ -97,16 +97,36 @@ Page {
             }
 
             Label {
-                id: timeStamp
+                id: timeStampDate
 
                 anchors {
                     right: parent.right
                     rightMargin: Theme.paddingLarge
                 }
 
+                height: otherPartyId.height
+
+                verticalAlignment: Text.AlignVCenter
                 font.pixelSize: Theme.fontSizeExtraSmall
-                text: Format.formatDate(model.TimeStamp, Formatter.TimepointRelativeCurrentDay)
                 color: highlighted? Theme.highlightColor : Theme.primaryColor
+
+                text: Format.formatDate(model.TimeStamp, Formatter.TimepointRelativeCurrentDay)
+            }
+
+            Label {
+                id: timeStampTime
+
+                anchors {
+                    left: timeStampDate.left
+                    right: timeStampDate.right
+                    top: timeStampDate.bottom
+                }
+
+                font.pixelSize: Theme.fontSizeExtraSmall
+                horizontalAlignment: Text.AlignHCenter
+                color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
+
+                text: Format.formatDate(model.TimeStamp, Formatter.TimeValue)
             }
 
             Label {
