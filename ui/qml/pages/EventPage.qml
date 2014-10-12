@@ -144,21 +144,15 @@ Page {
 
                     width: parent.width
 
-                    handleVisible: true
-
                     maximumValue: mediaPlayer.duration
+
+                    valueText: Format.formatDuration(value / 1000, Formatter.DurationShort);
 
                     onValueChanged: {
                         if (!mediaPlayerChange)
-                        {
                             mediaPlayer.seek(value);
-                        }
                         else
-                        {
                             mediaPlayerChange = false;
-
-                            valueText = Format.formatDuration(value / 1000, Formatter.DurationShort);
-                        }
                     }
                 }
 
