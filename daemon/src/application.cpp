@@ -24,6 +24,11 @@
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
 
+#include <pulse/context.h>
+#include <pulse/mainloop-api.h>
+#include <pulse/subscribe.h>
+#include <pulse/thread-mainloop.h>
+
 #include "model.h"
 #include "settings.h"
 #include "voicecallrecorder.h"
@@ -34,13 +39,72 @@ class Application::ApplicationPrivate
 
     friend class Application;
 
+private:
     explicit ApplicationPrivate(): active(true) {}
 
+private:
+    static void onContextNotify(pa_context* context, void* userData)
+    {
+        Q_UNUSED(context);
+        Q_UNUSED(userData);
+
+        pa_threaded_mainloop_signal(paMainLoop, 0);
+    }
+
+    static void onContextSubscription(pa_context* context, pa_subscription_event_type_t event, uint32_t idx, void* userData)
+    {
+        long facility = (event & PA_SUBSCRIPTION_EVENT_FACILITY_MASK);
+        long eventType = (event & PA_SUBSCRIPTION_EVENT_TYPE_MASK);
+
+        static QHash< long, QString > facilities;
+
+        if (facilities.isEmpty())
+        {
+            facilities.insert(PA_SUBSCRIPTION_EVENT_SINK, "PA_SUBSCRIPTION_EVENT_SINK");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_SOURCE, "PA_SUBSCRIPTION_EVENT_SOURCE");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_SINK_INPUT, "PA_SUBSCRIPTION_EVENT_SINK_INPUT");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT, "PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_MODULE, "PA_SUBSCRIPTION_EVENT_MODULE");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_CLIENT, "PA_SUBSCRIPTION_EVENT_CLIENT");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE, "PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE");
+            facilities.insert(PA_SUBSCRIPTION_EVENT_CARD, "PA_SUBSCRIPTION_EVENT_CARD");
+        }
+
+        static QHash< long, QString > eventTypes;
+
+        if (eventTypes.isEmpty())
+        {
+            eventTypes.insert(PA_SUBSCRIPTION_EVENT_NEW, "PA_SUBSCRIPTION_EVENT_NEW");
+            eventTypes.insert(PA_SUBSCRIPTION_EVENT_CHANGE, "PA_SUBSCRIPTION_EVENT_CHANGE");
+            eventTypes.insert(PA_SUBSCRIPTION_EVENT_REMOVE, "PA_SUBSCRIPTION_EVENT_REMOVE");
+        }
+
+        qDebug() << "Facility: " << facilities.value(facility, "Other") <<
+                    "Event Type: " << eventTypes.value(eventType, "Other");
+
+
+    }
+
+    static void onContextSubscriptionSuccess(pa_context* context, int success, void* userData)
+    {
+        Q_UNUSED(context);
+        Q_UNUSED(userData);
+
+        qDebug() << "success: " << success;
+
+        pa_threaded_mainloop_signal(ApplicationPrivate::paMainLoop, 0);
+    }
+
+private:
     bool active;
 
     QScopedPointer< Database > database;
 
     QScopedPointer< Model > model;
+
+    static pa_threaded_mainloop* paMainLoop;
+    static pa_mainloop_api* paMainLoopApi;
+    static pa_context* paContext;
 
     QScopedPointer< QOfonoManager > qofonoManager;
     QScopedPointer< QOfonoVoiceCallManager > qofonoVoiceCallManager;
@@ -50,6 +114,10 @@ class Application::ApplicationPrivate
     // stores object paths and its recorders
     QHash< QString, VoiceCallRecorder* > voiceCallRecorders;
 };
+
+pa_threaded_mainloop* Application::ApplicationPrivate::paMainLoop = NULL;
+pa_mainloop_api* Application::ApplicationPrivate::paMainLoopApi = NULL;
+pa_context* Application::ApplicationPrivate::paContext = NULL;
 
 Application::Application(int argc, char* argv[])
     : QCoreApplication(argc, argv),
@@ -80,6 +148,8 @@ Application::Application(int argc, char* argv[])
     else
         initVoiceCallManager(modems.first());
 
+    initPulseAudio();
+
     d->database.reset(new Database());
     d->model.reset(new Model());
     d->settings.reset(new Settings());
@@ -88,6 +158,15 @@ Application::Application(int argc, char* argv[])
 Application::~Application()
 {
     qDebug() << __PRETTY_FUNCTION__;
+
+    pa_context_disconnect(ApplicationPrivate::paContext);
+
+    pa_threaded_mainloop_wait(ApplicationPrivate::paMainLoop);
+
+    pa_context_unref(ApplicationPrivate::paContext);
+
+    pa_threaded_mainloop_stop(ApplicationPrivate::paMainLoop);
+    pa_threaded_mainloop_free(ApplicationPrivate::paMainLoop);
 }
 
 /// Checks whether the call recording application is active
@@ -99,6 +178,59 @@ bool Application::active() const
 Database* Application::database() const
 {
     return d->database.data();
+}
+
+void Application::initPulseAudio()
+{
+    qDebug() << __PRETTY_FUNCTION__;
+
+    ApplicationPrivate::paMainLoop = pa_threaded_mainloop_new();
+    pa_threaded_mainloop_start(ApplicationPrivate::paMainLoop);
+
+    ApplicationPrivate::paMainLoopApi = pa_threaded_mainloop_get_api(ApplicationPrivate::paMainLoop);
+
+    pa_threaded_mainloop_lock(ApplicationPrivate::paMainLoop);
+
+    ApplicationPrivate::paContext = pa_context_new(ApplicationPrivate::paMainLoopApi, applicationName().toUtf8().data());
+
+    pa_context_set_state_callback(ApplicationPrivate::paContext, &ApplicationPrivate::onContextNotify, NULL);
+    pa_context_connect(ApplicationPrivate::paContext, NULL, PA_CONTEXT_NOFLAGS, NULL);
+
+    bool done = false;
+    pa_context_state_t contextState;
+
+    while (!done)
+    {
+        switch (contextState = pa_context_get_state(d->paContext))
+        {
+            case PA_CONTEXT_UNCONNECTED: qDebug() << "Context state: PA_CONTEXT_UNCONNECTED"; break;
+            case PA_CONTEXT_CONNECTING: qDebug() << "Context state: PA_CONTEXT_CONNECTING"; break;
+            case PA_CONTEXT_AUTHORIZING: qDebug() << "Context state: PA_CONTEXT_AUTHORIZING"; break;
+            case PA_CONTEXT_SETTING_NAME: qDebug() << "Context state: PA_CONTEXT_SETTING_NAME"; break;
+            case PA_CONTEXT_READY: qDebug() << "Context state: PA_CONTEXT_READY"; done = true; break;
+            case PA_CONTEXT_FAILED: qDebug() << "Context state: PA_CONTEXT_FAILED"; done = true; break;
+            case PA_CONTEXT_TERMINATED: qDebug() << "Context state: PA_CONTEXT_TERMINATED"; done = true; break;
+        }
+
+        if (!done)
+            pa_threaded_mainloop_wait(ApplicationPrivate::paMainLoop);
+    }
+
+    if (contextState != PA_CONTEXT_READY)
+        throw CallRecorderException("Unable to connect PulseAudio context!");
+
+    pa_context_set_subscribe_callback(ApplicationPrivate::paContext, &ApplicationPrivate::onContextSubscription, NULL);
+
+    pa_operation* subscriptionOp = pa_context_subscribe(ApplicationPrivate::paContext,
+                                                        PA_SUBSCRIPTION_MASK_ALL,
+                                                        &ApplicationPrivate::onContextSubscriptionSuccess,
+                                                        NULL);
+    pa_threaded_mainloop_wait(ApplicationPrivate::paMainLoop);
+    pa_operation_unref(subscriptionOp);
+
+
+    pa_threaded_mainloop_unlock(ApplicationPrivate::paMainLoop);
+
 }
 
 Model* Application::model() const
