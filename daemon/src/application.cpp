@@ -65,8 +65,8 @@ Application::Application(int argc, char* argv[])
     if (!d->qofonoManager->available())
         throw CallRecorderException(QLatin1String("Ofono is not available!"));
 
-    // check if modems available    
-    // use the first one for now
+    // check if modems available. If there are modems, take the first one and initialize app with it
+    // If no modems available, wait for first modemAdded and initialize with this one
 
     QStringList modems = d->qofonoManager->modems();
 
@@ -106,6 +106,7 @@ Model* Application::model() const
     return d->model.data();
 }
 
+/// Connects to Ofono voice call add/remove signals using the modem given
 void Application::initVoiceCallManager(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
@@ -125,6 +126,7 @@ void Application::initVoiceCallManager(const QString& objectPath)
     d->qofonoManager->deleteLater();
 }
 
+/// Creates the recorder for a voice call appeared in the system
 void Application::onVoiceCallAdded(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
@@ -136,6 +138,7 @@ void Application::onVoiceCallAdded(const QString& objectPath)
     }
 }
 
+/// Checks whether recorder is active and cleans it up after the voice call was removed from the system
 void Application::onVoiceCallRemoved(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
