@@ -35,7 +35,7 @@ INCLUDEPATH += ../libcallrecorder/include
 
 LIBS += -L../libcallrecorder -lcallrecorder -lqofono-qt5
 
-PKGCONFIG += flac
+PKGCONFIG += flac libpulse
 
 SOURCES += \
     src/application.cpp \
