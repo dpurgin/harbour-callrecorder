@@ -218,17 +218,17 @@ VoiceCallRecorder::CallType VoiceCallRecorder::callType() const
 
 void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+//    qDebug() << __PRETTY_FUNCTION__;
 
     QByteArray data = d->audioInputDevice->readAll();
 
-    qDebug() << __PRETTY_FUNCTION__ << ": read bytes: " << data.size();
+//    qDebug() << __PRETTY_FUNCTION__ << ": read bytes: " << data.size();
 
     const qint16* sampleData = reinterpret_cast< const qint16* >(data.constData());
 
     quint64 sampleCount = data.size() / (app->settings()->audioFormat().sampleSize() / 8);
 
-    qDebug() << __PRETTY_FUNCTION__ << ": sample count: " << sampleCount;
+//    qDebug() << __PRETTY_FUNCTION__ << ": sample count: " << sampleCount;
 
     FLAC__StreamEncoderState state = FLAC__stream_encoder_get_state(d->flacEncoder);
 
