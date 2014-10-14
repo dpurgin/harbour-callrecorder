@@ -174,7 +174,7 @@ void VoiceCallRecorder::arm()
         // File name is set to "{timestamp}_{phoneNumber}_{type}.flac"
         d->outputLocation = (app->settings()->outputLocation() %
                              QLatin1Char('/') %
-                             timeStamp().toString(Qt::ISODate).replace(QChar(':'), QChar('_')) % QLatin1Char('_') %
+                             Application::getIsoTimeStamp(timeStamp()).replace(QChar(':'), QChar('_')) % QLatin1Char('_') %
                              d->qofonoVoiceCall->lineIdentification() % QLatin1Char('_') %
                              (callType() == Incoming? QLatin1String("in"): QLatin1String("out")) %
                              QLatin1String(".flac"));
