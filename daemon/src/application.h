@@ -20,6 +20,7 @@
 #define HARBOUR_CALLRECORDERD_APPLICATION_H
 
 #include <QCoreApplication>
+#include <QDateTime>
 #include <QScopedPointer>
 
 #define app (reinterpret_cast< Application* >(qApp))
@@ -32,6 +33,20 @@ class Application : public QCoreApplication
 {
     Q_OBJECT
     Q_DISABLE_COPY(Application)
+
+public:
+    // Workaround for https://bugreports.qt-project.org/browse/QTBUG-26161
+    static QString getIsoTimeStamp(QDateTime dt)
+    {
+        QDateTime utc = dt.toUTC();
+        utc.setTimeSpec(Qt::LocalTime);
+
+        int utcOffset = utc.secsTo(dt);
+
+        dt.setUtcOffset(utcOffset);
+
+        return dt.toString(Qt::ISODate);
+    }
 
 public:
     explicit Application(int argc, char* argv[]);
