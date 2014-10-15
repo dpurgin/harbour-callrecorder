@@ -64,7 +64,6 @@ signals:
 public slots:
 
 private slots:
-    void initPulseAudio();
     void initVoiceCallManager(const QString& objectPath);
 
     void onVoiceCallAdded(const QString& objectPath);
