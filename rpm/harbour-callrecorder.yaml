@@ -4,8 +4,8 @@ Version: 0.1
 Release: 1
 # The contents of the Group field must be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
-Group: Qt/Qt
-URL: http://example.org/
+Group: Applications/Communications
+URL: https://github.com/dpurgin/harbour-callrecorder
 License: GPLv3
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.
