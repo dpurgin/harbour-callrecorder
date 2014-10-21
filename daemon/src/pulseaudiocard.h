@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QScopedPointer>
 
+struct pa_context;
 struct pa_card_info;
 
 class PulseAudioCardProfile;
@@ -32,10 +33,12 @@ class PulseAudioCard : public QObject
     Q_DISABLE_COPY(PulseAudioCard)    
 
 public:
-    explicit PulseAudioCard(const pa_card_info* paCardInfo, QObject* parent = 0);
+    explicit PulseAudioCard(pa_context* paContext, const pa_card_info* paCardInfo, QObject* parent = 0);
     virtual ~PulseAudioCard();
 
     PulseAudioCardProfile* activeProfile() const;
+    void setActiveProfile(const QString& activeProfile);
+
     QString driver() const;
     quint32 index() const;
     QString name() const;

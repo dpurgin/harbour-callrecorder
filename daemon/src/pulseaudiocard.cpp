@@ -24,6 +24,7 @@
 #include <QSet>
 #include <QVariant>
 
+#include <pulse/context.h>
 #include <pulse/introspect.h>
 #include <pulse/version.h>
 
@@ -33,12 +34,19 @@ class PulseAudioCard::PulseAudioCardPrivate
     friend class QScopedPointerDeleter< PulseAudioCardPrivate >;
 
     PulseAudioCardPrivate()
-        : activeProfile(NULL)
+        : activeProfile(NULL),
+          context(NULL)
     {
     }
     ~PulseAudioCardPrivate()
     {
     }
+
+    static void trivialCallback(pa_context*, int, void*)
+    {
+    }
+
+    pa_context* context;
 
     PulseAudioCardProfile* activeProfile;
     QString driver;
@@ -50,10 +58,12 @@ class PulseAudioCard::PulseAudioCardPrivate
     QHash< QString, QVariant> properties;
 };
 
-PulseAudioCard::PulseAudioCard(const pa_card_info* paCardInfo, QObject *parent)
+PulseAudioCard::PulseAudioCard(pa_context* context, const pa_card_info* paCardInfo, QObject *parent)
     : QObject(parent),
       d(new PulseAudioCardPrivate)
 {
+    d->context = context;
+
     d->index = paCardInfo->index;
     d->name = QLatin1String(paCardInfo->name);
     d->ownerModule = paCardInfo->owner_module;
@@ -133,3 +143,14 @@ void PulseAudioCard::update(const pa_card_info* paCardInfo)
     }
 }
 
+void PulseAudioCard::setActiveProfile(const QString& profileName)
+{
+    if (d->activeProfile && profileName == d->activeProfile->name())
+        return;
+
+    pa_operation_unref(pa_context_set_card_profile_by_index(d->context,
+                                                            index(),
+                                                            profileName.toUtf8().data(),
+                                                            &PulseAudioCardPrivate::trivialCallback,
+                                                            NULL));
+}

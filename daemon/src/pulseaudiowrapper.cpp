@@ -58,7 +58,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
         {
             PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
 
-            PulseAudioCard* card = new PulseAudioCard(cardInfo);
+            PulseAudioCard* card = new PulseAudioCard(context, cardInfo);
 
             d->cards.insert(card);
             d->cardsByIndex.insert(card->index(), card);
