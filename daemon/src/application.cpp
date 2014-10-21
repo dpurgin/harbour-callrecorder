@@ -145,8 +145,8 @@ void Application::onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile* pr
 {
     qDebug() << __PRETTY_FUNCTION__ << (profile? profile->name(): "NULL");
 
-//    if (profile->name() == QLatin1String("voicecall"))
-//        d->pulseAudioCard->setActiveProfile(QLatin1String("voicecall-record"));
+    if (profile->name() == QLatin1String("voicecall"))
+        d->pulseAudioCard->setActiveProfile(QLatin1String("voicecall-record"));
 
 }
 
