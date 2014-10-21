@@ -275,15 +275,8 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
     }
     // when the call goes into active state, the sound card's profile is set to voicecall-record.
     // recording is started or resumed
-    if (ofonoState == QLatin1String("active"))
+    else if (ofonoState == QLatin1String("active"))
     {
-        // simple shell call for now
-        // WARNING: this does not always work!
-        // TODO: replace with normal pulseaudio APIs
-        int retval = QProcess::execute("pacmd set-card-profile 0 voicecall-record");
-
-        qDebug() << __PRETTY_FUNCTION__ << ": pacmd returns " << retval;
-
         // if the recorder was armed, recording was not started yet. start recording and connect to
         // readyRead() signal to retrieve and encode data
         if (state() == Armed)
