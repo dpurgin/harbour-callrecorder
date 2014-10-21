@@ -115,7 +115,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
             {
                 pa_operation_unref(pa_context_get_card_info_by_index(
                                        PulseAudioWrapperPrivate::paContext,
-                                       idx,
+                                       0,
                                        &PulseAudioWrapperPrivate::onCardInfoByIndex,
                                        userData));
             }
@@ -193,12 +193,14 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
     pa_operation_unref(infoOp);
 
-    pa_context_set_subscribe_callback(PulseAudioWrapperPrivate::paContext, &PulseAudioWrapperPrivate::onContextSubscription, NULL);
+    pa_context_set_subscribe_callback(PulseAudioWrapperPrivate::paContext,
+                                      &PulseAudioWrapperPrivate::onContextSubscription,
+                                      d.data());
 
     pa_operation* subscriptionOp = pa_context_subscribe(PulseAudioWrapperPrivate::paContext,
-                                                        PA_SUBSCRIPTION_MASK_SERVER,
+                                                        PA_SUBSCRIPTION_MASK_CARD,
                                                         &PulseAudioWrapperPrivate::onContextSubscriptionSuccess,
-                                                        this);
+                                                        d.data());
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
     pa_operation_unref(subscriptionOp);
 
