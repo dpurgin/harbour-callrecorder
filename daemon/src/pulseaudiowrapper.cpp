@@ -30,7 +30,7 @@
 #include <libcallrecorder/callrecorderexception.h>
 
 #include "application.h"
-
+#include "pulseaudiocard.h"
 
 class PulseAudioWrapper::PulseAudioWrapperPrivate
 {
@@ -38,16 +38,38 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onCardInfoByIndex(pa_context* context, const pa_card_info* info, int eol, void* userData)
     {
+        qDebug() << __PRETTY_FUNCTION__;
+
         if (!eol)
-            qDebug() << "Active profile: " << info->active_profile->name;
-//        if (eol)
-//            pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
-//        else
-//            qDebug() << "Active profile: " << info->active_profile->name;
+        {
+            PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
+
+            d->cardsByIndex.value(info->index)->update(info);
+        }
+    }
+
+    static void onCardInfoList(pa_context* context, const pa_card_info* cardInfo, int eol, void* userData)
+    {
+        qDebug() << __PRETTY_FUNCTION__;
+
+        if (eol)
+            pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
+        else
+        {
+            PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
+
+            PulseAudioCard* card = new PulseAudioCard(cardInfo);
+
+            d->cards.insert(card);
+            d->cardsByIndex.insert(card->index(), card);
+            d->cardsByName.insert(card->name(), card);
+        }
     }
 
     static void onContextNotify(pa_context* context, void* userData)
     {
+        qDebug() << __PRETTY_FUNCTION__;
+
         Q_UNUSED(context);
         Q_UNUSED(userData);
 
@@ -56,6 +78,8 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onContextSubscription(pa_context* context, pa_subscription_event_type_t event, uint32_t idx, void* userData)
     {
+        qDebug() << __PRETTY_FUNCTION__;
+
         long facility = (event & PA_SUBSCRIPTION_EVENT_FACILITY_MASK);
         long eventType = (event & PA_SUBSCRIPTION_EVENT_TYPE_MASK);
 
@@ -85,19 +109,23 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
         qDebug() << "Facility: " << facilities.value(facility, "Other") <<
                     "Event Type: " << eventTypes.value(eventType, "Other");
 
-//        if (facility == PA_SUBSCRIPTION_EVENT_CLIENT && PA_SUBSCRIPTION_EVENT_CHANGE)
-//        {
-//            pa_operation_unref(pa_context_get_card_info_by_index(PulseAudioWrapperPrivate::paContext, 0, &PulseAudioWrapperPrivate::onCardInfoByIndex, NULL));
-//        }
-
-        if (facility == PA_SUBSCRIPTION_EVENT_CARD && eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
+        if (facility == PA_SUBSCRIPTION_EVENT_CARD)
         {
-            pa_operation_unref(pa_context_get_card_info_by_index(PulseAudioWrapperPrivate::paContext, 0, &PulseAudioWrapperPrivate::onCardInfoByIndex, NULL));
+            if (eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
+            {
+                pa_operation_unref(pa_context_get_card_info_by_index(
+                                       PulseAudioWrapperPrivate::paContext,
+                                       idx,
+                                       &PulseAudioWrapperPrivate::onCardInfoByIndex,
+                                       userData));
+            }
         }
     }
 
     static void onContextSubscriptionSuccess(pa_context* context, int success, void* userData)
     {
+        qDebug() << __PRETTY_FUNCTION__;
+
         Q_UNUSED(context);
         Q_UNUSED(userData);
 
@@ -110,6 +138,9 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     static pa_mainloop_api* paMainLoopApi;
     static pa_context* paContext;
 
+    QSet< PulseAudioCard* > cards; // this one owns the pointers
+    QVector< PulseAudioCard* > cardsByIndex;
+    QHash< QString, PulseAudioCard* > cardsByName;
 };
 
 pa_threaded_mainloop* PulseAudioWrapper::PulseAudioWrapperPrivate::paMainLoop = NULL;
@@ -127,7 +158,8 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
 
     pa_threaded_mainloop_lock(PulseAudioWrapperPrivate::paMainLoop);
 
-    PulseAudioWrapperPrivate::paContext = pa_context_new(PulseAudioWrapperPrivate::paMainLoopApi, qApp->applicationName().toUtf8().data());
+    PulseAudioWrapperPrivate::paContext = pa_context_new(PulseAudioWrapperPrivate::paMainLoopApi,
+                                                         qApp->applicationName().toUtf8().data());
 
     pa_context_set_state_callback(PulseAudioWrapperPrivate::paContext, &PulseAudioWrapperPrivate::onContextNotify, NULL);
     pa_context_connect(PulseAudioWrapperPrivate::paContext, NULL, PA_CONTEXT_NOFLAGS, NULL);
@@ -155,12 +187,18 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
     if (contextState != PA_CONTEXT_READY)
         throw CallRecorderException("Unable to connect PulseAudio context!");
 
+    pa_operation* infoOp = pa_context_get_card_info_list(PulseAudioWrapperPrivate::paContext,
+                                                         &PulseAudioWrapperPrivate::onCardInfoList,
+                                                         d.data());
+    pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
+    pa_operation_unref(infoOp);
+
     pa_context_set_subscribe_callback(PulseAudioWrapperPrivate::paContext, &PulseAudioWrapperPrivate::onContextSubscription, NULL);
 
     pa_operation* subscriptionOp = pa_context_subscribe(PulseAudioWrapperPrivate::paContext,
-                                                        PA_SUBSCRIPTION_MASK_ALL,
+                                                        PA_SUBSCRIPTION_MASK_SERVER,
                                                         &PulseAudioWrapperPrivate::onContextSubscriptionSuccess,
-                                                        NULL);
+                                                        this);
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
     pa_operation_unref(subscriptionOp);
 
@@ -170,6 +208,8 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
 
 PulseAudioWrapper::~PulseAudioWrapper()
 {
+    qDeleteAll(d->cards);
+
     pa_context_disconnect(PulseAudioWrapperPrivate::paContext);
 
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
@@ -179,3 +219,14 @@ PulseAudioWrapper::~PulseAudioWrapper()
     pa_threaded_mainloop_stop(PulseAudioWrapperPrivate::paMainLoop);
     pa_threaded_mainloop_free(PulseAudioWrapperPrivate::paMainLoop);
 }
+
+PulseAudioCard* PulseAudioWrapper::cardByIndex(quint32 index) const
+{
+    return d->cardsByIndex.size() > index? d->cardsByIndex[index]: NULL;
+}
+
+PulseAudioCard* PulseAudioWrapper::cardByName(const QString& name) const
+{
+    return d->cardsByName.value(name, NULL);
+}
+

@@ -22,6 +22,8 @@
 #include <QObject>
 #include <QScopedPointer>
 
+class PulseAudioCard;
+
 class PulseAudioWrapper : public QObject
 {
     Q_OBJECT
@@ -31,8 +33,10 @@ public:
     explicit PulseAudioWrapper(QObject *parent = 0);
     virtual ~PulseAudioWrapper();
 
+    PulseAudioCard* cardByIndex(quint32 index) const;
+    PulseAudioCard* cardByName(const QString& name) const;
+
 signals:
-    void cardProfileChanged(QString cardProfile);
 
 public slots:
 
