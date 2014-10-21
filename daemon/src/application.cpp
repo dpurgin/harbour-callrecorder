@@ -25,6 +25,8 @@
 #include <libcallrecorder/database.h>
 
 #include "model.h"
+#include "pulseaudiocard.h"
+#include "pulseaudiocardprofile.h"
 #include "pulseaudiowrapper.h"
 #include "settings.h"
 #include "voicecallrecorder.h"
@@ -36,7 +38,7 @@ class Application::ApplicationPrivate
     friend class Application;
 
 private:
-    explicit ApplicationPrivate(): active(true) {}
+    explicit ApplicationPrivate(): active(true), pulseAudioCard(NULL) {}
 
 private:
     bool active;
@@ -45,6 +47,7 @@ private:
 
     QScopedPointer< Model > model;
 
+    PulseAudioCard* pulseAudioCard;
     QScopedPointer< PulseAudioWrapper > pulseAudioWrapper;
 
     QScopedPointer< QOfonoManager > qofonoManager;
@@ -88,8 +91,13 @@ Application::Application(int argc, char* argv[])
 
     d->database.reset(new Database());
     d->model.reset(new Model());
-    d->pulseAudioWrapper.reset(new PulseAudioWrapper());
     d->settings.reset(new Settings());
+
+    d->pulseAudioWrapper.reset(new PulseAudioWrapper());
+    d->pulseAudioCard = d->pulseAudioWrapper->cardByIndex(0);
+
+    connect(d->pulseAudioCard, SIGNAL(activeProfileChanged(PulseAudioCardProfile*)),
+            this, SLOT(onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile*)));
 }
 
 Application::~Application()
@@ -131,6 +139,15 @@ void Application::initVoiceCallManager(const QString& objectPath)
 
     // ofono manager is not needed now
     d->qofonoManager->deleteLater();
+}
+
+void Application::onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile* profile)
+{
+    qDebug() << __PRETTY_FUNCTION__ << (profile? profile->name(): "NULL");
+
+//    if (profile->name() == QLatin1String("voicecall"))
+//        d->pulseAudioCard->setActiveProfile(QLatin1String("voicecall-record"));
+
 }
 
 /// Creates the recorder for a voice call appeared in the system

@@ -27,6 +27,8 @@
 
 class Database;
 class Model;
+class PulseAudioCard;
+class PulseAudioCardProfile;
 class Settings;
 
 class Application : public QCoreApplication
@@ -56,7 +58,7 @@ public:
     void setActive(bool active);
 
     Database* database() const;
-    Model* model() const;
+    Model* model() const;    
     Settings* settings() const;
 
 signals:   
@@ -66,6 +68,7 @@ public slots:
 private slots:
     void initVoiceCallManager(const QString& objectPath);
 
+    void onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile* profile);
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRemoved(const QString& objectPath);
 
