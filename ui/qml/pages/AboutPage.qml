@@ -165,7 +165,9 @@ Page {
 
                     text: qsTr('Show license')
 
-                    onClicked: console.log('license clicked')
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl('LicensePage.qml'))
+                    }
                 }
             }
         }

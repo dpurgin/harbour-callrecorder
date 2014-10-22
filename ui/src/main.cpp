@@ -50,6 +50,18 @@ int main(int argc, char *argv[])
     view->show();
     view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
 
+    QFile licenseFile(SailfishApp::pathTo("LICENSE").toLocalFile());
+
+    if (licenseFile.open(QFile::ReadOnly))
+    {
+        view->rootContext()->setContextProperty("license", QString::fromUtf8(licenseFile.readAll().data()));
+
+        licenseFile.close();
+    }
+    else
+        view->rootContext()->setContextProperty("license",
+            QObject::tr("LICENSE file not found. Please visit the project web page for license details."));
+
     return app->exec();
 }
 
