@@ -125,7 +125,7 @@ Page {
                 visible: startOfDay(new Date()).valueOf() != startOfDay(model.TimeStamp).valueOf()
 
                 font.pixelSize: Theme.fontSizeExtraSmall
-                horizontalAlignment: Text.AlignHCenter
+                horizontalAlignment: Text.AlignRight
                 color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
 
                 text: Format.formatDate(model.TimeStamp, Formatter.TimeValue)
