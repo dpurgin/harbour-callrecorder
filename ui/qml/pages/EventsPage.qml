@@ -184,7 +184,7 @@ Page {
             MenuItem {
                 text: qsTr("About")
                 onClicked: {
-                    console.log('About')
+                    pageStack.push(Qt.resolvedUrl('AboutPage.qml'))
                 }
             }
         }
