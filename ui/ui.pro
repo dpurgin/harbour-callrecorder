@@ -33,6 +33,7 @@ SOURCES += \
 OTHER_FILES += \
     harbour-callrecorder.desktop \
     translations/*.ts \
+    qml/pages/AboutPage.qml \
     qml/cover/CoverPage.qml \
     qml/pages/EventsPage.qml \
     qml/pages/EventPage.qml \
