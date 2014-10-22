@@ -28,6 +28,7 @@ PkgConfigBR:
    - Qt5Sql
    - flac
    - qofono-qt5
+   - libpulse
    - sailfishapp >= 1.0.2
 
 # Build dependencies without a pkgconfig setup can be listed here
