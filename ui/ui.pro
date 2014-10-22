@@ -37,6 +37,7 @@ OTHER_FILES += \
     qml/cover/CoverPage.qml \
     qml/pages/EventsPage.qml \
     qml/pages/EventPage.qml \
+    qml/pages/LicensePage.qml \
     qml/main.qml
 
 # to disable building translations every time, comment out the
