@@ -7,15 +7,13 @@ Page {
     SilicaFlickable {
         anchors {
             fill: parent
-
-            leftMargin: Theme.paddingLarge
-            rightMargin: Theme.paddingLarge
         }
 
         contentHeight: contentColumn.height
 
         Column {
             id: contentColumn
+
 
             width: parent.width
 
@@ -24,6 +22,11 @@ Page {
             }
 
             Label {
+                anchors {
+                    leftMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingLarge
+                }
+
                 width: parent.width
 
                 font.pixelSize: Theme.fontSizeTiny
