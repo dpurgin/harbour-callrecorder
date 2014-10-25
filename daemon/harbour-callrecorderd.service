@@ -7,7 +7,7 @@ After=pulseaudio.service
 [Service]
 Type=simple
 ExecStart=/usr/bin/harbour-callrecorderd
-Restart=on-abort
+Restart=on-failure
 
 [Install]
 WantedBy=user-session.target
