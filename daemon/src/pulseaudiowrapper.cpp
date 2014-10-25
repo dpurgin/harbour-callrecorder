@@ -20,6 +20,7 @@
 
 #include <QDebug>
 #include <QHash>
+#include <QVector>
 
 #include <pulse/context.h>
 #include <pulse/introspect.h>
@@ -31,6 +32,7 @@
 
 #include "application.h"
 #include "pulseaudiocard.h"
+#include "pulseaudiosink.h"
 
 class PulseAudioWrapper::PulseAudioWrapperPrivate
 {
@@ -134,6 +136,24 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
         pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
     }
 
+    static void onSinkInfoList(pa_context* context, const pa_sink_info* sinkInfo, int eol, void* userData)
+    {
+        qDebug() << __PRETTY_FUNCTION__;
+
+        if (eol)
+            pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
+        else
+        {
+            PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
+
+            PulseAudioSink* sink = new PulseAudioSink(sinkInfo);
+
+            d->sinks.insert(sink);
+            d->sinksByIndex.insert(sink->index(), sink);
+            d->sinksByName.insert(sink->name(), sink);
+        }
+    }
+
     static pa_threaded_mainloop* paMainLoop;
     static pa_mainloop_api* paMainLoopApi;
     static pa_context* paContext;
@@ -141,6 +161,10 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     QSet< PulseAudioCard* > cards; // this one owns the pointers
     QVector< PulseAudioCard* > cardsByIndex;
     QHash< QString, PulseAudioCard* > cardsByName;
+
+    QSet< PulseAudioSink* > sinks; // owns the pointers
+    QVector< PulseAudioSink* > sinksByIndex;
+    QHash< QString, PulseAudioSink* > sinksByName;
 };
 
 pa_threaded_mainloop* PulseAudioWrapper::PulseAudioWrapperPrivate::paMainLoop = NULL;
@@ -187,18 +211,25 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
     if (contextState != PA_CONTEXT_READY)
         throw CallRecorderException("Unable to connect PulseAudio context!");
 
-    pa_operation* infoOp = pa_context_get_card_info_list(PulseAudioWrapperPrivate::paContext,
+    pa_operation* listCardsOp = pa_context_get_card_info_list(PulseAudioWrapperPrivate::paContext,
                                                          &PulseAudioWrapperPrivate::onCardInfoList,
                                                          d.data());
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
-    pa_operation_unref(infoOp);
+    pa_operation_unref(listCardsOp);
+
+    pa_operation* listSinksOp = pa_context_get_sink_info_list(PulseAudioWrapperPrivate::paContext,
+                                                             &PulseAudioWrapperPrivate::onSinkInfoList,
+                                                             d.data());
+    pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
+    pa_operation_unref(listSinksOp);
 
     pa_context_set_subscribe_callback(PulseAudioWrapperPrivate::paContext,
                                       &PulseAudioWrapperPrivate::onContextSubscription,
                                       d.data());
 
     pa_operation* subscriptionOp = pa_context_subscribe(PulseAudioWrapperPrivate::paContext,
-                                                        PA_SUBSCRIPTION_MASK_CARD,
+                                                        static_cast< pa_subscription_mask_t >(
+                                                            PA_SUBSCRIPTION_MASK_CARD | PA_SUBSCRIPTION_MASK_SINK),
                                                         &PulseAudioWrapperPrivate::onContextSubscriptionSuccess,
                                                         d.data());
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
@@ -211,6 +242,7 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
 PulseAudioWrapper::~PulseAudioWrapper()
 {
     qDeleteAll(d->cards);
+    qDeleteAll(d->sinks);
 
     pa_context_disconnect(PulseAudioWrapperPrivate::paContext);
 
