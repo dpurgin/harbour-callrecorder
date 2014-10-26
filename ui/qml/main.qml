@@ -21,6 +21,7 @@ import Sailfish.Silica 1.0
 import "pages"
 
 import org.nemomobile.contacts 1.0
+import org.nemomobile.dbus 1.0
 
 ApplicationWindow {
     initialPage: Component { EventsPage { } }
@@ -41,5 +42,17 @@ ApplicationWindow {
         dtObj.setMilliseconds(0);
 
         return dtObj;
+    }    
+
+    DBusInterface {
+        service: 'kz.dpurgin.DBus.CallRecorder'
+        path: '/Daemon'
+        iface: 'kz.dpurgin.DBus.CallRecorder'
+
+        signalsEnabled: true
+
+        function recorderStateChanged() {
+            eventsModel.select()
+        }
     }
 }
