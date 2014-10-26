@@ -13,8 +13,8 @@ Name:       harbour-callrecorder
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
-Version:    0.1
-Release:    4
+Version:    0.2
+Release:    1
 Group:      Applications/Communications
 License:    GPLv3
 URL:        https://github.com/dpurgin/harbour-callrecorder
@@ -62,15 +62,15 @@ rm -rf %{buildroot}
 # << install pre
 %qmake5_install
 
-desktop-file-install --delete-original       \
-  --dir %{buildroot}%{_datadir}/applications             \
-   %{buildroot}%{_datadir}/applications/*.desktop
-
 # >> install post
 %post
 su nemo
 systemctl --user enable harbour-callrecorderd
 # << install post
+
+desktop-file-install --delete-original       \
+  --dir %{buildroot}%{_datadir}/applications             \
+   %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
 %defattr(-,root,root,-)
