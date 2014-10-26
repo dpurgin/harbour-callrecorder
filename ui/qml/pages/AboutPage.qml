@@ -84,7 +84,7 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
 
-                    text: qsTr('Version 0.1')
+                    text: qsTr('Version 0.2')
                 }
 
                 Item {
@@ -128,7 +128,24 @@ Page {
 
                     text: qsTr("https://github.com/dpurgin/harbour-callrecorder")
                 }
-            }
+
+                Item {
+                    width: parent.width
+                    height: Theme.paddingLarge * 2
+                }
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
+
+                    wrapMode: Text.Wrap
+
+                    text: qsTr('Thanks to Simonas Leleiva and Juho Hämäläinen')
+                }
+            }                        
 
             Item {
                 width: parent.width
