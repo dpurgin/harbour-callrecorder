@@ -190,7 +190,7 @@ void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* po
 {
     qDebug() << "Active port: " << (port->name());
 
-    if (port && port->name() == QLatin1String("output-earpiece") && !d->timer->isActive());
+    if (port && port->name() == QLatin1String("output-earpiece") && !d->timer->isActive())
         d->timer->start(500);
 }
 
