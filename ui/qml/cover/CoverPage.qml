@@ -29,13 +29,13 @@ CoverBackground {
     CoverActionList {
         id: coverAction
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
+//        CoverAction {
+//            iconSource: "image://theme/icon-cover-next"
+//        }
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
-        }
+//        CoverAction {
+//            iconSource: "image://theme/icon-cover-pause"
+//        }
     }
 }
 

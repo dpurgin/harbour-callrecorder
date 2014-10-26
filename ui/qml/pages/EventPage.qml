@@ -161,9 +161,9 @@ Page {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    IconButton {
-                        icon.source: 'image://theme/icon-l-left'
-                    }
+//                    IconButton {
+//                        icon.source: 'image://theme/icon-l-left'
+//                    }
 
                     IconButton {
                         icon.source: mediaPlayer.playbackState == MediaPlayer.PlayingState?
@@ -175,9 +175,9 @@ Page {
                                        mediaPlayer.play()
                     }
 
-                    IconButton {
-                        icon.source: 'image://theme/icon-l-right'
-                    }
+//                    IconButton {
+//                        icon.source: 'image://theme/icon-l-right'
+//                    }
                 }
             }
 
