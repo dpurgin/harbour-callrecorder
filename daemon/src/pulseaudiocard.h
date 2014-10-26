@@ -47,10 +47,11 @@ public:
     void update(const pa_card_info* paCardInfo);
 
 signals:
-    void activeProfileChanged(PulseAudioCardProfile* activeProfile);
-    void driverChanged(QString driver);
-    void nameChanged(QString name);
+    void activeProfileChanged(const PulseAudioCardProfile* activeProfile);
+    void driverChanged(const QString& driver);
+    void nameChanged(const QString& name);
     void ownerModuleChanged(quint32 ownerModule);
+    void propertiesChanged();
 
 public slots:
 

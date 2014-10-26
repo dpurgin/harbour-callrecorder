@@ -116,22 +116,24 @@ quint32 PulseAudioCard::ownerModule() const
 
 void PulseAudioCard::update(const pa_card_info* paCardInfo)
 {
+    QSet< QString > emitters;
+
     if (d->name != QLatin1String(paCardInfo->name))
     {
         d->name = QLatin1String(paCardInfo->name);
-        emit nameChanged(d->name);
+        emitters.insert(QLatin1String("name"));
     }
 
     if (d->ownerModule != paCardInfo->owner_module)
     {
         d->ownerModule = paCardInfo->owner_module;
-        emit ownerModuleChanged(d->ownerModule);
+        emitters.insert(QLatin1String("ownerModule"));
     }
 
     if (d->driver != QLatin1String(paCardInfo->driver))
     {
         d->driver = QLatin1String(paCardInfo->driver);
-        emit driverChanged(d->driver);
+        emitters.insert(QLatin1String("driver"));
     }
 
     // for now, assume that profiles can never be added/removed/changed at runtime
@@ -139,8 +141,26 @@ void PulseAudioCard::update(const pa_card_info* paCardInfo)
     if (d->activeProfile->name() != QLatin1String(paCardInfo->active_profile->name))
     {
         d->activeProfile = d->profilesByName.value(paCardInfo->active_profile->name, NULL);
-        emit activeProfileChanged(d->activeProfile);
+        emitters.insert(QLatin1String("activeProfile"));
     }
+
+    if (emitters.size() > 0)
+    {
+        emit propertiesChanged();
+
+        foreach (QString emitter, emitters)
+        {
+            if (emitter == QLatin1String("name"))
+                emit nameChanged(d->name);
+            else if (emitter == QLatin1String("ownerModule"))
+                emit ownerModuleChanged(d->ownerModule);
+            else if (emitter == QLatin1String("driver"))
+                emit driverChanged(d->driver);
+            else if (emitter == QLatin1String("activeProfile"))
+                emit activeProfileChanged(d->activeProfile);
+        }
+    }
+
 }
 
 void PulseAudioCard::setActiveProfile(const QString& profileName)
