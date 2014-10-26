@@ -84,3 +84,17 @@ QHash< int, QByteArray > EventsTableModel::roleNames() const
 
     return roles;
 }
+
+bool EventsTableModel::select()
+{
+    qDebug() << "";
+
+    int oldRowCount = rowCount();
+
+    bool result = QSqlRelationalTableModel::select();
+
+    if (rowCount() != oldRowCount)
+        emit rowCountChanged();
+
+    return result;
+}

@@ -30,7 +30,7 @@ class LIBCALLRECORDER_DECL EventsTableModel : public QSqlRelationalTableModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(int count READ rowCount)
+    Q_PROPERTY(int count READ rowCount NOTIFY rowCountChanged)
 
 public:
     EventsTableModel(Database* db, QObject* parent = 0);
@@ -40,7 +40,10 @@ public:
 
     QHash< int, QByteArray > roleNames() const;
 
+    Q_INVOKABLE bool select();
+
 signals:
+    void rowCountChanged();
 
 public slots:        
 
