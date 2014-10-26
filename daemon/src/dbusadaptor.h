@@ -33,7 +33,7 @@ public:
     virtual ~DBusAdaptor();
 
 signals:
-    void recorderStateChanged();
+    void RecorderStateChanged();
 
 public slots:
 
