@@ -50,17 +50,23 @@ int main(int argc, char *argv[])
     view->show();
     view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
 
-    QFile licenseFile(SailfishApp::pathTo("LICENSE").toLocalFile());
-
-    if (licenseFile.open(QFile::ReadOnly))
-    {
-        view->rootContext()->setContextProperty("license", QString::fromUtf8(licenseFile.readAll().data()));
-
-        licenseFile.close();
-    }
-    else
-        view->rootContext()->setContextProperty("license",
-            QObject::tr("LICENSE file not found. Please visit the project web page for license details."));
+    view->rootContext()->setContextProperty("license",
+                                            "Call Recorder for SailfishOS"
+                                            "\nCopyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>"
+                                            "\nhttps://github.com/dpurgin/harbour-callrecorder"
+                                            "\n"
+                                            "\nThis program is free software: you can redistribute it and/or modify"
+                                            " it under the terms of the GNU General Public License as published by"
+                                            " the Free Software Foundation, either version 3 of the License, or"
+                                            " (at your option) any later version."
+                                            "\n"
+                                            "\nThis program is distributed in the hope that it will be useful,"
+                                            " but WITHOUT ANY WARRANTY; without even the implied warranty of"
+                                            " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+                                            " GNU General Public License for more details."
+                                            "\n"
+                                            "\nYou should have received a copy of the GNU General Public License"
+                                            " along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 
     return app->exec();
 }
