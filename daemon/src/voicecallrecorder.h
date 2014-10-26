@@ -54,6 +54,7 @@ public:
     QDateTime timeStamp() const;
 
 signals:
+    void stateChanged(State state);
 
 public slots:
 

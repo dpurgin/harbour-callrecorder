@@ -361,6 +361,8 @@ void VoiceCallRecorder::setCallType(CallType callType)
 void VoiceCallRecorder::setState(State state)
 {
     d->state = state;
+
+    emit stateChanged(state);
 }
 
 void VoiceCallRecorder::setTimeStamp(const QDateTime& timeStamp)
