@@ -18,6 +18,8 @@
 
 #include "application.h"
 
+#include <QTimer>
+
 #include <qofono-qt5/qofonomanager.h>
 #include <qofono-qt5/qofonovoicecallmanager.h>
 
@@ -27,6 +29,8 @@
 #include "model.h"
 #include "pulseaudiocard.h"
 #include "pulseaudiocardprofile.h"
+#include "pulseaudiosink.h"
+#include "pulseaudiosinkport.h"
 #include "pulseaudiowrapper.h"
 #include "settings.h"
 #include "voicecallrecorder.h"
@@ -48,12 +52,15 @@ private:
     QScopedPointer< Model > model;
 
     PulseAudioCard* pulseAudioCard;
+    PulseAudioSink* pulseAudioSink;
     QScopedPointer< PulseAudioWrapper > pulseAudioWrapper;
 
     QScopedPointer< QOfonoManager > qofonoManager;
     QScopedPointer< QOfonoVoiceCallManager > qofonoVoiceCallManager;
 
     QScopedPointer< Settings > settings;
+
+    QScopedPointer< QTimer > timer;
 
     // stores object paths and its recorders
     QHash< QString, VoiceCallRecorder* > voiceCallRecorders;
@@ -93,11 +100,20 @@ Application::Application(int argc, char* argv[])
     d->model.reset(new Model());
     d->settings.reset(new Settings());
 
+    d->timer.reset(new QTimer());
+    d->timer->setSingleShot(true);
+    connect(d->timer.data(), SIGNAL(timeout()),
+            this, SLOT(maybeSwitchProfile()));
+
     d->pulseAudioWrapper.reset(new PulseAudioWrapper());
     d->pulseAudioCard = d->pulseAudioWrapper->cardByIndex(0);
+    d->pulseAudioSink = d->pulseAudioWrapper->sinkByName("sink.primary");
 
-    connect(d->pulseAudioCard, SIGNAL(activeProfileChanged(PulseAudioCardProfile*)),
-            this, SLOT(onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile*)));
+    connect(d->pulseAudioCard, SIGNAL(activeProfileChanged(const PulseAudioCardProfile*)),
+            this, SLOT(onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile*)));
+
+    connect(d->pulseAudioSink, SIGNAL(activePortChanged(const PulseAudioSinkPort*)),
+            this, SLOT(onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort*)));
 }
 
 Application::~Application()
@@ -141,13 +157,36 @@ void Application::initVoiceCallManager(const QString& objectPath)
     d->qofonoManager->deleteLater();
 }
 
-void Application::onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile* profile)
+void Application::maybeSwitchProfile()
 {
-    qDebug() << __PRETTY_FUNCTION__ << (profile? profile->name(): "NULL");
+    qDebug() << "Card profile: " << d->pulseAudioCard->activeProfile()->name() <<
+                ", sink port: " << d->pulseAudioSink->activePort()->name();
 
-    if (profile->name() == QLatin1String("voicecall"))
+    if (d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall") &&
+            d->pulseAudioSink->activePort()->name() == QLatin1String("output-earpiece"))
+    {
+        qDebug() << "Switching profile to voicecall-record";
+
         d->pulseAudioCard->setActiveProfile(QLatin1String("voicecall-record"));
+    }
+    else
+        qDebug() << "Not switching profile";
+}
 
+void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile)
+{
+    qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
+
+    if (profile && profile->name() == QLatin1String("voicecall") && !d->timer->isActive())
+        d->timer->start(500);
+}
+
+void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port)
+{
+    qDebug() << "Active port: " << (port->name());
+
+    if (port && port->name() == QLatin1String("output-earpiece") && !d->timer->isActive());
+        d->timer->start(500);
 }
 
 /// Creates the recorder for a voice call appeared in the system

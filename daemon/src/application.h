@@ -27,8 +27,8 @@
 
 class Database;
 class Model;
-class PulseAudioCard;
 class PulseAudioCardProfile;
+class PulseAudioSinkPort;
 class Settings;
 
 class Application : public QCoreApplication
@@ -68,10 +68,12 @@ public slots:
 private slots:
     void initVoiceCallManager(const QString& objectPath);
 
-    void onPulseAudioCardActiveProfileChanged(PulseAudioCardProfile* profile);
+    void maybeSwitchProfile();
+
+    void onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile);
+    void onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port);
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRemoved(const QString& objectPath);
-
 
 private:
     class ApplicationPrivate;
