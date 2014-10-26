@@ -18,6 +18,7 @@
 
 #include "pulseaudiosink.h"
 
+#include <QDebug>
 #include <QHash>
 #include <QSet>
 #include <QVector>
@@ -45,6 +46,8 @@ PulseAudioSink::PulseAudioSink(const pa_sink_info* sinkInfo, QObject *parent)
     : QObject(parent),
       d(new PulseAudioSinkPrivate())
 {
+    qDebug() << "Discovered sink: " << sinkInfo->name << ", index: " << sinkInfo->index;
+
     d->name = QLatin1String(sinkInfo->name);
     d->index = sinkInfo->index;
 
@@ -80,4 +83,26 @@ quint32 PulseAudioSink::index() const
 QString PulseAudioSink::name() const
 {
     return d->name;
+}
+
+void PulseAudioSink::update(const pa_sink_info* sinkInfo)
+{
+    QSet< QString > emitters;
+
+    if (sinkInfo->active_port && d->activePort &&
+            d->activePort->name() != QLatin1String(sinkInfo->active_port->name))
+    {
+        d->activePort = d->sinkPortsByName.value(sinkInfo->active_port->name, NULL);
+
+        if (!d->activePort)
+            qWarning() << "Port is active but was not discovered:" << sinkInfo->active_port->name;
+
+        emitters.insert("activePort");
+    }
+
+    foreach (QString emitter, emitters)
+    {
+        if (emitter == QLatin1String("activePort"))
+            emit activePortChanged(d->activePort);
+    }
 }

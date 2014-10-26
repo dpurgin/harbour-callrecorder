@@ -36,7 +36,10 @@ public:
     quint32 index() const;
     QString name() const;
 
+    void update(const pa_sink_info* sinkInfo);
+
 signals:
+    void activePortChanged(const PulseAudioSinkPort* activePort);
 
 public slots:
 
