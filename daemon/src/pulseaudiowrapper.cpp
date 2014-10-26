@@ -40,7 +40,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onCardInfoByIndex(pa_context* context, const pa_card_info* info, int eol, void* userData)
     {
-        qDebug() << __PRETTY_FUNCTION__;
+        qDebug() << "entering";
 
         if (!eol)
         {
@@ -52,7 +52,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onCardInfoList(pa_context* context, const pa_card_info* cardInfo, int eol, void* userData)
     {
-        qDebug() << __PRETTY_FUNCTION__;
+        qDebug() << "entering";
 
         if (eol)
             pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
@@ -70,7 +70,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onContextNotify(pa_context* context, void* userData)
     {
-        qDebug() << __PRETTY_FUNCTION__;
+        qDebug() << "entering";
 
         Q_UNUSED(context);
         Q_UNUSED(userData);
@@ -80,7 +80,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onContextSubscription(pa_context* context, pa_subscription_event_type_t event, uint32_t idx, void* userData)
     {
-        qDebug() << __PRETTY_FUNCTION__;
+        qDebug() << "entering";
 
         long facility = (event & PA_SUBSCRIPTION_EVENT_FACILITY_MASK);
         long eventType = (event & PA_SUBSCRIPTION_EVENT_TYPE_MASK);
@@ -108,8 +108,9 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
             eventTypes.insert(PA_SUBSCRIPTION_EVENT_REMOVE, "PA_SUBSCRIPTION_EVENT_REMOVE");
         }
 
-        qDebug() << "Facility: " << facilities.value(facility, "Other") <<
-                    "Event Type: " << eventTypes.value(eventType, "Other");
+        qDebug() << "Facility:" << facilities.value(facility, "Other") <<
+                    "Event Type:" << eventTypes.value(eventType, "Other") <<
+                    "idx:" << idx;
 
         if (facility == PA_SUBSCRIPTION_EVENT_CARD)
         {
@@ -119,6 +120,17 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
                                        PulseAudioWrapperPrivate::paContext,
                                        0,
                                        &PulseAudioWrapperPrivate::onCardInfoByIndex,
+                                       userData));
+            }
+        }
+        else if (facility == PA_SUBSCRIPTION_EVENT_SINK)
+        {
+            if (eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
+            {
+                pa_operation_unref(pa_context_get_sink_info_by_index(
+                                       PulseAudioWrapperPrivate::paContext,
+                                       idx,
+                                       &PulseAudioWrapperPrivate::onSinkInfoByIndex,
                                        userData));
             }
         }
@@ -136,10 +148,25 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
         pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
     }
 
+    static void onSinkInfoByIndex(pa_context* context, const pa_sink_info* sinkInfo, int eol, void* userData)
+    {
+        qDebug() << "entering";
+
+        if (!eol)
+        {
+            PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
+
+            PulseAudioSink* sink = d->sinksByName.value(QLatin1String(sinkInfo->name), NULL);
+
+            if (sink)
+                sink->update(sinkInfo);
+            else
+                qDebug() << "Sink was not discovered:" << sink->name();
+        }
+    }
+
     static void onSinkInfoList(pa_context* context, const pa_sink_info* sinkInfo, int eol, void* userData)
     {
-        qDebug() << __PRETTY_FUNCTION__;
-
         if (eol)
             pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
         else
@@ -264,3 +291,12 @@ PulseAudioCard* PulseAudioWrapper::cardByName(const QString& name) const
     return d->cardsByName.value(name, NULL);
 }
 
+PulseAudioSink* PulseAudioWrapper::sinkByIndex(quint32 index) const
+{
+    return d->sinksByIndex.size() > index? d->sinksByIndex[index]: NULL;
+}
+
+PulseAudioSink* PulseAudioWrapper::sinkByName(const QString& name) const
+{
+    return d->sinksByName.value(name, NULL);
+}
