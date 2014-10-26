@@ -204,7 +204,7 @@ void Application::onVoiceCallAdded(const QString& objectPath)
         QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
 
         connect(voiceCallRecorder.data(), SIGNAL(stateChanged(State)),
-                d->dbusAdaptor.data(), SIGNAL(recorderStateChanged()));
+                d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
 
         d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
     }
