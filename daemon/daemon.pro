@@ -49,7 +49,8 @@ SOURCES += \
     src/pulseaudiocard.cpp \
     src/pulseaudiocardprofile.cpp \
     src/pulseaudiosink.cpp \
-    src/pulseaudiosinkport.cpp
+    src/pulseaudiosinkport.cpp \
+    src/dbusadaptor.cpp
 
 HEADERS += \
     src/application.h \
@@ -62,7 +63,8 @@ HEADERS += \
     src/pulseaudiocard.h \
     src/pulseaudiocardprofile.h \
     src/pulseaudiosink.h \
-    src/pulseaudiosinkport.h
+    src/pulseaudiosinkport.h \
+    src/dbusadaptor.h
 
 OTHER_FILES += \
     $${TARGET}.service
