@@ -61,8 +61,6 @@ public:
     Model* model() const;    
     Settings* settings() const;
 
-signals:   
-
 public slots:
 
 private slots:

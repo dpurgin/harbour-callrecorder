@@ -26,6 +26,7 @@
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
 
+#include "dbusadaptor.h"
 #include "model.h"
 #include "pulseaudiocard.h"
 #include "pulseaudiocardprofile.h"
@@ -48,6 +49,8 @@ private:
     bool active;
 
     QScopedPointer< Database > database;
+
+    QScopedPointer< DBusAdaptor > dbusAdaptor;
 
     QScopedPointer< Model > model;
 
@@ -75,6 +78,8 @@ Application::Application(int argc, char* argv[])
 
     setApplicationName(QLatin1String("harbour-callrecorder"));
     setOrganizationName(QLatin1String("kz.dpurgin"));
+
+    d->dbusAdaptor.reset(new DBusAdaptor(this));
 
     d->qofonoManager.reset(new QOfonoManager());
 
@@ -197,6 +202,10 @@ void Application::onVoiceCallAdded(const QString& objectPath)
     if (active())
     {
         QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
+
+        connect(voiceCallRecorder.data(), SIGNAL(stateChanged(State)),
+                d->dbusAdaptor.data(), SIGNAL(recorderStateChanged()));
+
         d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
     }
 }
