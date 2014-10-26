@@ -23,6 +23,7 @@
 #include <QScopedPointer>
 
 class PulseAudioCard;
+class PulseAudioSink;
 
 class PulseAudioWrapper : public QObject
 {
@@ -35,6 +36,9 @@ public:
 
     PulseAudioCard* cardByIndex(quint32 index) const;
     PulseAudioCard* cardByName(const QString& name) const;
+
+    PulseAudioSink* sinkByIndex(quint32 index) const;
+    PulseAudioSink* sinkByName(const QString& name) const;
 
 signals:
 
