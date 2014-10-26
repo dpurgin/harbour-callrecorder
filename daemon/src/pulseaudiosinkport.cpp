@@ -19,6 +19,8 @@
 
 #include "pulseaudiosinkport.h"
 
+#include <QDebug>
+
 #include <pulse/introspect.h>
 
 class PulseAudioSinkPort::PulseAudioSinkPortPrivate
@@ -34,6 +36,8 @@ class PulseAudioSinkPort::PulseAudioSinkPortPrivate
 PulseAudioSinkPort::PulseAudioSinkPort(const pa_sink_port_info* portInfo)
     : d(new PulseAudioSinkPortPrivate())
 {
+    qDebug() << "Discovered sink port: " << portInfo->name;
+
     if (portInfo->available == PA_PORT_AVAILABLE_NO)
         d->available = NotAvailable;
     else if (portInfo->available == PA_PORT_AVAILABLE_YES)
