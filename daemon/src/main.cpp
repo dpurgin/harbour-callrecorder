@@ -1,6 +1,7 @@
 #include "application.h"
 
 #include <QDebug>
+#include <QDBusConnection>
 #include <QScopedPointer>
 
 #include <libcallrecorder/callrecorderexception.h>
@@ -12,6 +13,9 @@ int main(int argc, char* argv[])
     try
     {
         QScopedPointer< Application > a(new Application(argc, argv));
+
+        QDBusConnection::sessionBus().registerObject("/Daemon", a.data());
+
         retval = a->exec();
     }
     catch (CallRecorderException& e)
