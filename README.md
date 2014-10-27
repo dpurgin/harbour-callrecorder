@@ -36,7 +36,13 @@ You don't need to have the UI application running all the time to have your call
 
 ##Installation from sources
 
-This section is WIP, but it's basically `git clone`, make and deploy with latest SDK. You might need to install flac, pulse and qofono-qt5 development packages on the build VM, just follow the build errors.
+This section assumes you are familiar with SailfishOS SDK and able to deploy your own project to a device. The project was developed and tested with SDK version 1407.
+
+1. Clone the project from master branch or a tag to a directory of your choice. The master branch will always contain compilable bleeding edge code.
+2. Open harbour-callrecorder.pro in SailfishOS SDK, configure the project to use armv7hl and i486 targets.
+3. Run qmake, build, deploy. 
+
+Luckily, all the dependencies will be downloaded automatically by the SDK.
 
 ##Troubleshooting
 
@@ -80,6 +86,6 @@ Check if you have SailfishOS 1.1 (Settings -> Sailfish OS updates).
 
 ##FAQ
 
-**Q:Does it require developer mode?**<br>
-A: Generally, no. If you run into trouble, you might need the Terminal application to diagnose. 
+###Does it require developer mode?
+Generally, no. If you run into trouble, you might need the Terminal application to diagnose. 
 
