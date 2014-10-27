@@ -5,16 +5,27 @@ Native call recorder for Jolla's SailfishOS.
 
 **WARNING!!! This is application requires unstable version of SailfishOS.**
 
-**Table of Contents**
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [harbour-callrecorder](#user-content-harbour-callrecorder)
 	- [Requirements](#user-content-requirements)
 	- [Installation from RPM](#user-content-installation-from-rpm)
 	- [Installation from sources](#user-content-installation-from-sources)
+	- [Usage](#user-content-usage)
+		- [Storage](#user-content-storage)
+		- [Audio Format](#user-content-audio-format)
+		- [Call Recorder UI](#user-content-call-recorder-ui)
+			- [Start page -- Events](#user-content-start-page----events)
+			- [Details Page](#user-content-details-page)
+			- [About Page](#user-content-about-page)
+	- [Known Issues](#user-content-known-issues)
+		- [Moving call to speaker when the number is still dialled](#user-content-moving-call-to-speaker-when-the-number-is-still-dialled)
+		- [Switching from loudspeaker to earpiece may cause 500ms lack in the recording (doesn't affect the call itself)](#user-content-switching-from-loudspeaker-to-earpiece-may-cause-500ms-lack-in-the-recording-doesnt-affect-the-call-itself)
 	- [Troubleshooting](#user-content-troubleshooting)
 		- [The calls are not recorded](#user-content-the-calls-are-not-recorded)
 		- [The UI application shows white screen](#user-content-the-ui-application-shows-white-screen)
 	- [FAQ](#user-content-faq)
+		- [Does it require developer mode?](#user-content-does-it-require-developer-mode)
 
 ##Requirements
 
