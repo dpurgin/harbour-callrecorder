@@ -5,6 +5,17 @@ Native call recorder for Jolla's SailfishOS.
 
 **WARNING!!! This is application requires unstable version of SailfishOS.**
 
+**Table of Contents**
+
+- [harbour-callrecorder](#user-content-harbour-callrecorder)
+	- [Requirements](#user-content-requirements)
+	- [Installation from RPM](#user-content-installation-from-rpm)
+	- [Installation from sources](#user-content-installation-from-sources)
+	- [Troubleshooting](#user-content-troubleshooting)
+		- [The calls are not recorded](#user-content-the-calls-are-not-recorded)
+		- [The UI application shows white screen](#user-content-the-ui-application-shows-white-screen)
+	- [FAQ](#user-content-faq)
+
 ##Requirements
 
 * SailfishOS 1.1 or later
