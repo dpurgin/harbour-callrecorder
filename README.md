@@ -3,7 +3,7 @@ harbour-callrecorder
 
 Native call recorder for Jolla's SailfishOS.
 
-**WARNING!!! This is application requires unstable version of SailfishOS.**
+**WARNING! This is application requires opt-in version of SailfishOS. If you are unsure, wait for its public roll-out.**
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -41,7 +41,6 @@ Native call recorder for Jolla's SailfishOS.
 4. Tap on `Install` when prompted.
 5. After installation is successful, a notification appears.
 6. Make sure `Call Recorder` has appeared in the list of applications.
-6. Reboot the phone.
 7. Make a call and check if the recording has appeared in `Call Recorder` application. If it hasn't, go to Troubleshooting section.
 
 You don't need to have the UI application running all the time to have your calls recorded. They always are as soon as the service is enabled. 
@@ -111,13 +110,13 @@ None. Should be treated more as a feature. The 500ms switch time may change to l
 
 ### The calls are not recorded
 
-Did you reboot your phone after installation? If not, reboot and try again. If still not working, please check if the service is enabled and running. You will need the Terminal application. Issue the following command in terminal (mind 'd' at the end and you don't need to enter $ sign, it's already there):
+Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in terminal (mind 'd' at the end and you don't need to enter $ sign, it's already there):
 
 ```
 $ systemctl --user status harbour-callrecorderd
 ```
 
-If the output looks like this after reboot (mind `disabled` at the second line):
+If the output looks like this (mind `disabled` at the second line):
 
 ```
 harbour-callrecorderd.service - Call Recorder Daemon
