@@ -3,7 +3,7 @@ harbour-callrecorder
 
 Native call recorder for Jolla's SailfishOS.
 
-**WARNING! This is application requires opt-in version of SailfishOS. If you are unsure, wait for its public roll-out.**
+**This is application requires the latest opt-in SailfishOS update (update9, SailfishOS 1.1). If you are unsure, wait for its general availability.**
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
