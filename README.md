@@ -9,6 +9,7 @@ Native call recorder for Jolla's SailfishOS.
 
 - [harbour-callrecorder](#user-content-harbour-callrecorder)
 	- [Requirements](#user-content-requirements)
+	- [Installation from OpenRepos](#user-content-installation-from-openrepos)
 	- [Installation from RPM](#user-content-installation-from-rpm)
 	- [Installation from sources](#user-content-installation-from-sources)
 	- [Usage](#user-content-usage)
@@ -32,6 +33,12 @@ Native call recorder for Jolla's SailfishOS.
 
 * SailfishOS 1.1 or later
 * Allowance for unrusted software installation
+
+##Installation from OpenRepos
+
+1. Install Warehouse application from [OpenRepos](https://openrepos.net/content/basil/warehouse-sailfishos)
+2. Search for 'Call Recorder' in Warehouse
+3. Install it.
 
 ##Installation from RPM
 
