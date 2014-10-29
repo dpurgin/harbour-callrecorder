@@ -14,7 +14,7 @@ Name:       harbour-callrecorder
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
 Version:    0.2
-Release:    1
+Release:    2
 Group:      Applications/Communications
 License:    GPLv3
 URL:        https://github.com/dpurgin/harbour-callrecorder
@@ -64,8 +64,9 @@ rm -rf %{buildroot}
 
 # >> install post
 %post
-su nemo
-systemctl --user enable harbour-callrecorderd
+systemctl-user daemon-reload
+systemctl-user enable harbour-callrecorderd
+systemctl-user start harbour-callrecorderd
 # << install post
 
 desktop-file-install --delete-original       \
