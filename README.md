@@ -26,6 +26,7 @@ Native call recorder for Jolla's SailfishOS.
 		- [The UI application shows white screen](#user-content-the-ui-application-shows-white-screen)
 	- [FAQ](#user-content-faq)
 		- [Does it require developer mode?](#user-content-does-it-require-developer-mode)
+	- [Contacts](#user-content-contacts)
 
 ##Requirements
 
@@ -151,3 +152,5 @@ Check if you have SailfishOS 1.1 (Settings -> Sailfish OS updates).
 ###Does it require developer mode?
 Generally, no. If you run into trouble, you might need the Terminal application to diagnose. 
 
+#Contacts
+If you have any questions not covered by this file, please contact me at <dpurgin@gmail.com>
