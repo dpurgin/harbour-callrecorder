@@ -113,6 +113,14 @@ This is due to asynchronous nature of PulseAudio events and internals of call re
 
 None. Should be treated more as a feature. The 500ms switch time may change to lower values in future based on user experience.
 
+###The other party is not recorded if the call is on headphones or bluetooth
+
+Unfortunately this feature is still lacking in the underlying PulseAudio module.
+
+**Workaround**
+
+None. Do not reroute calls except to loudspeaker, if possible.
+
 ##Troubleshooting
 
 ### The calls are not recorded
