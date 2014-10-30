@@ -115,11 +115,13 @@ None. Should be treated more as a feature. The 500ms switch time may change to l
 
 ###The other party is not recorded if the call is on headphones or bluetooth
 
-Unfortunately this feature is still lacking in the underlying PulseAudio module.
+Unfortunately this feature is still WIP.
 
 **Workaround**
 
 None. Do not reroute calls except to loudspeaker, if possible.
+
+**There has been a report on TMO that BT switching works fine and the call gets recorded**
 
 ##Troubleshooting
 
