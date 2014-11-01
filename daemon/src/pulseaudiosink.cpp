@@ -23,6 +23,7 @@
 #include <QSet>
 #include <QVector>
 
+#include <pulse/context.h>
 #include <pulse/introspect.h>
 
 #include "pulseaudiosinkport.h"
@@ -31,7 +32,13 @@ class PulseAudioSink::PulseAudioSinkPrivate
 {
     friend class PulseAudioSink;
 
-    PulseAudioSinkPrivate(): activePort(NULL) {}
+    PulseAudioSinkPrivate(): activePort(NULL), context(NULL) {}
+
+    static void trivialCallback(pa_context*, int, void*)
+    {
+    }
+
+    pa_context* context;
 
     QString name;
     int index;
@@ -42,11 +49,13 @@ class PulseAudioSink::PulseAudioSinkPrivate
     QHash< QString, PulseAudioSinkPort* > sinkPortsByName;
 };
 
-PulseAudioSink::PulseAudioSink(const pa_sink_info* sinkInfo, QObject *parent)
+PulseAudioSink::PulseAudioSink(pa_context* context, const pa_sink_info* sinkInfo, QObject *parent)
     : QObject(parent),
       d(new PulseAudioSinkPrivate())
 {
     qDebug() << "Discovered sink: " << sinkInfo->name << ", index: " << sinkInfo->index;
+
+    d->context = context;
 
     d->name = QLatin1String(sinkInfo->name);
     d->index = sinkInfo->index;
@@ -83,6 +92,20 @@ quint32 PulseAudioSink::index() const
 QString PulseAudioSink::name() const
 {
     return d->name;
+}
+
+void PulseAudioSink::setActivePort(const QString& port)
+{
+    qDebug() << "";
+
+    if (d->activePort && d->activePort->name() != port)
+    {
+        pa_operation_unref(pa_context_set_sink_port_by_index(d->context,
+                                                             d->index,
+                                                             port.toUtf8().data(),
+                                                             &PulseAudioSinkPrivate::trivialCallback,
+                                                             NULL));
+    }
 }
 
 void PulseAudioSink::update(const pa_sink_info* sinkInfo)

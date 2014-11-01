@@ -23,16 +23,19 @@
 
 class PulseAudioSinkPort;
 
+struct pa_context;
 struct pa_sink_info;
 
 class PulseAudioSink : public QObject
 {
     Q_OBJECT
 public:
-    explicit PulseAudioSink(const pa_sink_info* sinkInfo, QObject *parent = 0);
+    explicit PulseAudioSink(pa_context* context, const pa_sink_info* sinkInfo, QObject *parent = 0);
     virtual ~PulseAudioSink();
 
     PulseAudioSinkPort* activePort() const;
+    void setActivePort(const QString& port);
+
     quint32 index() const;
     QString name() const;
 
