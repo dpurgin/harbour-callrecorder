@@ -56,9 +56,6 @@ public:
     explicit Application(int argc, char* argv[]);
     virtual ~Application();
 
-    bool active() const;
-    void setActive(bool active);
-
     Database* database() const;
     Model* model() const;    
     Settings* settings() const;

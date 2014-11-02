@@ -130,12 +130,6 @@ Application::~Application()
     qDebug() << __PRETTY_FUNCTION__;
 }
 
-/// Checks whether the call recording application is active
-bool Application::active() const
-{
-    return d->active;
-}
-
 Database* Application::database() const
 {
     return d->database.data();
@@ -207,7 +201,7 @@ void Application::maybeSwitchProfile()
 
 void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile)
 {
-    if (active())
+    if (d->active)
     {
         qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
 
@@ -218,7 +212,7 @@ void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfi
 
 void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port)
 {
-    if (active())
+    if (d->active)
     {
         qDebug() << "Active port: " << (port->name());
 
@@ -248,13 +242,13 @@ void Application::onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state
 
     if (state == VoiceCallRecorder::Active)
     {
-        setActive(true);
+        d->active = true;
 
         if (!d->timer->isActive() && d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall"))
             d->timer->start();
     }
     else
-        setActive(false);
+        d->active = false;
 }
 
 /// Checks whether recorder is active and cleans it up after the voice call was removed from the system
@@ -271,11 +265,6 @@ void Application::onVoiceCallRemoved(const QString& objectPath)
         delete voiceCallRecorder;
         d->voiceCallRecorders.remove(objectPath);
     }
-}
-
-void Application::setActive(bool active)
-{
-    d->active = active;
 }
 
 Settings* Application::settings() const
