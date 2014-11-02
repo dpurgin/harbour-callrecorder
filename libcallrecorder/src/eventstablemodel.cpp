@@ -19,8 +19,11 @@
 #include "eventstablemodel.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QStandardPaths>
+#include <QStringBuilder>
 
 #include "database.h"
 
@@ -50,7 +53,7 @@ EventsTableModel::EventsTableModel(Database* db, QObject* parent)
 
     setRelation(2, QSqlRelation("PhoneNumbers", "ID", "LineIdentification"));
 
-    setEditStrategy(QSqlTableModel::OnRowChange);
+    setEditStrategy(QSqlTableModel::OnFieldChange);
 
     if (!select())
         qDebug() << __PRETTY_FUNCTION__ << ": unable to perform select: " << lastError().text();
@@ -66,6 +69,31 @@ EventsTableModel::~EventsTableModel()
 QVariant EventsTableModel::data(const QModelIndex& item, int role) const
 {    
     return QSqlRelationalTableModel::data(index(item.row(), role - Qt::UserRole));
+}
+
+bool EventsTableModel::removeItem(const QString& id, const QString& fileName)
+{
+    qDebug() << "id: " << id << ", fileName: " << fileName;
+
+    Database::SqlParameters params;
+    params.insert(":id", id);
+
+    if (d->db->execute("DELETE FROM Events WHERE ID = :id", params))
+    {
+        QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                QLatin1String("/data/") %
+                fileName;
+
+        qDebug() << "removing" << location;
+
+        QFile(location).remove();
+
+        select();
+    }
+    else
+        qDebug() << "error removing item: " << d->db->lastError();
+
+    return true;
 }
 
 QHash< int, QByteArray > EventsTableModel::roleNames() const

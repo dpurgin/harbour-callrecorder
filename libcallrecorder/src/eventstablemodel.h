@@ -40,6 +40,7 @@ public:
 
     QHash< int, QByteArray > roleNames() const;
 
+    Q_INVOKABLE bool removeItem(const QString& id, const QString& fileName);
     Q_INVOKABLE bool select();
 
 signals:
