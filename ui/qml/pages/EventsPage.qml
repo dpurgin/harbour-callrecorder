@@ -104,7 +104,7 @@ Page {
                     rightMargin: Theme.paddingLarge
                 }
 
-                height: timeStampTime.visible? otherPartyId.height: delegate.height
+                height: timeStampTime.visible? otherPartyId.height: otherPartyId.height + description.height
 
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: Theme.fontSizeExtraSmall
@@ -164,6 +164,13 @@ Page {
                         onClicked: removeItem()
                     }
                 }
+            }
+
+            ListView.onAdd: AddAnimation {
+                target: delegate
+            }
+            ListView.onRemove: RemoveAnimation {
+                target: delegate
             }
 
             onClicked: {
