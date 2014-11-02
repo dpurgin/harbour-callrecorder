@@ -157,6 +157,15 @@ Page {
                 color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
             }
 
+            menu: Component {
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr('Delete')
+                        onClicked: removeItem()
+                    }
+                }
+            }
+
             onClicked: {
                 if (model.RecordingStateID == 4)
                 {
@@ -169,6 +178,13 @@ Page {
                         duration: model.Duration
                     })
                 }
+            }
+
+            function removeItem()
+            {
+               remorseAction(qsTr('Deleting'), function() {
+                   eventsModel.removeItem(model.ID, model.FileName);
+               })
             }
         }
 
