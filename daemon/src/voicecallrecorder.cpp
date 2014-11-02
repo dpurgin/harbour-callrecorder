@@ -266,12 +266,17 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
     qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << ofonoState;
 
     // if a call has just appeared, we arm the recorder before it actually gets into recordable state
-    if (ofonoState == QLatin1String("incoming") || ofonoState == QLatin1String("dialing"))
+    if (ofonoState == QLatin1String("incoming") ||
+            ofonoState == QLatin1String("dialing") ||
+            ofonoState == QLatin1String("alerting"))
     {
-        setCallType(ofonoState == QLatin1String("incoming")? Incoming: Outgoing);
-        setTimeStamp(QDateTime::currentDateTime());
+        if (state() == Inactive)
+        {
+            setCallType(ofonoState == QLatin1String("incoming")? Incoming: Outgoing);
+            setTimeStamp(QDateTime::currentDateTime());
 
-        arm();
+            arm();
+        }
     }
     // when the call goes into active state, the sound card's profile is set to voicecall-record.
     // recording is started or resumed
