@@ -43,7 +43,7 @@ class Application::ApplicationPrivate
     friend class Application;
 
 private:
-    explicit ApplicationPrivate(): active(true), pulseAudioCard(NULL), wantPark(false) {}
+    explicit ApplicationPrivate(): active(false), pulseAudioCard(NULL), wantPark(false) {}
 
 private:
     bool active;
@@ -109,6 +109,7 @@ Application::Application(int argc, char* argv[])
     d->settings.reset(new Settings());
 
     d->timer.reset(new QTimer());
+    d->timer->setInterval(250);
     d->timer->setSingleShot(true);
     connect(d->timer.data(), SIGNAL(timeout()),
             this, SLOT(maybeSwitchProfile()));
@@ -206,18 +207,24 @@ void Application::maybeSwitchProfile()
 
 void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile)
 {
-    qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
+    if (active())
+    {
+        qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
 
-    if (profile && !d->timer->isActive())
-        d->timer->start(250);
+        if (profile && !d->timer->isActive())
+            d->timer->start();
+    }
 }
 
 void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port)
 {
-    qDebug() << "Active port: " << (port->name());
+    if (active())
+    {
+        qDebug() << "Active port: " << (port->name());
 
-    if (port && !d->timer->isActive())
-        d->timer->start(250);
+        if (port && !d->timer->isActive())
+            d->timer->start();
+    }
 }
 
 /// Creates the recorder for a voice call appeared in the system
@@ -225,23 +232,35 @@ void Application::onVoiceCallAdded(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
 
-    if (active())
+    QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
+
+    connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
+            this, SLOT(onVoiceCallRecorderStateChanged(VoiceCallRecorder::State)));
+    connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
+            d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
+
+    d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
+}
+
+void Application::onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state)
+{
+    qDebug();
+
+    if (state == VoiceCallRecorder::Active)
     {
-        QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
+        setActive(true);
 
-        connect(voiceCallRecorder.data(), SIGNAL(stateChanged(State)),
-                d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
-
-        d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
+        if (!d->timer->isActive() && d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall"))
+            d->timer->start();
     }
+    else
+        setActive(false);
 }
 
 /// Checks whether recorder is active and cleans it up after the voice call was removed from the system
 void Application::onVoiceCallRemoved(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
-
-    // not checking active() here, because the call recorder could be deactivated while recording a call
 
     VoiceCallRecorder* voiceCallRecorder = d->voiceCallRecorders.value(objectPath, NULL);
 
@@ -252,6 +271,11 @@ void Application::onVoiceCallRemoved(const QString& objectPath)
         delete voiceCallRecorder;
         d->voiceCallRecorders.remove(objectPath);
     }
+}
+
+void Application::setActive(bool active)
+{
+    d->active = active;
 }
 
 Settings* Application::settings() const
