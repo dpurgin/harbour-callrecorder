@@ -43,7 +43,7 @@ class Application::ApplicationPrivate
     friend class Application;
 
 private:
-    explicit ApplicationPrivate(): active(true), pulseAudioCard(NULL) {}
+    explicit ApplicationPrivate(): active(false), pulseAudioCard(NULL), wantPark(false) {}
 
 private:
     bool active;
@@ -67,6 +67,9 @@ private:
 
     // stores object paths and its recorders
     QHash< QString, VoiceCallRecorder* > voiceCallRecorders;
+
+    bool wantPark;
+    QString wantPort;
 };
 
 
@@ -106,6 +109,7 @@ Application::Application(int argc, char* argv[])
     d->settings.reset(new Settings());
 
     d->timer.reset(new QTimer());
+    d->timer->setInterval(250);
     d->timer->setSingleShot(true);
     connect(d->timer.data(), SIGNAL(timeout()),
             this, SLOT(maybeSwitchProfile()));
@@ -124,12 +128,6 @@ Application::Application(int argc, char* argv[])
 Application::~Application()
 {
     qDebug() << __PRETTY_FUNCTION__;
-}
-
-/// Checks whether the call recording application is active
-bool Application::active() const
-{
-    return d->active;
 }
 
 Database* Application::database() const
@@ -165,14 +163,37 @@ void Application::initVoiceCallManager(const QString& objectPath)
 void Application::maybeSwitchProfile()
 {
     qDebug() << "Card profile: " << d->pulseAudioCard->activeProfile()->name() <<
-                ", sink port: " << d->pulseAudioSink->activePort()->name();
+                ", sink port: " << d->pulseAudioSink->activePort()->name() <<
+                ", want park: " << d->wantPark <<
+                ", want port: " << d->wantPort;
 
-    if (d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall") &&
-            d->pulseAudioSink->activePort()->name() == QLatin1String("output-earpiece"))
+    if (d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall"))
     {
         qDebug() << "Switching profile to voicecall-record";
 
-        d->pulseAudioCard->setActiveProfile(QLatin1String("voicecall-record"));
+        d->pulseAudioCard->setActiveProfile(QLatin1String("voicecall-record"));              
+
+        d->wantPark = true;
+        d->wantPort = d->pulseAudioSink->activePort()->name();
+
+        qDebug() << "Now want park and port" << d->wantPort;
+    }
+    else if (d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall-record") &&
+             (d->pulseAudioSink->activePort()->name() != d->wantPort || d->wantPark))
+    {
+        if (d->wantPark)
+        {
+            qDebug() << "Switching port to output-parking";
+
+            d->pulseAudioSink->setActivePort("output-parking");
+            d->wantPark = false;
+        }
+        else
+        {
+            qDebug() << "Switching port to " << d->wantPort;
+
+            d->pulseAudioSink->setActivePort(d->wantPort);
+        }
     }
     else
         qDebug() << "Not switching profile";
@@ -180,18 +201,24 @@ void Application::maybeSwitchProfile()
 
 void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile)
 {
-    qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
+    if (d->active)
+    {
+        qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
 
-    if (profile && profile->name() == QLatin1String("voicecall") && !d->timer->isActive())
-        d->timer->start(500);
+        if (profile && !d->timer->isActive())
+            d->timer->start();
+    }
 }
 
 void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port)
 {
-    qDebug() << "Active port: " << (port->name());
+    if (d->active)
+    {
+        qDebug() << "Active port: " << (port->name());
 
-    if (port && port->name() == QLatin1String("output-earpiece") && !d->timer->isActive())
-        d->timer->start(500);
+        if (port && !d->timer->isActive())
+            d->timer->start();
+    }
 }
 
 /// Creates the recorder for a voice call appeared in the system
@@ -199,23 +226,35 @@ void Application::onVoiceCallAdded(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
 
-    if (active())
+    QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
+
+    connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
+            this, SLOT(onVoiceCallRecorderStateChanged(VoiceCallRecorder::State)));
+    connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
+            d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
+
+    d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
+}
+
+void Application::onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state)
+{
+    qDebug();
+
+    if (state == VoiceCallRecorder::Active)
     {
-        QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
+        d->active = true;
 
-        connect(voiceCallRecorder.data(), SIGNAL(stateChanged(State)),
-                d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
-
-        d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
+        if (!d->timer->isActive() && d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall"))
+            d->timer->start();
     }
+    else
+        d->active = false;
 }
 
 /// Checks whether recorder is active and cleans it up after the voice call was removed from the system
 void Application::onVoiceCallRemoved(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
-
-    // not checking active() here, because the call recorder could be deactivated while recording a call
 
     VoiceCallRecorder* voiceCallRecorder = d->voiceCallRecorders.value(objectPath, NULL);
 

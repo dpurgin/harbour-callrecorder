@@ -79,7 +79,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     }
 
     static void onContextSubscription(pa_context* context, pa_subscription_event_type_t event, uint32_t idx, void* userData)
-    {
+    {        
         qDebug() << "entering";
 
         long facility = (event & PA_SUBSCRIPTION_EVENT_FACILITY_MASK);
@@ -149,7 +149,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     }
 
     static void onSinkInfoByIndex(pa_context* context, const pa_sink_info* sinkInfo, int eol, void* userData)
-    {
+    {        
         qDebug() << "entering";
 
         if (!eol)
@@ -173,7 +173,7 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
         {
             PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
 
-            PulseAudioSink* sink = new PulseAudioSink(sinkInfo);
+            PulseAudioSink* sink = new PulseAudioSink(context, sinkInfo);
 
             d->sinks.insert(sink);
             d->sinksByIndex.insert(sink->index(), sink);

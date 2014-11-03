@@ -23,6 +23,8 @@
 #include <QDateTime>
 #include <QScopedPointer>
 
+#include "voicecallrecorder.h"
+
 #define app (reinterpret_cast< Application* >(qApp))
 
 class Database;
@@ -54,9 +56,6 @@ public:
     explicit Application(int argc, char* argv[]);
     virtual ~Application();
 
-    bool active() const;
-    void setActive(bool active);
-
     Database* database() const;
     Model* model() const;    
     Settings* settings() const;
@@ -71,6 +70,7 @@ private slots:
     void onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile);
     void onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port);
     void onVoiceCallAdded(const QString& objectPath);
+    void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);
     void onVoiceCallRemoved(const QString& objectPath);
 
 private:
