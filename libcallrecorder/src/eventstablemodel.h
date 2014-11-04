@@ -19,18 +19,17 @@
 #ifndef LIBCALLRECORDER_EVENTSTABLEMODEL_H
 #define LIBCALLRECORDER_EVENTSTABLEMODEL_H
 
-#include <QSqlRelationalTableModel>
-#include <QScopedPointer>
+#include <QAbstractListModel>
 
 #include "config.h"
 
 class Database;
 
-class LIBCALLRECORDER_DECL EventsTableModel : public QSqlRelationalTableModel
+class LIBCALLRECORDER_DECL EventsTableModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(int count READ rowCount NOTIFY rowCountChanged)
+    Q_PROPERTY(int rowCount READ rowCount NOTIFY rowCountChanged)
 
 public:
     EventsTableModel(Database* db, QObject* parent = 0);
@@ -40,8 +39,7 @@ public:
 
     QHash< int, QByteArray > roleNames() const;
 
-    Q_INVOKABLE bool removeItem(const QString& id, const QString& fileName);
-    Q_INVOKABLE bool select();
+    int rowCount(const QModelIndex& = QModelIndex()) const;
 
 signals:
     void rowCountChanged();
@@ -50,7 +48,7 @@ public slots:
 
 private:
     class EventsTableModelPrivate;
-    QScopedPointer< EventsTableModelPrivate > d;
+    EventsTableModelPrivate* d;
 };
 
 #endif // LIBCALLRECORDER_EVENTSMODEL_H

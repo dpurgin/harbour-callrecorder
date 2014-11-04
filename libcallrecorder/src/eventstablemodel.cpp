@@ -20,81 +20,147 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QHash>
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QStandardPaths>
 #include <QStringBuilder>
+#include <QVector>
 
 #include "database.h"
+#include "sqlcursor.h"
 
 class EventsTableModel::EventsTableModelPrivate
 {
     friend class EventsTableModel;
 
     EventsTableModelPrivate()
-        : db(NULL)
+        : db(NULL),
+          rowCount(0),
+          pageSize(100)
     {
     }
 
+private:
+    void guaranteeRange(int rowIndex)
+    {
+        if (!dataByRowIndex.contains(rowIndex))
+        {
+            int pageStart = (rowIndex / pageSize) * pageSize;
+
+            qDebug() << "Fetching " << pageSize << " items starting from " << pageStart;
+
+            static QString stmt(
+                        "\nSELECT"
+                        "\n    Events.*,"
+                        "\n    PhoneNumbers.LineIdentification AS PhoneNumberIDRepresentation"
+                        "\nFROM"
+                        "\n    Events"
+                        ""
+                        "\n    LEFT JOIN"
+                        "\n        PhoneNumbers"
+                        "\n    ON"
+                        "\n        PhoneNumbers.ID = Events.PhoneNumberID"
+                        "\nORDER BY"
+                        "\n    Events.TimeStamp DESC"
+                        "\nLIMIT :pageSize"
+                        "\nOFFSET :pageStart");
+
+            Database::SqlParameters params;
+            params.insert(":pageSize", pageSize);
+            params.insert(":pageStart", pageStart);
+
+            QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
+
+            QStringList columns = cursor->columns();
+
+            for (int i = 0; cursor->next(); i++)
+            {
+                QHash< QString, QVariant > record;
+
+                for (int j = 0; j < columns.size(); j++)
+                    record.insert(columns[j], cursor->value(columns[j]));
+
+                dataByRowIndex.insert(pageStart + i, record);
+                dataByOID.insert(cursor->value("ID").toInt(), record);
+            }
+        }
+    }
+
+private:
     Database* db;
+
+    QHash< int, QHash< QString, QVariant > > dataByRowIndex;
+    QHash< int, QHash< QString, QVariant > > dataByOID;
+
+    int pageSize;
+
+    int rowCount;
 };
 
 EventsTableModel::EventsTableModel(Database* db, QObject* parent)
-    : QSqlRelationalTableModel(parent),
+    : QAbstractListModel(parent),
       d(new EventsTableModelPrivate())
 {
     qDebug() << __PRETTY_FUNCTION__;
 
     d->db = db;
 
-    setTable("Events");
+    QScopedPointer< SqlCursor > cursor(d->db->select("SELECT COUNT(ID) AS RowCount FROM Events"));
 
-    setSort(1, Qt::DescendingOrder);
+    while (cursor->next())
+    {
+        d->rowCount = cursor->value("RowCount").toInt();
 
-    setRelation(2, QSqlRelation("PhoneNumbers", "ID", "LineIdentification"));
+        qDebug() << "Retrieved row count: " << d->rowCount;
+    }
 
-    setEditStrategy(QSqlTableModel::OnFieldChange);
-
-    if (!select())
-        qDebug() << __PRETTY_FUNCTION__ << ": unable to perform select: " << lastError().text();
-    else
-        qDebug() << __PRETTY_FUNCTION__ << ": " << rowCount() << " selected";    
 }
 
 EventsTableModel::~EventsTableModel()
 {
     qDebug() << __PRETTY_FUNCTION__;
+
+    delete d;
 }
 
 QVariant EventsTableModel::data(const QModelIndex& item, int role) const
 {    
-    return QSqlRelationalTableModel::data(index(item.row(), role - Qt::UserRole));
+    d->guaranteeRange(item.row());
+
+    QString fieldName(roleNames().value(role));
+
+    QHash< QString, QVariant > record = d->dataByRowIndex.value(item.row());
+
+    QVariant result = record.value(fieldName);
+
+    return result;
 }
 
-bool EventsTableModel::removeItem(const QString& id, const QString& fileName)
-{
-    qDebug() << "id: " << id << ", fileName: " << fileName;
+//bool EventsTableModel::removeItem(const QString& id, const QString& fileName)
+//{
+//    qDebug() << "id: " << id << ", fileName: " << fileName;
 
-    Database::SqlParameters params;
-    params.insert(":id", id);
+//    Database::SqlParameters params;
+//    params.insert(":id", id);
 
-    if (d->db->execute("DELETE FROM Events WHERE ID = :id", params))
-    {
-        QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                QLatin1String("/data/") %
-                fileName;
+//    if (d->db->execute("DELETE FROM Events WHERE ID = :id", params))
+//    {
+//        QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+//                QLatin1String("/data/") %
+//                fileName;
 
-        qDebug() << "removing" << location;
+//        qDebug() << "removing" << location;
 
-        QFile(location).remove();
+//        QFile(location).remove();
 
-        select();
-    }
-    else
-        qDebug() << "error removing item: " << d->db->lastError();
+//        select();
+//    }
+//    else
+//        qDebug() << "error removing item: " << d->db->lastError();
 
-    return true;
-}
+//    return true;
+//}
 
 QHash< int, QByteArray > EventsTableModel::roleNames() const
 {
@@ -102,27 +168,18 @@ QHash< int, QByteArray > EventsTableModel::roleNames() const
 
     if (roles.empty())
     {
-        QSqlRecord rec = record();
+        QStringList tableColumns = d->db->tableColumns("Events");
 
-        for (int c = 0; c < rec.count(); c++)
-            roles.insert(Qt::UserRole + c, rec.fieldName(c).toUtf8());
+        foreach (QString columnName, tableColumns)
+            roles.insert(Qt::UserRole + roles.size(), columnName.toUtf8());
+
+        roles.insert(Qt::UserRole + roles.size(), "PhoneNumberIDRepresentation");
     }
-
-    qDebug() << roles;
 
     return roles;
 }
 
-bool EventsTableModel::select()
+int EventsTableModel::rowCount(const QModelIndex&) const
 {
-    qDebug() << "";
-
-    int oldRowCount = rowCount();
-
-    bool result = QSqlRelationalTableModel::select();
-
-    if (rowCount() != oldRowCount)
-        emit rowCountChanged();
-
-    return result;
+    return d->rowCount;
 }
