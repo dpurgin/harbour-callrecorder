@@ -52,7 +52,7 @@ ApplicationWindow {
         signalsEnabled: true
 
         function recorderStateChanged() {
-            eventsModel.select()
+            eventsModel.refresh()
         }
     }
 }
