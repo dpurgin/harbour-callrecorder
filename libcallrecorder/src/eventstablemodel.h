@@ -40,6 +40,8 @@ public:
     Q_INVOKABLE bool removeRows(int rowIndex, int count, const QModelIndex& = QModelIndex());
     Q_INVOKABLE bool removeRow(int rowIndex, const QModelIndex& = QModelIndex());
 
+    Q_INVOKABLE void refresh();
+
     QHash< int, QByteArray > roleNames() const;
 
     int rowCount(const QModelIndex& = QModelIndex()) const;

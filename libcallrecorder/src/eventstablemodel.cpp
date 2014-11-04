@@ -36,12 +36,28 @@ class EventsTableModel::EventsTableModelPrivate
 
     EventsTableModelPrivate()
         : db(NULL),
-          rowCount(0),
-          pageSize(100)
+          pageSize(100),
+          rowCount(0)
     {
     }
 
 private:
+    void clearCache()
+    {
+        dataByRowIndex.clear();
+        dataByOID.clear();
+        rowCount = 0;
+
+        QScopedPointer< SqlCursor > cursor(db->select("SELECT COUNT(ID) AS RowCount FROM Events"));
+
+        while (cursor->next())
+        {
+            rowCount = cursor->value("RowCount").toInt();
+
+            qDebug() << "Retrieved row count: " << rowCount;
+        }
+    }
+
     void guaranteeRange(int rowIndex)
     {
         if (!dataByRowIndex.contains(rowIndex))
@@ -106,15 +122,7 @@ EventsTableModel::EventsTableModel(Database* db, QObject* parent)
 
     d->db = db;
 
-    QScopedPointer< SqlCursor > cursor(d->db->select("SELECT COUNT(ID) AS RowCount FROM Events"));
-
-    while (cursor->next())
-    {
-        d->rowCount = cursor->value("RowCount").toInt();
-
-        qDebug() << "Retrieved row count: " << d->rowCount;
-    }
-
+    d->clearCache();
 }
 
 EventsTableModel::~EventsTableModel()
@@ -135,6 +143,15 @@ QVariant EventsTableModel::data(const QModelIndex& item, int role) const
     QVariant result = record.value(fieldName);
 
     return result;
+}
+
+void EventsTableModel::refresh()
+{
+    emit beginResetModel();
+
+    d->clearCache();
+
+    emit endResetModel();
 }
 
 bool EventsTableModel::removeRow(int rowIndex, const QModelIndex& parent)
@@ -188,31 +205,6 @@ bool EventsTableModel::removeRows(int rowIndex, int count, const QModelIndex& pa
 
     return (failures != count);
 }
-
-//bool EventsTableModel::removeItem(const QString& id, const QString& fileName)
-//{
-//    qDebug() << "id: " << id << ", fileName: " << fileName;
-
-//    Database::SqlParameters params;
-//    params.insert(":id", id);
-
-//    if (d->db->execute("DELETE FROM Events WHERE ID = :id", params))
-//    {
-//        QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-//                QLatin1String("/data/") %
-//                fileName;
-
-//        qDebug() << "removing" << location;
-
-//        QFile(location).remove();
-
-//        select();
-//    }
-//    else
-//        qDebug() << "error removing item: " << d->db->lastError();
-
-//    return true;
-//}
 
 QHash< int, QByteArray > EventsTableModel::roleNames() const
 {
