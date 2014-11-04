@@ -21,6 +21,7 @@
 
 #include <QScopedPointer>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 
 #include "config.h"
@@ -34,6 +35,8 @@ class LIBCALLRECORDER_DECL SqlCursor
 public:
     explicit SqlCursor(const QSqlQuery& query);
     ~SqlCursor();
+
+    QStringList columns();
 
     bool next();
 

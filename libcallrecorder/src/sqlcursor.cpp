@@ -18,7 +18,9 @@
 
 #include "sqlcursor.h"
 
+#include <QSqlRecord>
 #include <QSqlQuery>
+#include <QStringList>
 
 class SqlCursor::SqlCursorPrivate
 {
@@ -36,6 +38,18 @@ SqlCursor::SqlCursor(const QSqlQuery &query)
 SqlCursor::~SqlCursor()
 {
 
+}
+
+QStringList SqlCursor::columns()
+{
+    QStringList result;
+
+    QSqlRecord record = d->query.record();
+
+    for (int c = 0; c < record.count(); c++)
+        result.push_back(record.fieldName(c));
+
+    return result;
 }
 
 bool SqlCursor::next()
