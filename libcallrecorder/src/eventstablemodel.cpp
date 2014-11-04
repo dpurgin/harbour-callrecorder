@@ -137,6 +137,58 @@ QVariant EventsTableModel::data(const QModelIndex& item, int role) const
     return result;
 }
 
+bool EventsTableModel::removeRow(int rowIndex, const QModelIndex& parent)
+{
+    return removeRows(rowIndex, 1, parent);
+}
+
+bool EventsTableModel::removeRows(int rowIndex, int count, const QModelIndex& parent)
+{
+    qDebug() << "rowIndex: " << rowIndex << ", count: " << count;
+
+    int failures = 0;
+
+    beginRemoveRows(parent, rowIndex, rowIndex + count);
+
+    for (int i = rowIndex; i < rowIndex + count; i++)
+    {
+        d->guaranteeRange(i);
+
+        QHash< QString, QVariant > record = d->dataByRowIndex.value(i);
+
+        Database::SqlParameters params;
+        params.insert(":id", record.value("ID"));
+
+        if (d->db->execute("DELETE FROM Events WHERE ID = :id", params))
+        {
+            QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                    QLatin1String("/data/") %
+                    record.value("FileName").toString();
+
+            qDebug() << "removing" << location;
+
+            QFile(location).remove();
+        }
+        else
+        {
+            failures++;
+
+            qDebug() << "error removing item: " << d->db->lastError();
+        }
+
+    }
+
+    if (failures != count)
+    {
+        d->rowCount -= count + failures;
+        emit rowCountChanged();
+    }
+
+    endRemoveRows();
+
+    return (failures != count);
+}
+
 //bool EventsTableModel::removeItem(const QString& id, const QString& fileName)
 //{
 //    qDebug() << "id: " << id << ", fileName: " << fileName;

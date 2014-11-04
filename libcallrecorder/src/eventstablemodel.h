@@ -37,6 +37,9 @@ public:
 
     QVariant data(const QModelIndex& item, int role = Qt::DisplayRole) const;
 
+    Q_INVOKABLE bool removeRows(int rowIndex, int count, const QModelIndex& = QModelIndex());
+    Q_INVOKABLE bool removeRow(int rowIndex, const QModelIndex& = QModelIndex());
+
     QHash< int, QByteArray > roleNames() const;
 
     int rowCount(const QModelIndex& = QModelIndex()) const;

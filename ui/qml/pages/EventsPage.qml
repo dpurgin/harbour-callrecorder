@@ -190,7 +190,7 @@ Page {
             function removeItem()
             {
                remorseAction(qsTr('Deleting'), function() {
-                   eventsModel.removeItem(model.ID, model.FileName);
+                   eventsModel.removeRow(model.index);
                })
             }
         }
