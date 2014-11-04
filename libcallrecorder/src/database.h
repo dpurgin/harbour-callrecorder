@@ -45,6 +45,8 @@ public:
     SqlCursor* select(const QString& statement, const SqlParameters& params = SqlParameters());
 
     QString lastError() const;
+
+    QStringList tableColumns(const QString& tableName);
 private:
 
 private:

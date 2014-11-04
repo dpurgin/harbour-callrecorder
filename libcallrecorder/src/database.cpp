@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QSqlRecord>
 #include <QSqlQuery>
 #include <QStandardPaths>
 #include <QStringBuilder>
@@ -175,4 +176,16 @@ SqlCursor* Database::select(const QString& statement, const SqlParameters& param
         return NULL;
 
     return new SqlCursor(query);
+}
+
+QStringList Database::tableColumns(const QString& tableName)
+{
+    QStringList columns;
+
+    QSqlRecord rec = d->db->record(tableName);
+
+    for (int c = 0; c < rec.count(); c++)
+        columns.append(rec.fieldName(c));
+
+    return columns;
 }
