@@ -41,7 +41,7 @@ Page {
         delegate: ListItem {
             id: delegate
 
-            property Person person: people.populated? people.personByPhoneNumber(model.LineIdentification): null
+            property Person person: people.populated? people.personByPhoneNumber(model.PhoneNumberIDRepresentation): null
 
             width: parent.width
 
@@ -76,7 +76,7 @@ Page {
                 Label {
                     id: primaryName
 
-                    text: person && person.primaryName.length > 0? person.primaryName : model.LineIdentification
+                    text: person && person.primaryName.length > 0? person.primaryName : model.PhoneNumberIDRepresentation
 
                     truncationMode: TruncationMode.Fade
                     color: highlighted? Theme.highlightColor: Theme.primaryColor
@@ -178,7 +178,7 @@ Page {
                 {
                     pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
                         timeStamp: model.TimeStamp,
-                        lineIdentification: model.LineIdentification,
+                        lineIdentification: model.PhoneNumberIDRepresentation,
                         eventTypeId: model.EventTypeID,
                         fileName: model.FileName,
                         fileSize: model.FileSize,
