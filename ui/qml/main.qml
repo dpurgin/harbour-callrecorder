@@ -45,7 +45,7 @@ ApplicationWindow {
     }    
 
     DBusInterface {
-        service: 'kz.dpurgin.DBus.CallRecorder'
+        destination: 'kz.dpurgin.DBus.CallRecorder'
         path: '/Daemon'
         iface: 'kz.dpurgin.DBus.CallRecorder'
 
