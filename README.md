@@ -125,6 +125,10 @@ None. Do not reroute calls except to loudspeaker, if possible.
 
 ##Troubleshooting
 
+### Calls were recorded after installation but after reboot it doesn't work anymore
+
+Please see next section
+
 ### The calls are not recorded
 
 Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in terminal (mind 'd' at the end and you don't need to enter $ sign, it's already there):
@@ -145,6 +149,19 @@ then try (mind `d` at the end):
 
 ```
 $ systemctl --user enable harbour-callrecorderd
+```
+
+If you get `Failed to issue method call: No such file or directory` then do enabling manually with: 
+
+```
+$ mkdir -p /home/nemo/.config/systemd/user/user-session.target.wants
+$ ln -s '/usr/lib/systemd/user/harbour-callrecorderd.service' '/home/nemo/.config/systemd/user/user-session.target.wants/harbour-callrecorderd.service'
+$ systemctl --user daemon-reload
+```
+
+After enabling start the recorder if not yet:
+
+```
 $ systemctl --user start harbour-callrecorderd
 ```
 
