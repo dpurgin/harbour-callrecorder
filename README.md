@@ -23,6 +23,7 @@ Native call recorder for Jolla's SailfishOS.
 		- [Moving call to speaker when the number is still dialled](#user-content-moving-call-to-speaker-when-the-number-is-still-dialled)
 		- [Switching from loudspeaker to earpiece may cause 500ms lack in the recording (doesn't affect the call itself)](#user-content-switching-from-loudspeaker-to-earpiece-may-cause-500ms-lack-in-the-recording-doesnt-affect-the-call-itself)
 	- [Troubleshooting](#user-content-troubleshooting)
+		- [Calls were recorded after installation but after reboot it doesn't work anymore](#calls-were-recorded-after-installation-but-after-reboot-it-doesnt-work-anymore)	
 		- [The calls are not recorded](#user-content-the-calls-are-not-recorded)
 		- [The UI application shows white screen](#user-content-the-ui-application-shows-white-screen)
 	- [FAQ](#user-content-faq)
