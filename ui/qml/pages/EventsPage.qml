@@ -31,7 +31,7 @@ Page {
         height: parent.height
 
         header: PageHeader {
-            title: qsTr("Events")
+            title: qsTr('Recordings')
         }
 
         VerticalScrollDecorator {}
