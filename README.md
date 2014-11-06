@@ -23,6 +23,7 @@ Native call recorder for Jolla's SailfishOS.
 		- [Moving call to speaker when the number is still dialled](#user-content-moving-call-to-speaker-when-the-number-is-still-dialled)
 		- [Switching from loudspeaker to earpiece may cause 500ms lack in the recording (doesn't affect the call itself)](#user-content-switching-from-loudspeaker-to-earpiece-may-cause-500ms-lack-in-the-recording-doesnt-affect-the-call-itself)
 	- [Troubleshooting](#user-content-troubleshooting)
+		- [Calls were recorded after installation but after reboot it doesn't work anymore](#calls-were-recorded-after-installation-but-after-reboot-it-doesnt-work-anymore)	
 		- [The calls are not recorded](#user-content-the-calls-are-not-recorded)
 		- [The UI application shows white screen](#user-content-the-ui-application-shows-white-screen)
 	- [FAQ](#user-content-faq)
@@ -125,6 +126,10 @@ None. Do not reroute calls except to loudspeaker, if possible.
 
 ##Troubleshooting
 
+### Calls were recorded after installation but after reboot it doesn't work anymore
+
+Please see next section
+
 ### The calls are not recorded
 
 Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in terminal (mind 'd' at the end and you don't need to enter $ sign, it's already there):
@@ -145,6 +150,19 @@ then try (mind `d` at the end):
 
 ```
 $ systemctl --user enable harbour-callrecorderd
+```
+
+If you get `Failed to issue method call: No such file or directory` then do enabling manually with: 
+
+```
+$ mkdir -p /home/nemo/.config/systemd/user/user-session.target.wants
+$ ln -s '/usr/lib/systemd/user/harbour-callrecorderd.service' '/home/nemo/.config/systemd/user/user-session.target.wants/harbour-callrecorderd.service'
+$ systemctl --user daemon-reload
+```
+
+After enabling start the recorder if not yet:
+
+```
 $ systemctl --user start harbour-callrecorderd
 ```
 
