@@ -35,7 +35,9 @@ OTHER_FILES += \
     translations/*.ts \
     qml/pages/AboutPage.qml \
     qml/cover/CoverPage.qml \
+    qml/pages/EventsDelegate.qml \
     qml/pages/EventsPage.qml \
+    qml/pages/EventsPicker.qml \
     qml/pages/EventPage.qml \
     qml/pages/LicensePage.qml \
     qml/main.qml
