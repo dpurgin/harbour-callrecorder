@@ -38,124 +38,8 @@ Page {
 
         model: eventsModel
 
-        delegate: ListItem {
+        delegate: EventsDelegate {
             id: delegate
-
-            property Person person: people.populated? people.personByPhoneNumber(model.PhoneNumberIDRepresentation): null
-
-            width: parent.width
-
-            anchors {
-                left: parent.left
-
-                right: parent.right
-            }
-
-            Image {
-                id: icon
-
-                anchors {
-                    left: parent.left
-                }
-
-                visible: model.EventTypeID == 1
-
-                source: 'image://theme/icon-m-incoming-call'
-            }
-
-            Row {
-                id: otherPartyId
-
-                spacing: Theme.paddingSmall
-                width: parent.width - icon.width - timeStampDate.width - Theme.paddingLarge
-
-                anchors {
-                    left: icon.right
-                }
-
-                Label {
-                    id: primaryName
-
-                    text: person && person.primaryName.length > 0? person.primaryName : model.PhoneNumberIDRepresentation
-
-                    truncationMode: TruncationMode.Fade
-                    color: highlighted? Theme.highlightColor: Theme.primaryColor
-                }
-
-                Label {
-                    id: secondaryName
-
-                    text: person && person.primaryName.length > 0 && person.secondaryName.length > 0?
-                              person.secondaryName :
-                              ''
-
-                    truncationMode: TruncationMode.Fade
-                    color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
-
-                    width: parent.width - primaryName.width
-                }
-            }
-
-            Label {
-                id: timeStampDate
-
-                anchors {
-                    right: parent.right
-                    rightMargin: Theme.paddingLarge
-                }
-
-                height: timeStampTime.visible? otherPartyId.height: otherPartyId.height + description.height
-
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: highlighted? Theme.highlightColor : Theme.primaryColor
-
-                text: Format.formatDate(model.TimeStamp, Formatter.TimepointRelativeCurrentDay)
-            }
-
-            Label {
-                id: timeStampTime
-
-                anchors {
-                    left: timeStampDate.left
-                    right: timeStampDate.right
-                    top: timeStampDate.bottom
-                }
-
-                visible: startOfDay(new Date()).valueOf() != startOfDay(model.TimeStamp).valueOf()
-
-                font.pixelSize: Theme.fontSizeExtraSmall
-                horizontalAlignment: Text.AlignRight
-                color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
-
-                text: Format.formatDate(model.TimeStamp, Formatter.TimeValue)
-            }
-
-            Label {
-                id: description
-
-                anchors {
-                    top: otherPartyId.bottom
-                    left: icon.right
-                }
-
-                font.pixelSize: Theme.fontSizeExtraSmall
-                text: {
-                    switch (model.RecordingStateID)
-                    {
-                    case 1:
-                        return qsTr('Armed for recording')
-                    case 2:
-                        return qsTr('Recording in progress')
-                    case 3:
-                        return qsTr('Recording suspended')
-                    case 4:
-                        return Format.formatDuration(model.Duration, Formatter.DurationShort) + ' \u2022 ' +
-                                Format.formatFileSize(model.FileSize);
-                    }
-                }
-                color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
-            }
 
             menu: Component {
                 ContextMenu {
@@ -199,7 +83,7 @@ Page {
             id: eventsViewPlaceholder
 
             text: qsTr("No calls recorded yet")
-            enabled: eventsModel.count == 0
+            enabled: eventsModel.rowCount === 0
         }
 
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
@@ -208,6 +92,14 @@ Page {
                 text: qsTr("About")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl('AboutPage.qml'))
+                }
+            }
+
+            MenuItem {
+                text: qsTr('Select recordings')
+                enabled: eventsModel.rowCount > 0
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl('EventsPicker.qml'))
                 }
             }
         }
