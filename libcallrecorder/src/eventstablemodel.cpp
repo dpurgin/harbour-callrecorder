@@ -19,6 +19,7 @@
 #include "eventstablemodel.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QHash>
 #include <QSqlError>
@@ -45,7 +46,8 @@ private:
     void clearCache()
     {
         dataByRowIndex.clear();
-        dataByOID.clear();
+        oidToRowIndex.clear();
+
         rowCount = 0;
 
         QScopedPointer< SqlCursor > cursor(db->select("SELECT COUNT(ID) AS RowCount FROM Events"));
@@ -98,16 +100,88 @@ private:
                     record.insert(columns[j], cursor->value(columns[j]));
 
                 dataByRowIndex.insert(pageStart + i, record);
-                dataByOID.insert(cursor->value("ID").toInt(), record);
+                oidToRowIndex.insert(record.value("ID").toInt(), pageStart + i);
             }
         }
+    }
+
+    void invalidatePage(int pageEntry)
+    {
+        int pageStart = (pageEntry / pageSize) * pageSize;
+
+        qDebug() << "Invalidating page starting from " << pageStart;
+
+        for (int i = pageStart; i < pageStart + pageSize; i++)
+        {
+            if (dataByRowIndex.contains(i))
+            {
+                oidToRowIndex.remove(dataByRowIndex.value(i).value("ID").toInt());
+
+                dataByRowIndex.remove(i);
+            }
+        }
+    }
+
+    bool removeOid(int oid)
+    {
+        qDebug() << "oid: " << oid;
+
+        bool result = true;
+
+        Database::SqlParameters params;
+        params.insert(":id", oid);
+
+        QString fileName;
+
+        if (oidToRowIndex.contains(oid))
+        {
+            fileName = dataByRowIndex.value(oidToRowIndex.value(oid)).value("FileName").toString();
+
+            qDebug() << "found in cache: " << fileName;
+        }
+        else
+        {
+            QScopedPointer< SqlCursor > cursor(db->select("SELECT FileName FROM Events WHERE ID = :id", params));
+
+            while (cursor->next())
+                fileName = cursor->value("FileName").toString();
+
+            qDebug() << "fetched from database: " << fileName;
+        }
+
+        if (db->execute("DELETE FROM Events WHERE ID = :id", params))
+        {
+            QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                    QLatin1String("/data/") %
+                    fileName;
+
+            qDebug() << "Removing" << location;
+
+            QFile file(location);
+
+            if (!file.remove())
+            {
+                qWarning() << "Unable to remove file " << location << ": " << file.errorString();
+
+                // result = false is not set since database row was deleted and there's need to emit
+                // rowCountChanged
+            }
+        }
+        else
+        {
+            result = false;
+
+            qDebug() << "Error removing databse row: " << db->lastError();
+        }
+
+        return result;
     }
 
 private:
     Database* db;
 
     QHash< int, QHash< QString, QVariant > > dataByRowIndex;
-    QHash< int, QHash< QString, QVariant > > dataByOID;
+    QHash< int, int > oidToRowIndex;
 
     int pageSize;
 
@@ -154,6 +228,78 @@ void EventsTableModel::refresh()
     emit endResetModel();
 }
 
+bool EventsTableModel::removeAll()
+{
+    bool result = true;
+
+    qDebug() << "removing all";
+
+    if (d->db->execute("DELETE FROM Events"))
+    {
+        QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                QLatin1String("/data");
+
+        QDir dir(location);
+
+        QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot);
+
+        foreach (QString file, files)
+        {
+            qDebug() << "removing" << file;
+            QFile(file).remove();
+        }
+
+        emit rowCountChanged();
+
+        refresh();
+    }
+    else
+        result = false;
+
+    return result;
+}
+
+bool EventsTableModel::removeOids(const QList< int >& oids)
+{
+    qDebug() << oids;
+
+    int failures = 0;
+
+    QList< int > rowIndices;
+
+    foreach (int oid, oids)
+    {
+        if (d->oidToRowIndex.contains(oid))
+            rowIndices.push_back(d->oidToRowIndex.value(oid));
+    }
+
+    qSort(rowIndices.begin(), rowIndices.end(), qGreater< int >());
+
+    foreach (int rowIndex, rowIndices)
+    {
+        beginRemoveRows(QModelIndex(), rowIndex, rowIndex);
+
+        if (!d->removeOid(d->dataByRowIndex.value(rowIndex).value("ID").toInt()))
+            failures++;
+
+        endRemoveRows();
+    }
+
+    foreach (int oid, oids)
+    {
+        if (!d->oidToRowIndex.contains(oid))
+            if (!d->removeOid(oid))
+                failures++;
+    }
+
+    d->clearCache();
+
+    if (failures != oids.size())
+    emit rowCountChanged();
+
+    return (failures != oids.size());
+}
+
 bool EventsTableModel::removeRow(int rowIndex, const QModelIndex& parent)
 {
     return removeRows(rowIndex, 1, parent);
@@ -165,7 +311,7 @@ bool EventsTableModel::removeRows(int rowIndex, int count, const QModelIndex& pa
 
     int failures = 0;
 
-    beginRemoveRows(parent, rowIndex, rowIndex + count);
+    beginRemoveRows(parent, rowIndex, rowIndex + count - 1);
 
     for (int i = rowIndex; i < rowIndex + count; i++)
     {
@@ -173,27 +319,11 @@ bool EventsTableModel::removeRows(int rowIndex, int count, const QModelIndex& pa
 
         QHash< QString, QVariant > record = d->dataByRowIndex.value(i);
 
-        Database::SqlParameters params;
-        params.insert(":id", record.value("ID"));
-
-        if (d->db->execute("DELETE FROM Events WHERE ID = :id", params))
-        {
-            QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                    QLatin1String("/data/") %
-                    record.value("FileName").toString();
-
-            qDebug() << "removing" << location;
-
-            QFile(location).remove();
-        }
-        else
-        {
+        if (!d->removeOid(record.value("ID").toInt()))
             failures++;
-
-            qDebug() << "error removing item: " << d->db->lastError();
-        }
-
     }
+
+    d->clearCache();
 
     if (failures != count)
     {

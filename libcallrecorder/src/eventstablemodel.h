@@ -20,6 +20,7 @@
 #define LIBCALLRECORDER_EVENTSTABLEMODEL_H
 
 #include <QAbstractListModel>
+#include <QVector>
 
 #include "config.h"
 
@@ -37,6 +38,8 @@ public:
 
     QVariant data(const QModelIndex& item, int role = Qt::DisplayRole) const;
 
+    Q_INVOKABLE bool removeAll();
+    Q_INVOKABLE bool removeOids(const QList< int >& oids);
     Q_INVOKABLE bool removeRows(int rowIndex, int count, const QModelIndex& = QModelIndex());
     Q_INVOKABLE bool removeRow(int rowIndex, const QModelIndex& = QModelIndex());
 
