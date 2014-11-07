@@ -55,4 +55,26 @@ ApplicationWindow {
             eventsModel.refresh()
         }
     }
+
+    DBusInterface {
+        id: systemdManager
+
+        destination: 'org.freedesktop.systemd1'
+        path: '/org/freedesktop/systemd1'
+        iface: 'org.freedesktop.systemd1.Manager'
+
+        busType: DBusInterface.SessionBus
+
+        Component.onCompleted: {
+            console.log(busType)
+            var args = [{
+                type: 's',
+                value: 'harbour-callrecorderd.service'
+            }];
+
+            systemdManager.typedCallWithReturn('GetUnit', args, function(result) {
+                console.log('result:' + result);
+            });
+        }
+    }
 }
