@@ -37,7 +37,8 @@ public:
     enum EventType
     {
         Incoming = 1,
-        Outgoing
+        Outgoing,
+        Partial
     };
 
 public:
