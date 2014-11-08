@@ -156,6 +156,12 @@ void Application::initVoiceCallManager(const QString& objectPath)
     connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
             this, SLOT(onVoiceCallRemoved(QString)));
 
+    // check if there are any active calls on start
+    QStringList activeCalls = d->qofonoVoiceCallManager->getCalls();
+
+    foreach (QString call, activeCalls)
+        onVoiceCallAdded(call);
+
     // ofono manager is not needed now
     d->qofonoManager->deleteLater();
 }
