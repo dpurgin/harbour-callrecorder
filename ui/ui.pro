@@ -40,6 +40,7 @@ OTHER_FILES += \
     qml/pages/EventsPicker.qml \
     qml/pages/EventPage.qml \
     qml/pages/LicensePage.qml \
+    qml/pages/SettingsPage.qml \
     qml/main.qml
 
 # to disable building translations every time, comment out the
