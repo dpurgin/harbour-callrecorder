@@ -32,7 +32,8 @@ public:
     enum CallType
     {
         Incoming,
-        Outgoing
+        Outgoing,
+        Partial
     };
 
     enum State
