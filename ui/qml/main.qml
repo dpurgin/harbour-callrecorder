@@ -66,15 +66,24 @@ ApplicationWindow {
         busType: DBusInterface.SessionBus
 
         Component.onCompleted: {
-            console.log(busType)
             var args = [{
                 type: 's',
                 value: 'harbour-callrecorderd.service'
             }];
 
             systemdManager.typedCallWithReturn('GetUnit', args, function(result) {
-                console.log('result:' + result);
-            });
+                console.log('Retrieved unit path: ' + result)
+                systemdUnit.path = result
+            });            
         }
+    }
+
+    DBusInterface {
+        id: systemdUnit
+
+        destination: 'org.freedesktop.systemd1'
+        iface: 'org.freedesktop.systemd1.Unit'
+
+        busType: DBusInterface.SessionBus
     }
 }
