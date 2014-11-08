@@ -168,6 +168,15 @@ void VoiceCallRecorder::arm()
                          ": unable to set FLAC compression level: " <<
                          FLAC__stream_encoder_get_state(d->flacEncoder);
 
+        QString callTypeSuffix;
+
+        if (callType() == Incoming)
+            callTypeSuffix = QLatin1String("in");
+        else if (callType() == Outgoing)
+            callTypeSuffix = QLatin1String("out");
+        else
+            callTypeSuffix = QLatin1String("part");
+
         // form output location with file name based on current date, phone number, call direction (in/out).
         // if line ID does not exist, we should wait for the corresponding signal from Ofono,
         // but maybe it is always known at this stage. Needs checking.
@@ -176,7 +185,7 @@ void VoiceCallRecorder::arm()
                              QLatin1Char('/') %
                              Application::getIsoTimeStamp(timeStamp()).replace(QChar(':'), QChar('_')) % QLatin1Char('_') %
                              d->qofonoVoiceCall->lineIdentification() % QLatin1Char('_') %
-                             (callType() == Incoming? QLatin1String("in"): QLatin1String("out")) %
+                             callTypeSuffix %
                              QLatin1String(".flac"));
 
         qDebug() << __PRETTY_FUNCTION__ << "Writing to " << d->outputLocation;
@@ -196,13 +205,20 @@ void VoiceCallRecorder::arm()
     // add new event to events table
     if (d->eventId == -1)
     {
+        EventsTableModel::EventType eventType;
+
+        if (callType() == Incoming)
+            eventType = EventsTableModel::Incoming;
+        else if (callType() == Outgoing)
+            eventType = EventsTableModel::Outgoing;
+        else
+            eventType = EventsTableModel::Partial;
+
         d->eventId = app->model()->events()->add(
                     timeStamp(),                                                // time stamp of recording
                     app->model()->phoneNumbers()->getIdByLineIdentification(    // phone number ref
                         d->qofonoVoiceCall->lineIdentification()),
-                    callType() == Incoming?                                     // call type
-                        EventsTableModel::Incoming :
-                        EventsTableModel::Outgoing,
+                    eventType,
                     EventsTableModel::Armed);                                   // initial recording state
     }
     else
@@ -265,22 +281,24 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
 {
     qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << ofonoState;
 
-    // if a call has just appeared, we arm the recorder before it actually gets into recordable state
-    if (ofonoState == QLatin1String("incoming") ||
-            ofonoState == QLatin1String("dialing") ||
-            ofonoState == QLatin1String("alerting"))
+    // if a call is not disconnecting, arm the recorder if not yet
+    if (ofonoState != QLatin1String("disconnected") && state() == Inactive)
     {
-        if (state() == Inactive)
-        {
-            setCallType(ofonoState == QLatin1String("incoming")? Incoming: Outgoing);
-            setTimeStamp(QDateTime::currentDateTime());
+        if (ofonoState == QLatin1String("incoming"))
+            setCallType(Incoming);
+        else if (ofonoState == QLatin1String("dialing"))
+            setCallType(Outgoing);
+        else
+            setCallType(Partial); // recorder has been turned on while call is in progress
 
-            arm();
-        }
+        setTimeStamp(QDateTime::currentDateTime());
+
+        arm();
     }
+
     // when the call goes into active state, the sound card's profile is set to voicecall-record.
     // recording is started or resumed
-    else if (ofonoState == QLatin1String("active"))
+    if (ofonoState == QLatin1String("active"))
     {
         // if the recorder was armed, recording was not started yet. start recording and connect to
         // readyRead() signal to retrieve and encode data
