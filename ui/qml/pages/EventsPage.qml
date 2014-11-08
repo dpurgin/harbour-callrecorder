@@ -95,18 +95,23 @@ Page {
                 }
             }
 
-            MenuItem {
-                text: qsTr('Start Unit')
-                onClicked: {
-                    systemdManager.call('RestartUnit', ['harbour-callrecorderd.service', 'replace'])
-                }
-            }
+//            MenuItem {
+//                text: qsTr('Start Unit')
+//                onClicked: {
+//                    systemdManager.call('RestartUnit', ['harbour-callrecorderd.service', 'replace'])
+//                }
+//            }
+
+//            MenuItem {
+//                text: qsTr('Stop Unit')
+//                onClicked: {
+//                    systemdManager.call('StopUnit', ['harbour-callrecorderd.service', 'replace'])
+//                }
+//            }
 
             MenuItem {
-                text: qsTr('Stop Unit')
-                onClicked: {
-                    systemdManager.call('StopUnit', ['harbour-callrecorderd.service', 'replace'])
-                }
+                text: qsTr('Settings')
+                onClicked: pageStack.push(Qt.resolvedUrl('SettingsPage.qml'))
             }
 
             MenuItem {
