@@ -54,6 +54,8 @@ public:
     State state() const;
     QDateTime timeStamp() const;
 
+    void processState();
+
 signals:
     void stateChanged(VoiceCallRecorder::State state);
 

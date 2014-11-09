@@ -82,8 +82,6 @@ VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
 
     connect(d->qofonoVoiceCall.data(), SIGNAL(stateChanged(QString)),
             this, SLOT(onVoiceCallStateChanged(QString)));
-
-    processOfonoState(d->qofonoVoiceCall->state());
 }
 
 VoiceCallRecorder::~VoiceCallRecorder()
@@ -374,6 +372,11 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
         }
     }
+}
+
+void VoiceCallRecorder::processState()
+{
+    processOfonoState(d->qofonoVoiceCall->state());
 }
 
 void VoiceCallRecorder::setCallType(CallType callType)
