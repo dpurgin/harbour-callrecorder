@@ -78,7 +78,14 @@ Page {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    text: eventTypeId == 1? qsTr('Incoming call'): qsTr('Outgoing call')
+                    text: {
+                        if (eventTypeId == 1)
+                            return qsTr('Incoming call');
+                        else if (eventTypeId == 2)
+                            return qsTr('Outgoing call');
+                        else
+                            return qsTr('Partial call');
+                    }
                 }
 
                 Item {
