@@ -1,7 +1,7 @@
 Name: harbour-callrecorder
 Summary: Call Recorder for SailfishOS
-Version: 0.2
-Release: 2
+Version: 0.3
+Release: 3
 # The contents of the Group field must be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
 Group: Applications/Communications
@@ -32,8 +32,9 @@ PkgConfigBR:
    - sailfishapp >= 1.0.2
 
 # Build dependencies without a pkgconfig setup can be listed here
-# PkgBR:
-#   - package-needed-to-build
+PkgBR:
+   - nemo-qml-plugin-dbus-qt5
+   - nemo-qml-plugin-contacts-qt5
 
 # Runtime dependencies which are not automatically detected
 Requires:
@@ -41,6 +42,8 @@ Requires:
   - qt5-qtmultimedia-plugin-audio-pulseaudio
   - qt5-qtmultimedia-plugin-mediaservice-gstmediaplayer
   - gst-plugins-good
+  - nemo-qml-plugin-dbus-qt5
+  - nemo-qml-plugin-contacts-qt5
 
 # All installed files
 Files:

@@ -14,7 +14,7 @@ Name:       harbour-callrecorder
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
 Version:    0.3
-Release:    2
+Release:    3
 Group:      Applications/Communications
 License:    GPLv3
 URL:        https://github.com/dpurgin/harbour-callrecorder
@@ -24,6 +24,8 @@ Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   qt5-qtmultimedia-plugin-audio-pulseaudio
 Requires:   qt5-qtmultimedia-plugin-mediaservice-gstmediaplayer
 Requires:   gst-plugins-good
+Requires:   nemo-qml-plugin-dbus-qt5
+Requires:   nemo-qml-plugin-contacts-qt5
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5Qml)
@@ -33,6 +35,8 @@ BuildRequires:  pkgconfig(flac)
 BuildRequires:  pkgconfig(qofono-qt5)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
+BuildRequires:  nemo-qml-plugin-dbus-qt5
+BuildRequires:  nemo-qml-plugin-contacts-qt5
 BuildRequires:  desktop-file-utils
 
 %description
@@ -69,11 +73,15 @@ systemctl-user daemon-reload
 
 if [ $1 = 1 ]; then
     echo "Enabling service"
+    mkdir -p /home/nemo/.config/systemd/user/user-session.target.wants
     systemctl-user enable harbour-callrecorderd
-fi
 
-echo "Starting service..."
-systemctl-user restart harbour-callrecorderd
+    echo "Starting service..."
+    systemctl-user start harbour-callrecorderd
+else
+    echo "Starting service..."
+    systemctl-user try-restart harbour-callrecorderd
+fi
 # << install post
 
 desktop-file-install --delete-original       \
