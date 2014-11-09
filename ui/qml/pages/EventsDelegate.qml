@@ -40,10 +40,11 @@ ListItem {
             left: parent.left
         }
 
-        visible: model.EventTypeID == 1
+        visible: model.EventTypeID != 2
 
-        source: 'image://theme/icon-m-incoming-call'
+        source: model.EventTypeID == 1? 'image://theme/icon-m-incoming-call': 'qrc:/images/icon-m-partial-call.png';
     }
+
 
     Row {
         id: otherPartyId
