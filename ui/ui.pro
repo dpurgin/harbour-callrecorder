@@ -30,6 +30,8 @@ LIBS += -L../libcallrecorder -lcallrecorder
 SOURCES += \
     src/main.cpp
 
+RESOURCES += ui.qrc
+
 OTHER_FILES += \
     harbour-callrecorder.desktop \
     translations/*.ts \
