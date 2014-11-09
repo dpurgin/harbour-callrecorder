@@ -84,26 +84,6 @@ Application::Application(int argc, char* argv[])
 
     d->dbusAdaptor.reset(new DBusAdaptor(this));
 
-    d->qofonoManager.reset(new QOfonoManager());
-
-    if (!d->qofonoManager->available())
-        throw CallRecorderException(QLatin1String("Ofono is not available!"));
-
-    // check if modems available. If there are modems, take the first one and initialize app with it
-    // If no modems available, wait for first modemAdded and initialize with this one
-
-    QStringList modems = d->qofonoManager->modems();
-
-    if (modems.length() == 0)
-    {
-        qWarning() << QLatin1String("No modems available! Waiting for modemAdded");
-
-        connect(d->qofonoManager.data(), SIGNAL(modemAdded(QString)),
-                this, SLOT(initVoiceCallManager(QString)));
-    }
-    else
-        initVoiceCallManager(modems.first());
-
     d->database.reset(new Database());
     d->model.reset(new Model());
     d->settings.reset(new Settings());
@@ -123,6 +103,26 @@ Application::Application(int argc, char* argv[])
 
     connect(d->pulseAudioSink, SIGNAL(activePortChanged(const PulseAudioSinkPort*)),
             this, SLOT(onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort*)));
+
+    d->qofonoManager.reset(new QOfonoManager());
+
+    if (!d->qofonoManager->available())
+        throw CallRecorderException(QLatin1String("Ofono is not available!"));
+
+    // check if modems available. If there are modems, take the first one and initialize app with it
+    // If no modems available, wait for first modemAdded and initialize with this one
+
+    QStringList modems = d->qofonoManager->modems();
+
+    if (modems.length() == 0)
+    {
+        qWarning() << QLatin1String("No modems available! Waiting for modemAdded");
+
+        connect(d->qofonoManager.data(), SIGNAL(modemAdded(QString)),
+                this, SLOT(initVoiceCallManager(QString)));
+    }
+    else
+        initVoiceCallManager(modems.first());
 }
 
 Application::~Application()
@@ -239,7 +239,9 @@ void Application::onVoiceCallAdded(const QString& objectPath)
     connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
             d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
 
-    d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());
+    voiceCallRecorder->processState();
+
+    d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());        
 }
 
 void Application::onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state)
