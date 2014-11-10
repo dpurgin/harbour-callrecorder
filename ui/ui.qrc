@@ -1,8 +1,5 @@
-<!DOCTYPE RCC>
-<RCC version="1.0">
-
+<RCC>
     <qresource prefix="/">
         <file>images/icon-m-partial-call.png</file>
     </qresource>
-
 </RCC>
