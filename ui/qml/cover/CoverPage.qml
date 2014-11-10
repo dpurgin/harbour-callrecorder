@@ -27,15 +27,21 @@ CoverBackground {
     }
 
     CoverActionList {
-        id: coverAction
+        enabled: !systemdUnit.isActive
 
-//        CoverAction {
-//            iconSource: "image://theme/icon-cover-next"
-//        }
+        CoverAction {
+            iconSource: '/usr/share/harbour-callrecorder/images/icon-cover-start-recorder.png'
+            onTriggered: systemdUnit.start();
+        }
+    }   
 
-//        CoverAction {
-//            iconSource: "image://theme/icon-cover-pause"
-//        }
+    CoverActionList {
+        enabled: systemdUnit.isActive
+
+        CoverAction {
+            iconSource: '/usr/share/harbour-callrecorder/images/icon-cover-stop-recorder.png'
+            onTriggered: systemdUnit.stop();
+        }
     }
 }
 
