@@ -22,15 +22,6 @@ import Sailfish.Silica 1.0
 Page {
     id: settingsPage
 
-    Timer {
-        id: dbusTimer
-        interval: 500
-
-        onTriggered: {
-            checkActiveState();
-        }
-    }
-
     SilicaFlickable {
         anchors.fill: parent
 
@@ -54,19 +45,16 @@ Page {
 
                 automaticCheck: false
 
+                checked: systemdUnit.isActive
+
                 text: qsTr('Active')
                 description: qsTr('Capture all incoming and outgoing calls')
 
                 onClicked: {
-                    activeSwitch.busy = true
-
-                    var method = activeSwitch.checked? 'Stop': 'Start';
-
-                    systemdUnit.typedCallWithReturn(method, [{type:'s',value:'replace'}], function(result) {
-                        console.log(result)
-
-                        dbusTimer.start();
-                    })
+                    if (systemdUnit.isActive)
+                        systemdUnit.stop();
+                    else
+                        systemdUnit.start();
                 }
             }
 
@@ -75,69 +63,18 @@ Page {
 
                 automaticCheck: false
 
+                checked: systemdUnit.isEnabled
+
                 text: qsTr('Automatic startup')
                 description: qsTr('Start automatically upon reboot')
 
                 onClicked: {
-                    startupTypeSwitch.busy = true
-
-                    var method = startupTypeSwitch.checked? 'DisableUnitFiles': 'EnableUnitFiles';
-
-                    var params = [];
-
-                    if (!startupTypeSwitch.checked)
-                    {
-                        params = [{
-                                      type: 'as',
-                                      value: [ 'harbour-callrecorderd.service' ]   // unit to enable
-                                  }, {
-                                      type: 'b',                                   // 'enable temporarily' flag
-                                      value: false                                 // we enable persistently
-                                  }, {
-                                      type: 'b',                                   // 'overwrite symlinks' flag
-                                      value: false                                 // we don't
-                                  }];
-                    }
+                    if (systemdUnit.isEnabled)
+                        systemdUnit.disable();
                     else
-                    {
-                        params = [{
-                                      type: 'as',
-                                      value: [ 'harbour-callrecorderd.service' ] // unit to disable
-                                  }, {
-                                      type: 'b',                                 // 'disable temporarily' flag
-                                      value: false                               // we disable persistently
-                                  }];
-                    }
-
-                    systemdManager.typedCallWithReturn(method, params, function(result) {
-                        systemdManager.typedCallWithReturn('Reload', [], function() {
-                            checkStartupType();
-                        });
-                    });
+                        systemdUnit.enable();
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        checkActiveState();
-        checkStartupType();
-    }
-
-    function checkActiveState()
-    {
-        activeSwitch.busy = true;
-        activeSwitch.checked = (systemdUnit.getProperty('ActiveState') === 'active' &&
-                                systemdUnit.getProperty('SubState') === 'running');
-        activeSwitch.busy = false;
-    }
-
-    function checkStartupType()
-    {
-        startupTypeSwitch.busy = true;
-
-        startupTypeSwitch.checked = (systemdUnit.getProperty('UnitFileState') === 'enabled');
-
-        startupTypeSwitch.busy = false;
     }
 }
