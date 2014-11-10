@@ -18,7 +18,7 @@ include(../common.pri)
 
 TARGET = $${PACKAGE}
 
-CONFIG += sailfishapp
+CONFIG += sailfishapp qml_debug
 PKGCONFIG += flac
 
 QT += core quick qml multimedia sql
@@ -44,6 +44,13 @@ OTHER_FILES += \
     qml/pages/LicensePage.qml \
     qml/pages/SettingsPage.qml \
     qml/main.qml
+
+images.files = \
+    images/icon-cover-start-recorder.png \
+    images/icon-cover-stop-recorder.png
+images.path = /usr/share/$${PACKAGE}/images
+
+INSTALLS += images
 
 # to disable building translations every time, comment out the
 # following CONFIG line
