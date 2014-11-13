@@ -96,7 +96,7 @@ ApplicationWindow {
             systemdManager.typedCall('Subscribe', [], function(result) {
                 console.log('Subscribe result: ' + result);
 
-                systemdManager.typedCall('GetUnit', args, function(result) {
+                systemdManager.typedCall('LoadUnit', args, function(result) {
                     console.log('Retrieved unit path: ' + result)
                     systemdUnit.path = result
                 });
