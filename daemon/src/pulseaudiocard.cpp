@@ -20,6 +20,7 @@
 
 #include "pulseaudiocardprofile.h"
 
+#include <QDebug>
 #include <QHash>
 #include <QSet>
 #include <QVariant>
@@ -62,6 +63,8 @@ PulseAudioCard::PulseAudioCard(pa_context* context, const pa_card_info* paCardIn
     : QObject(parent),
       d(new PulseAudioCardPrivate)
 {
+    qDebug() << "Discovered card: " << paCardInfo->name << ", index: " << paCardInfo->index;
+
     d->context = context;
 
     d->index = paCardInfo->index;
