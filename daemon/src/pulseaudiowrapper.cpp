@@ -21,6 +21,7 @@
 #include <QDebug>
 #include <QHash>
 #include <QVector>
+#include <QThread>
 
 #include <pulse/context.h>
 #include <pulse/introspect.h>
@@ -40,20 +41,25 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onCardInfoByIndex(pa_context* context, const pa_card_info* info, int eol, void* userData)
     {
-        qDebug() << "entering";
-
         if (!eol)
         {
             PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
 
-            d->cardsByIndex.value(info->index)->update(info);
+            if (d->cardsByIndex.contains(info->index))
+                d->cardsByIndex.value(info->index)->update(info);
+            else
+            {
+                PulseAudioCard* card = new PulseAudioCard(context, info);
+
+                d->cards.insert(card);
+                d->cardsByIndex.insert(card->index(), card);
+                d->cardsByName.insert(card->name(), card);
+            }
         }
     }
 
     static void onCardInfoList(pa_context* context, const pa_card_info* cardInfo, int eol, void* userData)
     {
-        qDebug() << "entering";
-
         if (eol)
             pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
         else
@@ -80,52 +86,71 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onContextSubscription(pa_context* context, pa_subscription_event_type_t event, uint32_t idx, void* userData)
     {        
-        qDebug() << "entering";
-
         long facility = (event & PA_SUBSCRIPTION_EVENT_FACILITY_MASK);
         long eventType = (event & PA_SUBSCRIPTION_EVENT_TYPE_MASK);
 
-        static QHash< long, QString > facilities;
+//        static QHash< long, QString > facilities;
 
-        if (facilities.isEmpty())
-        {
-            facilities.insert(PA_SUBSCRIPTION_EVENT_SINK, "PA_SUBSCRIPTION_EVENT_SINK");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_SOURCE, "PA_SUBSCRIPTION_EVENT_SOURCE");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_SINK_INPUT, "PA_SUBSCRIPTION_EVENT_SINK_INPUT");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT, "PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_MODULE, "PA_SUBSCRIPTION_EVENT_MODULE");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_CLIENT, "PA_SUBSCRIPTION_EVENT_CLIENT");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE, "PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE");
-            facilities.insert(PA_SUBSCRIPTION_EVENT_CARD, "PA_SUBSCRIPTION_EVENT_CARD");
-        }
+//        if (facilities.isEmpty())
+//        {
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_SINK, "PA_SUBSCRIPTION_EVENT_SINK");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_SOURCE, "PA_SUBSCRIPTION_EVENT_SOURCE");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_SINK_INPUT, "PA_SUBSCRIPTION_EVENT_SINK_INPUT");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT, "PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_MODULE, "PA_SUBSCRIPTION_EVENT_MODULE");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_CLIENT, "PA_SUBSCRIPTION_EVENT_CLIENT");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE, "PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE");
+//            facilities.insert(PA_SUBSCRIPTION_EVENT_CARD, "PA_SUBSCRIPTION_EVENT_CARD");
+//        }
 
-        static QHash< long, QString > eventTypes;
+//        static QHash< long, QString > eventTypes;
 
-        if (eventTypes.isEmpty())
-        {
-            eventTypes.insert(PA_SUBSCRIPTION_EVENT_NEW, "PA_SUBSCRIPTION_EVENT_NEW");
-            eventTypes.insert(PA_SUBSCRIPTION_EVENT_CHANGE, "PA_SUBSCRIPTION_EVENT_CHANGE");
-            eventTypes.insert(PA_SUBSCRIPTION_EVENT_REMOVE, "PA_SUBSCRIPTION_EVENT_REMOVE");
-        }
+//        if (eventTypes.isEmpty())
+//        {
+//            eventTypes.insert(PA_SUBSCRIPTION_EVENT_NEW, "PA_SUBSCRIPTION_EVENT_NEW");
+//            eventTypes.insert(PA_SUBSCRIPTION_EVENT_CHANGE, "PA_SUBSCRIPTION_EVENT_CHANGE");
+//            eventTypes.insert(PA_SUBSCRIPTION_EVENT_REMOVE, "PA_SUBSCRIPTION_EVENT_REMOVE");
+//        }
 
-        qDebug() << "Facility:" << facilities.value(facility, "Other") <<
-                    "Event Type:" << eventTypes.value(eventType, "Other") <<
-                    "idx:" << idx;
+//        qDebug() << "Facility:" << facilities.value(facility, "Other") <<
+//                    "Event Type:" << eventTypes.value(eventType, "Other") <<
+//                    "idx:" << idx;
+
+        PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
 
         if (facility == PA_SUBSCRIPTION_EVENT_CARD)
         {
-            if (eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
+            if (eventType == PA_SUBSCRIPTION_EVENT_NEW ||
+                    eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
             {
                 pa_operation_unref(pa_context_get_card_info_by_index(
                                        PulseAudioWrapperPrivate::paContext,
-                                       0,
+                                       idx,
                                        &PulseAudioWrapperPrivate::onCardInfoByIndex,
                                        userData));
+            }
+            else if (eventType == PA_SUBSCRIPTION_EVENT_REMOVE)
+            {
+                qDebug() << "Removing card at idx: " << idx;
+
+                if (d->cardsByIndex.contains(idx))
+                {
+                    PulseAudioCard* card = d->cardsByIndex.value(idx);
+
+                    d->cards.remove(card);
+                    d->cardsByIndex.remove(idx);
+                    d->cardsByName.remove(card->name());
+
+                    delete card;
+                }
+                else
+                    qDebug() << "No card at idx " << idx;
             }
         }
         else if (facility == PA_SUBSCRIPTION_EVENT_SINK)
         {
-            if (eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
+            if (eventType == PA_SUBSCRIPTION_EVENT_NEW ||
+                    eventType == PA_SUBSCRIPTION_EVENT_CHANGE)
             {
                 pa_operation_unref(pa_context_get_sink_info_by_index(
                                        PulseAudioWrapperPrivate::paContext,
@@ -133,13 +158,28 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
                                        &PulseAudioWrapperPrivate::onSinkInfoByIndex,
                                        userData));
             }
+            else if (eventType == PA_SUBSCRIPTION_EVENT_REMOVE)
+            {
+                qDebug() << "Removing sink at idx: " << idx;
+
+                if (d->sinksByIndex.contains(idx))
+                {
+                    PulseAudioSink* sink = d->sinksByIndex.value(idx);
+
+                    d->sinks.remove(sink);
+                    d->sinksByIndex.remove(idx);
+                    d->sinksByName.remove(sink->name());
+
+                    delete sink;
+                }
+                else
+                    qDebug() << "No sink at idx " << idx;
+            }
         }
     }
 
     static void onContextSubscriptionSuccess(pa_context* context, int success, void* userData)
     {
-        qDebug() << __PRETTY_FUNCTION__;
-
         Q_UNUSED(context);
         Q_UNUSED(userData);
 
@@ -150,18 +190,20 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
 
     static void onSinkInfoByIndex(pa_context* context, const pa_sink_info* sinkInfo, int eol, void* userData)
     {        
-        qDebug() << "entering";
-
         if (!eol)
         {
             PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
 
-            PulseAudioSink* sink = d->sinksByName.value(QLatin1String(sinkInfo->name), NULL);
-
-            if (sink)
-                sink->update(sinkInfo);
+            if (d->sinksByIndex.contains(sinkInfo->index))
+                d->sinksByIndex.value(sinkInfo->index)->update(sinkInfo);
             else
-                qDebug() << "Sink was not discovered:" << sink->name();
+            {
+                PulseAudioSink* sink = new PulseAudioSink(context, sinkInfo);
+
+                d->sinks.insert(sink);
+                d->sinksByIndex.insert(sink->index(), sink);
+                d->sinksByName.insert(sink->name(), sink);
+            }
         }
     }
 
@@ -186,11 +228,11 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     static pa_context* paContext;
 
     QSet< PulseAudioCard* > cards; // this one owns the pointers
-    QVector< PulseAudioCard* > cardsByIndex;
+    QHash< int, PulseAudioCard* > cardsByIndex; // indices in pulseaudio can be somehow sparse
     QHash< QString, PulseAudioCard* > cardsByName;
 
     QSet< PulseAudioSink* > sinks; // owns the pointers
-    QVector< PulseAudioSink* > sinksByIndex;
+    QHash< int, PulseAudioSink* > sinksByIndex; // see cardsByIndex above
     QHash< QString, PulseAudioSink* > sinksByName;
 };
 
