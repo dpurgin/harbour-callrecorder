@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QHash>
 #include <QSet>
+#include <QThread>
 #include <QVariant>
 
 #include <pulse/context.h>
@@ -63,6 +64,7 @@ PulseAudioCard::PulseAudioCard(pa_context* context, const pa_card_info* paCardIn
     : QObject(parent),
       d(new PulseAudioCardPrivate)
 {
+    qDebug() << QThread::currentThread();
     qDebug() << "Discovered card: " << paCardInfo->name << ", index: " << paCardInfo->index;
 
     d->context = context;

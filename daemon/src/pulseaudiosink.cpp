@@ -21,6 +21,7 @@
 #include <QDebug>
 #include <QHash>
 #include <QSet>
+#include <QThread>
 #include <QVector>
 
 #include <pulse/context.h>
@@ -53,6 +54,7 @@ PulseAudioSink::PulseAudioSink(pa_context* context, const pa_sink_info* sinkInfo
     : QObject(parent),
       d(new PulseAudioSinkPrivate())
 {
+    qDebug() << QThread::currentThread();
     qDebug() << "Discovered sink: " << sinkInfo->name << ", index: " << sinkInfo->index;
 
     d->context = context;
@@ -96,7 +98,7 @@ QString PulseAudioSink::name() const
 
 void PulseAudioSink::setActivePort(const QString& port)
 {
-    qDebug() << "";
+    qDebug() << QThread::currentThread();
 
     if (d->activePort && d->activePort->name() != port)
     {
