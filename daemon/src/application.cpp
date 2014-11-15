@@ -168,6 +168,7 @@ void Application::initVoiceCallManager(const QString& objectPath)
 
 void Application::maybeSwitchProfile()
 {
+    qDebug() << QThread::currentThread();
     qDebug() << "Card profile: " << d->pulseAudioCard->activeProfile()->name() <<
                 ", sink port: " << d->pulseAudioSink->activePort()->name() <<
                 ", want park: " << d->wantPark <<
@@ -184,35 +185,34 @@ void Application::maybeSwitchProfile()
 
         qDebug() << "Now want park and port" << d->wantPort;
     }
-    else if (d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall-record") &&
-             (d->pulseAudioSink->activePort()->name() != d->wantPort || d->wantPark))
+    else if (d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall-record"))
     {
-        if (d->wantPark)
+        if (d->pulseAudioSink->activePort()->name() == QLatin1String("output-parking"))
         {
-            qDebug() << "Switching port to output-parking";
-
-            d->pulseAudioSink->setActivePort("output-parking");
-            d->wantPark = false;
-        }
-        else
-        {
-            qDebug() << "Switching port to " << d->wantPort;
+            qDebug() << "Port parked -- switching to " << d->wantPort;
 
             d->pulseAudioSink->setActivePort(d->wantPort);
         }
+        else if (d->wantPark || d->pulseAudioSink->activePort()->name() != d->wantPort)
+        {
+            qDebug() << "Now want port " << d->pulseAudioSink->activePort()->name();
+
+            d->wantPark = false;
+            d->wantPort = d->pulseAudioSink->activePort()->name();
+            d->pulseAudioSink->setActivePort(QLatin1String("output-parking"));
+        }
     }
     else
-        qDebug() << "Not switching profile";
+        qDebug() << "Not managing profile " << d->pulseAudioCard->activeProfile()->name();
 }
 
 void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile)
 {
     if (d->active)
     {
-        qDebug() << "Active profile: " << (profile? profile->name(): "NULL");
+        qDebug() << QThread::currentThread() << ": active profile: " << profile->name();
 
-        if (profile && !d->timer->isActive())
-            d->timer->start();
+        maybeSwitchProfile();
     }
 }
 
@@ -220,10 +220,9 @@ void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* po
 {
     if (d->active)
     {
-        qDebug() << "Active port: " << (port->name());
+        qDebug() << QThread::currentThread() << ": active port: " << port->name();
 
-        if (port && !d->timer->isActive())
-            d->timer->start();
+        maybeSwitchProfile();
     }
 }
 
@@ -246,14 +245,13 @@ void Application::onVoiceCallAdded(const QString& objectPath)
 
 void Application::onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state)
 {
-    qDebug();
+    qDebug() << state;
 
     if (state == VoiceCallRecorder::Active)
     {
         d->active = true;
 
-        if (!d->timer->isActive() && d->pulseAudioCard->activeProfile()->name() == QLatin1String("voicecall"))
-            d->timer->start();
+        maybeSwitchProfile();
     }
     else
         d->active = false;
