@@ -1,47 +1,35 @@
 harbour-callrecorder
 ====================
 
-Native call recorder for Jolla's SailfishOS.
+Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 
 **This is application requires the latest opt-in SailfishOS update (update9, SailfishOS 1.1). If you are unsure, wait for its general availability.**
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+##Changes
 
-- [harbour-callrecorder](#user-content-harbour-callrecorder)
-	- [Requirements](#user-content-requirements)
-	- [Installation from OpenRepos](#user-content-installation-from-openrepos)
-	- [Installation from RPM](#user-content-installation-from-rpm)
-	- [Installation from sources](#user-content-installation-from-sources)
-	- [Usage](#user-content-usage)
-		- [Storage](#user-content-storage)
-		- [Audio Format](#user-content-audio-format)
-		- [Call Recorder UI](#user-content-call-recorder-ui)
-			- [Start page -- Events](#user-content-start-page----events)
-			- [Details Page](#user-content-details-page)
-			- [About Page](#user-content-about-page)
-	- [Known Issues](#user-content-known-issues)
-		- [Moving call to speaker when the number is still dialled](#user-content-moving-call-to-speaker-when-the-number-is-still-dialled)
-		- [Switching from loudspeaker to earpiece may cause 500ms lack in the recording (doesn't affect the call itself)](#user-content-switching-from-loudspeaker-to-earpiece-may-cause-500ms-lack-in-the-recording-doesnt-affect-the-call-itself)
-	- [Troubleshooting](#user-content-troubleshooting)
-		- [Calls were recorded after installation but after reboot it doesn't work anymore](#calls-were-recorded-after-installation-but-after-reboot-it-doesnt-work-anymore)	
-		- [The calls are not recorded](#user-content-the-calls-are-not-recorded)
-		- [The UI application shows white screen](#user-content-the-ui-application-shows-white-screen)
-	- [FAQ](#user-content-faq)
-		- [Does it require developer mode?](#user-content-does-it-require-developer-mode)
-	- [Contacts](#user-content-contacts)
+###0.3
+ - Ability to remove recordings ([#1](../../issues/1));
+ - Settings page with ability to turn on/off the recorder, enable/disable automatic startup ([#2](../../issues/2));
+ - Cover actions with quick starting/stopping the recorder;
+ - Recording of an already ongoing call ([#2](../../issues/2)).
+
+###0.2
+ - Initial release
 
 ##Requirements
 
 * SailfishOS 1.1 or later
 * Allowance for unrusted software installation
 
-##Installation from OpenRepos
+##Installation
+
+###Installation from OpenRepos
 
 1. Install Warehouse application from [OpenRepos](https://openrepos.net/content/basil/warehouse-sailfishos)
 2. Search for 'Call Recorder' in Warehouse
-3. Install it.
+3. Enable repo and install it.
 
-##Installation from RPM
+###Installation from RPM
 
 1. Enable untrusted software installation at Settings -> Untrusted software.
 2. Download the latest version RPM package which is located at https://dpurgin.github.io/. This page is best accessed from your Jolla device. The package you need *doesn't* say `debuginfo` or `debugsource` in its name.
@@ -53,11 +41,11 @@ Native call recorder for Jolla's SailfishOS.
 
 You don't need to have the UI application running all the time to have your calls recorded. They always are as soon as the service is enabled. 
 
-##Installation from sources
+###Installation from sources
 
 This section assumes you are familiar with SailfishOS SDK and able to deploy your own project to a device. The project was developed and tested with SDK version 1407.
 
-1. Clone the project from master branch or a tag to a directory of your choice. The master branch will always contain compilable bleeding edge code.
+1. Clone the project from master branch or a tag to a directory of your choice. The master branch will always contain compilable bleeding edge code that doesn't necessarily work as you expect it to.
 2. Open harbour-callrecorder.pro in SailfishOS SDK, configure the project to use armv7hl and i486 targets.
 3. Run qmake, build, deploy. 
 
@@ -80,13 +68,13 @@ The recordings are currently encoded to FLAC, 44.1 kHz, mono, 16-bit LE, compres
 
 ###Call Recorder UI
 
-This application is a simple front-end for accessing the recordings which were made since the installation and property configuring harbour-callrecorder.
+This application is a simple front-end for accessing the recordings which were made since you got the recorder working. It also has an ability to turn on/off the recording quickly.
 
-####Start page -- Events
+####Start page -- Recordings
 
 This is a list of all the recordings made by the call recording daemon. Each list item contains call type marker (incoming/outgoing), caller/callee ID, date and time, recording duration and file size. Tap on item gets to Details page. 
 
-Pull-down menu provides access to About page.
+Pull-down menu provides access to About, Settings and Select recordings pages.
 
 ####Details Page
 
@@ -96,27 +84,52 @@ This page allows to listen to the recording. Player is situated in the lower par
 
 Pretty self-explanatory. Click on the button at the bottom to view short license notice. Full license text is installed to `/usr/share/harbour-callrecorder/LICENSE`.
 
+####Settings Page
+
+Turn the recorder on or off, enable or disable automatic startup on this page. If an item remains lit/unlit after tap, this means the underlying action didn't succeed. You might want to take a look at DBus session bus to see what's wrong.
+
+####Select recordings Page
+
+Select recordings with a tap on a list item or choose 'Select all' from the pulley menu. Having items selected, you can make an action. Currently, the only supported action is remove. 
+
 ##Known Issues
 
-###Moving call to speaker when the number is still dialled
+###Version 0.3
+
+Currently none
+
+###Version 0.2
+####Moving call to speaker when the number is still dialled
 
 If the call is started and put on speaker before the other party takes the call, the call remains on speaker during dialing tones but goes back to earpiece as soon as the other party takes the call, although the speaker icon remains highlit. 
+
+**Solution**
+
+Update to later version
 
 **Workaround**
 
 Tap on the speaker icon twice to get it back to speaker *or* move the call to speaker after the other party takes the call.
 
-###Switching from loudspeaker to earpiece may cause 500ms lack in the recording (doesn't affect the call itself)
+####Switching from loudspeaker to earpiece may cause 500ms lack in the recording (doesn't affect the call itself)
 
 This is due to asynchronous nature of PulseAudio events and internals of call recording process. It just needs some time to decide if the sound card really should go to other mode.
+
+**Solution**
+
+Update to later version
 
 **Workaround**
 
 None. Should be treated more as a feature. The 500ms switch time may change to lower values in future based on user experience.
 
-###The other party is not recorded if the call is on headphones or bluetooth
+####The other party is not recorded if the call is on headphones or bluetooth
 
 Unfortunately this feature is still WIP.
+
+**Solution**
+
+Update to later version
 
 **Workaround**
 
@@ -128,11 +141,19 @@ None. Do not reroute calls except to loudspeaker, if possible.
 
 ### Calls were recorded after installation but after reboot it doesn't work anymore
 
-Please see next section
+Look into the settings page of the call recorder UI and see if 'Automatic startup' option is highlit. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please see next section.
 
 ### The calls are not recorded
 
-Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in terminal (mind 'd' at the end and you don't need to enter $ sign, it's already there):
+First, look into the Settings page of the call recorder UI and see if 'Active' option is highlit. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please read further.
+
+Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in the terminal to make sure you have the latest status of systemd:
+
+```
+$ systemctl --user daemon-reload
+```
+
+Then issue the following command to see current status of the call recorder daemon (mind 'd' at the end and you don't need to enter $ sign, it's already there):
 
 ```
 $ systemctl --user status harbour-callrecorderd
@@ -184,7 +205,7 @@ Check if you have SailfishOS 1.1 (Settings -> Sailfish OS updates).
 ##FAQ
 
 ###Does it require developer mode?
-Generally, no. If you run into trouble, you might need the Terminal application to diagnose. 
+Generally, no. If you run into trouble, you might need the Terminal application or SSH connection to diagnose. 
 
 #Contacts
 If you have any questions not covered by this file, please contact me at <dpurgin@gmail.com>
