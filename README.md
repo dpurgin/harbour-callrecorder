@@ -5,6 +5,23 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 
 **This is application requires the latest opt-in SailfishOS update (update9, SailfishOS 1.1). If you are unsure, wait for its general availability.**
 
+##Table of Contents
+
+ - [Changes](#changes)
+ - [Requirements](#requirements)
+ - [Installation](#installation)
+     - [From OpenRepos](#installation-from-openrepos)
+     - [From RPM](#installation-from-rpm)
+     - [From Sources](#installation-from-sources)
+ - [Usage](#usage)
+     - [Storage](#storage)
+     - [Audio Format](#audio-format)
+     - [UI](#call-recorder-ui)
+ - [Known Issues](#known-issues)
+ - [Troubleshooting](#troubleshooting)
+ - [FAQ](#faq)
+ - [Contacts](#contacts)
+
 ##Changes
 
 ###0.3
