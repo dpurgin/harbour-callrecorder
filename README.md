@@ -107,7 +107,7 @@ Turn the recorder on or off, enable or disable automatic startup on this page. I
 
 ####Select recordings Page
 
-Select recordings with a tap on a list item or choose 'Select all' from the pulley menu. Having items selected, you can make an action. Currently, the only supported action is remove. 
+Select recordings with a tap on a list item. Having items selected, you can make an action. Currently, the only supported action is remove. Choose 'Delete all' from the pulley menu to remove all the recordings, both selected and unselected.
 
 ##Known Issues
 
