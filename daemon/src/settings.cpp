@@ -22,6 +22,7 @@
 #include <QAudioFormat>
 #include <QDebug>
 #include <QDir>
+#include <QSettings>
 #include <QStandardPaths>
 #include <QStringBuilder>
 
@@ -29,7 +30,33 @@ class Settings::SettingsPrivate
 {
     friend class Settings;
 
+    void readSettings()
+    {
+        QSettings settings(QString(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                                   QLatin1String("/callrecorder.ini")),
+                           QSettings::IniFormat);
+
+        settings.beginGroup("general");
+            inputDeviceName = settings.value("deviceName", "source.primary").toString();
+            outputLocation = settings.value("outputLocation",
+                                            QString(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                                                    QLatin1String("/data"))).toString();
+        settings.endGroup();
+
+        settings.beginGroup("encoder");
+            sampleRate = settings.value("sampleRate", 22050).toInt();
+            sampleSize = settings.value("sampleSize", 16).toInt();
+        settings.endGroup();
+    }
+
     QAudioDeviceInfo inputDevice;
+
+    QString inputDeviceName;
+
+    QString outputLocation;
+
+    int sampleRate;
+    int sampleSize;
 };
 
 Settings::Settings()
@@ -37,9 +64,11 @@ Settings::Settings()
 {
     qDebug() << __PRETTY_FUNCTION__;
 
+    d->readSettings();
+
     foreach (QAudioDeviceInfo deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
     {
-        if (deviceInfo.deviceName() == QLatin1String("source.primary"))
+        if (deviceInfo.deviceName() == d->inputDeviceName)
         {
             d->inputDevice = deviceInfo;
             break;
@@ -48,11 +77,11 @@ Settings::Settings()
 
     if (d->inputDevice.isNull())
     {
-        qDebug() << __PRETTY_FUNCTION__ << ": unable to find source.primary";
+        qDebug() << ": unable to find " << d->inputDeviceName;
 
         d->inputDevice = QAudioDeviceInfo::defaultInputDevice();
 
-        qDebug() << __PRETTY_FUNCTION__ << ": fallen back to " << d->inputDevice.deviceName();
+        qDebug() << ": fallen back to " << d->inputDevice.deviceName();
     }
 
     QDir().mkpath(outputLocation());
@@ -69,8 +98,8 @@ QAudioFormat Settings::audioFormat() const
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setChannelCount(1);
     format.setCodec("audio/pcm");
-    format.setSampleRate(44100);
-    format.setSampleSize(16);
+    format.setSampleRate(d->sampleRate);
+    format.setSampleSize(d->sampleSize);
     format.setSampleType(QAudioFormat::SignedInt);
 
     return d->inputDevice.nearestFormat(format);
@@ -83,8 +112,5 @@ QAudioDeviceInfo Settings::inputDevice() const
 
 QString Settings::outputLocation() const
 {
-    static QString outputLocation(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                                  QLatin1String("/data"));
-
-    return outputLocation;
+    return d->outputLocation;
 }
