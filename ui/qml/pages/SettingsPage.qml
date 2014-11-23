@@ -75,6 +75,41 @@ Page {
                         systemdUnit.enable();
                 }
             }
+
+            SectionHeader {
+                text: qsTr('Quality')
+            }
+
+            ComboBox {
+                label: qsTr('Sample rate')
+
+                menu: ContextMenu {
+                    MenuItem {
+                        text: '44.1 kHz'
+                        property int value: 44100
+                    }
+                    MenuItem {
+                        text: '32 kHz'
+                        property int value: 32000
+                    }
+                    MenuItem {
+                        text: '22.05 kHz'
+                        property int value: 22050
+                    }
+                    MenuItem {
+                        text: '16 kHz'
+                        property int value: 16000
+                    }
+                    MenuItem {
+                        text: '11.025 kHz'
+                        property int value: 11025
+                    }
+                    MenuItem {
+                        text: '8 kHz'
+                        property int value: 8000
+                    }
+                }
+            }
         }
     }
 }
