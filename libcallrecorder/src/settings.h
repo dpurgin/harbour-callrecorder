@@ -25,17 +25,31 @@
 
 #include "config.h"
 
-class LIBCALLRECORDER_DECL Settings
+class LIBCALLRECORDER_DECL Settings : public QObject
 {
+    Q_OBJECT
+
     Q_DISABLE_COPY(Settings)
 
+    Q_PROPERTY(QString outputLocation READ outputLocation WRITE setOutputLocation NOTIFY outputLocationChanged)
+    Q_PROPERTY(int sampleRate READ sampleRate WRITE setSampleRate NOTIFY sampleRateChanged)
+
 public:
-    Settings();
+    Settings(QObject* parent = NULL);
     ~Settings();
 
     QAudioFormat audioFormat() const;
     QAudioDeviceInfo inputDevice() const;
+
     QString outputLocation() const;
+    void setOutputLocation(const QString& outputLocation);
+
+    int sampleRate() const;
+    void setSampleRate(int sampleRate);
+
+signals:
+    void outputLocationChanged();
+    void sampleRateChanged();
 
 private:
     class SettingsPrivate;

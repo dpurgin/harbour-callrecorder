@@ -59,8 +59,9 @@ class Settings::SettingsPrivate
     int sampleSize;
 };
 
-Settings::Settings()
-    : d(new SettingsPrivate)
+Settings::Settings(QObject* parent)
+    : QObject(parent),
+      d(new SettingsPrivate)
 {
     qDebug() << __PRETTY_FUNCTION__;
 
@@ -113,4 +114,29 @@ QAudioDeviceInfo Settings::inputDevice() const
 QString Settings::outputLocation() const
 {
     return d->outputLocation;
+}
+
+int Settings::sampleRate() const
+{
+    return d->sampleRate;
+}
+
+void Settings::setOutputLocation(const QString& outputLocation)
+{
+    bool emitSignal = (d->outputLocation != outputLocation);
+
+    d->outputLocation = outputLocation;
+
+    if (emitSignal)
+        emit outputLocationChanged();
+}
+
+void Settings::setSampleRate(int sampleRate)
+{
+    bool emitSignal = (d->sampleRate != sampleRate);
+
+    d->sampleRate = sampleRate;
+
+    if (emitSignal)
+        emit sampleRateChanged();
 }
