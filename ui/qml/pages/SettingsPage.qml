@@ -91,7 +91,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr('Quality')
+                text: qsTr('Record Quality')
             }
 
             ComboBox {
