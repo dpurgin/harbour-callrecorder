@@ -26,11 +26,12 @@
 
 #include <qofono-qt5/qofonovoicecall.h>
 
+#include <libcallrecorder/settings.h>
+
 #include "application.h"
 #include "model.h"
 #include "eventstablemodel.h"
 #include "phonenumberstablemodel.h"
-#include "settings.h"
 
 class VoiceCallRecorder::VoiceCallRecorderPrivate
 {
