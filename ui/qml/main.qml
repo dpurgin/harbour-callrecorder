@@ -44,6 +44,22 @@ ApplicationWindow {
         return dtObj;
     }    
 
+    Connections {
+        target: settings
+
+        onSettingsChanged: {
+            dbusAdaptor.emitSignal('SettingsChanged')
+        }
+    }
+
+    DBusAdaptor {
+        id: dbusAdaptor
+
+        service: 'kz.dpurgin.DBus.CallRecorder'
+        path: '/UI'
+        iface: 'kz.dpurgin.DBus.CallRecorder'
+    }
+
     DBusInterface {
         service: 'kz.dpurgin.DBus.CallRecorder'
         path: '/Daemon'
