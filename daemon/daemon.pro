@@ -42,7 +42,6 @@ SOURCES += \
     src/main.cpp \
     src/voicecallrecorder.cpp \
     src/phonenumberstablemodel.cpp \
-    src/settings.cpp \
     src/eventstablemodel.cpp \
     src/model.cpp \
     src/pulseaudiowrapper.cpp \
@@ -56,7 +55,6 @@ HEADERS += \
     src/application.h \
     src/voicecallrecorder.h \
     src/phonenumberstablemodel.h \
-    src/settings.h \
     src/eventstablemodel.h \
     src/model.h \
     src/pulseaudiowrapper.h \

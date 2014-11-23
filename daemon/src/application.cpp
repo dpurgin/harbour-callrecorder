@@ -25,6 +25,7 @@
 
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
+#include <libcallrecorder/settings.h>
 
 #include "dbusadaptor.h"
 #include "model.h"
@@ -33,7 +34,6 @@
 #include "pulseaudiosink.h"
 #include "pulseaudiosinkport.h"
 #include "pulseaudiowrapper.h"
-#include "settings.h"
 #include "voicecallrecorder.h"
 
 class Application::ApplicationPrivate
