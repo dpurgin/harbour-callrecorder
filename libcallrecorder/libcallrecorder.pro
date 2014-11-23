@@ -24,7 +24,7 @@ target.path = /usr/share/$${PACKAGE}/lib
 
 INSTALLS += target
 
-QT += core sql
+QT += core sql multimedia
 
 DEFINES += LIBCALLRECORDER
 
@@ -32,7 +32,8 @@ SOURCES += \
     src/database.cpp \
     src/callrecorderexception.cpp \
     src/sqlcursor.cpp \
-    src/eventstablemodel.cpp
+    src/eventstablemodel.cpp \
+    src/settings.cpp
 
 HEADERS += \
     include/libcallrecorder/database.h \
@@ -42,6 +43,8 @@ HEADERS += \
     src/callrecorderexception.h \
     src/sqlcursor.h \
     src/eventstablemodel.h \
+    src/settings.h \
     include/libcallrecorder/sqlcursor.h \
-    include/libcallrecorder/callrecorderexception.h
+    include/libcallrecorder/callrecorderexception.h \
+    include/libcallrecorder/settings.h
 
