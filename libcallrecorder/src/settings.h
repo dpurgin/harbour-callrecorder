@@ -48,8 +48,9 @@ public:
     void setSampleRate(int sampleRate);
 
 signals:
-    void outputLocationChanged();
-    void sampleRateChanged();
+    void outputLocationChanged(QString outputLocation);
+    void sampleRateChanged(int sampleRate);
+    void settingsChanged();
 
 private:
     class SettingsPrivate;

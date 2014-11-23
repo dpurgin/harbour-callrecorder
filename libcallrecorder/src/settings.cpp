@@ -128,7 +128,10 @@ void Settings::setOutputLocation(const QString& outputLocation)
     d->outputLocation = outputLocation;
 
     if (emitSignal)
-        emit outputLocationChanged();
+    {
+        emit outputLocationChanged(outputLocation);
+        emit settingsChanged();
+    }
 }
 
 void Settings::setSampleRate(int sampleRate)
@@ -138,5 +141,8 @@ void Settings::setSampleRate(int sampleRate)
     d->sampleRate = sampleRate;
 
     if (emitSignal)
-        emit sampleRateChanged();
+    {
+        emit sampleRateChanged(sampleRate);
+        emit settingsChanged();
+    }
 }
