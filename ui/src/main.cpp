@@ -24,6 +24,7 @@
 
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/eventstablemodel.h>
+#include <libcallrecorder/settings.h>
 
 int main(int argc, char *argv[])
 {
@@ -44,6 +45,8 @@ int main(int argc, char *argv[])
     QScopedPointer< Database > db(new Database());
 
     QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
+
+    QScopedPointer< Settings > settings(new Settings());
 
     QScopedPointer< QQuickView > view(SailfishApp::createView());
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
@@ -67,6 +70,8 @@ int main(int argc, char *argv[])
                                             "\n"
                                             "\nYou should have received a copy of the GNU General Public License"
                                             " along with this program.  If not, see <http://www.gnu.org/licenses/>.");
+
+    view->rootContext()->setContextProperty("settings", settings.data());
 
     return app->exec();
 }
