@@ -22,6 +22,8 @@ import Sailfish.Silica 1.0
 Page {
     id: settingsPage
 
+    property bool acceptChanges: false // this is set to true when the page is complete, any change is made by the user
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -83,7 +85,7 @@ Page {
             TextField {
                 width: parent.width
 
-                text: '/home/nemo/.local/share/kz.dpurgin/harbour-callrecorder/data'
+                text: settings.outputLocation
 
                 label: qsTr('Location for storing the recordings')
             }
@@ -93,9 +95,13 @@ Page {
             }
 
             ComboBox {
+                id: sampleRateCombo
+
                 label: qsTr('Sample rate')
 
                 menu: ContextMenu {
+                    id: sampleRateMenu
+
                     MenuItem {
                         text: '44.1 kHz'
                         property int value: 44100
@@ -121,7 +127,32 @@ Page {
                         property int value: 8000
                     }
                 }
+
+                onCurrentItemChanged: {
+                    if (acceptChanges)
+                        settings.sampleRate = currentItem.value;
+                }
             }
         }
+    }
+
+    Component.onCompleted: {
+        console.log('Component.onCompleted');
+
+        sampleRateMenu._foreachMenuItem(function(item, index) {
+            if (item.value == settings.sampleRate)
+            {
+                sampleRateCombo.currentIndex = index;
+                return false;
+            }
+
+            return true;
+        })
+
+        acceptChanges = true;
+    }
+
+    RemorsePopup {
+        id: remorse
     }
 }
