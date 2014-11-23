@@ -77,6 +77,18 @@ Page {
             }
 
             SectionHeader {
+                text: qsTr('Location')
+            }
+
+            TextField {
+                width: parent.width
+
+                text: '/home/nemo/.local/share/kz.dpurgin/harbour-callrecorder/data'
+
+                label: qsTr('Location for storing the recordings')
+            }
+
+            SectionHeader {
                 text: qsTr('Quality')
             }
 
