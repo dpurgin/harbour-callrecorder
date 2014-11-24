@@ -113,7 +113,9 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ###Version 0.3
 
-Currently none
+####Empty list placeholder appears sometimes when having small number of recordings
+
+See [#6](../../issues/6)
 
 ###Version 0.2
 ####Moving call to speaker when the number is still dialled
