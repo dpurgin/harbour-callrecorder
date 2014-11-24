@@ -116,6 +116,13 @@ QString Settings::outputLocation() const
     return d->outputLocation;
 }
 
+void Settings::reload()
+{
+    qDebug() << "entering";
+
+    d->readSettings();
+}
+
 int Settings::sampleRate() const
 {
     return d->sampleRate;

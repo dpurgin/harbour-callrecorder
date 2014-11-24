@@ -47,6 +47,9 @@ public:
     int sampleRate() const;
     void setSampleRate(int sampleRate);
 
+public slots:
+    void reload();
+
 signals:
     void outputLocationChanged(QString outputLocation);
     void sampleRateChanged(int sampleRate);
