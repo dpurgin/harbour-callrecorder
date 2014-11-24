@@ -106,7 +106,7 @@ VoiceCallRecorder::~VoiceCallRecorder()
             params.insert(QLatin1String("FileSize"), fi.size());
             params.insert(QLatin1String("Duration"), d->duration / 1000); // duration is stored in seconds
 
-            app->model()->events()->update(d->eventId, params);
+            daemon->model()->events()->update(d->eventId, params);
         }
 
         setState(Inactive);
@@ -124,14 +124,14 @@ void VoiceCallRecorder::arm()
 {
     qDebug() << __PRETTY_FUNCTION__;
 
-    const QAudioFormat audioFormat = app->settings()->audioFormat();
+    const QAudioFormat audioFormat = daemon->settings()->audioFormat();
 
     qDebug() << __PRETTY_FUNCTION__ << "Audio format is: " << audioFormat;
 
     // create audio input device
     if (d->audioInput.isNull())
     {
-        d->audioInput.reset(new QAudioInput(app->settings()->inputDevice(), audioFormat));
+        d->audioInput.reset(new QAudioInput(daemon->settings()->inputDevice(), audioFormat));
         connect(d->audioInput.data(), SIGNAL(stateChanged(QAudio::State)),
                 this, SLOT(onAudioInputStateChanged(QAudio::State)));
     }
@@ -179,7 +179,7 @@ void VoiceCallRecorder::arm()
         // if line ID does not exist, we should wait for the corresponding signal from Ofono,
         // but maybe it is always known at this stage. Needs checking.
         // File name is set to "{timestamp}_{phoneNumber}_{type}.flac"
-        d->outputLocation = (app->settings()->outputLocation() %
+        d->outputLocation = (daemon->settings()->outputLocation() %
                              QLatin1Char('/') %
                              Application::getIsoTimeStamp(timeStamp()).replace(QChar(':'), QChar('_')) % QLatin1Char('_') %
                              d->qofonoVoiceCall->lineIdentification() % QLatin1Char('_') %
@@ -212,9 +212,9 @@ void VoiceCallRecorder::arm()
         else
             eventType = EventsTableModel::Partial;
 
-        d->eventId = app->model()->events()->add(
+        d->eventId = daemon->model()->events()->add(
                     timeStamp(),                                                // time stamp of recording
-                    app->model()->phoneNumbers()->getIdByLineIdentification(    // phone number ref
+                    daemon->model()->phoneNumbers()->getIdByLineIdentification(    // phone number ref
                         d->qofonoVoiceCall->lineIdentification()),
                     eventType,
                     EventsTableModel::Armed);                                   // initial recording state
@@ -240,7 +240,7 @@ void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 
     const qint16* sampleData = reinterpret_cast< const qint16* >(data.constData());
 
-    quint64 sampleCount = data.size() / (app->settings()->audioFormat().sampleSize() / 8);
+    quint64 sampleCount = data.size() / (daemon->settings()->audioFormat().sampleSize() / 8);
 
 //    qDebug() << __PRETTY_FUNCTION__ << ": sample count: " << sampleCount;
 
@@ -316,7 +316,7 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             QVariantMap params;
             params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::InProgress)));
 
-            app->model()->events()->update(d->eventId, params);
+            daemon->model()->events()->update(d->eventId, params);
         }
 
         // update 'last record start' timestamp to calculate duration when the recording ents
@@ -346,7 +346,7 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
         // if the call was never active, remove the record from Events
         else
         {
-            app->model()->events()->remove(d->eventId);
+            daemon->model()->events()->remove(d->eventId);
 
             setState(Inactive);
         }
@@ -365,7 +365,7 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
                 QVariantMap params;
                 params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Suspended)));
 
-                app->model()->events()->update(d->eventId, params);
+                daemon->model()->events()->update(d->eventId, params);
             }
 
             // calculate and add duration now

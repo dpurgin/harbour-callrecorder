@@ -69,7 +69,7 @@ int EventsTableModel::add(const QDateTime& timeStamp, int phoneNumberId, EventTy
     params.insert(QLatin1String(":recordingStateId"), static_cast< int >(recordingState));
 
     // TODO: process insert errors
-    return app->database()->insert(insertStatement, params);
+    return daemon->database()->insert(insertStatement, params);
 }
 
 void EventsTableModel::remove(int id)
@@ -82,7 +82,7 @@ void EventsTableModel::remove(int id)
     params.insert(QLatin1String(":id"), id);
 
     // TODO: process errors (maybe?)
-    app->database()->execute(statement, params);
+    daemon->database()->execute(statement, params);
 }
 
 void EventsTableModel::update(int id, const QVariantMap& items)
@@ -106,5 +106,5 @@ void EventsTableModel::update(int id, const QVariantMap& items)
     }
 
     // TODO: process errors
-    app->database()->execute(statement.arg(setList.join(QChar(','))), params);
+    daemon->database()->execute(statement.arg(setList.join(QChar(','))), params);
 }
