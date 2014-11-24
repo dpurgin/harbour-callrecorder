@@ -28,6 +28,7 @@
 #include <libcallrecorder/settings.h>
 
 #include "dbusadaptor.h"
+#include "uidbusinterface.h"
 #include "model.h"
 #include "pulseaudiocard.h"
 #include "pulseaudiocardprofile.h"
@@ -51,6 +52,7 @@ private:
     QScopedPointer< Database > database;
 
     QScopedPointer< DBusAdaptor > dbusAdaptor;
+    QScopedPointer< UiDBusInterface > uiInterface;
 
     QScopedPointer< Model > model;
 
@@ -82,11 +84,16 @@ Application::Application(int argc, char* argv[])
     setApplicationName(QLatin1String("harbour-callrecorder"));
     setOrganizationName(QLatin1String("kz.dpurgin"));
 
-    d->dbusAdaptor.reset(new DBusAdaptor(this));
+    d->settings.reset(new Settings());
+
+    d->dbusAdaptor.reset(new DBusAdaptor(this));        
+    d->uiInterface.reset(new UiDBusInterface(this));
+
+    connect(d->uiInterface.data(), SIGNAL(SettingsChanged()),
+            d->settings.data(), SLOT(reload()));
 
     d->database.reset(new Database());
     d->model.reset(new Model());
-    d->settings.reset(new Settings());
 
     d->timer.reset(new QTimer());
     d->timer->setInterval(250);
