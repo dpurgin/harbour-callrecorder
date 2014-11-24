@@ -117,6 +117,10 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 See [#6](../../issues/6)
 
+**Workaround**
+
+Restart the UI application
+
 ###Version 0.2
 ####Moving call to speaker when the number is still dialled
 
