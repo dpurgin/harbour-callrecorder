@@ -20,8 +20,8 @@
 
 #include <QTimer>
 
-#include <qofono-qt5/qofonomanager.h>
-#include <qofono-qt5/qofonovoicecallmanager.h>
+#include <qofonomanager.h>
+#include <qofonovoicecallmanager.h>
 
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>

@@ -33,9 +33,9 @@ QT += core dbus sql multimedia
 
 INCLUDEPATH += ../libcallrecorder/include
 
-LIBS += -L../libcallrecorder -lcallrecorder -lqofono-qt5
+LIBS += -L../libcallrecorder -lcallrecorder
 
-PKGCONFIG += flac libpulse
+PKGCONFIG += flac libpulse qofono-qt5
 
 SOURCES += \
     src/application.cpp \
