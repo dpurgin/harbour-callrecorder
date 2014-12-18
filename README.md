@@ -3,7 +3,7 @@ harbour-callrecorder
 
 Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 
-**This is application requires the latest opt-in SailfishOS update (update9, SailfishOS 1.1). If you are unsure, wait for its general availability.**
+**This is application requires the latest SailfishOS update (update10, SailfishOS 1.1) or later**
 
 ##Table of Contents
 
@@ -224,6 +224,14 @@ harbour-callrecorderd.service - Call Recorder Daemon
 ### The UI application shows white screen
 
 Check if you have SailfishOS 1.1 (Settings -> Sailfish OS updates).
+
+### Android applications do not record sound after recording a call
+
+This is an issue of underlying PulseAudio-related stuff which is likely to be fixed in the upcoming releases of SailfishOS. To work around this use the following command:
+
+```
+$ pacmd set-default-source source.primary
+```
 
 ##FAQ
 
