@@ -36,7 +36,7 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 ##Requirements
 
 * SailfishOS 1.1 or later
-* Allowance for unrusted software installation
+* Granted permission for installation of untrusted software (Settings -> Untrusted software) 
 
 ##Installation
 
@@ -95,7 +95,7 @@ Pull-down menu provides access to About, Settings and Select recordings pages.
 
 ####Details Page
 
-This page allows to listen to the recording. Player is situated in the lower part of the page. If an error occured, player is replaced with textual error description. The recording can be seeked through using the progress bar above the Play button.
+This page allows to listen to the recording. Player is situated in the lower part of the page. If an error occurred, player is replaced with textual error description. The recording can be seeked through using the progress bar above the Play button.
 
 ####About Page
 
@@ -164,11 +164,11 @@ None. Do not reroute calls except to loudspeaker, if possible.
 
 ### Calls were recorded after installation but after reboot it doesn't work anymore
 
-Look into the settings page of the call recorder UI and see if 'Automatic startup' option is highlit. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please see next section.
+Look into the settings page of the call recorder UI and see if 'Automatic startup' option is highlighted. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please see next section.
 
 ### The calls are not recorded
 
-First, look into the Settings page of the call recorder UI and see if 'Active' option is highlit. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please read further.
+First, look into the Settings page of the call recorder UI and see if 'Active' option is highlighted. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please read further.
 
 Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in the terminal to make sure you have the latest status of systemd:
 
