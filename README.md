@@ -113,6 +113,20 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ###Version 0.3
 
+####Automatic startup refuses to activate
+
+See [#8](../../issues/8)
+
+This issue appears on fresh installs of 0.3-5.
+
+**Workaround**
+
+Being the root user issue the following command:
+
+```
+# chown --recursive nemo:nemo /home/nemo/.config/systemd
+```
+
 ####Empty list placeholder appears sometimes when having small number of recordings
 
 See [#6](../../issues/6)
