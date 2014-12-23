@@ -71,10 +71,9 @@ rm -rf %{buildroot}
 echo "Reloading systemd..."
 systemctl-user daemon-reload
 
-
-
+# install
 if [ $1 = 1 ]; then
-    echo "Enabling service"
+    echo "Enabling service..."
     mkdir -p /home/nemo/.config/systemd/user/user-session.target.wants
     chown --recursive nemo:nemo /home/nemo/.config/systemd
 
@@ -82,7 +81,8 @@ if [ $1 = 1 ]; then
 
     echo "Starting service..."
     systemctl-user start harbour-callrecorderd
-else
+# upgrade
+elif [ $1 = 2 ]; then
     echo "Starting service..."
     chown --recursive nemo:nemo /home/nemo/.config/systemd
     systemctl-user try-restart harbour-callrecorderd
@@ -95,8 +95,12 @@ desktop-file-install --delete-original       \
 
 # >> uninstall pre
 %preun
-echo "Stopping service..."
-systemctl-user stop harbour-callrecorderd
+
+#uninstall
+if [ $1 = 0 ]; then
+    echo "Stopping service..."
+    systemctl-user stop harbour-callrecorderd
+fi
 # << uninstall pre
 
 %files
