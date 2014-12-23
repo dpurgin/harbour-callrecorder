@@ -24,6 +24,11 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 
 ##Changes
 
+###0.3-6
+ - "Automatic startup" refuses to activate ([#8](../../issues/1)).
+ 
+If you update from 0.3-5 and the call recording daemon is running, it will be shut down as a side effect of this update. Please start it again from UI using the cover action or with Settings -> Active.
+
 ###0.3
  - Ability to remove recordings ([#1](../../issues/1));
  - Settings page with ability to turn on/off the recorder, enable/disable automatic startup ([#2](../../issues/2));
@@ -118,6 +123,10 @@ Select recordings with a tap on a list item. Having items selected, you can make
 See [#8](../../issues/8)
 
 This issue appears on fresh installs of 0.3-5.
+
+**Solution**
+
+Update to later version.
 
 **Workaround**
 
