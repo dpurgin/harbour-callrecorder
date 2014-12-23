@@ -52,7 +52,7 @@ int PhoneNumbersTableModel::getIdByLineIdentification(const QString& lineIdentif
     Database::SqlParameters params;
     params.insert(QLatin1String(":lineIdentification"), lineIdentification);
 
-    QScopedPointer< SqlCursor > cursor(app->database()->select(selectStatement, params));
+    QScopedPointer< SqlCursor > cursor(daemon->database()->select(selectStatement, params));
 
     // TODO: process errors when selecting from DB
     if (cursor.isNull())
@@ -70,7 +70,7 @@ int PhoneNumbersTableModel::getIdByLineIdentification(const QString& lineIdentif
         static QString insertStatement("INSERT INTO PhoneNumbers(LineIdentification) VALUES(:lineIdentification);");
 
         // TODO: process errors when inserting to DB
-        id = app->database()->insert(insertStatement, params);
+        id = daemon->database()->insert(insertStatement, params);
     }
 
     return id;

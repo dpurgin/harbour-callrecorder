@@ -25,7 +25,7 @@
 
 #include "voicecallrecorder.h"
 
-#define app (reinterpret_cast< Application* >(qApp))
+#define daemon (reinterpret_cast< Application* >(qApp))
 
 class Database;
 class Model;
