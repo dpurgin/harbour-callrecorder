@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>images/icon-m-partial-call.png</file>
+        <file>images/icon-m-up.png</file>
+        <file>images/icon-m-sdcard.png</file>
+        <file>images/icon-m-hidden-folders.png</file>
     </qresource>
 </RCC>
