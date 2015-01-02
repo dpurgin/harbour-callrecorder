@@ -27,7 +27,11 @@ INCLUDEPATH += ../libcallrecorder/include
 
 LIBS += -L../libcallrecorder -lcallrecorder
 
+HEADERS += \
+    src/filesystemhelper.h
+
 SOURCES += \
+    src/filesystemhelper.cpp \
     src/main.cpp
 
 RESOURCES += ui.qrc
@@ -37,6 +41,8 @@ OTHER_FILES += \
     translations/*.ts \
     qml/pages/AboutPage.qml \
     qml/cover/CoverPage.qml \
+    qml/pages/DirectoryNameDialog.qml \
+    qml/pages/DirectoryPickerDialog.qml \
     qml/pages/EventsDelegate.qml \
     qml/pages/EventsPage.qml \
     qml/pages/EventsPicker.qml \
@@ -56,4 +62,6 @@ INSTALLS += images
 # following CONFIG line
 #CONFIG += sailfishapp_i18n
 #TRANSLATIONS += translations/ui-de.ts
+
+
 
