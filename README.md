@@ -3,7 +3,7 @@ harbour-callrecorder
 
 Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 
-**This is application requires the latest opt-in SailfishOS update (update9, SailfishOS 1.1). If you are unsure, wait for its general availability.**
+**This is application requires the latest SailfishOS update (update10, SailfishOS 1.1) or later**
 
 ##Table of Contents
 
@@ -36,7 +36,7 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 ##Requirements
 
 * SailfishOS 1.1 or later
-* Allowance for unrusted software installation
+* Granted permission for installation of untrusted software (Settings -> Untrusted software) 
 
 ##Installation
 
@@ -95,7 +95,7 @@ Pull-down menu provides access to About, Settings and Select recordings pages.
 
 ####Details Page
 
-This page allows to listen to the recording. Player is situated in the lower part of the page. If an error occured, player is replaced with textual error description. The recording can be seeked through using the progress bar above the Play button.
+This page allows to listen to the recording. Player is situated in the lower part of the page. If an error occurred, player is replaced with textual error description. The recording can be seeked through using the progress bar above the Play button.
 
 ####About Page
 
@@ -113,7 +113,27 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ###Version 0.3
 
-Currently none
+####Automatic startup refuses to activate
+
+See [#8](../../issues/8)
+
+This issue appears on fresh installs of 0.3-5.
+
+**Workaround**
+
+Being the root user issue the following command:
+
+```
+# chown --recursive nemo:nemo /home/nemo/.config/systemd
+```
+
+####Empty list placeholder appears sometimes when having small number of recordings
+
+See [#6](../../issues/6)
+
+**Workaround**
+
+Restart the UI application
 
 ###Version 0.2
 ####Moving call to speaker when the number is still dialled
@@ -158,11 +178,11 @@ None. Do not reroute calls except to loudspeaker, if possible.
 
 ### Calls were recorded after installation but after reboot it doesn't work anymore
 
-Look into the settings page of the call recorder UI and see if 'Automatic startup' option is highlit. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please see next section.
+Look into the settings page of the call recorder UI and see if 'Automatic startup' option is highlighted. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please see next section.
 
 ### The calls are not recorded
 
-First, look into the Settings page of the call recorder UI and see if 'Active' option is highlit. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please read further.
+First, look into the Settings page of the call recorder UI and see if 'Active' option is highlighted. If not, tap on it to activate. If it remains unlit or goes lit for a short period of time and then back to unlit, please read further.
 
 Please check if the service is enabled and running. You will need the Terminal application. Issue the following command in the terminal to make sure you have the latest status of systemd:
 
@@ -218,6 +238,14 @@ harbour-callrecorderd.service - Call Recorder Daemon
 ### The UI application shows white screen
 
 Check if you have SailfishOS 1.1 (Settings -> Sailfish OS updates).
+
+### Android applications do not record sound after recording a call
+
+This is an issue of underlying PulseAudio-related stuff which is likely to be fixed in the upcoming releases of SailfishOS. To work around this use the following command:
+
+```
+$ pacmd set-default-source source.primary
+```
 
 ##FAQ
 
