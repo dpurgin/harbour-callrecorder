@@ -83,6 +83,8 @@ Page {
             }
 
             TextField {
+                id: outputLocationField
+
                 width: parent.width
 
                 text: settings.outputLocation
@@ -97,7 +99,9 @@ Page {
                     text: qsTr('Browse')
 
                     onClicked: {
-                        var dialog = pageStack.push("DirectoryPickerDialog.qml");
+                        var dialog = pageStack.push("DirectoryPickerDialog.qml", {
+                            directoryPath: outputLocationField.text
+                        });
                     }
                 }
 
