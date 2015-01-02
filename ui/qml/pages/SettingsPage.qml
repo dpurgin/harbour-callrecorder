@@ -129,18 +129,31 @@ Page {
                     onClicked: {
                         var oldLocation = settings.outputLocation;
                         var newLocation = outputLocationField.text;
-                        var fileList = fileSystemHelper.fileList(oldLocation);
 
                         settings.outputLocation = newLocation;
 
-                        if (fileList.length > 0)
+                        if (!fileSystemHelper.dirIsEmpty(oldLocation))
                         {
                             remorse.execute(qsTr("Relocating files"), function() {
-                                console.log('relocate');
+                                fileSystemHelper.relocate(oldLocation, newLocation);
                             });
                         }
                     }
                 }
+            }
+
+            ProgressBar {
+                id: relocationProgress
+
+                width: parent.width
+
+                label: qsTr('Relocating files')
+
+                minimumValue: 0
+
+                visible: fileSystemHelper.busy
+                value: fileSystemHelper.progress
+                maximumValue: fileSystemHelper.queueLength
             }
 
             SectionHeader {
