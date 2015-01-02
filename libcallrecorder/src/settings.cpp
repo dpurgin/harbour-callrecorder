@@ -18,6 +18,7 @@
 
 #include "settings.h"
 
+#include <QCoreApplication>
 #include <QAudioDeviceInfo>
 #include <QAudioFormat>
 #include <QDebug>
@@ -30,18 +31,21 @@ class Settings::SettingsPrivate
 {
     friend class Settings;
 
+    QString configPath()
+    {
+        return QString(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
+                       QLatin1Char('/') % qApp->applicationName() %
+                       QLatin1String("/callrecorder.ini"));
+    }
+
     void readSettings()
     {
-        QSettings settings(QString(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
-                                   QLatin1String("/callrecorder.ini")),
-                           QSettings::IniFormat);
+        QSettings settings(configPath(), QSettings::IniFormat);
 
-        settings.beginGroup("general");
-            inputDeviceName = settings.value("deviceName", "source.primary").toString();
-            outputLocation = settings.value("outputLocation",
-                                            QString(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                                                    QLatin1String("/data"))).toString();
-        settings.endGroup();
+        inputDeviceName = settings.value("deviceName", "source.primary").toString();
+        outputLocation = settings.value("outputLocation",
+                                        QString(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                                                QLatin1String("/data"))).toString();
 
         settings.beginGroup("encoder");
             sampleRate = settings.value("sampleRate", 22050).toInt();
@@ -52,14 +56,10 @@ class Settings::SettingsPrivate
 
     void saveSettings()
     {
-        QSettings settings(QString(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
-                                   QLatin1String("/callrecorder.ini")),
-                           QSettings::IniFormat);
+        QSettings settings(configPath(), QSettings::IniFormat);
 
-        settings.beginGroup("general");
-            settings.setValue("deviceName", inputDeviceName);
-            settings.setValue("outputLocation", outputLocation);
-        settings.endGroup();
+        settings.setValue("deviceName", inputDeviceName);
+        settings.setValue("outputLocation", outputLocation);
 
         settings.beginGroup("encoder");
             settings.setValue("sampleRate", sampleRate);
