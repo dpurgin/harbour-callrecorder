@@ -30,14 +30,7 @@
 
 int main(int argc, char *argv[])
 {
-    // SailfishApp::main() will display "qml/template.qml", if you need more
-    // control over initialization, you can use:
-    //
-    //   - SailfishApp::application(int, char *[]) to get the QGuiApplication *
-    //   - SailfishApp::createView() to get a new QQuickView * instance
-    //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
-    //
-    // To display the view, call "show()" (will show fullscreen on device).
+    qmlRegisterType< Settings >("kz.dpurgin.callrecorder.Settings", 1, 0, "Settings");
 
     QScopedPointer< QGuiApplication > app(SailfishApp::application(argc, argv));
 
@@ -50,7 +43,7 @@ int main(int argc, char *argv[])
 
     QScopedPointer< FileSystemHelper > fileSystemHelper(new FileSystemHelper());
 
-    QScopedPointer< Settings > settings(new Settings());
+//    QScopedPointer< Settings > settings(new Settings());
 
     QScopedPointer< QQuickView > view(SailfishApp::createView());
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
@@ -77,7 +70,7 @@ int main(int argc, char *argv[])
                                             "\nYou should have received a copy of the GNU General Public License"
                                             " along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 
-    view->rootContext()->setContextProperty("settings", settings.data());
+//    view->rootContext()->setContextProperty("settings", settings.data());
 
     return app->exec();
 }
