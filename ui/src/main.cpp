@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 #include <libcallrecorder/eventstablemodel.h>
 #include <libcallrecorder/settings.h>
 
+#include "filesystemhelper.h"
+
 int main(int argc, char *argv[])
 {
     // SailfishApp::main() will display "qml/template.qml", if you need more
@@ -46,12 +48,16 @@ int main(int argc, char *argv[])
 
     QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
 
+    QScopedPointer< FileSystemHelper > fileSystemHelper(new FileSystemHelper());
+
     QScopedPointer< Settings > settings(new Settings());
 
     QScopedPointer< QQuickView > view(SailfishApp::createView());
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
     view->show();
+
     view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
+    view->rootContext()->setContextProperty("fileSystemHelper", fileSystemHelper.data());
 
     view->rootContext()->setContextProperty("license",
                                             "Call Recorder for SailfishOS"
