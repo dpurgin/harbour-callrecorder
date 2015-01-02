@@ -72,19 +72,31 @@ Dialog {
                 menu: Component {
                     ContextMenu {
                         MenuItem {
-                            text: qsTr('Rename')
+                            text: enabled? qsTr('Rename'): qsTr('Renaming not available')
+
+                            enabled: fileSystemHelper.isWritable(model.filePath)
+
                             onClicked: {
                                 console.log('rename ' + model.fileName)
                             }
                         }
 
                         MenuItem {
-                            text: qsTr('Delete')
+                            text: enabled? qsTr('Delete'): qsTr('Removal not available')
+
+                            enabled: fileSystemHelper.isRemovable(model.filePath)
+
                             onClicked: {
-                                console.log('delete ' + model.fileName)
+                                deleteDirectory()
                             }
                         }
                     }
+                }
+
+                function deleteDirectory() {
+                    remorseAction("Deleting directory", function() {
+                        console.log('delete ' + model.filePath);
+                    })
                 }
             }
         }
@@ -93,9 +105,11 @@ Dialog {
             id: controls
 
             width: parent.width
-            height: Theme.itemSizeLarge
+            height: buttons.height
 
             Row {
+                id: buttons
+
                 IconButton {
                     icon.source: 'qrc:/images/icon-m-up.png'
 
@@ -114,8 +128,11 @@ Dialog {
 
                 IconButton {
                     icon.source: 'qrc:/images/icon-m-sdcard.png'
+
+                    enabled: fileSystemHelper.sdCardExists()
+
                     onClicked: {
-                        folderListModel.folder = 'file:///mnt/sdcard';
+                        folderListModel.folder = 'file://' + fileSystemHelper.sdCardPath();
                     }
                 }
 
