@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ class LIBCALLRECORDER_DECL Settings : public QObject
 
     Q_DISABLE_COPY(Settings)
 
+    Q_PROPERTY(int compression READ compression WRITE setCompression NOTIFY compressionChanged)
     Q_PROPERTY(QString outputLocation READ outputLocation WRITE setOutputLocation NOTIFY outputLocationChanged)
     Q_PROPERTY(int sampleRate READ sampleRate WRITE setSampleRate NOTIFY sampleRateChanged)
 
@@ -40,6 +41,9 @@ public:
 
     QAudioFormat audioFormat() const;
     QAudioDeviceInfo inputDevice() const;
+
+    int compression() const;
+    void setCompression(int compression);
 
     QString outputLocation() const;
     void setOutputLocation(const QString& outputLocation);
@@ -51,6 +55,7 @@ public slots:
     void reload();
 
 signals:
+    void compressionChanged(int compression);
     void outputLocationChanged(QString outputLocation);
     void sampleRateChanged(int sampleRate);
     void settingsChanged();

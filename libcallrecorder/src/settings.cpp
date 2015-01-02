@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ class Settings::SettingsPrivate
         settings.beginGroup("encoder");
             sampleRate = settings.value("sampleRate", 22050).toInt();
             sampleSize = settings.value("sampleSize", 16).toInt();
+            compression = settings.value("compression", 8).toInt();
         settings.endGroup();
     }
 
@@ -55,6 +56,7 @@ class Settings::SettingsPrivate
 
     QString outputLocation;
 
+    int compression;
     int sampleRate;
     int sampleSize;
 };
@@ -106,6 +108,11 @@ QAudioFormat Settings::audioFormat() const
     return d->inputDevice.nearestFormat(format);
 }
 
+int Settings::compression() const
+{
+    return d->compression;
+}
+
 QAudioDeviceInfo Settings::inputDevice() const
 {
     return d->inputDevice;
@@ -126,6 +133,19 @@ void Settings::reload()
 int Settings::sampleRate() const
 {
     return d->sampleRate;
+}
+
+void Settings::setCompression(int compression)
+{
+    bool emitSignal = (d->compression != compression);
+
+    d->compression = compression;
+
+    if (emitSignal)
+    {
+        emit compressionChanged(compression);
+        emit settingsChanged();
+    }
 }
 
 void Settings::setOutputLocation(const QString& outputLocation)
