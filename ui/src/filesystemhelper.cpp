@@ -27,19 +27,27 @@ FileSystemHelper::FileSystemHelper(QObject *parent) :
 {
 }
 
+bool FileSystemHelper::dirIsEmpty(const QString& dirPath) const
+{
+    return QFileInfo(dirPath).isDir() &&
+            (QDir(dirPath).entryList(QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot).size() == 0);
+}
+
 bool FileSystemHelper::exists(const QString& filePath) const
 {
     return QFileInfo(filePath).exists();
+}
+
+QStringList FileSystemHelper::fileList(const QString& dirPath) const
+{
+    return (QFileInfo(dirPath).isDir()? QDir(dirPath).entryList(QDir::Files): QStringList());
 }
 
 bool FileSystemHelper::isRemovable(const QString& filePath) const
 {
     QFileInfo fi(filePath);
 
-    return fi.isWritable() && (fi.isDir()?
-                                   QDir(filePath).entryList(
-                                       QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot).size() == 0:
-                                   true);
+    return fi.isWritable() && (!fi.isDir() || dirIsEmpty(filePath));
 }
 
 bool FileSystemHelper::isWritable(const QString& filePath) const

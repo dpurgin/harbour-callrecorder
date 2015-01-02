@@ -20,6 +20,7 @@
 #define HARBOUR_CALLRECORDER_UI_FILESYSTEMHELPER_H
 
 #include <QObject>
+#include <QStringList>
 
 class FileSystemHelper : public QObject
 {
@@ -28,11 +29,13 @@ class FileSystemHelper : public QObject
 public:
     explicit FileSystemHelper(QObject *parent = 0);
 
+    Q_INVOKABLE bool dirIsEmpty(const QString& dirPath) const;
     Q_INVOKABLE bool exists(const QString& filePath) const;
+    Q_INVOKABLE QStringList fileList(const QString& dirPath) const;
     Q_INVOKABLE bool isRemovable(const QString& filePath) const;
     Q_INVOKABLE bool isWritable(const QString& filePath) const;
 
-    Q_INVOKABLE bool mkpath(const QString& path) const;
+    Q_INVOKABLE bool mkpath(const QString& dirPath) const;
     Q_INVOKABLE bool rename(const QString& filePath, const QString& newName) const;
     Q_INVOKABLE bool remove(const QString& filePath) const;
 
