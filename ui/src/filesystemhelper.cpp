@@ -49,6 +49,11 @@ bool FileSystemHelper::isWritable(const QString& filePath) const
     return fi.exists() && fi.isWritable();
 }
 
+bool FileSystemHelper::mkpath(const QString& dirPath) const
+{
+    return QDir().mkpath(dirPath);
+}
+
 bool FileSystemHelper::rename(const QString& filePath, const QString& newName) const
 {
     QFile f(filePath);

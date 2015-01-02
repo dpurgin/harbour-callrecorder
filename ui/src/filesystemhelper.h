@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE bool isRemovable(const QString& filePath) const;
     Q_INVOKABLE bool isWritable(const QString& filePath) const;
 
+    Q_INVOKABLE bool mkpath(const QString& path) const;
     Q_INVOKABLE bool rename(const QString& filePath, const QString& newName) const;
     Q_INVOKABLE bool remove(const QString& filePath) const;
 
