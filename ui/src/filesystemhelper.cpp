@@ -59,3 +59,15 @@ bool FileSystemHelper::remove(const QString& filePath) const
 
     return isRemovable(filePath) && (fi.isDir()? QDir().rmdir(filePath): QFile(filePath).remove());
 }
+
+bool FileSystemHelper::sdCardExists() const
+{
+    return QDir("/media/sdcard").entryList(QDir::NoDotAndDotDot).size() > 0;
+}
+
+QString FileSystemHelper::sdCardPath() const
+{
+    QFileInfoList fiList = QDir("/media/sdcard").entryInfoList(QDir::NoDotAndDotDot);
+
+    return fiList.size() > 0? fiList.first().absoluteFilePath(): QString();
+}

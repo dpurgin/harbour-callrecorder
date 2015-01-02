@@ -35,6 +35,9 @@ public:
     Q_INVOKABLE bool rename(const QString& filePath, const QString& newName) const;
     Q_INVOKABLE bool remove(const QString& filePath) const;
 
+    Q_INVOKABLE bool sdCardExists() const;
+    Q_INVOKABLE QString sdCardPath() const;
+
 signals:
 
 public slots:
