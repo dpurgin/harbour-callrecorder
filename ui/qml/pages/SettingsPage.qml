@@ -89,11 +89,23 @@ Page {
 
                 text: settings.outputLocation
 
+                errorHighlight: !fileSystemHelper.isWritable(text)
+
                 label: qsTr('Location for storing the recordings')
             }
 
             Row {
                 width: parent.width
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+
+                    leftMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingLarge
+
+                    horizontalCenter: parent.horizontalCenter
+                }
 
                 Button {
                     text: qsTr('Browse')
@@ -110,7 +122,24 @@ Page {
                 }
 
                 Button {
-                    text: qsTr('Relocate')
+                    text: qsTr('Save')
+
+                    enabled: !outputLocationField.errorHighlight && (settings.outputLocation !== outputLocationField.text)
+
+                    onClicked: {
+                        var oldLocation = settings.outputLocation;
+                        var newLocation = outputLocationField.text;
+                        var fileList = fileSystemHelper.fileList(oldLocation);
+
+                        settings.outputLocation = newLocation;
+
+                        if (fileList.length > 0)
+                        {
+                            remorse.execute(qsTr("Relocating files"), function() {
+                                console.log('relocate');
+                            });
+                        }
+                    }
                 }
             }
 
