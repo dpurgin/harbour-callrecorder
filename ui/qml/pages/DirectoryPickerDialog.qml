@@ -160,7 +160,16 @@ Dialog {
                     icon.source :'image://theme/icon-m-add'
 
                     onClicked: {
-                        pageStack.push("DirectoryNameDialog.qml");
+                        var dlg = pageStack.push("DirectoryNameDialog.qml");
+
+                        dlg.accepted.connect(function() {
+                            var dirPath = directoryPath + '/' + dlg.directoryName;
+
+                            console.log('Making path ' + dirPath);
+
+                            if (fileSystemHelper.mkpath(dirPath))
+                                folderListModel.folder = 'file://' + dirPath;
+                        });
                     }
                 }
             }
