@@ -123,53 +123,88 @@ Dialog {
             id: controls
 
             width: parent.width
-            height: buttons.height
+            height: dockedContents.height
 
-            Row {
-                id: buttons
+            Column {
+                id: dockedContents
 
-                IconButton {
-                    icon.source: 'qrc:/images/icon-m-up.png'
+                width: parent.width
 
-                    enabled: directoryPath !== '/'
+                spacing: Theme.paddingMedium
 
-                    onClicked: {
-                        folderListModel.folder = folderListModel.parentFolder;
-                    }
+                Label {
+                    x: Theme.paddingMedium
+
+                    text: directoryPath
+
+                    width: parent.width - 2 * Theme.paddingLarge
+
+                    color: Theme.secondaryColor
+
+                    truncationMode: TruncationMode.Elide
+                    elide: Text.ElideLeft
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
                 }
 
-                IconButton {
-                    icon.source: 'image://theme/icon-m-home'
+                Row {
+                    id: buttons
 
-                    onClicked: {
-                        folderListModel.folder = 'file:///home/nemo';
+                    spacing: (width - upIcon.width * 4) / 3;
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+
+                        leftMargin: Theme.paddingMedium
+                        rightMargin: Theme.paddingMedium
                     }
-                }
 
-                IconButton {
-                    icon.source: 'qrc:/images/icon-m-sdcard.png'
+                    IconButton {
+                        id: upIcon
 
-                    enabled: fileSystemHelper.sdCardExists()
+                        icon.source: 'qrc:/images/icon-m-up.png'
 
-                    onClicked: {
-                        folderListModel.folder = 'file://' + fileSystemHelper.sdCardPath();
+                        enabled: directoryPath !== '/'
+
+                        onClicked: {
+                            folderListModel.folder = folderListModel.parentFolder;
+                        }
                     }
-                }
 
-                IconButton {
-                    icon.source :'image://theme/icon-m-add'
+                    IconButton {
+                        icon.source: 'image://theme/icon-m-home'
 
-                    onClicked: {
-                        var dlg = pageStack.push("DirectoryNameDialog.qml");
+                        onClicked: {
+                            folderListModel.folder = 'file:///home/nemo';
+                        }
+                    }
 
-                        dlg.accepted.connect(function() {
-                            var dirPath = directoryPath + '/' + dlg.directoryName;
+                    IconButton {
+                        icon.source: 'qrc:/images/icon-m-sdcard.png'
 
-                            console.log('Making path ' + dirPath);
+                        enabled: fileSystemHelper.sdCardExists()
 
-                            if (fileSystemHelper.mkpath(dirPath))
-                                folderListModel.folder = 'file://' + dirPath;
-                        });
+                        onClicked: {
+                            folderListModel.folder = 'file://' + fileSystemHelper.sdCardPath();
+                        }
+                    }
+
+                    IconButton {
+                        icon.source :'image://theme/icon-m-add'
+
+                        onClicked: {
+                            var dlg = pageStack.push("DirectoryNameDialog.qml");
+
+                            dlg.accepted.connect(function() {
+                                var dirPath = directoryPath + '/' + dlg.directoryName;
+
+                                console.log('Making path ' + dirPath);
+
+                                if (fileSystemHelper.mkpath(dirPath))
+                                    folderListModel.folder = 'file://' + dirPath;
+                            });
+                        }
                     }
                 }
             }
