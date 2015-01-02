@@ -103,8 +103,6 @@ Page {
 
                     leftMargin: Theme.paddingLarge
                     rightMargin: Theme.paddingLarge
-
-                    horizontalCenter: parent.horizontalCenter
                 }
 
                 Button {
