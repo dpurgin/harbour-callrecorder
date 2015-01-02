@@ -99,9 +99,13 @@ Page {
                     text: qsTr('Browse')
 
                     onClicked: {
-                        var dialog = pageStack.push("DirectoryPickerDialog.qml", {
+                        var dlg = pageStack.push("DirectoryPickerDialog.qml", {
                             directoryPath: outputLocationField.text
                         });
+
+                        dlg.accepted.connect(function() {
+                            outputLocationField.text = dlg.directoryPath;
+                        })
                     }
                 }
 
