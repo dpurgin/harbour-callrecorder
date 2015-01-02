@@ -36,7 +36,10 @@ bool FileSystemHelper::isRemovable(const QString& filePath) const
 {
     QFileInfo fi(filePath);
 
-    return fi.isWritable() && (fi.isDir()? QDir(filePath).entryList(QDir::NoDotAndDotDot).size() == 0: true);
+    return fi.isWritable() && (fi.isDir()?
+                                   QDir(filePath).entryList(
+                                       QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot).size() == 0:
+                                   true);
 }
 
 bool FileSystemHelper::isWritable(const QString& filePath) const
@@ -62,12 +65,12 @@ bool FileSystemHelper::remove(const QString& filePath) const
 
 bool FileSystemHelper::sdCardExists() const
 {
-    return QDir("/media/sdcard").entryList(QDir::NoDotAndDotDot).size() > 0;
+    return QDir("/media/sdcard").entryList(QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot).size() > 0;
 }
 
 QString FileSystemHelper::sdCardPath() const
 {
-    QFileInfoList fiList = QDir("/media/sdcard").entryInfoList(QDir::NoDotAndDotDot);
+    QFileInfoList fiList = QDir("/media/sdcard").entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
 
     return fiList.size() > 0? fiList.first().absoluteFilePath(): QString();
 }
