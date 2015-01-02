@@ -53,6 +53,7 @@ public:
 
 public slots:
     void reload();
+    void save();
 
 signals:
     void compressionChanged(int compression);

@@ -32,7 +32,7 @@ class Settings::SettingsPrivate
 
     void readSettings()
     {
-        QSettings settings(QString(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+        QSettings settings(QString(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
                                    QLatin1String("/callrecorder.ini")),
                            QSettings::IniFormat);
 
@@ -47,6 +47,24 @@ class Settings::SettingsPrivate
             sampleRate = settings.value("sampleRate", 22050).toInt();
             sampleSize = settings.value("sampleSize", 16).toInt();
             compression = settings.value("compression", 8).toInt();
+        settings.endGroup();
+    }
+
+    void saveSettings()
+    {
+        QSettings settings(QString(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
+                                   QLatin1String("/callrecorder.ini")),
+                           QSettings::IniFormat);
+
+        settings.beginGroup("general");
+            settings.setValue("deviceName", inputDeviceName);
+            settings.setValue("outputLocation", outputLocation);
+        settings.endGroup();
+
+        settings.beginGroup("encoder");
+            settings.setValue("sampleRate", sampleRate);
+            settings.setValue("sampleSize", sampleSize);
+            settings.setValue("compression", compression);
         settings.endGroup();
     }
 
@@ -133,6 +151,13 @@ void Settings::reload()
 int Settings::sampleRate() const
 {
     return d->sampleRate;
+}
+
+void Settings::save()
+{
+    qDebug() << "entering";
+
+    d->saveSettings();
 }
 
 void Settings::setCompression(int compression)
