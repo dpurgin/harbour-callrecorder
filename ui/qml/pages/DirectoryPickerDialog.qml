@@ -9,6 +9,10 @@ Dialog {
     property string directoryPath;
     property string directoryName;
 
+    onDirectoryPathChanged: {
+        canAccept = fileSystemHelper.isWritable(directoryPath)
+    }
+
     onDirectoryNameChanged: {
         header.acceptText = qsTr('Select %1').arg(directoryName)
     }
@@ -72,7 +76,7 @@ Dialog {
                 menu: Component {
                     ContextMenu {
                         MenuItem {
-                            text: enabled? qsTr('Rename'): qsTr('Renaming not available')
+                            text: enabled? qsTr('Rename'): qsTr('Renaming is not allowed')
 
                             enabled: fileSystemHelper.isWritable(model.filePath)
 
@@ -82,7 +86,7 @@ Dialog {
                         }
 
                         MenuItem {
-                            text: enabled? qsTr('Delete'): qsTr('Removal not available')
+                            text: enabled? qsTr('Delete'): qsTr('Removal is not allowed')
 
                             enabled: fileSystemHelper.isRemovable(model.filePath)
 
@@ -95,7 +99,7 @@ Dialog {
 
                 function deleteDirectory() {
                     remorseAction("Deleting directory", function() {
-                        console.log('delete ' + model.filePath);
+                        fileSystemHelper.remove(model.filePath);
                     })
                 }
             }
@@ -112,6 +116,8 @@ Dialog {
 
                 IconButton {
                     icon.source: 'qrc:/images/icon-m-up.png'
+
+                    enabled: directoryPath !== '/'
 
                     onClicked: {
                         folderListModel.folder = folderListModel.parentFolder;
