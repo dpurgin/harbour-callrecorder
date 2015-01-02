@@ -6,8 +6,8 @@ import Qt.labs.folderlistmodel 2.1
 Dialog {
     id: directoryPickerDialog
 
-    property string directoryPath;
-    property string directoryName;
+    property string directoryPath: '';
+    property string directoryName: '';
 
     onDirectoryPathChanged: {
         canAccept = fileSystemHelper.isWritable(directoryPath)
@@ -81,7 +81,7 @@ Dialog {
                             enabled: fileSystemHelper.isWritable(model.filePath)
 
                             onClicked: {
-                                console.log('rename ' + model.fileName)
+                                renameDirectory();
                             }
                         }
 
@@ -99,8 +99,22 @@ Dialog {
 
                 function deleteDirectory() {
                     remorseAction("Deleting directory", function() {
+                        console.log('Removing ' + model.filePath);
+
                         fileSystemHelper.remove(model.filePath);
                     })
+                }
+
+                function renameDirectory() {
+                    var dlg = pageStack.push("DirectoryNameDialog.qml", {
+                        directoryName: model.fileName
+                    });
+
+                    dlg.accepted.connect(function() {
+                        console.log('Renaming ' + model.filePath + ' to ' + dlg.directoryName);
+
+                        fileSystemHelper.rename(model.filePath, dlg.directoryName);
+                    });
                 }
             }
         }
@@ -154,8 +168,17 @@ Dialog {
     }
 
     Component.onCompleted: {
-        directoryPath = '/home/nemo';
-        directoryName = 'nemo';
+        if (directoryPath === '')
+        {
+            directoryPath = '/home/nemo';
+            directoryName = 'nemo';
+        }
+        else
+        {
+            directoryName = directoryPath.substring(directoryPath.lastIndexOf('/') + 1);
+        }
+
+        folderListModel.folder = 'file://' + directoryPath;
     }
 }
 
