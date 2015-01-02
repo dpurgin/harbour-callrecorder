@@ -21,9 +21,15 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QThreadPool>
+
+#include "filerelocationworker.h"
 
 FileSystemHelper::FileSystemHelper(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    mBusy(false),
+    mProgress(0),
+    mTotalCount(0)
 {
 }
 
@@ -62,11 +68,26 @@ bool FileSystemHelper::mkpath(const QString& dirPath) const
     return QDir().mkpath(dirPath);
 }
 
-bool FileSystemHelper::rename(const QString& filePath, const QString& newName) const
+bool FileSystemHelper::relocate(const QString& oldPath, const QString& newPath)
 {
-    QFile f(filePath);
+    bool result = false;
 
-    return (f.exists() && f.rename(newName));
+    FileRelocationWorker* worker = new FileRelocationWorker(oldPath, newPath);
+
+    connect(worker, SIGNAL(started()),
+            this, SLOT(onWorkerStarted()));
+    connect(worker, SIGNAL(finished()),
+            this, SLOT(onWorkerFinished()));
+
+    connect(worker, SIGNAL(totalCountChanged(int)),
+            this, SLOT(setTotalCount(int)));
+    connect(worker, SIGNAL(progressChanged(int)),
+            this, SLOT(setProgress(int)));
+
+    if (worker)
+        result = QThreadPool::globalInstance()->tryStart(worker);
+
+    return result;
 }
 
 bool FileSystemHelper::remove(const QString& filePath) const
@@ -74,6 +95,13 @@ bool FileSystemHelper::remove(const QString& filePath) const
     QFileInfo fi(filePath);
 
     return isRemovable(filePath) && (fi.isDir()? QDir().rmdir(filePath): QFile(filePath).remove());
+}
+
+bool FileSystemHelper::rename(const QString& filePath, const QString& newName) const
+{
+    QFile f(filePath);
+
+    return (f.exists() && f.rename(newName));
 }
 
 bool FileSystemHelper::sdCardExists() const
