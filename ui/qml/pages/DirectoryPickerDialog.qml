@@ -240,7 +240,7 @@ Dialog {
     }
 
     Component.onCompleted: {
-        if (directoryPath === '')
+        if (directoryPath === '' || !fileSystemHelper.exists(directoryPath))
         {
             directoryPath = '/home/nemo';
             directoryName = 'nemo';
