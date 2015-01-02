@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ Page {
 
                     font.pixelSize: Theme.fontSizeExtraSmall
 
-                    text: qsTr('Copyright \u00a9 2014 Dmitriy Purgin')
+                    text: qsTr('Copyright \u00a9 2014-2015 Dmitriy Purgin')
                 }
 
                 Label {
