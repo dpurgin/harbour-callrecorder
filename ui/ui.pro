@@ -28,9 +28,11 @@ INCLUDEPATH += ../libcallrecorder/include
 LIBS += -L../libcallrecorder -lcallrecorder
 
 HEADERS += \
+    src/filerelocationworker.h \
     src/filesystemhelper.h
 
 SOURCES += \
+    src/filerelocationworker.cpp \
     src/filesystemhelper.cpp \
     src/main.cpp
 
