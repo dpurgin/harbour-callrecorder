@@ -162,7 +162,7 @@ void VoiceCallRecorder::arm()
                          ": unable to set FLAC sample rate: " <<
                          FLAC__stream_encoder_get_state(d->flacEncoder);
 
-        if (!FLAC__stream_encoder_set_compression_level(d->flacEncoder, 8))
+        if (!FLAC__stream_encoder_set_compression_level(d->flacEncoder, daemon->settings()->compression()))
             qCritical() << __PRETTY_FUNCTION__ <<
                          ": unable to set FLAC compression level: " <<
                          FLAC__stream_encoder_get_state(d->flacEncoder);
