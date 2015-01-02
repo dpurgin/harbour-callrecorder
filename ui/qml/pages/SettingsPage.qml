@@ -210,6 +210,11 @@ Page {
                 label: qsTr('FLAC compression level')
 
                 value: settings.compression
+
+                onValueChanged: {
+                    if (acceptChanges)
+                        settings.compression = value;
+                }
             }
         }
     }
