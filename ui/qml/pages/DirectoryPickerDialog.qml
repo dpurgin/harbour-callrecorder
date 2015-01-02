@@ -63,10 +63,38 @@ Dialog {
             delegate: ListItem {
                 id: delegate
 
-                Label {
-                    text: fileName
+                width: parent.width
 
-                    color: highlighted? Theme.highlightColor: Theme.primaryColor
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                Row {
+                    anchors.fill: parent
+
+                    spacing: Theme.paddingMedium
+
+                    Image {
+                        x: Theme.paddingLarge
+
+                        id: icon
+
+                        source: 'image://theme/icon-m-folder'
+                    }
+
+                    Label {
+                        width: parent.width - icon.width - Theme.paddingLarge * 3
+                        height: icon.height
+
+                        truncationMode: TruncationMode.Fade
+
+                        text: fileName
+
+                        color: highlighted? Theme.highlightColor: Theme.primaryColor
+
+                        verticalAlignment: Text.AlignVCenter
+                    }
                 }
 
                 onClicked: {
