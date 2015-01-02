@@ -90,6 +90,22 @@ Page {
                 label: qsTr('Location for storing the recordings')
             }
 
+            Row {
+                width: parent.width
+
+                Button {
+                    text: qsTr('Browse')
+
+                    onClicked: {
+                        var dialog = pageStack.push("DirectoryPickerDialog.qml");
+                    }
+                }
+
+                Button {
+                    text: qsTr('Relocate')
+                }
+            }
+
             SectionHeader {
                 text: qsTr('Record Quality')
             }
