@@ -153,7 +153,7 @@ Page {
 
                 visible: fileSystemHelper.busy
                 value: fileSystemHelper.progress
-                maximumValue: fileSystemHelper.queueLength
+                maximumValue: fileSystemHelper.totalCount
             }
 
             SectionHeader {
@@ -198,6 +198,20 @@ Page {
                     if (acceptChanges)
                         settings.sampleRate = currentItem.value;
                 }
+            }
+
+            Slider {
+                id: compressionSlider
+
+                width: parent.width
+
+                minimumValue: 0
+                maximumValue: 8
+                stepSize: 1
+
+                label: qsTr('FLAC compression level')
+
+                value: settings.compression
             }
         }
     }
