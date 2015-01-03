@@ -111,8 +111,6 @@ void PulseAudioSink::setActivePort(const QString& port)
 
 void PulseAudioSink::update(const pa_sink_info* sinkInfo)
 {
-    qDebug() << QThread::currentThread();
-
     QSet< QString > emitters;
 
     if (sinkInfo->active_port && d->activePort &&
