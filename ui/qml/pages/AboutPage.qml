@@ -84,7 +84,7 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
 
-                    text: qsTr('Version 0.3')
+                    text: qsTr('Version 0.4')
                 }
 
                 Item {
