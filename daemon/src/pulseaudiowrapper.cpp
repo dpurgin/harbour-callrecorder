@@ -298,15 +298,15 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     static pa_context* paContext;
 
     QSet< PulseAudioCard* > cards; // this one owns the pointers
-    QHash< int, PulseAudioCard* > cardsByIndex; // indices in pulseaudio can be somehow sparse
+    QHash< quint32, PulseAudioCard* > cardsByIndex; // indices in pulseaudio can be somehow sparse
     QHash< QString, PulseAudioCard* > cardsByName;
 
     QSet< PulseAudioSink* > sinks; // owns the pointers
-    QHash< int, PulseAudioSink* > sinksByIndex; // see cardsByIndex above
+    QHash< quint32, PulseAudioSink* > sinksByIndex; // see cardsByIndex above
     QHash< QString, PulseAudioSink* > sinksByName;
 
     QSet< PulseAudioSource* > sources; // owns the pointers
-    QHash< int, PulseAudioSource* > sourcesByIndex; // see cardsByIndex above
+    QHash< quint32, PulseAudioSource* > sourcesByIndex; // see cardsByIndex above
     QHash< QString, PulseAudioSource* > sourcesByName;
 };
 
