@@ -34,10 +34,19 @@
 #include "application.h"
 #include "pulseaudiocard.h"
 #include "pulseaudiosink.h"
+#include "pulseaudiosource.h"
 
 class PulseAudioWrapper::PulseAudioWrapperPrivate
 {
     friend class PulseAudioWrapper;
+
+    static void asyncSuccessCallback(pa_context* context, int success, void* userData)
+    {
+        Q_UNUSED(context);
+        Q_UNUSED(userData);
+
+        qDebug() << "success: " << success;
+    }
 
     static void onCardInfoByIndex(pa_context* context, const pa_card_info* info, int eol, void* userData)
     {
@@ -176,6 +185,34 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
                     qDebug() << "No sink at idx " << idx;
             }
         }
+        else if (facility == PA_SUBSCRIPTION_EVENT_SOURCE)
+        {
+            if (eventType == PA_SUBSCRIPTION_EVENT_NEW)
+            {
+                pa_operation_unref(pa_context_get_source_info_by_index(
+                                       PulseAudioWrapperPrivate::paContext,
+                                       idx,
+                                       &PulseAudioWrapperPrivate::onSourceInfoByIndex,
+                                       userData));
+            }
+            else if (eventType == PA_SUBSCRIPTION_EVENT_REMOVE)
+            {
+                qDebug() << "Removing source at idx: " << idx;
+
+                if (d->sourcesByIndex.contains(idx))
+                {
+                    PulseAudioSource* source = d->sourcesByIndex.value(idx);
+
+                    d->sources.remove(source);
+                    d->sourcesByIndex.remove(idx);
+                    d->sourcesByName.remove(source->name());
+
+                    delete source;
+                }
+                else
+                    qDebug() << "No source at idx " << idx;
+            }
+        }
     }
 
     static void onContextSubscriptionSuccess(pa_context* context, int success, void* userData)
@@ -223,6 +260,39 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
         }
     }
 
+    static void onSourceInfoByIndex(pa_context* context, const pa_source_info* sourceInfo, int eol, void* userData)
+    {
+        if (!eol)
+        {
+            PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
+
+            if (!d->sourcesByIndex.contains(sourceInfo->index))
+            {
+                PulseAudioSource* source = new PulseAudioSource(context, sourceInfo);
+
+                d->sources.insert(source);
+                d->sourcesByIndex.insert(source->index(), source);
+                d->sourcesByName.insert(source->name(), source);
+            }
+        }
+    }
+
+    static void onSourceInfoList(pa_context* context, const pa_source_info* sourceInfo, int eol, void* userData)
+    {
+        if (eol)
+            pa_threaded_mainloop_signal(PulseAudioWrapperPrivate::paMainLoop, 0);
+        else
+        {
+            PulseAudioWrapperPrivate* d = reinterpret_cast< PulseAudioWrapperPrivate* >(userData);
+
+            PulseAudioSource* source = new PulseAudioSource(context, sourceInfo);
+
+            d->sources.insert(source);
+            d->sourcesByIndex.insert(source->index(), source);
+            d->sourcesByName.insert(source->name(), source);
+        }
+    }
+
     static pa_threaded_mainloop* paMainLoop;
     static pa_mainloop_api* paMainLoopApi;
     static pa_context* paContext;
@@ -234,6 +304,10 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
     QSet< PulseAudioSink* > sinks; // owns the pointers
     QHash< int, PulseAudioSink* > sinksByIndex; // see cardsByIndex above
     QHash< QString, PulseAudioSink* > sinksByName;
+
+    QSet< PulseAudioSource* > sources; // owns the pointers
+    QHash< int, PulseAudioSource* > sourcesByIndex; // see cardsByIndex above
+    QHash< QString, PulseAudioSource* > sourcesByName;
 };
 
 pa_threaded_mainloop* PulseAudioWrapper::PulseAudioWrapperPrivate::paMainLoop = NULL;
@@ -292,13 +366,21 @@ PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
     pa_operation_unref(listSinksOp);
 
+    pa_operation* listSourcesOp = pa_context_get_source_info_list(PulseAudioWrapperPrivate::paContext,
+                                                                  &PulseAudioWrapperPrivate::onSourceInfoList,
+                                                                  d.data());
+    pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
+    pa_operation_unref(listSourcesOp);
+
     pa_context_set_subscribe_callback(PulseAudioWrapperPrivate::paContext,
                                       &PulseAudioWrapperPrivate::onContextSubscription,
                                       d.data());
 
     pa_operation* subscriptionOp = pa_context_subscribe(PulseAudioWrapperPrivate::paContext,
                                                         static_cast< pa_subscription_mask_t >(
-                                                            PA_SUBSCRIPTION_MASK_CARD | PA_SUBSCRIPTION_MASK_SINK),
+                                                            PA_SUBSCRIPTION_MASK_CARD |
+                                                            PA_SUBSCRIPTION_MASK_SINK |
+                                                            PA_SUBSCRIPTION_MASK_SOURCE),
                                                         &PulseAudioWrapperPrivate::onContextSubscriptionSuccess,
                                                         d.data());
     pa_threaded_mainloop_wait(PulseAudioWrapperPrivate::paMainLoop);
@@ -331,6 +413,16 @@ PulseAudioCard* PulseAudioWrapper::cardByIndex(quint32 index) const
 PulseAudioCard* PulseAudioWrapper::cardByName(const QString& name) const
 {
     return d->cardsByName.value(name, NULL);
+}
+
+void PulseAudioWrapper::setDefaultSource(const QString& sourceName)
+{
+    qDebug() << sourceName;
+
+    pa_operation_unref(pa_context_set_default_source(PulseAudioWrapperPrivate::paContext,
+                                                     sourceName.toUtf8().data(),
+                                                     PulseAudioWrapperPrivate::asyncSuccessCallback,
+                                                     NULL));
 }
 
 PulseAudioSink* PulseAudioWrapper::sinkByIndex(quint32 index) const

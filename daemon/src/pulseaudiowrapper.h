@@ -40,6 +40,8 @@ public:
     PulseAudioSink* sinkByIndex(quint32 index) const;
     PulseAudioSink* sinkByName(const QString& name) const;
 
+    void setDefaultSource(const QString& sourceName);
+
 signals:
 
 public slots:
