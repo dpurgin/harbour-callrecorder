@@ -34,7 +34,7 @@ Page {
     MediaPlayer {
         id: mediaPlayer
 
-        source: StandardPaths.data + '/data/' + fileName
+        source: settings.outputLocation + '/' + fileName
 
         onPositionChanged: {
             slider.mediaPlayerChange = true
