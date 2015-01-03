@@ -41,6 +41,7 @@ Dialog {
 
             focus: true
 
+            inputMethodHints: Qt.ImhNoPredictiveText
             validator: RegExpValidator {
                 regExp: /[^\/]+/
             }
