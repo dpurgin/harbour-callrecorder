@@ -223,9 +223,11 @@ void EventsTableModel::refresh()
 {
     emit beginResetModel();
 
-    d->clearCache();
+    d->clearCache();    
 
     emit endResetModel();
+
+    emit rowCountChanged();
 }
 
 bool EventsTableModel::removeAll()
@@ -248,8 +250,6 @@ bool EventsTableModel::removeAll()
             qDebug() << "removing" << file;
             QFile(file).remove();
         }
-
-        emit rowCountChanged();
 
         refresh();
     }
