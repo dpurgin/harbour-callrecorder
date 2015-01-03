@@ -54,8 +54,7 @@ PulseAudioSink::PulseAudioSink(pa_context* context, const pa_sink_info* sinkInfo
     : QObject(parent),
       d(new PulseAudioSinkPrivate())
 {
-    qDebug() << QThread::currentThread();
-    qDebug() << "Discovered sink: " << sinkInfo->name << ", index: " << sinkInfo->index;
+    qDebug() << QThread::currentThread() << "Discovered sink: " << sinkInfo->name << ", index: " << sinkInfo->index;
 
     d->context = context;
 
@@ -112,6 +111,8 @@ void PulseAudioSink::setActivePort(const QString& port)
 
 void PulseAudioSink::update(const pa_sink_info* sinkInfo)
 {
+    qDebug() << QThread::currentThread();
+
     QSet< QString > emitters;
 
     if (sinkInfo->active_port && d->activePort &&
