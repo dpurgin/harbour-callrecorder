@@ -47,7 +47,8 @@ public:
     void setDefaultSource(const QString& sourceName);
 
 signals:
-
+    void sourceAdded(quint32 index, QString name);
+    void sourceRemoved(quint32 index, QString name);
 
 public slots:
 

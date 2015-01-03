@@ -203,11 +203,15 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
                 {
                     PulseAudioSource* source = d->sourcesByIndex.value(idx);
 
+                    QString sourceName = source->name();
+
                     d->sources.remove(source);
                     d->sourcesByIndex.remove(idx);
                     d->sourcesByName.remove(source->name());
 
                     delete source;
+
+                    emit d->q->sourceRemoved(idx, sourceName);
                 }
                 else
                     qDebug() << "No source at idx " << idx;
@@ -273,6 +277,8 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
                 d->sources.insert(source);
                 d->sourcesByIndex.insert(source->index(), source);
                 d->sourcesByName.insert(source->name(), source);
+
+                emit d->q->sourceAdded(source->index(), source->name());
             }
         }
     }
@@ -290,12 +296,30 @@ class PulseAudioWrapper::PulseAudioWrapperPrivate
             d->sources.insert(source);
             d->sourcesByIndex.insert(source->index(), source);
             d->sourcesByName.insert(source->name(), source);
+
+            emit d->q->sourceAdded(source->index(), source->name());
         }
     }
+
+    //
+    // static data
+    //
 
     static pa_threaded_mainloop* paMainLoop;
     static pa_mainloop_api* paMainLoopApi;
     static pa_context* paContext;
+
+    //
+    // private ctor
+    //
+
+    PulseAudioWrapperPrivate(PulseAudioWrapper* qPtr): q(qPtr) {}
+
+    //
+    // private data
+    //
+
+    PulseAudioWrapper* q;
 
     QSet< PulseAudioCard* > cards; // this one owns the pointers
     QHash< quint32, PulseAudioCard* > cardsByIndex; // indices in pulseaudio can be somehow sparse
@@ -316,7 +340,7 @@ pa_context* PulseAudioWrapper::PulseAudioWrapperPrivate::paContext = NULL;
 
 PulseAudioWrapper::PulseAudioWrapper(QObject *parent)
     : QObject(parent),
-      d(new PulseAudioWrapperPrivate)
+      d(new PulseAudioWrapperPrivate(this))
 {
     PulseAudioWrapperPrivate::paMainLoop = pa_threaded_mainloop_new();
     pa_threaded_mainloop_start(PulseAudioWrapperPrivate::paMainLoop);
