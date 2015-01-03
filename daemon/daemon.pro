@@ -49,6 +49,7 @@ SOURCES += \
     src/pulseaudiocardprofile.cpp \
     src/pulseaudiosink.cpp \
     src/pulseaudiosinkport.cpp \
+    src/pulseaudiosource.cpp \
     src/dbusadaptor.cpp \
     src/uidbusinterface.cpp
 
@@ -63,6 +64,7 @@ HEADERS += \
     src/pulseaudiocardprofile.h \
     src/pulseaudiosink.h \
     src/pulseaudiosinkport.h \
+    src/pulseaudiosource.h \
     src/dbusadaptor.h \
     src/uidbusinterface.h
 
