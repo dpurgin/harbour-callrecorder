@@ -295,7 +295,7 @@ bool EventsTableModel::removeOids(const QList< int >& oids)
     d->clearCache();
 
     if (failures != oids.size())
-    emit rowCountChanged();
+        emit rowCountChanged();
 
     return (failures != oids.size());
 }
@@ -307,7 +307,7 @@ bool EventsTableModel::removeRow(int rowIndex, const QModelIndex& parent)
 
 bool EventsTableModel::removeRows(int rowIndex, int count, const QModelIndex& parent)
 {
-    qDebug() << "rowIndex: " << rowIndex << ", count: " << count;
+    qDebug() << "rowIndex: " << rowIndex << ", count: " << count << ", rowCount: " << d->rowCount;
 
     int failures = 0;
 
@@ -324,12 +324,7 @@ bool EventsTableModel::removeRows(int rowIndex, int count, const QModelIndex& pa
     }
 
     d->clearCache();
-
-    if (failures != count)
-    {
-        d->rowCount -= count + failures;
-        emit rowCountChanged();
-    }
+    emit rowCountChanged();
 
     endRemoveRows();
 
