@@ -44,7 +44,7 @@ class Application::ApplicationPrivate
     friend class Application;
 
 private:
-    explicit ApplicationPrivate(): active(false), pulseAudioCard(NULL), wantPark(false) {}
+    explicit ApplicationPrivate(): active(false), pulseAudioCard(NULL), wantPark(false), needResetDefaultSource(false) {}
 
 private:
     bool active;
@@ -72,6 +72,9 @@ private:
 
     bool wantPark;
     QString wantPort;
+
+    // workaround for Android mic issue
+    bool needResetDefaultSource;
 };
 
 
@@ -110,6 +113,12 @@ Application::Application(int argc, char* argv[])
 
     connect(d->pulseAudioSink, SIGNAL(activePortChanged(const PulseAudioSinkPort*)),
             this, SLOT(onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort*)));
+
+    connect(d->pulseAudioWrapper.data(), SIGNAL(sourceAdded(quint32, QString)),
+            this, SLOT(onPulseAudioSourceAdded(quint32, QString)));
+
+    connect(d->pulseAudioWrapper.data(), SIGNAL(sourceRemoved(quint32, QString)),
+            this, SLOT(onPulseAudioSourceRemoved(quint32, QString)));
 
     d->qofonoManager.reset(new QOfonoManager());
 
@@ -175,8 +184,8 @@ void Application::initVoiceCallManager(const QString& objectPath)
 
 void Application::maybeSwitchProfile()
 {
-    qDebug() << QThread::currentThread();
-    qDebug() << "Card profile: " << d->pulseAudioCard->activeProfile()->name() <<
+    qDebug() << QThread::currentThread() <<
+                "Card profile: " << d->pulseAudioCard->activeProfile()->name() <<
                 ", sink port: " << d->pulseAudioSink->activePort()->name() <<
                 ", want park: " << d->wantPark <<
                 ", want port: " << d->wantPort;
@@ -233,6 +242,28 @@ void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* po
     }
 }
 
+void Application::onPulseAudioSourceAdded(quint32 idx, const QString& name)
+{
+    qDebug() << QThread::currentThread() << idx << name;
+
+    // Workaround for Android mic issue.
+    // If recording is active, default source is being reset constantly.
+    // After recording is done, the app leaves "needResetDefaultSource" flag in case if
+    // source.primary would be recreated after recording is done
+    if ((d->active || d->needResetDefaultSource) && name == QLatin1String("source.primary"))
+    {
+        d->pulseAudioWrapper->setDefaultSource("source.primary");
+
+        if (!d->active && d->needResetDefaultSource)
+            d->needResetDefaultSource = false;
+    }
+}
+
+void Application::onPulseAudioSourceRemoved(quint32 idx, const QString& name)
+{
+    qDebug() << QThread::currentThread() << idx << name;
+}
+
 /// Creates the recorder for a voice call appeared in the system
 void Application::onVoiceCallAdded(const QString& objectPath)
 {
@@ -277,6 +308,9 @@ void Application::onVoiceCallRemoved(const QString& objectPath)
     {
         delete voiceCallRecorder;
         d->voiceCallRecorders.remove(objectPath);
+
+        // workaround for Android mic issue
+        d->needResetDefaultSource = true;
     }
 }
 

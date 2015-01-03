@@ -69,6 +69,9 @@ private slots:
 
     void onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile);
     void onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port);
+    void onPulseAudioSourceAdded(quint32 idx, const QString& name);
+    void onPulseAudioSourceRemoved(quint32 idx, const QString& name);
+
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);
     void onVoiceCallRemoved(const QString& objectPath);
