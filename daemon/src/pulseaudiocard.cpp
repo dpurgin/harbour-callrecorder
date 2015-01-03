@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -64,15 +64,14 @@ PulseAudioCard::PulseAudioCard(pa_context* context, const pa_card_info* paCardIn
     : QObject(parent),
       d(new PulseAudioCardPrivate)
 {
-    qDebug() << QThread::currentThread();
-    qDebug() << "Discovered card: " << paCardInfo->name << ", index: " << paCardInfo->index;
+    qDebug() << QThread::currentThread() << "Discovered card: " << paCardInfo->name << ", index: " << paCardInfo->index;
 
     d->context = context;
 
     d->index = paCardInfo->index;
-    d->name = QLatin1String(paCardInfo->name);
+    d->name = QString::fromUtf8(paCardInfo->name);
     d->ownerModule = paCardInfo->owner_module;
-    d->driver = QLatin1String(paCardInfo->driver);
+    d->driver = QString::fromUtf8(paCardInfo->driver);
 
     for (quint32 i = 0; i < paCardInfo->n_profiles; i++)
     {
@@ -143,7 +142,7 @@ void PulseAudioCard::update(const pa_card_info* paCardInfo)
 
     // for now, assume that profiles can never be added/removed/changed at runtime
 
-    if (d->activeProfile->name() != QLatin1String(paCardInfo->active_profile->name))
+    if (d->activeProfile->name() != QString::fromUtf8(paCardInfo->active_profile->name))
     {
         d->activeProfile = d->profilesByName.value(paCardInfo->active_profile->name, NULL);
         emitters.insert(QLatin1String("activeProfile"));

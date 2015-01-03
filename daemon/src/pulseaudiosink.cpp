@@ -58,7 +58,7 @@ PulseAudioSink::PulseAudioSink(pa_context* context, const pa_sink_info* sinkInfo
 
     d->context = context;
 
-    d->name = QLatin1String(sinkInfo->name);
+    d->name = QString::fromUtf8(sinkInfo->name);
     d->index = sinkInfo->index;
 
     for (quint32 c = 0; c < sinkInfo->n_ports; c++)
@@ -70,7 +70,7 @@ PulseAudioSink::PulseAudioSink(pa_context* context, const pa_sink_info* sinkInfo
     }
 
     if (sinkInfo->active_port)
-        d->activePort = d->sinkPortsByName.value(QLatin1String(sinkInfo->active_port->name), NULL);
+        d->activePort = d->sinkPortsByName.value(QString::fromUtf8(sinkInfo->active_port->name), NULL);
 }
 
 PulseAudioSink::~PulseAudioSink()
@@ -116,7 +116,7 @@ void PulseAudioSink::update(const pa_sink_info* sinkInfo)
     QSet< QString > emitters;
 
     if (sinkInfo->active_port && d->activePort &&
-            d->activePort->name() != QLatin1String(sinkInfo->active_port->name))
+            d->activePort->name() != QString::fromUtf8(sinkInfo->active_port->name))
     {
         d->activePort = d->sinkPortsByName.value(sinkInfo->active_port->name, NULL);
 

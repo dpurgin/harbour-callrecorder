@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -58,8 +58,8 @@ PulseAudioCardProfile::PulseAudioCardProfile(pa_card_profile_info* paCardProfile
 #endif
     : d(new PulseAudioCardProfilePrivate)
 {
-    d->name = QLatin1String(paCardProfileInfo->name);
-    d->description = QLatin1String(paCardProfileInfo->description);
+    d->name = QString::fromUtf8(paCardProfileInfo->name);
+    d->description = QString::fromUtf8(paCardProfileInfo->description);
 
     d->sinks = paCardProfileInfo->n_sinks;
     d->sources = paCardProfileInfo->n_sources;

@@ -41,7 +41,7 @@ PulseAudioSource::PulseAudioSource(pa_context* context, const pa_source_info* in
 
     d->index = info->index;
 
-    d->name = QLatin1String(info->name);
+    d->name = QString::fromUtf8(info->name);
 }
 
 PulseAudioSource::~PulseAudioSource()

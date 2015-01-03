@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,8 +45,8 @@ PulseAudioSinkPort::PulseAudioSinkPort(const pa_sink_port_info* portInfo)
     else
         d->available = Unknown;
 
-    d->name = QLatin1String(portInfo->name);
-    d->description = QLatin1String(portInfo->description);
+    d->name = QString::fromUtf8(portInfo->name);
+    d->description = QString::fromUtf8(portInfo->description);
     d->priority = portInfo->priority;
 }
 
