@@ -60,7 +60,9 @@ void FileRelocationWorker::run()
             QFile::rename(oldName, newName);
 
             if ((++count) % progressStep == 0)
-                emit progressChanged(count / progressStep);
+            {
+                emit progressChanged(count);
+            }
         }
     }
 
