@@ -109,6 +109,9 @@ VoiceCallRecorder::~VoiceCallRecorder()
 
             daemon->model()->events()->update(d->eventId, params);
         }
+        // If call was armed, FLAC has started the output file. Need to remove it
+        else
+            QFile(d->outputLocation).remove();
 
         setState(Inactive);
     }
@@ -338,19 +341,19 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             if (state() == Active)
                 d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
 
-            // we do not call FLAC__stream_encode_finish at this point, as the d->audioInput can still some data
-            // to actually cleanup FLAC, we will process WaitingForFinish in destructor
-
-            setState(WaitingForFinish);
-
         }
         // if the call was never active, remove the record from Events
         else
         {
             daemon->model()->events()->remove(d->eventId);
-
-            setState(Inactive);
+            d->eventId = -1;
         }
+
+        // We do not call FLAC__stream_encode_finish at this point, as the d->audioInput can still some data.
+        // To actually cleanup FLAC, we will process WaitingForFinish in destructor.
+        // In case if the call was never active, FLAC still has to be cleaned up.
+
+        setState(WaitingForFinish);
     }
     // if the call is on hold or waiting, suspend recording if it was active
     else if (ofonoState == QLatin1String("held") || ofonoState == QLatin1String("waiting"))
