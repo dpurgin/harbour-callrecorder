@@ -116,13 +116,37 @@ Pretty self-explanatory. Click on the button at the bottom to view short license
 
 ####Settings Page
 
+**Recorder Daemon**
+
 Turn the recorder on or off, enable or disable automatic startup on this page. If an item remains lit/unlit after tap, this means the underlying action didn't succeed. You might want to take a look at DBus session bus to see what's wrong.
+
+**Location**
+
+Type in save location or choose with a directory picker by pressing 'Browse' button. If location does not exist or is not writable, the text field is marked with red. After either browsing or typing in a new location, **press 'Save' button** to save it. If the old location contained recordings, they will be moved to the new location after 5 sec remorse. You may cancel this action but the old recordings won't be accessible from the UI. If the action was canceled accidentally, reset location to the old one, tap 'Save' and then set the new location again followed by tapping 'Save'.
+
+####Directory picker page
+
+Directory picker can be used to select a writable location. It opens with current path set to one entered in 'Location' text field. If path doesn't exist, the picker opens your Home directory. The directory you will peak by accepting dialog appears both at the bottom toolbar and at the top right corner of the dialog.
+
+**List of directories**
+
+This is a list of directories at current path. Short tap on an item to navigate to this directory. If directory doesn't contain any nested directories, placeholder appears. Although this doesn't mean that directory doesn't contain files. Long tap on an item to rename writable directory or remove empty writable directory. When renaming is not availble, this means this directory is not writable. When removing is not available, this means this directory is either read-only or not empty (may contain other files or directories).
+
+**Bottom Toolbar**
+
+The dialog contains a toolbar at the bottom for convenient navigation and directory creation. The buttons from left to right are: 'Navigate Up', 'Go to Home', 'Go to SD Card', 'New Directory'. 
+
+'Navigate Up' is used to go to parent folder. You may also use 'Home' and 'SD Card' buttons of the bottom toolbar to quickly navigate to `/home/nemo` or to `/media/sdcard/<SD Serial Number>` respectively. 'New Directory' button can be used to create a new directory in a writable location. 
 
 ####Select recordings Page
 
 Select recordings with a tap on a list item. Having items selected, you can make an action. Currently, the only supported action is remove. Choose 'Delete all' from the pulley menu to remove all the recordings, both selected and unselected.
 
 ##Known Issues
+
+###Version 0.4
+
+Currently none
 
 ###Version 0.3
 
@@ -258,7 +282,7 @@ Check if you have SailfishOS 1.1 (Settings -> Sailfish OS updates).
 
 ### Android applications do not record sound after recording a call
 
-This is an issue of underlying PulseAudio-related stuff which is likely to be fixed in the upcoming releases of SailfishOS. To work around this use the following command:
+This is an issue of underlying PulseAudio-related stuff which is likely to be fixed in the upcoming releases of SailfishOS. To work around use harbour-callrecorder 0.4 or use the following command:
 
 ```
 $ pacmd set-default-source source.primary
