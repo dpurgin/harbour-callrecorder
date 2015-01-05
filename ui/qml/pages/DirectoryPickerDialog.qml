@@ -239,6 +239,8 @@ Dialog {
                     IconButton {
                         icon.source :'image://theme/icon-m-add'
 
+                        enabled: fileSystemHelper.isWritable(directoryPath);
+
                         onClicked: {
                             var dlg = pageStack.push("DirectoryNameDialog.qml");
 
