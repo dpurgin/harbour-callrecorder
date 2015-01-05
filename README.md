@@ -26,8 +26,9 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
 
 ###0.4
  - Fixed issues
-  - Empty list placeholder appears when list is not empty ([#6](../../issues/6));
-  - Workaround for Android microphone [issue](#android-applications-do-not-record-sound-after-recording-a-call).
+  - Empty list placeholder appears when list is not empty ([#6](../../issues/6)): fixed;
+  - Workaround for Android microphone [issue](#android-applications-do-not-record-sound-after-recording-a-call) included;
+  - FLAC file now gets removed if a call was not answered.
  - New features
   - Choosing of save location and relocating already recorded files;
   - Choosing sampling rate and FLAC compression level.
