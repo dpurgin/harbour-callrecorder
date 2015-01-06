@@ -74,7 +74,7 @@ You don't need to have the UI application running all the time to have your call
 
 ###Installation from sources
 
-This section assumes you are familiar with SailfishOS SDK and able to deploy your own project to a device. The project was developed and tested with SDK version 1407.
+This section assumes you are familiar with SailfishOS SDK and able to deploy your own project to a device. The project was developed and tested with SDK version 1410 and tested to build with SDK version 1412.
 
 1. Clone the project from master branch or a tag to a directory of your choice. The master branch will always contain compilable bleeding edge code that doesn't necessarily work as you expect it to.
 2. Open harbour-callrecorder.pro in SailfishOS SDK, configure the project to use armv7hl and i486 targets.
