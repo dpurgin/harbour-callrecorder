@@ -48,7 +48,7 @@ class Settings::SettingsPrivate
                                                 QLatin1String("/data"))).toString();
 
         settings.beginGroup("encoder");
-            sampleRate = settings.value("sampleRate", 22050).toInt();
+            sampleRate = settings.value("sampleRate", 16000).toInt();
             sampleSize = settings.value("sampleSize", 16).toInt();
             compression = settings.value("compression", 8).toInt();
         settings.endGroup();
