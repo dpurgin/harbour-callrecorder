@@ -151,7 +151,7 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ####Playback slider stucks or shows irrelevant time codes
 
-This is often caused by playing back a recording whose sample rate is neither 44.1 kHz nor 32 kHz. For some reason the underlying QtMultimedia or gstreamer may screw durations or not be able to play short recordings (up to 10 sec). **Nevertheless, the recordings are not corrupted and can be played back on a desktop computer**.
+This is often caused by playing back a recording whose sample rate is neither 44.1 kHz nor 32 kHz. For some reason the existing implementation may screw durations or not be able to play short recordings (up to 10 sec). **Nevertheless, the recordings are not corrupted and can be played back on a desktop computer**.
 
 ###Version 0.3
 
