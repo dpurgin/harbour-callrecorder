@@ -149,6 +149,16 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ###Version 0.4
 
+####Removing recording in UI doesn't remove file in a relocated location
+
+See [#10](../../issues/10).
+
+This issue will be fixed in a bugfix release.
+
+**Workaround**
+
+Remove the file manually.
+
 ####Playback slider stucks or shows irrelevant time codes
 
 This is often caused by playing back a recording whose sample rate is neither 44.1 kHz nor 32 kHz. For some reason the existing implementation may screw durations or not be able to play short recordings (up to 10 sec). **Nevertheless, the recordings are not corrupted and can be played back on a desktop computer**.
