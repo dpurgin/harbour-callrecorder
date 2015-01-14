@@ -29,6 +29,7 @@
 #include <QVector>
 
 #include "database.h"
+#include "settings.h"
 #include "sqlcursor.h"
 
 class EventsTableModel::EventsTableModelPrivate
@@ -151,9 +152,9 @@ private:
 
         if (db->execute("DELETE FROM Events WHERE ID = :id", params))
         {
-            QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                    QLatin1String("/data/") %
-                    fileName;
+            Settings settings;
+
+            QString location = settings.outputLocation() % QLatin1Char('/') % fileName;
 
             qDebug() << "Removing" << location;
 
@@ -171,7 +172,7 @@ private:
         {
             result = false;
 
-            qDebug() << "Error removing databse row: " << db->lastError();
+            qDebug() << "Error removing database row: " << db->lastError();
         }
 
         return result;
@@ -238,10 +239,7 @@ bool EventsTableModel::removeAll()
 
     if (d->db->execute("DELETE FROM Events"))
     {
-        QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                QLatin1String("/data");
-
-        QDir dir(location);
+        QDir dir(Settings().outputLocation());
 
         QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot);
 
