@@ -1,7 +1,7 @@
 harbour-callrecorder
 ====================
 
-Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
+Native call recorder for Jolla's SailfishOS. The latest version is 0.4-2.
 
 **This is application requires the latest SailfishOS update (update10, SailfishOS 1.1) or later**
 
@@ -22,7 +22,7 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
  - [FAQ](#faq)
  - [Contacts](#contacts)
 
-##Changes
+##Changes and Release notes
 
 ###0.4
  - Fixed issues
@@ -32,6 +32,8 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.3.
  - New features
   - Choosing of save location and relocating already recorded files;
   - Choosing sampling rate and FLAC compression level.
+
+Default sampling rate was reduced to 32 kHz. Using sampling rates other than 44.1 and 32 kHz is possible but may yield side effects when playing back using the call recorder UI (see [Known Issues](#known-issues))
 
 ###0.3-6
  - "Automatic startup" refuses to activate ([#8](../../issues/8)).
@@ -95,7 +97,7 @@ All the recordings made by the daemon are initially stored at `$DATA/data`. You 
 List of recordings with their properties is stored in a database at `$DATA/callrecorder.db`. Please refer to `libcallrecorder/database.cpp`, `Database::Database()` for database structure.
 
 ###Audio Format
-The recordings are initially encoded to FLAC, 22 kHz, mono, 16-bit LE, compression level 8. You may change sample rate and compression level at the Settings page of the UI application.
+The recordings are initially encoded to FLAC, 32 kHz, mono, 16-bit LE, compression level 8. You may change sample rate and compression level at the Settings page of the UI application (see [Known Issues](#known-issues) for side effects).
 
 ###Call Recorder UI
 
@@ -147,7 +149,19 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ###Version 0.4
 
-Currently none
+####Removing recording in UI doesn't remove file in a relocated location
+
+See [#10](../../issues/10).
+
+This issue will be fixed in a bugfix release.
+
+**Workaround**
+
+Remove the file manually.
+
+####Playback slider stucks or shows irrelevant time codes
+
+This is often caused by playing back a recording whose sample rate is neither 44.1 kHz nor 32 kHz. For some reason the existing implementation may screw durations or not be able to play short recordings (up to 10 sec). **Nevertheless, the recordings are not corrupted and can be played back on a desktop computer**.
 
 ###Version 0.3
 
