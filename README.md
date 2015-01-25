@@ -1,7 +1,7 @@
 harbour-callrecorder
 ====================
 
-Native call recorder for Jolla's SailfishOS. The latest version is 0.4-2.
+Native call recorder for Jolla's SailfishOS. The latest version is 0.4.1.
 
 **This is application requires the latest SailfishOS update (update10, SailfishOS 1.1) or later**
 
@@ -23,6 +23,9 @@ Native call recorder for Jolla's SailfishOS. The latest version is 0.4-2.
  - [Contacts](#contacts)
 
 ##Changes and Release notes
+
+###0.4.1
+ - Fixed issue [#10](../../issues/10): Removing recording in UI doesn't remove file in a relocated location.
 
 ###0.4
  - Fixed issues
@@ -147,13 +150,21 @@ Select recordings with a tap on a list item. Having items selected, you can make
 
 ##Known Issues
 
+###Version 0.4.1
+
+See 0.4
+
 ###Version 0.4
 
 ####Removing recording in UI doesn't remove file in a relocated location
 
 See [#10](../../issues/10).
 
-This issue will be fixed in a bugfix release.
+This issue was fixed in a bugfix release 0.4.1.
+
+**Solution**
+
+Update to later version.
 
 **Workaround**
 
