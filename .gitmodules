@@ -1,0 +1,3 @@
+[submodule "qtpulseaudio/qtpulseaudio"]
+	path = qtpulseaudio/qtpulseaudio
+	url = https://github.com/dpurgin/qtpulseaudio.git
