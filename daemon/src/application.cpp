@@ -27,14 +27,17 @@
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/settings.h>
 
+#include <qtpulseaudio/qtpulseaudioconnection.h>
+#include <qtpulseaudio/qtpulseaudiocard.h>
+#include <qtpulseaudio/qtpulseaudiocardprofile.h>
+#include <qtpulseaudio/qtpulseaudioserver.h>
+#include <qtpulseaudio/qtpulseaudiosink.h>
+#include <qtpulseaudio/qtpulseaudiosinkport.h>
+#include <qtpulseaudio/qtpulseaudiosource.h>
+
 #include "dbusadaptor.h"
 #include "uidbusinterface.h"
 #include "model.h"
-#include "pulseaudiocard.h"
-#include "pulseaudiocardprofile.h"
-#include "pulseaudiosink.h"
-#include "pulseaudiosinkport.h"
-#include "pulseaudiowrapper.h"
 #include "voicecallrecorder.h"
 
 class Application::ApplicationPrivate
@@ -44,7 +47,12 @@ class Application::ApplicationPrivate
     friend class Application;
 
 private:
-    explicit ApplicationPrivate(): active(false), pulseAudioCard(NULL), wantPark(false), needResetDefaultSource(false) {}
+    explicit ApplicationPrivate()
+        : active(false),
+          pulseAudioCard(NULL),
+          wantPark(false),
+          needResetDefaultSource(false)
+    {}
 
 private:
     bool active;
@@ -56,9 +64,9 @@ private:
 
     QScopedPointer< Model > model;
 
-    PulseAudioCard* pulseAudioCard;
-    PulseAudioSink* pulseAudioSink;
-    QScopedPointer< PulseAudioWrapper > pulseAudioWrapper;
+    QSharedPointer< QtPulseAudioCard > pulseAudioCard;
+    QSharedPointer< QtPulseAudioSink > pulseAudioSink;
+    QScopedPointer< QtPulseAudioConnection > pulseAudioConnection;
 
     QScopedPointer< QOfonoManager > qofonoManager;
     QScopedPointer< QOfonoVoiceCallManager > qofonoVoiceCallManager;
@@ -89,7 +97,7 @@ Application::Application(int argc, char* argv[])
 
     d->settings.reset(new Settings());
 
-    d->dbusAdaptor.reset(new DBusAdaptor(this));        
+    d->dbusAdaptor.reset(new DBusAdaptor(this));
     d->uiInterface.reset(new UiDBusInterface(this));
 
     connect(d->uiInterface.data(), SIGNAL(SettingsChanged()),
@@ -97,28 +105,6 @@ Application::Application(int argc, char* argv[])
 
     d->database.reset(new Database());
     d->model.reset(new Model());
-
-    d->timer.reset(new QTimer());
-    d->timer->setInterval(250);
-    d->timer->setSingleShot(true);
-    connect(d->timer.data(), SIGNAL(timeout()),
-            this, SLOT(maybeSwitchProfile()));
-
-    d->pulseAudioWrapper.reset(new PulseAudioWrapper());
-    d->pulseAudioCard = d->pulseAudioWrapper->cardByIndex(0);
-    d->pulseAudioSink = d->pulseAudioWrapper->sinkByName("sink.primary");
-
-    connect(d->pulseAudioCard, SIGNAL(activeProfileChanged(const PulseAudioCardProfile*)),
-            this, SLOT(onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile*)));
-
-    connect(d->pulseAudioSink, SIGNAL(activePortChanged(const PulseAudioSinkPort*)),
-            this, SLOT(onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort*)));
-
-    connect(d->pulseAudioWrapper.data(), SIGNAL(sourceAdded(quint32, QString)),
-            this, SLOT(onPulseAudioSourceAdded(quint32, QString)));
-
-    connect(d->pulseAudioWrapper.data(), SIGNAL(sourceRemoved(quint32, QString)),
-            this, SLOT(onPulseAudioSourceRemoved(quint32, QString)));
 
     d->qofonoManager.reset(new QOfonoManager());
 
@@ -139,6 +125,18 @@ Application::Application(int argc, char* argv[])
     }
     else
         initVoiceCallManager(modems.first());
+
+    d->pulseAudioConnection.reset(
+        new QtPulseAudioConnection(QtPulseAudio::Card |
+                                   QtPulseAudio::Server |
+                                   QtPulseAudio::Source));
+
+    connect(d->pulseAudioConnection.data(), SIGNAL(connected()),
+            this, SLOT(onPulseAudioConnected()));
+    connect(d->pulseAudioConnection.data(), SIGNAL(error(QString)),
+            this, SLOT(onPulseAudioError(QString)));
+
+    d->pulseAudioConnection->connectToServer();
 }
 
 Application::~Application()
@@ -222,46 +220,80 @@ void Application::maybeSwitchProfile()
         qDebug() << "Not managing profile " << d->pulseAudioCard->activeProfile()->name();
 }
 
-void Application::onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile)
+void Application::onPulseAudioCardActiveProfileChanged(QString profileName)
 {
     if (d->active)
     {
-        qDebug() << QThread::currentThread() << ": active profile: " << profile->name();
+        qDebug() << QThread::currentThread() << ": active profile: " << profileName;
 
         maybeSwitchProfile();
     }
 }
 
-void Application::onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port)
+void Application::onPulseAudioConnected()
+{
+    qDebug() << QThread::currentThread() << ": connected to PulseAudio";
+
+    d->timer.reset(new QTimer());
+    d->timer->setInterval(250);
+    d->timer->setSingleShot(true);
+    connect(d->timer.data(), SIGNAL(timeout()),
+            this, SLOT(maybeSwitchProfile()));
+
+    d->pulseAudioCard = d->pulseAudioConnection->cardByIndex(0);
+    d->pulseAudioSink = d->pulseAudioConnection->sinkByName("sink.primary");
+
+    connect(d->pulseAudioCard.data(), SIGNAL(activeProfileChanged(QString)),
+            this, SLOT(onPulseAudioCardActiveProfileChanged(QString)));
+
+    connect(d->pulseAudioSink.data(), SIGNAL(activePortChanged(QString)),
+            this, SLOT(onPulseAudioSinkActivePortChanged(QString)));
+
+    connect(d->pulseAudioConnection.data(), SIGNAL(sourceAdded(QSharedPointer<QtPulseAudioSource>)),
+            this, SLOT(onPulseAudioSourceAdded(QSharedPointer<QtPulseAudioSource>)));
+
+    connect(d->pulseAudioConnection.data(), SIGNAL(sourceRemoved(QSharedPointer<QtPulseAudioSource>)),
+            this, SLOT(onPulseAudioSourceRemoved(QSharedPointer<QtPulseAudioSource>)));
+}
+
+void Application::onPulseAudioError(QString error)
+{
+    qDebug() << QThread::currentThread() << ": error connecting to PulseAudio: " << error;
+
+    quit();
+}
+
+void Application::onPulseAudioSinkActivePortChanged(QString portName)
 {
     if (d->active)
     {
-        qDebug() << QThread::currentThread() << ": active port: " << port->name();
+        qDebug() << QThread::currentThread() << ": active port: " << portName;
 
         maybeSwitchProfile();
     }
 }
 
-void Application::onPulseAudioSourceAdded(quint32 idx, const QString& name)
+void Application::onPulseAudioSourceAdded(QSharedPointer< QtPulseAudioSource > source)
 {
-    qDebug() << QThread::currentThread() << idx << name;
+    qDebug() << QThread::currentThread() << source->index() << source->name();
 
     // Workaround for Android mic issue.
     // If recording is active, default source is being reset constantly.
     // After recording is done, the app leaves "needResetDefaultSource" flag in case if
     // source.primary would be recreated after recording is done
-    if ((d->active || d->needResetDefaultSource) && name == QLatin1String("source.primary"))
+    if ((d->active || d->needResetDefaultSource) &&
+            source->name() == QLatin1String("source.primary"))
     {
-        d->pulseAudioWrapper->setDefaultSource("source.primary");
+        d->pulseAudioConnection->server()->setDefaultSource("source.primary");
 
         if (!d->active && d->needResetDefaultSource)
             d->needResetDefaultSource = false;
     }
 }
 
-void Application::onPulseAudioSourceRemoved(quint32 idx, const QString& name)
+void Application::onPulseAudioSourceRemoved(QSharedPointer< QtPulseAudioSource > source)
 {
-    qDebug() << QThread::currentThread() << idx << name;
+    qDebug() << QThread::currentThread() << source->index() << source->name();
 }
 
 /// Creates the recorder for a voice call appeared in the system

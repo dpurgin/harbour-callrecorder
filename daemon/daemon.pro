@@ -31,11 +31,11 @@ CONFIG += console link_pkgconfig
 
 QT += core dbus sql multimedia
 
-INCLUDEPATH += ../libcallrecorder/include
+INCLUDEPATH += ../libcallrecorder/include ../qtpulseaudio/qtpulseaudio/lib/include
 
-LIBS += -L../libcallrecorder -lcallrecorder
+LIBS += -L../libcallrecorder -lcallrecorder -L../qtpulseaudio -lqtpulse
 
-PKGCONFIG += flac libpulse qofono-qt5
+PKGCONFIG += flac qofono-qt5
 
 SOURCES += \
     src/application.cpp \
@@ -44,12 +44,6 @@ SOURCES += \
     src/phonenumberstablemodel.cpp \
     src/eventstablemodel.cpp \
     src/model.cpp \
-    src/pulseaudiowrapper.cpp \
-    src/pulseaudiocard.cpp \
-    src/pulseaudiocardprofile.cpp \
-    src/pulseaudiosink.cpp \
-    src/pulseaudiosinkport.cpp \
-    src/pulseaudiosource.cpp \
     src/dbusadaptor.cpp \
     src/uidbusinterface.cpp
 
@@ -59,12 +53,6 @@ HEADERS += \
     src/phonenumberstablemodel.h \
     src/eventstablemodel.h \
     src/model.h \
-    src/pulseaudiowrapper.h \
-    src/pulseaudiocard.h \
-    src/pulseaudiocardprofile.h \
-    src/pulseaudiosink.h \
-    src/pulseaudiosinkport.h \
-    src/pulseaudiosource.h \
     src/dbusadaptor.h \
     src/uidbusinterface.h
 
