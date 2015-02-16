@@ -129,7 +129,8 @@ Application::Application(int argc, char* argv[])
     d->pulseAudioConnection.reset(
         new QtPulseAudioConnection(QtPulseAudio::Card |
                                    QtPulseAudio::Server |
-                                   QtPulseAudio::Source));
+                                   QtPulseAudio::Source |
+                                   QtPulseAudio::Sink));
 
     connect(d->pulseAudioConnection.data(), SIGNAL(connected()),
             this, SLOT(onPulseAudioConnected()));
@@ -243,11 +244,22 @@ void Application::onPulseAudioConnected()
     d->pulseAudioCard = d->pulseAudioConnection->cardByIndex(0);
     d->pulseAudioSink = d->pulseAudioConnection->sinkByName("sink.primary");
 
-    connect(d->pulseAudioCard.data(), SIGNAL(activeProfileChanged(QString)),
-            this, SLOT(onPulseAudioCardActiveProfileChanged(QString)));
+    if (!d->pulseAudioCard.isNull())
+    {
+        connect(d->pulseAudioCard.data(), SIGNAL(activeProfileChanged(QString)),
+                this, SLOT(onPulseAudioCardActiveProfileChanged(QString)));
+    }
+    else
+        qDebug() << "no PulseAudio cards found!";
 
-    connect(d->pulseAudioSink.data(), SIGNAL(activePortChanged(QString)),
-            this, SLOT(onPulseAudioSinkActivePortChanged(QString)));
+
+    if (!d->pulseAudioSink.isNull())
+    {
+        connect(d->pulseAudioSink.data(), SIGNAL(activePortChanged(QString)),
+                this, SLOT(onPulseAudioSinkActivePortChanged(QString)));
+    }
+    else
+        qDebug() << "no PulseAudio sink named sink.primary found!";
 
     connect(d->pulseAudioConnection.data(), SIGNAL(sourceAdded(QSharedPointer<QtPulseAudioSource>)),
             this, SLOT(onPulseAudioSourceAdded(QSharedPointer<QtPulseAudioSource>)));
