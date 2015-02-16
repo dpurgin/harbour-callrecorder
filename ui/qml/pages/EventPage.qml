@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015  Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.nemomobile.contacts 1.0
 
 import QtMultimedia 5.0
 
@@ -30,6 +31,7 @@ Page {
     property string fileName
     property int fileSize
     property int duration
+    property Person person: people.populated? people.personByPhoneNumber(lineIdentification): null
 
     MediaPlayer {
         id: mediaPlayer
@@ -103,6 +105,38 @@ Page {
                     color: Theme.highlightColor
 
                     text: lineIdentification
+                }
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
+
+                    color: Theme.secondaryHighlightColor
+
+                    visible: person != null
+
+                    text: {
+                        var val = "";
+
+                        if (person)
+                        {
+                            if (person.person.primaryName.length > 0)
+                                val += person.primaryName;
+
+                            if (person.person.secondaryName.length > 0)
+                            {
+                                if (val != "")
+                                    val += " ";
+
+                                val += person.secondaryName;
+                            }
+                        }
+
+                        return val;
+                    }
                 }
 
                 Item {
