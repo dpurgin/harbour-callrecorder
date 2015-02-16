@@ -1,3 +1,5 @@
+include(../common.pri)
+
 TEMPLATE = lib
 
 TARGET = qtpulse
