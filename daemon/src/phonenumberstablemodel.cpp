@@ -33,17 +33,17 @@ class PhoneNumbersTableModel::PhoneNumbersTableModelPrivate
 
 PhoneNumbersTableModel::PhoneNumbersTableModel()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 PhoneNumbersTableModel::~PhoneNumbersTableModel()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 int PhoneNumbersTableModel::getIdByLineIdentification(const QString& lineIdentification)
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 
     int id = -1;
 

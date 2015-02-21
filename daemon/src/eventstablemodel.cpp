@@ -34,17 +34,17 @@ class EventsTableModel::EventsTableModelPrivate
 EventsTableModel::EventsTableModel()
     : d(new EventsTableModelPrivate())
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 EventsTableModel::~EventsTableModel()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 int EventsTableModel::add(const QDateTime& timeStamp, int phoneNumberId, EventType eventType, RecordingState recordingState)
 {
-    qDebug() << __PRETTY_FUNCTION__ << timeStamp << phoneNumberId << eventType;
+    qDebug() << timeStamp << phoneNumberId << eventType;
 
     static QString insertStatement(
                 "\nINSERT INTO Events"
@@ -74,7 +74,7 @@ int EventsTableModel::add(const QDateTime& timeStamp, int phoneNumberId, EventTy
 
 void EventsTableModel::remove(int id)
 {
-    qDebug() << __PRETTY_FUNCTION__ << id;
+    qDebug() << id;
 
     static QString statement("DELETE FROM Events WHERE ID = :id;");
 
@@ -87,7 +87,7 @@ void EventsTableModel::remove(int id)
 
 void EventsTableModel::update(int id, const QVariantMap& items)
 {
-    qDebug() << __PRETTY_FUNCTION__ << id << items;
+    qDebug() << id << items;
 
     static QString statement("UPDATE Events SET %1 WHERE ID = :id");
 

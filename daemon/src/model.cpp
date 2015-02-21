@@ -40,12 +40,12 @@ class Model::ModelPrivate
 Model::Model()
     : d(new ModelPrivate())
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 Model::~Model()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 EventsTableModel* Model::events() const
