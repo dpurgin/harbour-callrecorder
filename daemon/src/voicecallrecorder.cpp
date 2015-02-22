@@ -269,19 +269,27 @@ void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 
 void VoiceCallRecorder::onAudioInputStateChanged(QAudio::State state)
 {
-    qDebug() << __PRETTY_FUNCTION__ << state;
+    qDebug() << state;
 }
 
 void VoiceCallRecorder::onVoiceCallStateChanged(const QString& state)
 {
-    qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << state;
+    qDebug() << d->dbusObjectPath << state;
 
     processOfonoState(state);
 }
 
 void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
 {
-    qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath << ofonoState;
+    qDebug() << d->dbusObjectPath << ofonoState;
+
+    // libqofono 0.61 produces state change signal with an empty state
+    // do not process this
+    if (ofonoState.length() == 0)
+    {
+        qDebug() << "Not processing empty ofono state";
+        return ;
+    }
 
     // if a call is not disconnecting, arm the recorder if not yet
     if (ofonoState != QLatin1String("disconnected") && state() == Inactive)
