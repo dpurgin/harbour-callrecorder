@@ -33,7 +33,8 @@ SOURCES += \
     src/callrecorderexception.cpp \
     src/sqlcursor.cpp \
     src/eventstablemodel.cpp \
-    src/settings.cpp
+    src/settings.cpp \
+    src/libcallrecorder.cpp
 
 HEADERS += \
     include/libcallrecorder/database.h \
@@ -46,5 +47,7 @@ HEADERS += \
     src/settings.h \
     include/libcallrecorder/sqlcursor.h \
     include/libcallrecorder/callrecorderexception.h \
-    include/libcallrecorder/settings.h
+    include/libcallrecorder/settings.h \
+    include/libcallrecorder/libcallrecorder.h \
+    src/libcallrecorder.h
 
