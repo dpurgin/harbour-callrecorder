@@ -25,6 +25,7 @@
 
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
+#include <libcallrecorder/libcallrecorder.h>
 #include <libcallrecorder/settings.h>
 
 #include <qtpulseaudio/qtpulseaudioconnection.h>
@@ -95,6 +96,8 @@ Application::Application(int argc, char* argv[])
     setApplicationName(QLatin1String("harbour-callrecorder"));
     setOrganizationName(QLatin1String("kz.dpurgin"));
 
+    LibCallRecorder::installMessageHandler();
+
     d->settings.reset(new Settings());
 
     d->dbusAdaptor.reset(new DBusAdaptor(this));
@@ -158,7 +161,7 @@ Model* Application::model() const
 /// Connects to Ofono voice call add/remove signals using the modem given
 void Application::initVoiceCallManager(const QString& objectPath)
 {
-    qDebug() << __PRETTY_FUNCTION__ << objectPath;
+    qDebug() << objectPath;
 
     d->qofonoVoiceCallManager.reset(new QOfonoVoiceCallManager());
 
