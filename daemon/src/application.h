@@ -22,6 +22,7 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QScopedPointer>
+#include <QSharedPointer>
 
 #include "voicecallrecorder.h"
 
@@ -29,9 +30,9 @@
 
 class Database;
 class Model;
-class PulseAudioCardProfile;
-class PulseAudioSinkPort;
 class Settings;
+
+class QtPulseAudioSource;
 
 class Application : public QCoreApplication
 {
@@ -67,10 +68,13 @@ private slots:
 
     void maybeSwitchProfile();
 
-    void onPulseAudioCardActiveProfileChanged(const PulseAudioCardProfile* profile);
-    void onPulseAudioSinkActivePortChanged(const PulseAudioSinkPort* port);
-    void onPulseAudioSourceAdded(quint32 idx, const QString& name);
-    void onPulseAudioSourceRemoved(quint32 idx, const QString& name);
+    void onPulseAudioConnected();
+    void onPulseAudioError(QString error);
+
+    void onPulseAudioCardActiveProfileChanged(QString profileName);
+    void onPulseAudioSinkActivePortChanged(QString portName);
+    void onPulseAudioSourceAdded(QSharedPointer< QtPulseAudioSource > source);
+    void onPulseAudioSourceRemoved(QSharedPointer< QtPulseAudioSource > source);
 
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);

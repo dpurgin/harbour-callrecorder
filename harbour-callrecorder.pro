@@ -5,9 +5,10 @@ TEMPLATE = subdirs
 SUBDIRS += \
     daemon \
     ui \
-    libcallrecorder
+    libcallrecorder \
+    qtpulseaudio
 
-daemon.depends = libcallrecorder
+daemon.depends = libcallrecorder qtpulseaudio
 ui.depends = libcallrecorder
 
 license.files = LICENSE
