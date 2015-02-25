@@ -36,6 +36,13 @@ class LIBCALLRECORDER_DECL Settings : public QObject
     Q_PROPERTY(int sampleRate READ sampleRate WRITE setSampleRate NOTIFY sampleRateChanged)
 
 public:
+    enum OperationMode
+    {
+        BlackList,
+        WhiteList
+    };
+
+public:
     Settings(QObject* parent = NULL);
     ~Settings();
 
@@ -44,6 +51,9 @@ public:
 
     int compression() const;
     void setCompression(int compression);
+
+    OperationMode operationMode() const;
+    void setOperationMode(OperationMode operationMode);
 
     QString outputLocation() const;
     void setOutputLocation(const QString& outputLocation);
@@ -57,6 +67,7 @@ public slots:
 
 signals:
     void compressionChanged(int compression);
+    void operationModeChanged(OperationMode operationMode);
     void outputLocationChanged(QString outputLocation);
     void sampleRateChanged(int sampleRate);
     void settingsChanged();

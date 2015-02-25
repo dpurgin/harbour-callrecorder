@@ -45,7 +45,10 @@ class Settings::SettingsPrivate
         inputDeviceName = settings.value("deviceName", "source.primary").toString();
         outputLocation = settings.value("outputLocation",
                                         QString(QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
-                                                QLatin1String("/data"))).toString();
+                                                QLatin1String("/data"))).toString();                
+
+        QString operationModeStr = settings.value("operationMode", "blacklist").toString();
+        operationMode = (operationModeStr == "whitelist"? Settings::WhiteList: Settings::BlackList);
 
         settings.beginGroup("encoder");
             sampleRate = settings.value("sampleRate", 32000).toInt();
@@ -72,6 +75,8 @@ class Settings::SettingsPrivate
 
     QString inputDeviceName;
 
+    Settings::OperationMode operationMode;
+
     QString outputLocation;
 
     int compression;
@@ -83,7 +88,7 @@ Settings::Settings(QObject* parent)
     : QObject(parent),
       d(new SettingsPrivate)
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 
     d->readSettings();
 
@@ -110,7 +115,7 @@ Settings::Settings(QObject* parent)
 
 Settings::~Settings()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 }
 
 QAudioFormat Settings::audioFormat() const
@@ -136,6 +141,11 @@ QAudioDeviceInfo Settings::inputDevice() const
     return d->inputDevice;
 }
 
+Settings::OperationMode Settings::operationMode() const
+{
+    return d->operationMode;
+}
+
 QString Settings::outputLocation() const
 {
     return d->outputLocation;
@@ -143,7 +153,7 @@ QString Settings::outputLocation() const
 
 void Settings::reload()
 {
-    qDebug() << "entering";
+    qDebug();
 
     d->readSettings();
 }
@@ -155,32 +165,39 @@ int Settings::sampleRate() const
 
 void Settings::save()
 {
-    qDebug() << "entering";
+    qDebug();
 
     d->saveSettings();
 }
 
 void Settings::setCompression(int compression)
 {
-    bool emitSignal = (d->compression != compression);
-
-    d->compression = compression;
-
-    if (emitSignal)
+    if (d->compression != compression)
     {
+        d->compression = compression;
+
         emit compressionChanged(compression);
+        emit settingsChanged();
+    }
+}
+
+void Settings::setOperationMode(OperationMode operationMode)
+{
+    if (d->operationMode != operationMode)
+    {
+        d->operationMode = operationMode;
+
+        emit operationModeChanged(operationMode);
         emit settingsChanged();
     }
 }
 
 void Settings::setOutputLocation(const QString& outputLocation)
 {
-    bool emitSignal = (d->outputLocation != outputLocation);
-
-    d->outputLocation = outputLocation;
-
-    if (emitSignal)
+    if (d->outputLocation != outputLocation)
     {
+        d->outputLocation = outputLocation;
+
         emit outputLocationChanged(outputLocation);
         emit settingsChanged();
     }
@@ -188,12 +205,10 @@ void Settings::setOutputLocation(const QString& outputLocation)
 
 void Settings::setSampleRate(int sampleRate)
 {
-    bool emitSignal = (d->sampleRate != sampleRate);
-
-    d->sampleRate = sampleRate;
-
-    if (emitSignal)
+    if (d->sampleRate != sampleRate)
     {
+        d->sampleRate = sampleRate;
+
         emit sampleRateChanged(sampleRate);
         emit settingsChanged();
     }
