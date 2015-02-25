@@ -74,12 +74,20 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
 VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
     : d(new VoiceCallRecorderPrivate())
 {
-    qDebug() << __PRETTY_FUNCTION__ << dbusObjectPath;
+    qDebug() << dbusObjectPath;
 
     d->dbusObjectPath = dbusObjectPath;
 
     d->qofonoVoiceCall.reset(new QOfonoVoiceCall());
     d->qofonoVoiceCall->setVoiceCallPath(dbusObjectPath);
+
+    // recording process should be started only when line id is known
+    // what if someone calls from a hidden number? needs researching
+    if (d->qofonoVoiceCall->lineIdentification().isEmpty())
+    {
+        connect(d->qofonoVoiceCall.data(), SIGNAL(lineIdentificationChanged(QString)),
+                this, SLOT(onVoiceCallLineIdentificationChanged(QString)));
+    }
 
     connect(d->qofonoVoiceCall.data(), SIGNAL(stateChanged(QString)),
             this, SLOT(onVoiceCallStateChanged(QString)));
@@ -87,7 +95,7 @@ VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
 
 VoiceCallRecorder::~VoiceCallRecorder()
 {
-    qDebug() << __PRETTY_FUNCTION__ << d->dbusObjectPath;
+    qDebug() << d->dbusObjectPath;
 
     // if the call was recorded, the processor for "disconnected" signal should have told us
     // to finalize FLAC encoder, as readyRead() could still have been called after audioInput->stop()
@@ -126,11 +134,11 @@ VoiceCallRecorder::~VoiceCallRecorder()
 
 void VoiceCallRecorder::arm()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 
     const QAudioFormat audioFormat = daemon->settings()->audioFormat();
 
-    qDebug() << __PRETTY_FUNCTION__ << "Audio format is: " << audioFormat;
+    qDebug() << "Audio format is: " << audioFormat;
 
     // create audio input device
     if (d->audioInput.isNull())
@@ -140,7 +148,7 @@ void VoiceCallRecorder::arm()
                 this, SLOT(onAudioInputStateChanged(QAudio::State)));
     }
     else
-        qWarning() << __PRETTY_FUNCTION__ << ": d->audioInput expected to be NULL but it wasn't!";
+        qWarning() << ": d->audioInput expected to be NULL but it wasn't!";
 
     // initialize FLAC encoder
     if (d->flacEncoder == NULL)
@@ -190,19 +198,23 @@ void VoiceCallRecorder::arm()
                              callTypeSuffix %
                              QLatin1String(".flac"));
 
-        qDebug() << __PRETTY_FUNCTION__ << "Writing to " << d->outputLocation;
+        qDebug() << "Writing to " << d->outputLocation;
 
-        FLAC__StreamEncoderInitStatus status = FLAC__stream_encoder_init_file(d->flacEncoder,
-                                                                              d->outputLocation.toLatin1().data(),
-                                                                              NULL,
-                                                                              NULL);
+        FLAC__StreamEncoderInitStatus status =
+                FLAC__stream_encoder_init_file(d->flacEncoder,
+                                               d->outputLocation.toLatin1().data(),
+                                               NULL,
+                                               NULL);
+
         if (status != FLAC__STREAM_ENCODER_INIT_STATUS_OK)
-            qCritical() << __PRETTY_FUNCTION__ <<
-                        ": unable to init FLAC file: " << status <<
-                        ", current encoder status is " << FLAC__stream_encoder_get_state(d->flacEncoder);
+        {
+            qCritical() <<
+                ": unable to init FLAC file: " << status <<
+                ", current encoder status is " << FLAC__stream_encoder_get_state(d->flacEncoder);
+        }
     }
     else
-        qWarning() << __PRETTY_FUNCTION__ << ": d->flacEncoder expected to be NULL but it wasn't!";
+        qWarning() << ": d->flacEncoder expected to be NULL but it wasn't!";
 
     // add new event to events table
     if (d->eventId == -1)
@@ -217,14 +229,14 @@ void VoiceCallRecorder::arm()
             eventType = EventsTableModel::Partial;
 
         d->eventId = daemon->model()->events()->add(
-                    timeStamp(),                                                // time stamp of recording
-                    daemon->model()->phoneNumbers()->getIdByLineIdentification(    // phone number ref
-                        d->qofonoVoiceCall->lineIdentification()),
+                    timeStamp(),                                   // time stamp of recording
+                    daemon->model()->phoneNumbers()->getIdByLineIdentification(
+                        d->qofonoVoiceCall->lineIdentification()), // phone number ref
                     eventType,
-                    EventsTableModel::Armed);                                   // initial recording state
+                    EventsTableModel::Armed);                      // initial recording state
     }
     else
-        qWarning() << __PRETTY_FUNCTION__ << ": d->eventId expected to be -1 but it wasn't!";
+        qWarning() << ": d->eventId expected to be -1 but it wasn't!";
 
     setState(Armed);
 }
@@ -251,7 +263,7 @@ void VoiceCallRecorder::onAudioInputDeviceReadyRead()
     FLAC__StreamEncoderState state = FLAC__stream_encoder_get_state(d->flacEncoder);
 
     if (state != FLAC__STREAM_ENCODER_OK)
-        qDebug() << __PRETTY_FUNCTION__ << ": FLAC encoder state is not ok: " << state;
+        qDebug() << ": FLAC encoder state is not ok: " << state;
     else
     {
         for (quint64 sampleIdx = 0; sampleIdx < sampleCount; sampleIdx++)
@@ -260,7 +272,8 @@ void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 
             if (!FLAC__stream_encoder_process_interleaved(d->flacEncoder, &sample, 1))
             {
-                qDebug() << "Unable to FLAC__stream_encoder_process(): " << FLAC__stream_encoder_get_state(d->flacEncoder);
+                qDebug() << "Unable to FLAC__stream_encoder_process(): " <<
+                            FLAC__stream_encoder_get_state(d->flacEncoder);
                 break;
             }
         }
@@ -270,6 +283,14 @@ void VoiceCallRecorder::onAudioInputDeviceReadyRead()
 void VoiceCallRecorder::onAudioInputStateChanged(QAudio::State state)
 {
     qDebug() << state;
+}
+
+void VoiceCallRecorder::onVoiceCallLineIdentificationChanged(const QString& lineIdentification)
+{
+    qDebug() << lineIdentification;
+
+    if (!lineIdentification.isEmpty() && !d->qofonoVoiceCall->state().isEmpty())
+        processOfonoState(d->qofonoVoiceCall->state());
 }
 
 void VoiceCallRecorder::onVoiceCallStateChanged(const QString& state)
@@ -283,14 +304,6 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
 {
     qDebug() << d->dbusObjectPath << ofonoState;
 
-    // libqofono 0.61 produces state change signal with an empty state
-    // do not process this
-    if (ofonoState.length() == 0)
-    {
-        qDebug() << "Not processing empty ofono state";
-        return ;
-    }
-
     // if a call is not disconnecting, arm the recorder if not yet
     if (ofonoState != QLatin1String("disconnected") && state() == Inactive)
     {
@@ -303,92 +316,121 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
 
         setTimeStamp(QDateTime::currentDateTime());
 
-        arm();
+        // if line identification received, arm the recording if operation mode allows.
+        // Wait for lineIdentificationChanged otherwise
+
+        QString lineIdentification = d->qofonoVoiceCall->lineIdentification();
+
+        if (!lineIdentification.isEmpty())
+        {
+            // check the operation mode
+            // If operating in BlackList mode, the call is recorded if it doesn't belong to
+            // the black list.
+            // If operating in WhiteList mode, the call is recorded only if it belongs to the
+            // white list.
+
+            if ((daemon->settings()->operationMode() == Settings::BlackList &&
+                    !daemon->model()->blackList().contains(lineIdentification)) ||
+                (daemon->settings()->operationMode() == Settings::WhiteList &&
+                    daemon->model()->whiteList().contains(lineIdentification)))
+            {
+                arm();
+            }
+        }
     }
 
-    // when the call goes into active state, the sound card's profile is set to voicecall-record.
-    // recording is started or resumed
-    if (ofonoState == QLatin1String("active"))
+    // the call has been armed just now or is being recorded already
+    if (state() != Inactive)
     {
-        // if the recorder was armed, recording was not started yet. start recording and connect to
-        // readyRead() signal to retrieve and encode data
-        if (state() == Armed)
+        // when the call goes into active state from ringing, the sound card's profile is set to
+        // voicecall-record. Recording is started or resumed
+        if (ofonoState == QLatin1String("active"))
         {
-            d->audioInputDevice = d->audioInput->start();
-            connect(d->audioInputDevice, SIGNAL(readyRead()),
-                    this, SLOT(onAudioInputDeviceReadyRead()));
-        }
-        // if the recorder was suspended, just resume the recording
-        else if (state() == Suspended)
-            d->audioInput->resume();
+            // if the recorder was armed, recording was not started yet. start recording and connect
+            // to readyRead() signal to retrieve and encode data
+            if (state() == Armed)
+            {
+                d->audioInputDevice = d->audioInput->start();
+                connect(d->audioInputDevice, SIGNAL(readyRead()),
+                        this, SLOT(onAudioInputDeviceReadyRead()));
+            }
+            // if the recorder was suspended, just resume the recording
+            else if (state() == Suspended)
+                d->audioInput->resume();
 
-        // update event state to InProgress
-        if (d->eventId != -1)
-        {
-            QVariantMap params;
-            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::InProgress)));
-
-            daemon->model()->events()->update(d->eventId, params);
-        }
-
-        // update 'last record start' timestamp to calculate duration when the recording ents
-        d->lastRecordStart = QDateTime::currentMSecsSinceEpoch();
-
-        setState(Active);
-    }
-    // stop recording if the call was disconnected
-    else if (ofonoState == QLatin1String("disconnected"))
-    {
-        // stop recording if it was ever started
-        if (state() == Active || state() == Suspended)
-        {
-            d->audioInput->stop();
-
-            // if the call was active, calculate and add duration
-            // if the call was suspended, the duration has already been added
-            if (state() == Active)
-                d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
-
-        }
-        // if the call was never active, remove the record from Events
-        else
-        {
-            daemon->model()->events()->remove(d->eventId);
-            d->eventId = -1;
-        }
-
-        // We do not call FLAC__stream_encode_finish at this point, as the d->audioInput can still some data.
-        // To actually cleanup FLAC, we will process WaitingForFinish in destructor.
-        // In case if the call was never active, FLAC still has to be cleaned up.
-
-        setState(WaitingForFinish);
-    }
-    // if the call is on hold or waiting, suspend recording if it was active
-    else if (ofonoState == QLatin1String("held") || ofonoState == QLatin1String("waiting"))
-    {
-        if (state() == Active)
-        {
-            d->audioInput->suspend();
-
-            setState(Suspended);
-
+            // update event state to InProgress
             if (d->eventId != -1)
             {
                 QVariantMap params;
-                params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Suspended)));
+                params.insert(QLatin1String("RecordingStateID"),
+                              QVariant(static_cast< int >(EventsTableModel::InProgress)));
 
                 daemon->model()->events()->update(d->eventId, params);
             }
 
-            // calculate and add duration now
-            d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
+            // update 'last record start' timestamp to calculate duration when the recording ents
+            d->lastRecordStart = QDateTime::currentMSecsSinceEpoch();
+
+            setState(Active);
+        }
+        // stop recording if the call was disconnected
+        else if (ofonoState == QLatin1String("disconnected"))
+        {
+            // stop recording if it was ever started
+            if (state() == Active || state() == Suspended)
+            {
+                d->audioInput->stop();
+
+                // if the call was active, calculate and add duration
+                // if the call was suspended, the duration has already been added
+                if (state() == Active)
+                    d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
+
+            }
+            // if the call was never active, remove the record from Events
+            else
+            {
+                daemon->model()->events()->remove(d->eventId);
+                d->eventId = -1;
+            }
+
+            // We do not call FLAC__stream_encode_finish at this point, as the d->audioInput can still some data.
+            // To actually cleanup FLAC, we will process WaitingForFinish in destructor.
+            // In case if the call was never active, FLAC still has to be cleaned up.
+
+            setState(WaitingForFinish);
+        }
+        // if the call is on hold or waiting, suspend recording if it was active
+        else if (ofonoState == QLatin1String("held") || ofonoState == QLatin1String("waiting"))
+        {
+            if (state() == Active)
+            {
+                d->audioInput->suspend();
+
+                setState(Suspended);
+
+                if (d->eventId != -1)
+                {
+                    QVariantMap params;
+                    params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Suspended)));
+
+                    daemon->model()->events()->update(d->eventId, params);
+                }
+
+                // calculate and add duration now
+                d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
+            }
         }
     }
 }
 
 void VoiceCallRecorder::processState()
 {
-    processOfonoState(d->qofonoVoiceCall->state());
+    if (!d->qofonoVoiceCall->state().isEmpty() &&
+            !d->qofonoVoiceCall->lineIdentification().isEmpty())
+    {
+        processOfonoState(d->qofonoVoiceCall->state());
+    }
 }
 
 void VoiceCallRecorder::setCallType(CallType callType)

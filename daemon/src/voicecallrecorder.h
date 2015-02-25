@@ -64,6 +64,7 @@ public slots:
 private slots:
     void onAudioInputDeviceReadyRead();
     void onAudioInputStateChanged(QAudio::State state);
+    void onVoiceCallLineIdentificationChanged(const QString& lineIdentification);
     void onVoiceCallStateChanged(const QString& state);
 
 private:
