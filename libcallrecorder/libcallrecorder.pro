@@ -51,3 +51,6 @@ HEADERS += \
     include/libcallrecorder/libcallrecorder.h \
     src/libcallrecorder.h
 
+RESOURCES += \
+    qrc/resource.qrc
+
