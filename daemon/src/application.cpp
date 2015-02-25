@@ -314,7 +314,7 @@ void Application::onPulseAudioSourceRemoved(QSharedPointer< QtPulseAudioSource >
 /// Creates the recorder for a voice call appeared in the system
 void Application::onVoiceCallAdded(const QString& objectPath)
 {
-    qDebug() << __PRETTY_FUNCTION__ << objectPath;
+    qDebug() << objectPath;
 
     QScopedPointer< VoiceCallRecorder > voiceCallRecorder(new VoiceCallRecorder(objectPath));
 
@@ -323,6 +323,7 @@ void Application::onVoiceCallAdded(const QString& objectPath)
     connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
             d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
 
+    // for qofono < 0.61 (SailfishOS prior to 1.1.2.15) state is already known after constructing
     voiceCallRecorder->processState();
 
     d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());        
