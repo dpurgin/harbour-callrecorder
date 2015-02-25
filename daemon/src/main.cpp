@@ -26,7 +26,7 @@
 
 int main(int argc, char* argv[])
 {
-    int retval = 0;
+    int retval = -1;
 
     try
     {
@@ -41,12 +41,11 @@ int main(int argc, char* argv[])
     }
     catch (CallRecorderException& e)
     {
-        qCritical() << e.what();
+        qCritical() << e.qWhat();
     }
     catch (...)
     {
-        qCritical() << __PRETTY_FUNCTION__ << "Unhandled exception occured";
-        retval = -1;
+        qCritical() << "Unhandled exception occured";
     }
 
     QDBusConnection::sessionBus().unregisterService("kz.dpurgin.DBus.CallRecorder");
