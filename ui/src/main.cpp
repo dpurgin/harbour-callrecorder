@@ -22,56 +22,81 @@
 #include <QtQuick>
 #include <QScopedPointer>
 
+#include <exception>
+
+#include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/eventstablemodel.h>
+#include <libcallrecorder/libcallrecorder.h>
 #include <libcallrecorder/settings.h>
 
 #include "filesystemhelper.h"
 
 int main(int argc, char *argv[])
 {
+    LibCallRecorder::installMessageHandler();
+
     qmlRegisterType< Settings >("kz.dpurgin.callrecorder.Settings", 1, 0, "Settings");
 
-    QScopedPointer< QGuiApplication > app(SailfishApp::application(argc, argv));
+    int retval = -1;
 
-    app->setOrganizationName("kz.dpurgin");
-    app->setApplicationName("harbour-callrecorder");
+    try
+    {
+        QScopedPointer< QGuiApplication > app(SailfishApp::application(argc, argv));
 
-    QScopedPointer< Database > db(new Database());
+        app->setOrganizationName("kz.dpurgin");
+        app->setApplicationName("harbour-callrecorder");
 
-    QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
+        QScopedPointer< Database > db(new Database());
 
-    QScopedPointer< FileSystemHelper > fileSystemHelper(new FileSystemHelper());
+        QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
 
-//    QScopedPointer< Settings > settings(new Settings());
+        QScopedPointer< FileSystemHelper > fileSystemHelper(new FileSystemHelper());
 
-    QScopedPointer< QQuickView > view(SailfishApp::createView());
-    view->setSource(SailfishApp::pathTo("qml/main.qml"));
-    view->show();
+    //    QScopedPointer< Settings > settings(new Settings());
 
-    view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
-    view->rootContext()->setContextProperty("fileSystemHelper", fileSystemHelper.data());
+        QScopedPointer< QQuickView > view(SailfishApp::createView());
+        view->setSource(SailfishApp::pathTo("qml/main.qml"));
+        view->show();
 
-    view->rootContext()->setContextProperty("license",
-                                            "Call Recorder for SailfishOS"
-                                            "\nCopyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>"
-                                            "\nhttps://github.com/dpurgin/harbour-callrecorder"
-                                            "\n"
-                                            "\nThis program is free software: you can redistribute it and/or modify"
-                                            " it under the terms of the GNU General Public License as published by"
-                                            " the Free Software Foundation, either version 3 of the License, or"
-                                            " (at your option) any later version."
-                                            "\n"
-                                            "\nThis program is distributed in the hope that it will be useful,"
-                                            " but WITHOUT ANY WARRANTY; without even the implied warranty of"
-                                            " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
-                                            " GNU General Public License for more details."
-                                            "\n"
-                                            "\nYou should have received a copy of the GNU General Public License"
-                                            " along with this program.  If not, see <http://www.gnu.org/licenses/>.");
+        view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
+        view->rootContext()->setContextProperty("fileSystemHelper", fileSystemHelper.data());
 
-//    view->rootContext()->setContextProperty("settings", settings.data());
+        view->rootContext()->setContextProperty("license",
+                                                "Call Recorder for SailfishOS"
+                                                "\nCopyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>"
+                                                "\nhttps://github.com/dpurgin/harbour-callrecorder"
+                                                "\n"
+                                                "\nThis program is free software: you can redistribute it and/or modify"
+                                                " it under the terms of the GNU General Public License as published by"
+                                                " the Free Software Foundation, either version 3 of the License, or"
+                                                " (at your option) any later version."
+                                                "\n"
+                                                "\nThis program is distributed in the hope that it will be useful,"
+                                                " but WITHOUT ANY WARRANTY; without even the implied warranty of"
+                                                " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+                                                " GNU General Public License for more details."
+                                                "\n"
+                                                "\nYou should have received a copy of the GNU General Public License"
+                                                " along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 
-    return app->exec();
+    //    view->rootContext()->setContextProperty("settings", settings.data());
+
+        retval = app->exec();
+    }
+    catch (CallRecorderException& e)
+    {
+        qCritical() << "Exception occured: " << e.qWhat();
+    }
+    catch (std::exception& e)
+    {
+        qCritical() << "Exception occured: " << e.what();
+    }
+    catch (...)
+    {
+        qCritical() << "Unhandled exception occured";
+    }
+
+    return retval;
 }
 
