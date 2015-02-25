@@ -1,0 +1,36 @@
+PRAGMA foreign_keys = on;
+
+CREATE TABLE IF NOT EXISTS PhoneNumbers
+(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    LineIdentification TEXT
+);
+
+INSERT OR IGNORE INTO PhoneNumbers(ID, LineIdentification) VALUES(1, '');
+
+CREATE TABLE IF NOT EXISTS Events
+(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    TimeStamp TEXT,
+    PhoneNumberID INTEGER,
+    EventTypeID INTEGER,
+    RecordingStateID INTEGER,
+    Duration INTEGER,
+    FileName TEXT,
+    FileSize INTEGER,
+    FOREIGN KEY(PhoneNumberID) REFERENCES PhoneNumbers(ID)
+);
+
+CREATE TABLE IF NOT EXISTS BlackList
+(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    PhoneNumberID INTEGER,
+    FOREIGN KEY(PhoneNumberID) REFERENCES PhoneNumbers(ID)
+);
+
+CREATE TABLE IF NOT EXISTS WhiteList
+(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    PhoneNumberID INTEGER,
+    FOREIGN KEY(PhoneNumberID) REFERENCES PhoneNumbers(ID)
+);

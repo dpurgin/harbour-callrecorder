@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,15 +37,13 @@ class Database::DatabasePrivate
 private:
     bool prepareAndExecute(const QString& statement, const SqlParameters& params, QSqlQuery* query = NULL)
     {
-        qDebug() << __PRETTY_FUNCTION__ << statement << params;
+        qDebug() << statement << params;
 
         resetLastError();
 
         if (!query->prepare(statement))
         {
             QString errorText = QLatin1String("Unable to prepare query: ") % query->lastError().text();
-
-            qDebug() << __PRETTY_FUNCTION__ << errorText;
 
             setLastError(errorText);
             return false;
@@ -61,8 +59,6 @@ private:
         if (!query->exec())
         {
             QString errorText = QLatin1String("Unable to execute query: ") % query->lastError().text();
-
-            qDebug() << __PRETTY_FUNCTION__ << errorText;
 
             setLastError(errorText);
 
@@ -84,7 +80,9 @@ private:
 Database::Database()
     : d(new DatabasePrivate())
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    Q_INIT_RESOURCE(resource);
+
+    qDebug();
 
     d->db.reset(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE")));
 
@@ -105,31 +103,22 @@ Database::Database()
     d->db->setDatabaseName(location % QLatin1String("/callrecorder.db"));
 
     if (!d->db->open())
-        throw CallRecorderException(QLatin1String("Unable to open database: ") % d->db->lastError().text());
+        throw CallRecorderException(QLatin1String("Unable to open database: ") %
+                                    d->db->lastError().text());
 
-    static QStringList initStatements = QStringList() <<
-        "\nPRAGMA foreign_keys = ON;" <<
+    QFile initFile(":/sql/init.sql");
 
-        "\nCREATE TABLE IF NOT EXISTS PhoneNumbers(ID INTEGER PRIMARY KEY AUTOINCREMENT, LineIdentification TEXT);" <<
+    if (!initFile.open(QFile::ReadOnly))
+        throw CallRecorderException(QLatin1String("Unable to open :/sql/init.sql: ") %
+                                    initFile.errorString());
 
-        "\nINSERT OR IGNORE INTO PhoneNumbers(ID, LineIdentification) VALUES(1, '');" <<
+    QStringList initStatements = QString::fromUtf8(initFile.readAll()).split(QChar(';'));
 
-        "\nCREATE TABLE IF NOT EXISTS Events"
-        "\n("
-        "\n    ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "\n    TimeStamp TEXT,"
-        "\n    PhoneNumberID INTEGER,"
-        "\n    EventTypeID INTEGER,"
-        "\n    RecordingStateID INTEGER,"
-        "\n    Duration INTEGER,"
-        "\n    FileName TEXT,"
-        "\n    FileSize INTEGER,"
-        "\n    FOREIGN KEY(PhoneNumberID) REFERENCES PhoneNumbers(ID)"
-        "\n);";
+    initFile.close();
 
     foreach (QString statement, initStatements)
     {
-        if (!execute(statement))
+        if (!statement.trimmed().isEmpty() && !execute(statement))
             throw CallRecorderException(QLatin1String("Unable to execute initializing statement: ") %
                                         statement %
                                         lastError());
@@ -138,7 +127,9 @@ Database::Database()
 
 Database::~Database()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
+
+    Q_CLEANUP_RESOURCE(resource);
 
     if (d->db->isOpen())
         d->db->close();
@@ -146,7 +137,7 @@ Database::~Database()
 
 bool Database::execute(const QString& statement, const SqlParameters& params)
 {
-    qDebug() << __PRETTY_FUNCTION__ << statement;
+    qDebug() << statement;
 
     QSqlQuery query(*d->db.data());
 
