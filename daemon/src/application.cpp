@@ -107,7 +107,7 @@ Application::Application(int argc, char* argv[])
             d->settings.data(), SLOT(reload()));
 
     d->database.reset(new Database());
-    d->model.reset(new Model());
+    d->model.reset(new Model(d->database.data()));
 
     d->qofonoManager.reset(new QOfonoManager());
 
