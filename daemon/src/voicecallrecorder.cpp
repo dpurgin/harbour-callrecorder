@@ -26,6 +26,7 @@
 
 #include <qofono-qt5/qofonovoicecall.h>
 
+#include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/settings.h>
 
 #include "application.h"
@@ -330,12 +331,14 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             // white list.
 
             if ((daemon->settings()->operationMode() == Settings::BlackList &&
-                    !daemon->model()->blackList().contains(lineIdentification)) ||
+                    !daemon->model()->blackList()->contains(lineIdentification)) /*||
                 (daemon->settings()->operationMode() == Settings::WhiteList &&
-                    daemon->model()->whiteList().contains(lineIdentification)))
+                    daemon->model()->whiteList().contains(lineIdentification))*/)
             {
                 arm();
             }
+            else
+                qWarning() << "Not arming for " << lineIdentification << " due to operation mode";
         }
     }
 
