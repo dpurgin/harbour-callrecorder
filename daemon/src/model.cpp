@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@
 
 #include <QDebug>
 
+#include <libcallrecorder/blacklisttablemodel.h>
+#include <libcallrecorder/database.h>
+
 #include "eventstablemodel.h"
 #include "phonenumberstablemodel.h"
 
@@ -27,18 +30,20 @@ class Model::ModelPrivate
 {
     friend class Model;
 
-    ModelPrivate()
-        : events(new EventsTableModel()),
+    ModelPrivate(Database* db)
+        : blackList(new BlackListTableModel(db)),
+          events(new EventsTableModel()),
           phoneNumbers(new PhoneNumbersTableModel())
     {
     }
 
+    QScopedPointer< BlackListTableModel > blackList;
     QScopedPointer< EventsTableModel > events;
     QScopedPointer< PhoneNumbersTableModel > phoneNumbers;
 };
 
-Model::Model()
-    : d(new ModelPrivate())
+Model::Model(Database* db)
+    : d(new ModelPrivate(db))
 {
     qDebug();
 }
@@ -46,6 +51,11 @@ Model::Model()
 Model::~Model()
 {
     qDebug();
+}
+
+BlackListTableModel* Model::blackList() const
+{
+    return d->blackList.data();
 }
 
 EventsTableModel* Model::events() const
