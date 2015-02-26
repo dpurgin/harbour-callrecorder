@@ -34,7 +34,8 @@ SOURCES += \
     src/sqlcursor.cpp \
     src/eventstablemodel.cpp \
     src/settings.cpp \
-    src/libcallrecorder.cpp
+    src/libcallrecorder.cpp \
+    src/blacklisttablemodel.cpp
 
 HEADERS += \
     include/libcallrecorder/database.h \
@@ -49,7 +50,9 @@ HEADERS += \
     include/libcallrecorder/callrecorderexception.h \
     include/libcallrecorder/settings.h \
     include/libcallrecorder/libcallrecorder.h \
-    src/libcallrecorder.h
+    src/libcallrecorder.h \
+    src/blacklisttablemodel.h \
+    include/libcallrecorder/blacklisttablemodel.h
 
 RESOURCES += \
     qrc/resource.qrc
