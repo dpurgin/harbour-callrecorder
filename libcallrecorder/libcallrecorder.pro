@@ -35,7 +35,8 @@ SOURCES += \
     src/eventstablemodel.cpp \
     src/settings.cpp \
     src/libcallrecorder.cpp \
-    src/blacklisttablemodel.cpp
+    src/blacklisttablemodel.cpp \
+    src/whitelisttablemodel.cpp
 
 HEADERS += \
     include/libcallrecorder/database.h \
@@ -52,7 +53,9 @@ HEADERS += \
     include/libcallrecorder/libcallrecorder.h \
     src/libcallrecorder.h \
     src/blacklisttablemodel.h \
-    include/libcallrecorder/blacklisttablemodel.h
+    include/libcallrecorder/blacklisttablemodel.h \
+    src/whitelisttablemodel.h \
+    include/libcallrecorder/whitelisttablemodel.h
 
 RESOURCES += \
     qrc/resource.qrc
