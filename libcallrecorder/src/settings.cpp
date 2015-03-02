@@ -63,6 +63,10 @@ class Settings::SettingsPrivate
 
         settings.setValue("deviceName", inputDeviceName);
         settings.setValue("outputLocation", outputLocation);
+        settings.setValue("operationMode",
+                          operationMode == Settings::WhiteList?
+                              "whitelist":
+                              "blacklist");
 
         settings.beginGroup("encoder");
             settings.setValue("sampleRate", sampleRate);
@@ -212,4 +216,11 @@ void Settings::setSampleRate(int sampleRate)
         emit sampleRateChanged(sampleRate);
         emit settingsChanged();
     }
+}
+
+QDebug operator<<(QDebug dbg, Settings::OperationMode state)
+{
+    dbg << (state == Settings::BlackList? "Black List": "White List");
+
+    return dbg;
 }

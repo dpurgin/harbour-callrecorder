@@ -77,4 +77,6 @@ private:
     QScopedPointer< SettingsPrivate > d;
 };
 
+LIBCALLRECORDER_DECL QDebug operator<<(QDebug dbg, Settings::OperationMode state);
+
 #endif // LIBCALLRECORDER_SETTINGS_H
