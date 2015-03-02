@@ -22,6 +22,7 @@
 
 #include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/database.h>
+#include <libcallrecorder/whitelisttablemodel.h>
 
 #include "eventstablemodel.h"
 #include "phonenumberstablemodel.h"
@@ -33,13 +34,15 @@ class Model::ModelPrivate
     ModelPrivate(Database* db)
         : blackList(new BlackListTableModel(db)),
           events(new EventsTableModel()),
-          phoneNumbers(new PhoneNumbersTableModel())
+          phoneNumbers(new PhoneNumbersTableModel()),
+          whiteList(new WhiteListTableModel(db))
     {
     }
 
     QScopedPointer< BlackListTableModel > blackList;
     QScopedPointer< EventsTableModel > events;
     QScopedPointer< PhoneNumbersTableModel > phoneNumbers;
+    QScopedPointer< WhiteListTableModel > whiteList;
 };
 
 Model::Model(Database* db)
@@ -66,4 +69,9 @@ EventsTableModel* Model::events() const
 PhoneNumbersTableModel* Model::phoneNumbers() const
 {
     return d->phoneNumbers.data();
+}
+
+WhiteListTableModel* Model::whiteList() const
+{
+    return d->whiteList.data();
 }

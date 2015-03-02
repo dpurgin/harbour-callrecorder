@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef HARBOUR_CALLBLOCKERD_MODEL_H
-#define HARBOUR_CALLBLOCKERD_MODEL_H
+#ifndef HARBOUR_CALLRECORDERD_MODEL_H
+#define HARBOUR_CALLRECORDERD_MODEL_H
 
 #include <QScopedPointer>
 
@@ -26,6 +26,7 @@ class Database;
 class BlackListTableModel;
 class EventsTableModel;
 class PhoneNumbersTableModel;
+class WhiteListTableModel;
 
 class Model
 {
@@ -38,6 +39,7 @@ public:
     BlackListTableModel* blackList() const;
     EventsTableModel* events() const;
     PhoneNumbersTableModel* phoneNumbers() const;
+    WhiteListTableModel* whiteList() const;
 
 private:
     class ModelPrivate;
@@ -45,4 +47,4 @@ private:
 };
 
 
-#endif // HARBOUR_CALLBLOCKERD_MODEL_H
+#endif // HARBOUR_CALLRECORDERD_MODEL_H
