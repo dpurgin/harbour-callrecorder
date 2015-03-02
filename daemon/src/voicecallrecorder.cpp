@@ -28,6 +28,7 @@
 
 #include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/settings.h>
+#include <libcallrecorder/whitelisttablemodel.h>
 
 #include "application.h"
 #include "model.h"
@@ -330,15 +331,18 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             // If operating in WhiteList mode, the call is recorded only if it belongs to the
             // white list.
 
-            if ((daemon->settings()->operationMode() == Settings::BlackList &&
-                    !daemon->model()->blackList()->contains(lineIdentification)) /*||
-                (daemon->settings()->operationMode() == Settings::WhiteList &&
-                    daemon->model()->whiteList().contains(lineIdentification))*/)
+            Settings::OperationMode opMode = daemon->settings()->operationMode();
+
+            if ((opMode == Settings::BlackList &&
+                    !daemon->model()->blackList()->contains(lineIdentification)) ||
+                (opMode == Settings::WhiteList &&
+                    daemon->model()->whiteList()->contains(lineIdentification)))
             {
                 arm();
             }
             else
-                qWarning() << "Not arming for " << lineIdentification << " due to operation mode";
+                qWarning() << "Not arming for " << lineIdentification
+                           << " due to operation mode " << opMode;
         }
     }
 
