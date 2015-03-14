@@ -4,5 +4,7 @@
         <file>images/icon-m-up.png</file>
         <file>images/icon-m-sdcard.png</file>
         <file>images/icon-m-hidden-folders.png</file>
+        <file>images/icon-m-recording.png</file>
+        <file>images/icon-m-daemon.png</file>
     </qresource>
 </RCC>
