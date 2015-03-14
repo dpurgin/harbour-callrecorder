@@ -38,6 +38,10 @@ Page {
                 title: qsTr('Recording Daemon')
             }
 
+            SectionHeader {
+                text: qsTr('Startup')
+            }
+
             TextSwitch {
                 id: activeSwitch
 
@@ -74,6 +78,10 @@ Page {
                 }
             }
 
+            SectionHeader {
+                text: qsTr('Operation mode')
+            }
+
             ComboBox {
                 id: operationModeCombo
 
@@ -95,6 +103,12 @@ Page {
                         settings.operationMode = currentIndex;
                     }
                 }
+            }
+
+            Button {
+                text: qsTr('Edit List')
+
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }
