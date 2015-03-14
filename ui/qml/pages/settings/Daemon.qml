@@ -20,6 +20,9 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
+    property bool acceptChanges: false; // set to true when the page is initialized and settings are
+                                        // actually changed by the user
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height
@@ -70,6 +73,37 @@ Page {
                         systemdUnit.enable();
                 }
             }
+
+            ComboBox {
+                id: operationModeCombo
+
+                label: qsTr('Operation mode')
+
+                description:
+                    currentIndex == 0?
+                        qsTr('Record calls to any number except those in the black list'):
+                        qsTr('Do not record anything except numbers in the white list')
+
+                menu: ContextMenu {
+                    MenuItem { text: qsTr('Black List') }
+                    MenuItem { text: qsTr('White List') }
+                }
+
+                onCurrentIndexChanged: {
+                    if (acceptChanges)
+                    {
+                        settings.operationMode = currentIndex;
+                    }
+                }
+            }
         }
+    }
+
+    Component.onCompleted: {
+        console.log(settings.operationMode)
+
+        operationModeCombo.currentIndex = settings.operationMode;
+
+        acceptChanges = true
     }
 }
