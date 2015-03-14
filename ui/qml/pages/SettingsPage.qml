@@ -22,220 +22,323 @@ import Sailfish.Silica 1.0
 Page {
     id: settingsPage
 
-    property bool acceptChanges: false // this is set to true when the page is complete, any change is made by the user
+    SilicaListView {
+        id: settingsView
 
-    SilicaFlickable {
         anchors.fill: parent
 
-        contentHeight: contentColumn.height
+        header: PageHeader {
+            title: qsTr('Settings')
+        }
 
-        Column {
-            id: contentColumn
-
-            width: parent.width
-
-            PageHeader {
-                title: qsTr('Settings')
+        model: ListModel {
+            ListElement {
+                title: 'Daemon'
+                img: 'qrc:/images/icon-m-daemon.png'
+                target: 'Daemon.qml'
             }
 
-            SectionHeader {
-                text: qsTr('Recorder Daemon')
+            ListElement {
+                title: 'Storage'
+                img: 'qrc:/images/icon-m-sdcard.png'
+                target: 'Storage.qml'
             }
 
-            TextSwitch {
-                id: activeSwitch
-
-                automaticCheck: false
-
-                checked: systemdUnit.isActive
-
-                text: qsTr('Active')
-                description: qsTr('Capture all incoming and outgoing calls')
-
-                onClicked: {
-                    if (systemdUnit.isActive)
-                        systemdUnit.stop();
-                    else
-                        systemdUnit.start();
-                }
+            ListElement {
+                title: 'Recording'
+                img: 'qrc:/images/icon-m-recording.png'
+                target: 'Recording.qml'
             }
+        }
 
-            TextSwitch {
-                id: startupTypeSwitch
+        delegate: ListItem {
+            id: delegate
 
-                automaticCheck: false
-
-                checked: systemdUnit.isEnabled
-
-                text: qsTr('Automatic startup')
-                description: qsTr('Start automatically upon reboot')
-
-                onClicked: {
-                    if (systemdUnit.isEnabled)
-                        systemdUnit.disable();
-                    else
-                        systemdUnit.enable();
-                }
-            }
-
-            SectionHeader {
-                text: qsTr('Location')
-            }
-
-            TextField {
-                id: outputLocationField
-
-                width: parent.width
-
-                text: settings.outputLocation
-
-                errorHighlight: !fileSystemHelper.isWritable(text)
-
-                label: qsTr('Location for storing the recordings')
-            }
+            contentHeight: content.height
 
             Row {
-                width: parent.width
-
-                anchors {
-                    left: parent.left
-                    right: parent.right
-
-                    leftMargin: Theme.paddingLarge
-                    rightMargin: Theme.paddingLarge
-                }
-
-                Button {
-                    text: qsTr('Browse')
-
-                    onClicked: {
-                        var dlg = pageStack.push("DirectoryPickerDialog.qml", {
-                            directoryPath: outputLocationField.text
-                        });
-
-                        dlg.accepted.connect(function() {
-                            outputLocationField.text = dlg.directoryPath;
-                        })
-                    }
-                }
-
-                Button {
-                    text: qsTr('Save')
-
-                    enabled: !outputLocationField.errorHighlight && (settings.outputLocation !== outputLocationField.text)
-
-                    onClicked: {
-                        var oldLocation = settings.outputLocation;
-                        var newLocation = outputLocationField.text;
-
-                        settings.outputLocation = newLocation;
-
-                        if (!fileSystemHelper.dirIsEmpty(oldLocation))
-                        {
-                            remorse.execute(qsTr("Relocating files"), function() {
-                                fileSystemHelper.relocate(oldLocation, newLocation);
-                            });
-                        }
-                    }
-                }
-            }
-
-            ProgressBar {
-                id: relocationProgress
+                id: content
 
                 width: parent.width
+                height: Theme.itemSizeSmall
 
-                label: qsTr('Relocating files')
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge
 
-                minimumValue: 0
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingLarge
 
-                visible: fileSystemHelper.busy
-                value: fileSystemHelper.progress
-                maximumValue: fileSystemHelper.totalCount
-            }
+                spacing: Theme.paddingLarge
 
-            SectionHeader {
-                text: qsTr('Record Quality')
-            }
+                Image {
+                    id: icon
 
-            ComboBox {
-                id: sampleRateCombo
+                    height: parent.height
 
-                label: qsTr('Sample rate')
+                    source: img
 
-                menu: ContextMenu {
-                    id: sampleRateMenu
+                    verticalAlignment: Image.AlignVCenter
 
-                    MenuItem {
-                        text: '44.1 kHz'
-                        property int value: 44100
-                    }
-                    MenuItem {
-                        text: '32 kHz'
-                        property int value: 32000
-                    }
-                    MenuItem {
-                        text: '22.05 kHz'
-                        property int value: 22050
-                    }
-                    MenuItem {
-                        text: '16 kHz'
-                        property int value: 16000
-                    }
-                    MenuItem {
-                        text: '11.025 kHz'
-                        property int value: 11025
-                    }
-                    MenuItem {
-                        text: '8 kHz'
-                        property int value: 8000
-                    }
+                    fillMode: Image.Pad
                 }
 
-                onCurrentItemChanged: {
-                    if (acceptChanges)
-                        settings.sampleRate = currentItem.value;
+                Label {
+                    id: label
+
+                    text: title
+
+                    height: parent.height
+
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
 
-            Slider {
-                id: compressionSlider
-
-                width: parent.width
-
-                minimumValue: 0
-                maximumValue: 8
-                stepSize: 1
-
-                label: qsTr('FLAC compression level')
-
-                value: settings.compression
-
-                onValueChanged: {
-                    if (acceptChanges)
-                        settings.compression = value;
-                }
+            onClicked: {
+                pageStack.push('settings/' + target)
             }
+
         }
     }
 
-    Component.onCompleted: {
-        console.log('Component.onCompleted');
 
-        sampleRateMenu._foreachMenuItem(function(item, index) {
-            if (item.value == settings.sampleRate)
-            {
-                sampleRateCombo.currentIndex = index;
-                return false;
+/*            Row {
+                id: row
+
+                spacing: Theme.paddingLarge
+
+                Image {
+                    id: icon
+
+                    source: img
+                }
+
+                Label {
+                    text: qsTr(title)
+
+                    anchors.left: icon.right
+                    anchors.right: parent.right
+
+                    truncationMode: TruncationMode.Fade
+
+                    color: highlighted? Theme.highlightColor: Theme.primaryColor
+                }
             }
+*/
 
-            return true;
-        })
+//    property bool acceptChanges: false // this is set to true when the page is complete, any change is made by the user
 
-        acceptChanges = true;
-    }
+//    SilicaFlickable {
+//        anchors.fill: parent
 
-    RemorsePopup {
-        id: remorse
-    }
+//        contentHeight: contentColumn.height
+
+//        Column {
+//            id: contentColumn
+
+//            width: parent.width
+
+//            PageHeader {
+//                title: qsTr('Settings')
+//            }
+
+//            SectionHeader {
+//                text: qsTr('Recorder Daemon')
+//            }
+
+//            TextSwitch {
+//                id: activeSwitch
+
+//                automaticCheck: false
+
+//                checked: systemdUnit.isActive
+
+//                text: qsTr('Active')
+//                description: qsTr('Capture all incoming and outgoing calls')
+
+//                onClicked: {
+//                    if (systemdUnit.isActive)
+//                        systemdUnit.stop();
+//                    else
+//                        systemdUnit.start();
+//                }
+//            }
+
+//            TextSwitch {
+//                id: startupTypeSwitch
+
+//                automaticCheck: false
+
+//                checked: systemdUnit.isEnabled
+
+//                text: qsTr('Automatic startup')
+//                description: qsTr('Start automatically upon reboot')
+
+//                onClicked: {
+//                    if (systemdUnit.isEnabled)
+//                        systemdUnit.disable();
+//                    else
+//                        systemdUnit.enable();
+//                }
+//            }
+
+//            SectionHeader {
+//                text: qsTr('Location')
+//            }
+
+//            TextField {
+//                id: outputLocationField
+
+//                width: parent.width
+
+//                text: settings.outputLocation
+
+//                errorHighlight: !fileSystemHelper.isWritable(text)
+
+//                label: qsTr('Location for storing the recordings')
+//            }
+
+//            Row {
+//                width: parent.width
+
+//                anchors {
+//                    left: parent.left
+//                    right: parent.right
+
+//                    leftMargin: Theme.paddingLarge
+//                    rightMargin: Theme.paddingLarge
+//                }
+
+//                Button {
+//                    text: qsTr('Browse')
+
+//                    onClicked: {
+//                        var dlg = pageStack.push("DirectoryPickerDialog.qml", {
+//                            directoryPath: outputLocationField.text
+//                        });
+
+//                        dlg.accepted.connect(function() {
+//                            outputLocationField.text = dlg.directoryPath;
+//                        })
+//                    }
+//                }
+
+//                Button {
+//                    text: qsTr('Save')
+
+//                    enabled: !outputLocationField.errorHighlight && (settings.outputLocation !== outputLocationField.text)
+
+//                    onClicked: {
+//                        var oldLocation = settings.outputLocation;
+//                        var newLocation = outputLocationField.text;
+
+//                        settings.outputLocation = newLocation;
+
+//                        if (!fileSystemHelper.dirIsEmpty(oldLocation))
+//                        {
+//                            remorse.execute(qsTr("Relocating files"), function() {
+//                                fileSystemHelper.relocate(oldLocation, newLocation);
+//                            });
+//                        }
+//                    }
+//                }
+//            }
+
+//            ProgressBar {
+//                id: relocationProgress
+
+//                width: parent.width
+
+//                label: qsTr('Relocating files')
+
+//                minimumValue: 0
+
+//                visible: fileSystemHelper.busy
+//                value: fileSystemHelper.progress
+//                maximumValue: fileSystemHelper.totalCount
+//            }
+
+//            SectionHeader {
+//                text: qsTr('Record Quality')
+//            }
+
+//            ComboBox {
+//                id: sampleRateCombo
+
+//                label: qsTr('Sample rate')
+
+//                menu: ContextMenu {
+//                    id: sampleRateMenu
+
+//                    MenuItem {
+//                        text: '44.1 kHz'
+//                        property int value: 44100
+//                    }
+//                    MenuItem {
+//                        text: '32 kHz'
+//                        property int value: 32000
+//                    }
+//                    MenuItem {
+//                        text: '22.05 kHz'
+//                        property int value: 22050
+//                    }
+//                    MenuItem {
+//                        text: '16 kHz'
+//                        property int value: 16000
+//                    }
+//                    MenuItem {
+//                        text: '11.025 kHz'
+//                        property int value: 11025
+//                    }
+//                    MenuItem {
+//                        text: '8 kHz'
+//                        property int value: 8000
+//                    }
+//                }
+
+//                onCurrentItemChanged: {
+//                    if (acceptChanges)
+//                        settings.sampleRate = currentItem.value;
+//                }
+//            }
+
+//            Slider {
+//                id: compressionSlider
+
+//                width: parent.width
+
+//                minimumValue: 0
+//                maximumValue: 8
+//                stepSize: 1
+
+//                label: qsTr('FLAC compression level')
+
+//                value: settings.compression
+
+//                onValueChanged: {
+//                    if (acceptChanges)
+//                        settings.compression = value;
+//                }
+//            }
+//        }
+//    }
+
+//    Component.onCompleted: {
+//        console.log('Component.onCompleted');
+
+//        sampleRateMenu._foreachMenuItem(function(item, index) {
+//            if (item.value == settings.sampleRate)
+//            {
+//                sampleRateCombo.currentIndex = index;
+//                return false;
+//            }
+
+//            return true;
+//        })
+
+//        acceptChanges = true;
+//    }
+
+//    RemorsePopup {
+//        id: remorse
+//    }
 }
