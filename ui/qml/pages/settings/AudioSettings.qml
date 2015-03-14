@@ -38,6 +38,10 @@ Page {
                 title: qsTr('Audio Settings')
             }
 
+            SectionHeader {
+                text: qsTr('FLAC Encoder')
+            }
+
             ComboBox {
                 id: sampleRateCombo
 

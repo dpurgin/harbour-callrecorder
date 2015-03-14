@@ -35,6 +35,10 @@ Page {
                 title: qsTr('Storage')
             }
 
+            SectionHeader {
+                text: qsTr('Location')
+            }
+
             TextField {
                 id: outputLocationField
 
@@ -75,7 +79,8 @@ Page {
                 Button {
                     text: qsTr('Save')
 
-                    enabled: !outputLocationField.errorHighlight && (settings.outputLocation !== outputLocationField.text)
+                    enabled: !outputLocationField.errorHighlight &&
+                                (settings.outputLocation !== outputLocationField.text)
 
                     onClicked: {
                         var oldLocation = settings.outputLocation;
