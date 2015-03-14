@@ -32,7 +32,7 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                title: qsTr('Daemon')
+                title: qsTr('Recording Daemon')
             }
 
             TextSwitch {
