@@ -24,11 +24,13 @@
 
 #include <exception>
 
+#include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/eventstablemodel.h>
 #include <libcallrecorder/libcallrecorder.h>
 #include <libcallrecorder/settings.h>
+#include <libcallrecorder/whitelisttablemodel.h>
 
 #include "filesystemhelper.h"
 
@@ -50,6 +52,8 @@ int main(int argc, char *argv[])
         QScopedPointer< Database > db(new Database());
 
         QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
+        QScopedPointer< BlackListTableModel > blackListModel(new BlackListTableModel(db.data()));
+        QScopedPointer< WhiteListTableModel > whiteListModel(new WhiteListTableModel(db.data()));
 
         QScopedPointer< FileSystemHelper > fileSystemHelper(new FileSystemHelper());
 
@@ -60,6 +64,9 @@ int main(int argc, char *argv[])
         view->show();
 
         view->rootContext()->setContextProperty("eventsModel", eventsModel.data());
+        view->rootContext()->setContextProperty("blackListModel", blackListModel.data());
+        view->rootContext()->setContextProperty("whiteListModel", whiteListModel.data());
+
         view->rootContext()->setContextProperty("fileSystemHelper", fileSystemHelper.data());
 
         view->rootContext()->setContextProperty("license",
