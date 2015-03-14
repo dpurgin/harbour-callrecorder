@@ -41,6 +41,9 @@ RESOURCES += ui.qrc
 OTHER_FILES += \
     harbour-callrecorder.desktop \
     translations/*.ts \
+    qml/pages/settings/AudioSettings.qml \
+    qml/pages/settings/Daemon.qml \
+    qml/pages/settings/Storage.qml \
     qml/pages/AboutPage.qml \
     qml/cover/CoverPage.qml \
     qml/pages/DirectoryNameDialog.qml \
