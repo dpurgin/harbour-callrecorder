@@ -31,9 +31,25 @@ class LIBCALLRECORDER_DECL Settings : public QObject
 
     Q_DISABLE_COPY(Settings)
 
-    Q_PROPERTY(int compression READ compression WRITE setCompression NOTIFY compressionChanged)
-    Q_PROPERTY(QString outputLocation READ outputLocation WRITE setOutputLocation NOTIFY outputLocationChanged)
-    Q_PROPERTY(int sampleRate READ sampleRate WRITE setSampleRate NOTIFY sampleRateChanged)
+    Q_PROPERTY(int compression
+               READ compression
+               WRITE setCompression
+               NOTIFY compressionChanged)
+
+    Q_PROPERTY(QString outputLocation
+               READ outputLocation
+               WRITE setOutputLocation
+               NOTIFY outputLocationChanged)
+
+    Q_PROPERTY(int sampleRate
+               READ sampleRate
+               WRITE setSampleRate
+               NOTIFY sampleRateChanged)
+
+    Q_PROPERTY(OperationMode operationMode
+               READ operationMode
+               WRITE setOperationMode
+               NOTIFY operationModeChanged)
 
 public:
     enum OperationMode
@@ -41,6 +57,8 @@ public:
         BlackList,
         WhiteList
     };
+
+    Q_ENUMS(OperationMode)
 
 public:
     Settings(QObject* parent = NULL);
@@ -78,5 +96,6 @@ private:
 };
 
 LIBCALLRECORDER_DECL QDebug operator<<(QDebug dbg, Settings::OperationMode state);
+LIBCALLRECORDER_DECL void initQml();
 
 #endif // LIBCALLRECORDER_SETTINGS_H
