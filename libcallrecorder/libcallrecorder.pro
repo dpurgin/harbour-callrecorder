@@ -29,33 +29,38 @@ QT += core sql multimedia
 DEFINES += LIBCALLRECORDER
 
 SOURCES += \
-    src/database.cpp \
-    src/callrecorderexception.cpp \
-    src/sqlcursor.cpp \
-    src/eventstablemodel.cpp \
-    src/settings.cpp \
-    src/libcallrecorder.cpp \
     src/blacklisttablemodel.cpp \
+    src/callrecorderexception.cpp \
+    src/database.cpp \
+    src/eventstablemodel.cpp \
+    src/libcallrecorder.cpp \
+    src/phonenumberstablemodel.cpp \
+    src/phonenumberslisttablemodel.cpp \
+    src/settings.cpp \
+    src/sqlcursor.cpp \
     src/whitelisttablemodel.cpp
 
 HEADERS += \
+    include/libcallrecorder/blacklisttablemodel.h \
+    include/libcallrecorder/callrecorderexception.h \
     include/libcallrecorder/database.h \
     include/libcallrecorder/eventstablemodel.h \
-    src/config.h \
-    src/database.h \
-    src/callrecorderexception.h \
-    src/sqlcursor.h \
-    src/eventstablemodel.h \
-    src/settings.h \
-    include/libcallrecorder/sqlcursor.h \
-    include/libcallrecorder/callrecorderexception.h \
-    include/libcallrecorder/settings.h \
     include/libcallrecorder/libcallrecorder.h \
-    src/libcallrecorder.h \
+    include/libcallrecorder/phonenumberstablemodel.h \
+    include/libcallrecorder/settings.h \
+    include/libcallrecorder/sqlcursor.h \
+    include/libcallrecorder/whitelisttablemodel.h \
     src/blacklisttablemodel.h \
-    include/libcallrecorder/blacklisttablemodel.h \
-    src/whitelisttablemodel.h \
-    include/libcallrecorder/whitelisttablemodel.h
+    src/config.h \
+    src/callrecorderexception.h \
+    src/database.h \
+    src/eventstablemodel.h \
+    src/libcallrecorder.h \
+    src/phonenumberslisttablemodel.h
+    src/phonenumberstablemodel.h \
+    src/settings.h \
+    src/sqlcursor.h \
+    src/whitelisttablemodel.h
 
 RESOURCES += \
     qrc/resource.qrc
