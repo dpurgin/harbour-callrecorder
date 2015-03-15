@@ -19,8 +19,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Item {
+BackgroundItem {
     property string mode: 'dialpad';
+    property alias placeholderText: inputField.placeholderText
     property string value: '';
 
     Row {
@@ -31,7 +32,7 @@ Item {
 
             width: parent.width - iconsRow.width
 
-            placeholderText: qsTr('Search or add')
+            placeholderText: qsTr('Search by name or number')
 
             inputMethodHints: mode == 'dialpad'? Qt.ImhDialableCharactersOnly: Qt.ImhNoPredictiveText
 
@@ -57,13 +58,8 @@ Item {
                     inputField.forceActiveFocus()
                 }
             }
-
-            IconButton {
-                icon.source: 'image://theme/icon-m-add'
-
-                visible: value.length > 0
-            }
         }
     }
+
 }
 
