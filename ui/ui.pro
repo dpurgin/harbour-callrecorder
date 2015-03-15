@@ -41,6 +41,7 @@ RESOURCES += ui.qrc
 OTHER_FILES += \
     harbour-callrecorder.desktop \
     translations/*.ts \
+    qml/pages/dialogs/PhoneNumbersListDialog.qml \
     qml/pages/settings/AudioSettings.qml \
     qml/pages/settings/Daemon.qml \
     qml/pages/settings/Storage.qml \
@@ -54,6 +55,7 @@ OTHER_FILES += \
     qml/pages/EventPage.qml \
     qml/pages/LicensePage.qml \
     qml/pages/SettingsPage.qml \
+    qml/widgets/PhoneNumberEntryField.qml \
     qml/main.qml
 
 images.files = \
