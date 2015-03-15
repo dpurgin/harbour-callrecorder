@@ -109,13 +109,17 @@ Page {
                 text: qsTr('Edit List')
 
                 anchors.horizontalCenter: parent.horizontalCenter
+
+                onClicked: {
+                    pageStack.push('../dialogs/PhoneNumbersListDialog.qml', {
+                        role: operationModeCombo.currentIndex
+                    })
+                }
             }
         }
     }
 
     Component.onCompleted: {
-        console.log(settings.operationMode)
-
         operationModeCombo.currentIndex = settings.operationMode;
 
         acceptChanges = true
