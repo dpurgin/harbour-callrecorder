@@ -19,27 +19,25 @@
 #ifndef LIBCALLRECORDER_WHITELISTTABLEMODEL_H
 #define LIBCALLRECORDER_WHITELISTTABLEMODEL_H
 
-#include <QSqlRelationalTableModel>
+#include "phonenumberslisttablemodel.h"
 
 class Database;
 
-class WhiteListTableModel : public QSqlRelationalTableModel
+class WhiteListTableModel : public PhoneNumbersListTableModel
 {
     Q_OBJECT
 
 public:
-    explicit WhiteListTableModel(Database* db, QObject *parent = 0);
-    virtual ~WhiteListTableModel();
-
-    bool contains(const QString& lineIdentification) const;
+    explicit WhiteListTableModel(Database* db, QObject *parent = 0)
+        : PhoneNumbersListTableModel("WhiteList", db, parent)
+    {
+    }
 
 signals:
 
 public slots:
 
 private:
-    class WhiteListTableModelPrivate;
-    WhiteListTableModelPrivate* d;
 };
 
 #endif // LIBCALLRECORDER_WHITELISTTABLEMODEL_H

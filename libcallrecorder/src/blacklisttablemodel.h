@@ -19,31 +19,26 @@
 #ifndef LIBCALLRECORDER_BLACKLISTTABLEMODEL_H
 #define LIBCALLRECORDER_BLACKLISTTABLEMODEL_H
 
-#include <QAbstractListModel>
+#include "phonenumberslisttablemodel.h"
 
 class Database;
 
-class BlackListTableModel : public QAbstractListModel
+class BlackListTableModel : public PhoneNumbersListTableModel
 {
     Q_OBJECT
 
 public:
-    explicit BlackListTableModel(Database* db, QObject *parent = 0);
-    virtual ~BlackListTableModel();
-
-    bool contains(const QString& lineIdentification);
-
-    QVariant data(const QModelIndex& index, int role) const;
-
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    explicit BlackListTableModel(Database* db, QObject *parent = 0)
+        : PhoneNumbersListTableModel("BlackList", db, parent)
+    {
+    }
 
 signals:
 
 public slots:
 
 private:
-    class BlackListTableModelPrivate;
-    BlackListTableModelPrivate* d;
+
 };
 
 #endif // LIBCALLRECORDER_BLACKLISTTABLEMODEL_H
