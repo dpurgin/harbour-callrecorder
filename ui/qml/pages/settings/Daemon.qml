@@ -35,7 +35,7 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                title: qsTr('Recording Daemon')
+                title: qsTr('Recording daemon')
             }
 
             SectionHeader {
@@ -93,8 +93,8 @@ Page {
                         qsTr('Do not record anything except numbers in the white list')
 
                 menu: ContextMenu {
-                    MenuItem { text: qsTr('Black List') }
-                    MenuItem { text: qsTr('White List') }
+                    MenuItem { text: qsTr('Black list') }
+                    MenuItem { text: qsTr('White list') }
                 }
 
                 onCurrentIndexChanged: {
@@ -106,7 +106,7 @@ Page {
             }
 
             Button {
-                text: qsTr('Edit List')
+                text: qsTr('Edit list')
 
                 anchors.horizontalCenter: parent.horizontalCenter
 

@@ -33,7 +33,7 @@ Page {
 
         model: ListModel {
             ListElement {
-                title: 'Recording Daemon'
+                title: 'Recording daemon'
                 img: 'qrc:/images/icon-m-daemon.png'
                 target: 'Daemon.qml'
             }
@@ -45,7 +45,7 @@ Page {
             }
 
             ListElement {
-                title: 'Audio Settings'
+                title: 'Audio settings'
                 img: 'qrc:/images/icon-m-recording.png'
                 target: 'AudioSettings.qml'
             }
