@@ -19,6 +19,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import org.nemomobile.contacts 1.0
+
 import kz.dpurgin.callrecorder.Settings 1.0;
 
 import "../../widgets"
@@ -44,7 +46,7 @@ Dialog {
             MenuItem {
                 text: qsTr('Copy from black list')
                 visible: role == Settings.WhiteList
-                enabled: whiteListModel.count > 0
+                enabled: blackListModel.count > 0
             }
             MenuItem {
                 text: qsTr('Delete all')
@@ -52,11 +54,61 @@ Dialog {
             }
         }
 
+//        SilicaListView {
+//            id: phoneNumbersListView
+
+//            header: PhoneNumberEntryField {
+//                width: parent.width
+//            }
+
+//            anchors {
+//                top: header.bottom
+//                left: parent.left
+//                right: parent.right
+//                bottom: parent.bottom
+//            }
+
+//            model: PeopleModel {
+//                filterType: PeopleModel.FilterNone
+//            }
+
+//            delegate: ListItem {
+//                Label {
+//                    text: 'anc'
+//                }
+//            }
+//        }
+
         SilicaListView {
             id: phoneNumbersListView
 
-            header: PhoneNumberEntryField {
+            header: Row {
                 width: parent.width
+
+                PhoneNumberEntryField {
+                    id: phoneNumberEntryField
+
+                    width: parent.width - (addButton.visible? addButton.width: 0)
+
+                    Behavior on width {
+                        NumberAnimation { }
+                    }
+                }
+
+                IconButton {
+                    id: addButton
+
+                    icon.source: 'image://theme/icon-m-add'
+
+                    visible: phoneNumberEntryField.value.length > 0
+                    opacity: phoneNumberEntryField.value.length > 0? 1: 0
+
+                    onClicked: {
+                        phoneNumbersListView.model.insert(
+                            phoneNumbersModel.getIdByLineIdentification(
+                                phoneNumberEntryField.value))
+                    }
+                }
             }
 
             anchors {
@@ -70,7 +122,15 @@ Dialog {
 
             delegate: ListItem {
                 Label {
-                    text: 'abc'
+                    text: model.PhoneNumberIDRepresentation
+                }
+
+                menu: Component {
+                    ContextMenu {
+                        MenuItem {
+                            text: qsTr('Remove')
+                        }
+                    }
                 }
             }
 
@@ -82,5 +142,14 @@ Dialog {
             }
 
         }
+    }
+
+    onAccepted: {
+        var result = phoneNumbersListView.model.submitAll();
+        console.log(result);
+    }
+
+    Component.onCompleted: {
+        console.log(people.count);
     }
 }
