@@ -29,6 +29,64 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
 {
     friend class PhoneNumbersListTableModel;
 
+    // single database row
+    // key - column index
+    // value - column value
+    typedef QHash< int, QVariant > Row;
+
+    // database rowset
+    // key - OID (value of ID column)
+    // value - row with OID
+    typedef QHash< int, Row > Rowset;
+
+    // Fetches single row from database.
+    // Used after inserting a new record to update cached data.
+    void fetch(int id)
+    {
+        QString stmt(
+            "\nSELECT"
+            "\n    List.ID,"
+            "\n    List.PhoneNumberID,"
+            "\n    PhoneNumbers.LineIdentification AS PhoneNumberIDRepresentation"
+            "\nFROM"
+            "\n    " % tableName % " AS List"
+            "\n    LEFT JOIN"
+            "\n        PhoneNumbers"
+            "\n    ON"
+            "\n        PhoneNumbers.ID = List.PhoneNumberID"
+            "\nWHERE"
+            "\n    List.ID = :id");
+
+        Database::SqlParameters params;
+        params.insert(":id", id);
+
+        QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
+
+        if (cursor->next())
+        {
+            Row record;
+
+            QStringList columns = cursor->columns();
+
+            for (int c = 0; c < columns.size(); c++)
+                record.insert(c, cursor->value(columns[c]));
+
+            int oid = record.value(0).toInt();
+
+            // If this record is new, a mapping to display position at the end of the list is added.
+            // Otherwise, such a mapping already exists.
+            if (!data.contains(oid))
+                displayToOidMapping.insert(displayToOidMapping.size(), oid);
+
+            data.insert(record.value(0).toInt(), record);
+
+            rowCount = data.size();
+        }
+    }
+
+    // Prefetches all data from a table.
+    // This means that we can safely assume that the order of model indices will be consistent
+    // for now
     void prefetch()
     {
         data.clear();
@@ -43,27 +101,37 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
             "\n    LEFT JOIN"
             "\n        PhoneNumbers"
             "\n    ON"
-            "\n        PhoneNumbers.ID = List.PhoneNumberID");
+            "\n        PhoneNumbers.ID = List.PhoneNumberID"
+            "\nORDER BY"
+            "\n    List.ID");
 
         QScopedPointer< SqlCursor > cursor(db->select(stmt));
 
-
         for (int i = 0; cursor->next(); i++)
         {
-            QHash< int, QVariant > record;
+            Row record;
 
             QStringList columns = cursor->columns();
 
             for (int c = 0; c < columns.size(); c++)
-                record.insert(c + Qt::UserRole, cursor->value(columns[c]));
+                record.insert(c, cursor->value(columns[c]));
 
-            data.insert(i, record);
+            // get record OID and add to data
+            data.insert(record.value(0).toInt(), record);
+
+            // map this record to display position
+            displayToOidMapping.insert(i, record.value(0).toInt());
         }
 
         rowCount = data.size();
     }
 
-    QHash< int, QHash< int, QVariant > > data;
+    // table contents
+    Rowset data;
+
+    // model index => OID mapping
+    QHash< int, int > displayToOidMapping;
+
     int rowCount;
 
     Database* db;    
@@ -121,12 +189,18 @@ bool PhoneNumbersListTableModel::add(int phoneNumberId)
 {
     qDebug();
 
+    emit beginInsertRows(QModelIndex(), rowCount(), rowCount());
+
     QString stmt("INSERT INTO " % tableName() % "(PhoneNumberID) VALUES(:phoneNumberId)");
 
     Database::SqlParameters params;
     params.insert(":phoneNumberId", phoneNumberId);
 
     int id = d->db->insert(stmt, params);
+
+    d->fetch(id);
+
+    emit endInsertRows();
 
     return (id != -1);
 }
@@ -135,8 +209,17 @@ QVariant PhoneNumbersListTableModel::data(const QModelIndex& index, int role) co
 {
     QVariant result;
 
-    if (d->data.contains(index.row()))
-        result = d->data.value(index.row()).value(role, QVariant());
+    // index.row() references to a display position
+    // OIDs can be non-continuous (e.g., a user deleted one of the earlier entries in table),
+    // so we use model index to OID mapping
+
+    if (d->displayToOidMapping.contains(index.row()))
+    {
+        PhoneNumbersListTableModelPrivate::Row record =
+                d->data.value(d->displayToOidMapping.value(index.row()));
+
+        result = record.value(role - Qt::UserRole, QVariant());
+    }
 
     return result;
 }
