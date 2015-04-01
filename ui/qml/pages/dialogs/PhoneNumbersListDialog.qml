@@ -19,7 +19,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nemomobile.contacts 1.0
+import kz.dpurgin.nemomobile.contacts 1.0
 
 import kz.dpurgin.callrecorder.Settings 1.0;
 
@@ -30,12 +30,6 @@ Dialog {
 
     SilicaFlickable {
         anchors.fill: parent
-
-        DialogHeader {
-            id: header
-
-            acceptText: qsTr('Save')
-        }
 
         PullDownMenu {
             MenuItem {
@@ -50,81 +44,67 @@ Dialog {
             }
             MenuItem {
                 text: qsTr('Delete all')
-                enabled: phoneNumbersListView.count !== 0
+//                enabled: phoneNumbersListView.count !== 0
             }
         }
 
-//        SilicaListView {
-//            id: phoneNumbersListView
+        DialogHeader {
+            id: header
 
-//            header: PhoneNumberEntryField {
-//                width: parent.width
-//            }
-
-//            anchors {
-//                top: header.bottom
-//                left: parent.left
-//                right: parent.right
-//                bottom: parent.bottom
-//            }
-
-//            model: PeopleModel {
-//                filterType: PeopleModel.FilterNone
-//            }
-
-//            delegate: ListItem {
-//                Label {
-//                    text: 'anc'
-//                }
-//            }
-//        }
+            acceptText: qsTr('Save')
+        }
 
         SilicaListView {
             id: phoneNumbersListView
 
-            header: Row {
-                width: parent.width
-
-                PhoneNumberEntryField {
-                    id: phoneNumberEntryField
-
-                    width: parent.width - (addButton.visible? addButton.width: 0)
-
-                    Behavior on width {
-                        NumberAnimation { }
-                    }
-                }
-
-                IconButton {
-                    id: addButton
-
-                    icon.source: 'image://theme/icon-m-add'
-
-                    visible: phoneNumberEntryField.value.length > 0
-                    opacity: phoneNumberEntryField.value.length > 0? 1: 0
-
-                    onClicked: {
-                        phoneNumbersListView.model.insert(
-                            phoneNumbersModel.getIdByLineIdentification(
-                                phoneNumberEntryField.value))
-                    }
-                }
-            }
-
-            anchors {
-                top: header.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
+            anchors.top: header.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
 
             model: role == Settings.BlackList? blackListModel: whiteListModel;
 
-            delegate: ListItem {
-                Label {
-                    text: model.PhoneNumberIDRepresentation
-                }
+            header: Item {
+                width: parent.width
+                height: content.height
 
+                Row {
+                    id: content
+
+                    width: parent.width
+
+                    PhoneNumberEntryField {
+                        id: inputField
+
+                        width: parent.width - (addButton.visible? addButton.width: 0)
+
+                        placeholderText: qsTr('Search by name or number')
+
+                        Behavior on width {
+                            NumberAnimation {}
+                        }
+
+                    }
+
+                    IconButton {
+                        id: addButton
+
+                        icon.source: 'image://theme/icon-m-add'
+
+                        visible: inputField.value.length > 0 &&
+                                    !phoneNumbersListView.model.contains(inputField.value)
+
+                        onClicked: {
+                            phoneNumbersListView.model.add(
+                                phoneNumbersModel.getIdByLineIdentification(inputField.value))
+
+                            inputField.value = ''
+                        }
+                    }
+                }
+            }
+
+            delegate: PhoneNumbersListDelegate {
                 menu: Component {
                     ContextMenu {
                         MenuItem {
@@ -140,16 +120,14 @@ Dialog {
                 text: qsTr('No items in the list')
                 hintText: qsTr('Add numbers with field above or use pull-down menu')
             }
-
         }
     }
 
     onAccepted: {
-        var result = phoneNumbersListView.model.submitAll();
+//        var result = phoneNumbersListView.model.submitAll();
         console.log(result);
     }
 
     Component.onCompleted: {
-        console.log(people.count);
     }
 }
