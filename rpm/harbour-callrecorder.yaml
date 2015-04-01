@@ -21,20 +21,25 @@ Builder: qtc5
 # This section specifies build dependencies that are resolved using pkconfig.
 # This is the preferred way of specifying build dependencies for your package.
 PkgConfigBR:
+   - Qt5Contacts
    - Qt5Core
    - Qt5Multimedia
    - Qt5Qml
    - Qt5Quick
    - Qt5Sql
+   - Qt5Versit
    - flac
    - qofono-qt5
    - libpulse
+   - mce
+   - mlocale5
    - sailfishapp >= 1.0.2
+   - qtcontacts-sqlite-qt5-extensions >= 0.2.1
 
 # Build dependencies without a pkgconfig setup can be listed here
 PkgBR:
    - nemo-qml-plugin-dbus-qt5
-   - nemo-qml-plugin-contacts-qt5
+   - qtcontacts-sqlite-qt5
 
 # Runtime dependencies which are not automatically detected
 Requires:
@@ -43,7 +48,6 @@ Requires:
   - qt5-qtmultimedia-plugin-mediaservice-gstmediaplayer
   - gst-plugins-good
   - nemo-qml-plugin-dbus-qt5
-  - nemo-qml-plugin-contacts-qt5
 
 # All installed files
 Files:
