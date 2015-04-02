@@ -27,8 +27,20 @@ class PhoneNumbersListTableModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int rowCount READ rowCount NOTIFY rowCountChanged)
+
 public:
-    explicit PhoneNumbersListTableModel(QString tableName, Database* db, QObject *parent = 0);
+    enum Columns
+    {
+        ID = Qt::UserRole,
+        PhoneNumberID,
+        PhoneNumberIDRepresentation
+    };
+
+public:
+    explicit PhoneNumbersListTableModel(QString tableName,
+                                        Database* db,
+                                        QObject *parent = 0);
     virtual ~PhoneNumbersListTableModel();
 
     Q_INVOKABLE bool add(int phoneNumberId);
@@ -41,9 +53,12 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
+    bool submitAll();
+
     QString tableName() const;
 
 signals:
+    void rowCountChanged();
 
 public slots:
 
