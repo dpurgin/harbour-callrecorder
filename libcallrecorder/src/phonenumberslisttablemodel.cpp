@@ -160,9 +160,79 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
         return result;
     }
 
+    bool remove(int oid)
+    {
+        bool result = false;
+
+        // if oid >=0 schedule for removal in persistent data
+        if (oid >= 0)
+            removedData.insert(oid);
+
+        // all the display indices greater than the removed one should decrease by one as
+        // one row was removed, so the mappings should be rebuilt now
+        int displayIndex = oidToDisplayMapping.value(oid);
+        oidToDisplayMapping.clear();
+
+        displayToOidMapping.remove(displayIndex);
+
+        QHash< int, int > rebuiltDisplayToOidMapping;
+
+        for (QHash< int, int >::const_iterator cit = displayToOidMapping.cbegin();
+             cit != displayToOidMapping.cend();
+             cit++)
+        {
+            if (cit.key() < displayIndex)
+                rebuiltDisplayToOidMapping.insert(cit.key(), cit.value());
+            else
+                rebuiltDisplayToOidMapping.insert(cit.key() - 1, cit.value());
+
+            oidToDisplayMapping.insert(cit.value(), cit.key());
+        }
+
+        displayToOidMapping = rebuiltDisplayToOidMapping;
+
+        // remove from rowset
+        Rowset& rowset = (oid < 0)? dirtyData: data;
+
+        if (rowset.contains(oid))
+        {
+            rowset.remove(oid);
+
+            rowCount--;
+
+            emit q->rowCountChanged();
+
+            result = true;
+        }
+
+        return result;
+    }
+
+    bool revert()
+    {
+        data.clear();
+
+        displayToOidMapping.clear();
+        oidToDisplayMapping.clear();
+
+        dirtyData.clear();
+        dirtyIndex = 0;
+
+        removedData.clear();
+
+        QString stmt("SELECT COUNT(ID) AS Total FROM " % tableName);
+
+        QScopedPointer< SqlCursor > cursor(db->select(stmt));
+
+        if (cursor->next())
+            rowCount = cursor->value("Total").toInt();
+
+        emit q->rowCountChanged();
+    }
+
     // Persists all dirty data.
     // Row count is not changed.
-    // TODO: check if some of dirty data was not written
+    // TODO: check if some of dirty data was not written or data not removed
     bool submit()
     {
         bool result = true;
@@ -206,6 +276,21 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
         dirtyData.clear();
         dirtyIndex = 0;
 
+        // perform scheduled removal
+        foreach (int oid, removedData)
+        {
+            QString stmt("DELETE FROM " % tableName % " WHERE ID = :id");
+
+            Database::SqlParameters params;
+            params.insert(":id", oid);
+
+            if (!db->execute(stmt, params))
+                qDebug() << db->lastError();
+        }
+
+        // clear removed data
+        removedData.clear();
+
         return result;
     }
 
@@ -220,10 +305,13 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
     // OID => model index mapping
     QHash< int, int > oidToDisplayMapping;
 
-    // non-persistent data
+    // added non-persistent data
     // OIDs are generated virtually starting from -1 to -inf
     Rowset dirtyData;
     int dirtyIndex;
+
+    // persistent OIDs scheduled for removal
+    QSet< int > removedData;
 
     int rowCount;
 
@@ -290,6 +378,8 @@ bool PhoneNumbersListTableModel::add(int phoneNumberId)
 
 QVariant PhoneNumbersListTableModel::data(const QModelIndex& index, int role) const
 {
+    qDebug() << index.row() << role;
+
     QVariant result;
 
     if (d->ensureRange(index.row()))
@@ -315,6 +405,38 @@ QVariant PhoneNumbersListTableModel::data(const QModelIndex& index, int role) co
     return result;
 }
 
+bool PhoneNumbersListTableModel::removeRow(int row, const QModelIndex& parent)
+{
+    return removeRows(row, 1, parent);
+}
+
+bool PhoneNumbersListTableModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+    bool result = true;
+
+    emit beginRemoveRows(parent, row, row + count - 1);
+
+    for (int displayIndex = row; displayIndex < row + count; displayIndex++)
+    {
+        int oid = d->displayToOidMapping.value(row);
+
+        result = d->remove(oid) && result;
+    }
+
+    emit endRemoveRows();
+
+    return result;
+}
+
+void PhoneNumbersListTableModel::revert()
+{
+    emit beginResetModel();
+
+    d->revert();
+
+    emit endResetModel();
+}
+
 QHash< int, QByteArray > PhoneNumbersListTableModel::roleNames() const
 {
     static QHash< int, QByteArray > names;
@@ -334,7 +456,7 @@ int PhoneNumbersListTableModel::rowCount(const QModelIndex&) const
     return d->rowCount;
 }
 
-bool PhoneNumbersListTableModel::submitAll()
+bool PhoneNumbersListTableModel::submit()
 {
     return d->submit();
 }
