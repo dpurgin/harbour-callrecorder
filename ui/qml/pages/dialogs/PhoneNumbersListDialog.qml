@@ -109,8 +109,16 @@ Dialog {
                     ContextMenu {
                         MenuItem {
                             text: qsTr('Remove')
+                            onClicked: removeItem()
                         }
                     }
+                }
+
+                function removeItem()
+                {
+                    remorseAction(qsTr('Removing'), function() {
+                        phoneNumbersListView.model.removeRow(model.index)
+                    })
                 }
             }
 
@@ -124,8 +132,11 @@ Dialog {
     }
 
     onAccepted: {
-//        var result = phoneNumbersListView.model.submitAll();
-        console.log(result);
+        phoneNumbersListView.model.submit();
+    }
+
+    onRejected: {
+        phoneNumbersListView.model.revert();
     }
 
     Component.onCompleted: {
