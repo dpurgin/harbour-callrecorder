@@ -63,6 +63,9 @@ int main(int argc, char *argv[])
     //    QScopedPointer< Settings > settings(new Settings());
 
         QScopedPointer< QQuickView > view(SailfishApp::createView());
+
+        view->engine()->addImportPath("/usr/share/harbour-callrecorder/lib/imports");
+
         view->setSource(SailfishApp::pathTo("qml/main.qml"));
         view->show();
 
