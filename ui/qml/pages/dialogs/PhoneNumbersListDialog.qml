@@ -78,11 +78,15 @@ Dialog {
 
                         width: parent.width - (addButton.visible? addButton.width: 0)
 
-                        placeholderText: qsTr('Search by name or number')
+                        placeholderText: qsTr('Enter phone number')
 
                         Behavior on width {
                             NumberAnimation {}
                         }
+
+//                        onValueChanged: {
+//                            phoneNumbersListView.model.setFilterFixedString(value);
+//                        }
 
                     }
 
@@ -105,22 +109,22 @@ Dialog {
             }
 
             delegate: PhoneNumbersListDelegate {
+                id: listDelegate
+
                 menu: Component {
                     ContextMenu {
                         MenuItem {
                             text: qsTr('Remove')
-                            onClicked: removeItem()
+                            onClicked: phoneNumbersListView.model.removeRow(model.index)
                         }
                     }
                 }
 
-                function removeItem()
-                {
-                    remorseAction(qsTr('Removing'), function() {
-                        phoneNumbersListView.model.removeRow(model.index)
-                    })
+                ListView.onAdd: AddAnimation {
+                    target: listDelegate
                 }
-            }
+                ListView.onRemove: animateRemoval(listDelegate)
+            }            
 
             ViewPlaceholder {
                 enabled: phoneNumbersListView.count == 0
