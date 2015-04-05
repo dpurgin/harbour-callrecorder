@@ -46,9 +46,11 @@ public:
     Q_INVOKABLE bool add(int phoneNumberId);
 
     Q_INVOKABLE bool contains(const QString& lineIdentification) const;
+    Q_INVOKABLE bool contains(int phoneNumberId) const;
 
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 
+    Q_INVOKABLE bool remove(int phoneNumberId);
     Q_INVOKABLE bool removeAll();
     Q_INVOKABLE bool removeRow(int row, const QModelIndex& parent = QModelIndex());
     Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());

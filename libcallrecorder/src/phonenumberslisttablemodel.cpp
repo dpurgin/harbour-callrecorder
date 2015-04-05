@@ -101,45 +101,7 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
     {
         qDebug() << phoneNumberId;
 
-        bool found = false;
-
-        // check dirty data first
-        for (Rowset::const_iterator cit = dirtyData.cbegin();
-             cit != dirtyData.cend() && !found;
-             cit++)
-        {
-            Row row = cit.value();
-
-            if (row.value(PhoneNumbersListTableModel::PhoneNumberID).toInt() == phoneNumberId)
-                found = true;
-        }
-
-        // if not found in dirty data, try to retrieve from persistent
-        // data if removedAll flag is not set
-        if (!found && !removedAll)
-        {
-            QString stmt("SELECT ID FROM " % tableName % " WHERE PhoneNumberID = :phoneNumberId");
-
-            Database::SqlParameters params;
-            params.insert(":phoneNumberId", phoneNumberId);
-
-            QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
-
-            if (!cursor.isNull())
-            {
-                if (cursor->next())
-                {
-                    int oid = cursor->value("ID").toInt();
-
-                    // phone number considered to be present if this OID is not pending for removal
-                    found = !removedData.contains(oid);
-                }
-            }
-            else
-                qDebug() << db->lastError();
-        }
-
-        return found;
+        return find(phoneNumberId) != 0;
     }
 
     bool ensureRange(int displayIndex)
@@ -203,6 +165,56 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
         }
 
         return result;
+    }
+
+    // searches OID of record containing PhoneNumberID.
+    // Returns OID > 0 if record is persistent
+    // Returns OID < 0 if record is dirty
+    // Returns OID == 0 if record was not found
+    int find(int phoneNumberId)
+    {
+        qDebug() << phoneNumberId;
+
+        int oid = 0;
+
+        // check dirty data first
+        for (Rowset::const_iterator cit = dirtyData.cbegin();
+             cit != dirtyData.cend() && oid == 0;
+             cit++)
+        {
+            Row row = cit.value();
+
+            if (row.value(PhoneNumbersListTableModel::PhoneNumberID).toInt() == phoneNumberId)
+                oid = row.value(PhoneNumbersListTableModel::ID).toInt();
+        }
+
+        // if not found in dirty data, try to retrieve from persistent
+        // data if removedAll flag is not set
+        if (oid == 0 && !removedAll)
+        {
+            QString stmt("SELECT ID FROM " % tableName % " WHERE PhoneNumberID = :phoneNumberId");
+
+            Database::SqlParameters params;
+            params.insert(":phoneNumberId", phoneNumberId);
+
+            QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
+
+            if (!cursor.isNull())
+            {
+                if (cursor->next())
+                {
+                    oid = cursor->value("ID").toInt();
+
+                    // phone number considered to be present if this OID is not pending for removal
+                    if (removedData.contains(oid))
+                        oid = 0;
+                }
+            }
+            else
+                qDebug() << db->lastError();
+        }
+
+        return oid;
     }
 
     bool remove(int oid)
@@ -303,6 +315,8 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
 
         if (cursor->next())
             setRowCount(cursor->value("Total").toInt());
+
+        return true;
     }
 
     void setRowCount(int _rowCount)
@@ -468,13 +482,18 @@ bool PhoneNumbersListTableModel::contains(const QString& lineIdentification) con
         {
             int phoneNumberId = cursor->value("ID").toInt();
 
-            result = d->contains(phoneNumberId);
+            result = contains(phoneNumberId);
         }
     }
     else
         qCritical() << "Unable to execute query: " << d->db->lastError();
 
     return result;
+}
+
+bool PhoneNumbersListTableModel::contains(int phoneNumberId) const
+{
+    return d->contains(phoneNumberId);
 }
 
 QVariant PhoneNumbersListTableModel::data(const QModelIndex& index, int role) const
@@ -502,6 +521,30 @@ QVariant PhoneNumbersListTableModel::data(const QModelIndex& index, int role) co
             result = record.value(role, QVariant());
         }
     }
+
+    return result;
+}
+
+bool PhoneNumbersListTableModel::remove(int phoneNumberId)
+{
+    qDebug() << phoneNumberId;
+
+    // find OID of record containing phoneNumberId
+    int oid = d->find(phoneNumberId);
+
+    // check if record is displayed
+    int displayIndex = d->oidToDisplayMapping.value(oid, -1);
+
+    // emit remove signal if record is displayed
+    if (displayIndex >= 0)
+        emit beginRemoveRows(QModelIndex(), displayIndex, displayIndex);
+
+    // remove record
+    bool result = d->remove(oid);
+
+    // emit remove signal if record was displayed
+    if (displayIndex >= 0)
+        emit endRemoveRows();
 
     return result;
 }
