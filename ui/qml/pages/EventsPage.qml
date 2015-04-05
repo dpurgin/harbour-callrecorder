@@ -85,16 +85,13 @@ Page {
                                  (settings.operationMode === Settings.BlackList && blackListed)
 
                         onClicked: {
+                            var remorseText = qsTr('Recording %1').arg(
+                                        model.PhoneNumberIDRepresentation);
+
                             if (settings.operationMode === Settings.WhiteList)
-                            {
-                                whiteListModel.add(model.PhoneNumberID);
-                                whiteListModel.submit();
-                            }
+                                addToList(whiteListModel, model.PhoneNumberID, remorseText)
                             else if (settings.operationMode === Settings.BlackList)
-                            {
-                                blackListModel.remove(model.PhoneNumberID);
-                                blackListModel.submit();
-                            }
+                                removeFromList(blackListModel, model.PhoneNumberID, remorseText);
                         }
                     }
 
@@ -107,16 +104,13 @@ Page {
                                  (settings.operationMode === Settings.WhiteList && whiteListed)
 
                         onClicked: {
+                            var remorseText = qsTr('Not recording %1').arg(
+                                        model.PhoneNumberIDRepresentation);
+
                             if (settings.operationMode === Settings.BlackList)
-                            {
-                                blackListModel.add(model.PhoneNumberID);
-                                blackListModel.submit();
-                            }
+                                addToList(blackListModel, model.PhoneNumberID, remorseText);
                             else if (settings.operationMode === Settings.WhiteList)
-                            {
-                                whiteListModel.remove(model.PhoneNumberID);
-                                whiteListModel.submit();
-                            }
+                                removeFromList(whiteListModel, model.PhoneNumberID, remorseText);
                         }
                     }
                 }                                
@@ -141,6 +135,24 @@ Page {
                         duration: model.Duration
                     })
                 }
+            }
+
+            function addToList(listModel, phoneNumberId, remorseText)
+            {
+                remorseAction(remorseText, function() {
+                    if (!listModel.contains(phoneNumberId))
+                    {
+                        listModel.add(phoneNumberId)
+                        listModel.submit();
+                    }
+                })
+            }
+
+            function removeFromList(listModel, phoneNumberId, remorseText)
+            {
+                remorseAction(remorseText, function() {
+                    listModel.remove(phoneNumberId);
+                })
             }
 
             function removeItem()
