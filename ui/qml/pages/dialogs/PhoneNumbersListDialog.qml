@@ -116,7 +116,7 @@ Dialog {
                 menu: Component {
                     ContextMenu {
                         MenuItem {
-                            text: qsTr('Remove')
+                            text: qsTr('Delete')
                             onClicked: phoneNumbersListView.model.removeRow(model.index)
                         }
                     }
