@@ -23,9 +23,15 @@ PKGCONFIG += flac
 
 QT += core quick qml multimedia sql
 
-INCLUDEPATH += ../libcallrecorder/include
+INCLUDEPATH += \
+    ../libcallrecorder/include \
+#    ../nemo-qml-plugin-contacts/nemo-qml-plugin-contacts/src
 
-LIBS += -L../libcallrecorder -lcallrecorder
+LIBS += \
+    -L../libcallrecorder -lcallrecorder \
+    -L../libcontacts -lcontactcache-qt5
+#    -L../nemo-qml-plugin-contacts -lnemocontacts \
+
 
 HEADERS += \
     src/filerelocationworker.h \
@@ -41,6 +47,7 @@ RESOURCES += ui.qrc
 OTHER_FILES += \
     harbour-callrecorder.desktop \
     translations/*.ts \
+    qml/pages/dialogs/PhoneNumbersListDelegate.qml \
     qml/pages/dialogs/PhoneNumbersListDialog.qml \
     qml/pages/settings/AudioSettings.qml \
     qml/pages/settings/Daemon.qml \
