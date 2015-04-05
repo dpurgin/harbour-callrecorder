@@ -19,47 +19,64 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-BackgroundItem {
+import kz.dpurgin.nemomobile.contacts 1.0
+
+Item {
     property string mode: 'dialpad';
     property alias placeholderText: inputField.placeholderText
     property string value: '';
 
+    width: parent.width
+    height: content.height
+
     Row {
+        id: content
+
         width: parent.width
 
         TextField {
             id: inputField
 
-            width: parent.width - iconsRow.width
+            width: parent.width //- modeIcon.width
 
             placeholderText: qsTr('Search by name or number')
 
             inputMethodHints: mode == 'dialpad'? Qt.ImhDialableCharactersOnly: Qt.ImhNoPredictiveText
 
             onTextChanged: {
-                if (/^[0-9p*#+]+$/.test(text))
-                    value = text;
-                else
-                    value = '';
-            }
-        }
-
-        Row {
-            id: iconsRow
-
-            IconButton {
-                icon.source: mode == 'dialpad'?
-                                 'image://theme/icon-m-keyboard':
-                                 'image://theme/icon-m-dialpad'
-
-                onClicked: {
-                    mode = (mode == 'dialpad'? 'keyboard': 'dialpad')
-
-                    inputField.forceActiveFocus()
+                if (value !== text)
+                {
+                    if (mode === 'dialpad')
+                    {
+                        if (/^[0-9p*#+]+$/.test(text))
+                            value = text;
+                        else
+                            value = '';
+                    }
+                    else
+                        value = text;
                 }
             }
         }
+
+//        IconButton {
+//            id: modeIcon
+
+//            icon.source: mode == 'dialpad'?
+//                             'image://theme/icon-m-keyboard':
+//                             'image://theme/icon-m-dialpad'
+
+//            onClicked: {
+//                mode = (mode == 'dialpad'? 'keyboard': 'dialpad')
+
+//                inputField.forceActiveFocus()
+//            }
+//        }
     }
 
+    onValueChanged: {
+        if (inputField.text !== value)
+            inputField.text = value;
+    }
 }
 
