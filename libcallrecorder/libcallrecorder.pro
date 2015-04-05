@@ -56,7 +56,7 @@ HEADERS += \
     src/database.h \
     src/eventstablemodel.h \
     src/libcallrecorder.h \
-    src/phonenumberslisttablemodel.h
+    src/phonenumberslisttablemodel.h \
     src/phonenumberstablemodel.h \
     src/settings.h \
     src/sqlcursor.h \
