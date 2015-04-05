@@ -44,7 +44,9 @@ Dialog {
             }
             MenuItem {
                 text: qsTr('Delete all')
-//                enabled: phoneNumbersListView.count !== 0
+                enabled: phoneNumbersListView.count !== 0
+
+                onClicked: phoneNumbersListView.model.removeAll()
             }
         }
 
