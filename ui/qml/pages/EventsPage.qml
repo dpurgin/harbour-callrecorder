@@ -18,8 +18,10 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.contacts 1.0
 
+import kz.dpurgin.nemomobile.contacts 1.0
+
+import kz.dpurgin.callrecorder.Settings 1.0
 
 Page {
     id: eventsPage
@@ -43,11 +45,81 @@ Page {
 
             menu: Component {
                 ContextMenu {
+                    property bool whiteListed: settings.operationMode === Settings.WhiteList &&
+                                                   whiteListModel.contains(model.PhoneNumberID)
+                    property bool blackListed: settings.operationMode === Settings.BlackList &&
+                                                   blackListModel.contains(model.PhoneNumberID)
+
                     MenuItem {
                         text: qsTr('Delete')
                         onClicked: removeItem()
                     }
-                }
+
+                    MenuLabel {
+                        text: {
+                            var result = '';
+
+                            if (settings.operationMode === Settings.WhiteList && whiteListed)
+                            {
+                                result = qsTr('%1 is whitelisted')
+                                            .arg(model.PhoneNumberIDRepresentation)
+                            }
+                            else if (settings.operationMode === Settings.BlackList && blackListed)
+                            {
+                                result = qsTr('%1 is blacklisted')
+                                            .arg(model.PhoneNumberIDRepresentation)
+                            }
+
+                            return result;
+                        }
+
+                        visible: whiteListed || blackListed
+                    }
+
+                    MenuItem {
+                        text: whiteListed || blackListed?
+                                  qsTr('Always record this number'):
+                                  qsTr('Always record %1').arg(model.PhoneNumberIDRepresentation)
+
+                        visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
+                                 (settings.operationMode === Settings.BlackList && blackListed)
+
+                        onClicked: {
+                            if (settings.operationMode === Settings.WhiteList)
+                            {
+                                whiteListModel.add(model.PhoneNumberID);
+                                whiteListModel.submit();
+                            }
+                            else if (settings.operationMode === Settings.BlackList)
+                            {
+                                blackListModel.remove(model.PhoneNumberID);
+                                blackListModel.submit();
+                            }
+                        }
+                    }
+
+                    MenuItem {
+                        text: whiteListed || blackListed?
+                                  qsTr('Never record this number'):
+                                  qsTr('Never record %1').arg(model.PhoneNumberIDRepresentation)
+
+                        visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
+                                 (settings.operationMode === Settings.WhiteList && whiteListed)
+
+                        onClicked: {
+                            if (settings.operationMode === Settings.BlackList)
+                            {
+                                blackListModel.add(model.PhoneNumberID);
+                                blackListModel.submit();
+                            }
+                            else if (settings.operationMode === Settings.WhiteList)
+                            {
+                                whiteListModel.remove(model.PhoneNumberID);
+                                whiteListModel.submit();
+                            }
+                        }
+                    }
+                }                                
             }
 
             ListView.onAdd: AddAnimation {
