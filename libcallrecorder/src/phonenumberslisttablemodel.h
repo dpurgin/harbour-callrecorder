@@ -48,6 +48,8 @@ public:
     Q_INVOKABLE bool contains(const QString& lineIdentification) const;
     Q_INVOKABLE bool contains(int phoneNumberId) const;
 
+    Q_INVOKABLE bool copyFrom(const QString& tableName);
+
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 
     Q_INVOKABLE bool remove(int phoneNumberId);

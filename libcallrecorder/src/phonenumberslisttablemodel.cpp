@@ -59,22 +59,23 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
 
     // adds a row to dirty data
     // returns row id of a newly added data
-    int add(int phoneNumberId)
+    int add(int phoneNumberId, QString phoneNumberIdRepresentation = QString())
     {
-        qDebug() << phoneNumberId;
+        qDebug() << phoneNumberId << phoneNumberIdRepresentation;
 
         // get phone number representation to show in ListView
-        QString stmt("SELECT LineIdentification FROM PhoneNumbers WHERE ID = :phoneNumberId");
+        if (phoneNumberIdRepresentation.isEmpty())
+        {
+            QString stmt("SELECT LineIdentification FROM PhoneNumbers WHERE ID = :phoneNumberId");
 
-        Database::SqlParameters params;
-        params.insert(":phoneNumberId", phoneNumberId);
+            Database::SqlParameters params;
+            params.insert(":phoneNumberId", phoneNumberId);
 
-        QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
+            QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
 
-        QString lineIdentification;
-
-        if (cursor->next())
-            lineIdentification = cursor->value("LineIdentification").toString();
+            if (cursor->next())
+                phoneNumberIdRepresentation = cursor->value("LineIdentification").toString();
+        }
 
         // now prepare dirty row and insert to dirty data and
         // to model index <=> oid mapping
@@ -84,12 +85,15 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
 
         dirtyRow.insert(PhoneNumbersListTableModel::ID, oid);
         dirtyRow.insert(PhoneNumbersListTableModel::PhoneNumberID, phoneNumberId);
-        dirtyRow.insert(PhoneNumbersListTableModel::PhoneNumberIDRepresentation, lineIdentification);
+        dirtyRow.insert(PhoneNumbersListTableModel::PhoneNumberIDRepresentation,
+                        phoneNumberIdRepresentation);
 
         dirtyData.insert(oid, dirtyRow);
 
         // now add model index to oid mapping
         displayToOidMapping.insert(displayToOidMapping.size(), oid);
+        // oid to display mapping. New rows are added at the end
+        oidToDisplayMapping.insert(oid, rowCount);
 
         setRowCount(rowCount + 1);
 
@@ -494,6 +498,44 @@ bool PhoneNumbersListTableModel::contains(const QString& lineIdentification) con
 bool PhoneNumbersListTableModel::contains(int phoneNumberId) const
 {
     return d->contains(phoneNumberId);
+}
+
+bool PhoneNumbersListTableModel::copyFrom(const QString& tableName)
+{
+    qDebug() << tableName;
+
+    bool result = false;
+
+    QString stmt("\nSELECT"
+                 "\n    List.PhoneNumberID,"
+                 "\n    PhoneNumbers.LineIdentification AS PhoneNumberIDRepresentation"
+                 "\nFROM"
+                 "\n    " % tableName % " AS List"
+                 "\n    LEFT JOIN"
+                 "\n        PhoneNumbers"
+                 "\n    ON"
+                 "\n        PhoneNumbers.ID = List.PhoneNumberID");
+
+    QScopedPointer< SqlCursor > cursor(d->db->select(stmt));
+
+    if (!cursor.isNull())
+    {
+        emit beginInsertRows(QModelIndex(), rowCount(), rowCount() + cursor->size() - 1);
+
+        while (cursor->next())
+        {
+            d->add(cursor->value("PhoneNumberID").toInt(),
+                   cursor->value("PhoneNumberIDRepresentation").toString());
+        }
+
+        emit endInsertRows();
+
+        result = true;
+    }
+    else
+        qDebug() << d->db->lastError();
+
+    return result;
 }
 
 QVariant PhoneNumbersListTableModel::data(const QModelIndex& index, int role) const
