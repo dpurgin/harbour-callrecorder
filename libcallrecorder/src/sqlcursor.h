@@ -40,6 +40,8 @@ public:
 
     bool next();
 
+    int size();
+
     QVariant value(const QString& fieldName);
 
 private:

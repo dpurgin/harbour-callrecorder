@@ -57,6 +57,11 @@ bool SqlCursor::next()
     return d->query.next();
 }
 
+int SqlCursor::size()
+{
+    return d->query.size();
+}
+
 QVariant SqlCursor::value(const QString& fieldName)
 {
     return d->query.value(fieldName);
