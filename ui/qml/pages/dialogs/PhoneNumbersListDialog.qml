@@ -35,12 +35,22 @@ Dialog {
             MenuItem {
                 text: qsTr('Copy from white list')
                 visible: role == Settings.BlackList
-                enabled: whiteListModel.count > 0
+                enabled: whiteListModel.rowCount > 0
+
+                onClicked: {
+                    blackListModel.removeAll();
+                    blackListModel.copyFrom('WhiteList')
+                }
             }
             MenuItem {
                 text: qsTr('Copy from black list')
                 visible: role == Settings.WhiteList
-                enabled: blackListModel.count > 0
+                enabled: blackListModel.rowCount > 0
+
+                onClicked: {
+                    whiteListModel.removeAll();
+                    whiteListModel.copyFrom('BlackList')
+                }
             }
             MenuItem {
                 text: qsTr('Delete all')
