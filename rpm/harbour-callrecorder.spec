@@ -25,18 +25,22 @@ Requires:   qt5-qtmultimedia-plugin-audio-pulseaudio
 Requires:   qt5-qtmultimedia-plugin-mediaservice-gstmediaplayer
 Requires:   gst-plugins-good
 Requires:   nemo-qml-plugin-dbus-qt5
-Requires:   nemo-qml-plugin-contacts-qt5
+BuildRequires:  pkgconfig(Qt5Contacts)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Sql)
+BuildRequires:  pkgconfig(Qt5Versit)
 BuildRequires:  pkgconfig(flac)
 BuildRequires:  pkgconfig(qofono-qt5)
 BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(mce)
+BuildRequires:  pkgconfig(mlocale5)
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
+BuildRequires:  pkgconfig(qtcontacts-sqlite-qt5-extensions) >= 0.2.1
 BuildRequires:  nemo-qml-plugin-dbus-qt5
-BuildRequires:  nemo-qml-plugin-contacts-qt5
+BuildRequires:  qtcontacts-sqlite-qt5
 BuildRequires:  desktop-file-utils
 
 %description
