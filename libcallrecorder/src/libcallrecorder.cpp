@@ -79,12 +79,33 @@ namespace LibCallRecorder
                 QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
                 QLatin1String("/log.txt");
 
-        QFile f(logLocation);
+        // check current log size, rotate if >= 2MB
 
-        if (f.open(QFile::WriteOnly | QFile::Append))
+        QFileInfo logFileInfo(logLocation);
+
+        if (logFileInfo.size() >= 2097152)
         {
-            f.write(entry);
-            f.close();
+            // rotated log name
+            static QString rotatedLogLocation =
+                    QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                    QLatin1String("/log.0.txt");
+
+            // if rotated file already exists, remove it
+            QFile rotatedLog(rotatedLogLocation);
+
+            if (rotatedLog.exists())
+                rotatedLog.remove();
+
+            // now rename current log to rotated log
+            QFile::rename(logLocation, rotatedLogLocation);
+        }
+
+        QFile log(logLocation);
+
+        if (log.open(QFile::WriteOnly | QFile::Append))
+        {
+            log.write(entry);
+            log.close();
         }
     }
 
