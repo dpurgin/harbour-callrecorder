@@ -59,7 +59,23 @@ bool SqlCursor::next()
 
 int SqlCursor::size()
 {
-    return d->query.size();
+    int result = d->query.size();
+
+    if (result == -1)
+    {
+        result = 0;
+
+        int curPos = d->query.at();
+
+        d->query.seek(QSql::BeforeFirstRow);
+
+        while (d->query.next())
+            result++;
+
+        d->query.seek(curPos);
+    }
+
+    return result;
 }
 
 QVariant SqlCursor::value(const QString& fieldName)
