@@ -2,7 +2,7 @@ include(../common.pri)
 include(libcontacts/config.pri)
 
 TEMPLATE = lib
-CONFIG += qt hide_symbols
+CONFIG += qt hide_symbols plugin
 #CONFIG += create_pc create_prl no_install_prl
 
 # 'contacts' is too generic for the target name - use 'contactcache'

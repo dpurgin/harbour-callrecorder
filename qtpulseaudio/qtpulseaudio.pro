@@ -10,7 +10,7 @@ INSTALLS += target
 
 VERSION = 0.1
 
-CONFIG += link_pkgconfig
+CONFIG += link_pkgconfig plugin
 
 PKGCONFIG += libpulse
 

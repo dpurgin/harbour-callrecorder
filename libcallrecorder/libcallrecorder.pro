@@ -17,6 +17,7 @@
 include(../common.pri)
 
 TEMPLATE = lib
+CONFIG += plugin
 
 TARGET = callrecorder
 
