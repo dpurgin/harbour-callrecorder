@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.contacts 1.0
+import kz.dpurgin.nemomobile.contacts 1.0
 
 import QtMultimedia 5.0
 
@@ -112,7 +112,7 @@ Page {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    font.pixelSize: Theme.fontSizeExtraSmall
+                    font.pixelSize: Theme.fontSizeSmall
 
                     color: Theme.secondaryHighlightColor
 
@@ -123,10 +123,10 @@ Page {
 
                         if (person)
                         {
-                            if (person.person.primaryName.length > 0)
+                            if (person.primaryName.length > 0)
                                 val += person.primaryName;
 
-                            if (person.person.secondaryName.length > 0)
+                            if (person.secondaryName.length > 0)
                             {
                                 if (val != "")
                                     val += " ";
