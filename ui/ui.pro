@@ -44,9 +44,7 @@ SOURCES += \
 
 RESOURCES += ui.qrc
 
-OTHER_FILES += \
-    harbour-callrecorder.desktop \
-    translations/*.ts \
+QMLFILES = \
     qml/pages/dialogs/PhoneNumbersListDelegate.qml \
     qml/pages/dialogs/PhoneNumbersListDialog.qml \
     qml/pages/settings/AudioSettings.qml \
@@ -65,6 +63,10 @@ OTHER_FILES += \
     qml/widgets/PhoneNumberEntryField.qml \
     qml/main.qml
 
+OTHER_FILES += \
+    harbour-callrecorder.desktop \
+    $${QMLFILES}
+
 images.files = \
     images/icon-cover-start-recorder.png \
     images/icon-cover-stop-recorder.png
@@ -72,10 +74,13 @@ images.path = /usr/share/$${PACKAGE}/images
 
 INSTALLS += images
 
+lupdate_only {
+    SOURCES = $${QMLFILES}
+}
+
 # to disable building translations every time, comment out the
 # following CONFIG line
-#CONFIG += sailfishapp_i18n
-#TRANSLATIONS += translations/ui-de.ts
-
-
-
+CONFIG += sailfishapp_i18n
+TRANSLATIONS += \
+    translations/ui.ts \
+    translations/ui-ru.ts
