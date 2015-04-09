@@ -110,7 +110,7 @@ Page {
                     font.pixelSize: Theme.fontSizeTiny
                     color: Theme.secondaryColor
 
-                    text: qsTr('dpurgin@gmail.com')
+                    text: 'dpurgin@gmail.com'
                 }
 
                 Item {
@@ -126,7 +126,7 @@ Page {
                     font.pixelSize: Theme.fontSizeTiny
                     color: Theme.highlightColor
 
-                    text: qsTr("https://github.com/dpurgin/harbour-callrecorder")
+                    text: "https://github.com/dpurgin/harbour-callrecorder"
                 }
 
                 Item {
