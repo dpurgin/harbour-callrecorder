@@ -55,6 +55,10 @@ class Settings::SettingsPrivate
             sampleSize = settings.value("sampleSize", 16).toInt();
             compression = settings.value("compression", 8).toInt();
         settings.endGroup();
+
+        settings.beginGroup("ui");
+            ui = settings.value("locale", "system").toString();
+        settings.endGroup();
     }
 
     void saveSettings()
@@ -73,11 +77,17 @@ class Settings::SettingsPrivate
             settings.setValue("sampleSize", sampleSize);
             settings.setValue("compression", compression);
         settings.endGroup();
+
+        settings.beginGroup("ui");
+            settings.setValue("locale", locale);
+        settings.endGroup();
     }
 
     QAudioDeviceInfo inputDevice;
 
     QString inputDeviceName;
+
+    QString locale;
 
     Settings::OperationMode operationMode;
 
@@ -145,6 +155,11 @@ QAudioDeviceInfo Settings::inputDevice() const
     return d->inputDevice;
 }
 
+QString Settings::locale() const
+{
+    return d->locale;
+}
+
 Settings::OperationMode Settings::operationMode() const
 {
     return d->operationMode;
@@ -181,6 +196,17 @@ void Settings::setCompression(int compression)
         d->compression = compression;
 
         emit compressionChanged(compression);
+        emit settingsChanged();
+    }
+}
+
+void Settings::setLocale(const QString& locale)
+{
+    if (d->locale != locale)
+    {
+        d->locale = locale;
+
+        emit localeChanged(locale);
         emit settingsChanged();
     }
 }

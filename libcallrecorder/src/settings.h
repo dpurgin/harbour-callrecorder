@@ -36,6 +36,11 @@ class LIBCALLRECORDER_DECL Settings : public QObject
                WRITE setCompression
                NOTIFY compressionChanged)
 
+    Q_PROPERTY(QString locale
+               READ locale
+               WRITE setLocale
+               NOTIFY localeChanged)
+
     Q_PROPERTY(QString outputLocation
                READ outputLocation
                WRITE setOutputLocation
@@ -70,6 +75,9 @@ public:
     int compression() const;
     void setCompression(int compression);
 
+    QString locale() const;
+    void setLocale(const QString& locale);
+
     OperationMode operationMode() const;
     void setOperationMode(OperationMode operationMode);
 
@@ -85,6 +93,7 @@ public slots:
 
 signals:
     void compressionChanged(int compression);
+    void localeChanged(QString locale);
     void operationModeChanged(OperationMode operationMode);
     void outputLocationChanged(QString outputLocation);
     void sampleRateChanged(int sampleRate);
