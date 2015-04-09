@@ -50,6 +50,14 @@ int main(int argc, char *argv[])
         app->setOrganizationName("kz.dpurgin");
         app->setApplicationName("harbour-callrecorder");
 
+        QTranslator translator;
+        translator.load(QLocale().system(),
+                         "ui",
+                         "-",
+                         "/usr/share/harbour-callrecorder/translations");
+        qApp->installTranslator(&translator);
+
+
         QScopedPointer< Database > db(new Database());
 
         QScopedPointer< EventsTableModel > eventsModel(new EventsTableModel(db.data()));
