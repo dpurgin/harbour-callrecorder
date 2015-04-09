@@ -22,6 +22,13 @@ import Sailfish.Silica 1.0
 Page {
     id: settingsPage
 
+    property var entries: [
+        qsTr('Recording daemon'),
+        qsTr('Storage'),
+        qsTr('Audio settings'),
+        qsTr('User interface')
+    ]
+
     SilicaListView {
         id: settingsView
 
@@ -33,19 +40,16 @@ Page {
 
         model: ListModel {
             ListElement {
-                title: 'Recording daemon'
                 img: 'qrc:/images/icon-m-daemon.png'
                 target: 'Daemon.qml'
             }
 
             ListElement {
-                title: 'Storage'
                 img: 'qrc:/images/icon-m-sdcard.png'
                 target: 'Storage.qml'
             }
 
             ListElement {
-                title: 'Audio settings'
                 img: 'qrc:/images/icon-m-recording.png'
                 target: 'AudioSettings.qml'
             }
@@ -85,7 +89,7 @@ Page {
                 Label {
                     id: label
 
-                    text: title
+                    text: entries[model.index]
 
                     height: parent.height
 
