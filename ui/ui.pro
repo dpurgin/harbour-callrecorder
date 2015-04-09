@@ -83,4 +83,5 @@ lupdate_only {
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += \
     translations/ui.ts \
-    translations/ui-ru.ts
+    translations/ui-ru.ts \
+    translations/ui-it.ts
