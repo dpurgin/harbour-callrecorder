@@ -57,7 +57,7 @@ class Settings::SettingsPrivate
         settings.endGroup();
 
         settings.beginGroup("ui");
-            ui = settings.value("locale", "system").toString();
+            locale = settings.value("locale", "system").toString();
         settings.endGroup();
     }
 
