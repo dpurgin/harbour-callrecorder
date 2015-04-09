@@ -6,5 +6,6 @@
         <file>images/icon-m-hidden-folders.png</file>
         <file>images/icon-m-recording.png</file>
         <file>images/icon-m-daemon.png</file>
+        <file>images/icon-m-ui.png</file>
     </qresource>
 </RCC>
