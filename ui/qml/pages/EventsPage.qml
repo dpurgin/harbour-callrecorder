@@ -23,154 +23,16 @@ import kz.dpurgin.nemomobile.contacts 1.0
 
 import kz.dpurgin.callrecorder.Settings 1.0
 
+import "../widgets"
+
 Page {
     id: eventsPage
 
-    SilicaListView {
-        id: eventsView
+    property bool searchVisible: false
 
-        width: parent.width
-        height: parent.height
+    SilicaFlickable {
+        anchors.fill: parent
 
-        header: PageHeader {
-            title: qsTr('Recordings')
-        }
-
-        VerticalScrollDecorator {}
-
-        model: eventsModel
-
-        delegate: EventsDelegate {
-            id: delegate
-
-            menu: Component {
-                ContextMenu {
-                    property bool whiteListed: settings.operationMode === Settings.WhiteList &&
-                                                   whiteListModel.contains(model.PhoneNumberID)
-                    property bool blackListed: settings.operationMode === Settings.BlackList &&
-                                                   blackListModel.contains(model.PhoneNumberID)
-
-                    MenuItem {
-                        text: qsTr('Delete')
-                        onClicked: removeItem()
-                    }
-
-                    MenuLabel {
-                        text: {
-                            var result = '';
-
-                            if (settings.operationMode === Settings.WhiteList && whiteListed)
-                            {
-                                result = qsTr('%1 is whitelisted')
-                                            .arg(model.PhoneNumberIDRepresentation)
-                            }
-                            else if (settings.operationMode === Settings.BlackList && blackListed)
-                            {
-                                result = qsTr('%1 is blacklisted')
-                                            .arg(model.PhoneNumberIDRepresentation)
-                            }
-
-                            return result;
-                        }
-
-                        visible: whiteListed || blackListed
-                    }
-
-                    MenuItem {
-                        text: whiteListed || blackListed?
-                                  qsTr('Always record this number'):
-                                  qsTr('Always record %1').arg(model.PhoneNumberIDRepresentation)
-
-                        visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
-                                 (settings.operationMode === Settings.BlackList && blackListed)
-
-                        onClicked: {
-                            var remorseText = qsTr('Recording %1').arg(
-                                        model.PhoneNumberIDRepresentation);
-
-                            if (settings.operationMode === Settings.WhiteList)
-                                addToList(whiteListModel, model.PhoneNumberID, remorseText)
-                            else if (settings.operationMode === Settings.BlackList)
-                                removeFromList(blackListModel, model.PhoneNumberID, remorseText);
-                        }
-                    }
-
-                    MenuItem {
-                        text: whiteListed || blackListed?
-                                  qsTr('Never record this number'):
-                                  qsTr('Never record %1').arg(model.PhoneNumberIDRepresentation)
-
-                        visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
-                                 (settings.operationMode === Settings.WhiteList && whiteListed)
-
-                        onClicked: {
-                            var remorseText = qsTr('Not recording %1').arg(
-                                        model.PhoneNumberIDRepresentation);
-
-                            if (settings.operationMode === Settings.BlackList)
-                                addToList(blackListModel, model.PhoneNumberID, remorseText);
-                            else if (settings.operationMode === Settings.WhiteList)
-                                removeFromList(whiteListModel, model.PhoneNumberID, remorseText);
-                        }
-                    }
-                }                                
-            }
-
-            ListView.onAdd: AddAnimation {
-                target: delegate
-            }
-            ListView.onRemove: RemoveAnimation {
-                target: delegate
-            }
-
-            onClicked: {
-                if (model.RecordingStateID == 4)
-                {
-                    pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
-                        timeStamp: model.TimeStamp,
-                        lineIdentification: model.PhoneNumberIDRepresentation,
-                        eventTypeId: model.EventTypeID,
-                        fileName: model.FileName,
-                        fileSize: model.FileSize,
-                        duration: model.Duration
-                    })
-                }
-            }
-
-            function addToList(listModel, phoneNumberId, remorseText)
-            {
-                remorseAction(remorseText, function() {
-                    if (!listModel.contains(phoneNumberId))
-                    {
-                        listModel.add(phoneNumberId)
-                        listModel.submit();
-                    }
-                })
-            }
-
-            function removeFromList(listModel, phoneNumberId, remorseText)
-            {
-                remorseAction(remorseText, function() {
-                    listModel.remove(phoneNumberId);
-                })
-            }
-
-            function removeItem()
-            {
-               remorseAction(qsTr('Deleting'), function() {
-                   eventsModel.removeRow(model.index);
-               })
-            }
-        }
-
-        ViewPlaceholder {
-            id: eventsViewPlaceholder
-
-            text: qsTr("No calls recorded yet")
-            enabled: eventsModel.rowCount === 0
-        }
-
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
                 text: qsTr("About")
@@ -191,6 +53,196 @@ Page {
                     pageStack.push(Qt.resolvedUrl('EventsPicker.qml'))
                 }
             }
+
+            MenuItem {
+                text: searchVisible? qsTr('Hide search'): qsTr('Show search')
+
+                onClicked: {
+                    searchVisible = !searchVisible
+                }
+            }
+        }
+
+        PageHeader {
+            id: header
+
+            title: qsTr('Recordings')
+        }
+
+        SilicaListView {
+            id: eventsView
+
+            anchors {
+                top: header.bottom
+                bottom: parent.bottom
+                left: parent.left
+                right: parent.right
+            }
+
+            clip: true
+
+            header: Item {
+                width: eventsView.width
+                height: searchVisible? searchField.height: 0
+
+                Behavior on height {
+                    NumberAnimation {}
+                }
+
+                PhoneNumberEntryField {
+                    id: searchField
+
+                    width: parent.width
+                    visible: searchVisible
+                    opacity: searchVisible? 1: 0
+
+                    Behavior on opacity {
+                        FadeAnimation {}
+                    }
+
+                    placeholderText: qsTr("Enter phone number")
+
+                    onValueChanged: {
+                        console.log(value)
+    //                    eventsModel.filterByPhoneNumber(value)
+                    }
+                }
+            }
+
+            VerticalScrollDecorator {}
+
+            model: eventsModel
+
+            delegate: EventsDelegate {
+                id: delegate
+
+                menu: Component {
+                    ContextMenu {
+                        property bool whiteListed: settings.operationMode === Settings.WhiteList &&
+                                                       whiteListModel.contains(model.PhoneNumberID)
+                        property bool blackListed: settings.operationMode === Settings.BlackList &&
+                                                       blackListModel.contains(model.PhoneNumberID)
+
+                        MenuItem {
+                            text: qsTr('Delete')
+                            onClicked: removeItem()
+                        }
+
+                        MenuLabel {
+                            text: {
+                                var result = '';
+
+                                if (settings.operationMode === Settings.WhiteList && whiteListed)
+                                {
+                                    result = qsTr('%1 is whitelisted')
+                                                .arg(model.PhoneNumberIDRepresentation)
+                                }
+                                else if (settings.operationMode === Settings.BlackList && blackListed)
+                                {
+                                    result = qsTr('%1 is blacklisted')
+                                                .arg(model.PhoneNumberIDRepresentation)
+                                }
+
+                                return result;
+                            }
+
+                            visible: whiteListed || blackListed
+                        }
+
+                        MenuItem {
+                            text: whiteListed || blackListed?
+                                      qsTr('Always record this number'):
+                                      qsTr('Always record %1').arg(model.PhoneNumberIDRepresentation)
+
+                            visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
+                                     (settings.operationMode === Settings.BlackList && blackListed)
+
+                            onClicked: {
+                                var remorseText = qsTr('Recording %1').arg(
+                                            model.PhoneNumberIDRepresentation);
+
+                                if (settings.operationMode === Settings.WhiteList)
+                                    addToList(whiteListModel, model.PhoneNumberID, remorseText)
+                                else if (settings.operationMode === Settings.BlackList)
+                                    removeFromList(blackListModel, model.PhoneNumberID, remorseText);
+                            }
+                        }
+
+                        MenuItem {
+                            text: whiteListed || blackListed?
+                                      qsTr('Never record this number'):
+                                      qsTr('Never record %1').arg(model.PhoneNumberIDRepresentation)
+
+                            visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
+                                     (settings.operationMode === Settings.WhiteList && whiteListed)
+
+                            onClicked: {
+                                var remorseText = qsTr('Not recording %1').arg(
+                                            model.PhoneNumberIDRepresentation);
+
+                                if (settings.operationMode === Settings.BlackList)
+                                    addToList(blackListModel, model.PhoneNumberID, remorseText);
+                                else if (settings.operationMode === Settings.WhiteList)
+                                    removeFromList(whiteListModel, model.PhoneNumberID, remorseText);
+                            }
+                        }
+                    }
+                }
+
+                ListView.onAdd: AddAnimation {
+                    target: delegate
+                }
+                ListView.onRemove: RemoveAnimation {
+                    target: delegate
+                }
+
+                onClicked: {
+                    if (model.RecordingStateID == 4)
+                    {
+                        pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
+                            timeStamp: model.TimeStamp,
+                            lineIdentification: model.PhoneNumberIDRepresentation,
+                            eventTypeId: model.EventTypeID,
+                            fileName: model.FileName,
+                            fileSize: model.FileSize,
+                            duration: model.Duration
+                        })
+                    }
+                }
+
+                function addToList(listModel, phoneNumberId, remorseText)
+                {
+                    remorseAction(remorseText, function() {
+                        if (!listModel.contains(phoneNumberId))
+                        {
+                            listModel.add(phoneNumberId)
+                            listModel.submit();
+                        }
+                    })
+                }
+
+                function removeFromList(listModel, phoneNumberId, remorseText)
+                {
+                    remorseAction(remorseText, function() {
+                        listModel.remove(phoneNumberId);
+                    })
+                }
+
+                function removeItem()
+                {
+                   remorseAction(qsTr('Deleting'), function() {
+                       eventsModel.removeRow(model.index);
+                   })
+                }
+            }
+
+            ViewPlaceholder {
+                id: eventsViewPlaceholder
+
+                text: qsTr("No calls recorded yet")
+                enabled: eventsModel.rowCount === 0
+            }
+
         }
     }
 }
