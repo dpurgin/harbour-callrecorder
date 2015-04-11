@@ -47,10 +47,11 @@ RESOURCES += ui.qrc
 QMLFILES = \
     qml/pages/dialogs/PhoneNumbersListDelegate.qml \
     qml/pages/dialogs/PhoneNumbersListDialog.qml \
+    qml/pages/settings/About.qml \
     qml/pages/settings/AudioSettings.qml \
     qml/pages/settings/Daemon.qml \
+    qml/pages/settings/License.qml \
     qml/pages/settings/Storage.qml \
-    qml/pages/AboutPage.qml \
     qml/cover/CoverPage.qml \
     qml/pages/DirectoryNameDialog.qml \
     qml/pages/DirectoryPickerDialog.qml \
@@ -58,7 +59,6 @@ QMLFILES = \
     qml/pages/EventsPage.qml \
     qml/pages/EventsPicker.qml \
     qml/pages/EventPage.qml \
-    qml/pages/LicensePage.qml \
     qml/pages/SettingsPage.qml \
     qml/widgets/PhoneNumberEntryField.qml \
     qml/main.qml
