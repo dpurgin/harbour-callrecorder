@@ -26,7 +26,8 @@ Page {
         qsTr('Recording daemon'),
         qsTr('Storage'),
         qsTr('Audio settings'),
-        qsTr('User interface')
+        qsTr('User interface'),
+        qsTr('About')
     ]
 
     SilicaListView {
@@ -51,7 +52,17 @@ Page {
 
             ListElement {
                 img: 'qrc:/images/icon-m-recording.png'
-                target: 'AudioSettings.qml'
+                target: 'AudioSettings.qml'                
+            }
+
+            ListElement {
+                img: 'qrc:/images/icon-m-ui.png'
+                target: 'UserInterface.qml'
+            }
+
+            ListElement {
+                img: 'qrc:/images/icon-m-about.png'
+                target: 'About.qml'
             }
         }
 
