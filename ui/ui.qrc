@@ -7,5 +7,6 @@
         <file>images/icon-m-recording.png</file>
         <file>images/icon-m-daemon.png</file>
         <file>images/icon-m-ui.png</file>
+        <file>images/icon-m-about.png</file>
     </qresource>
 </RCC>
