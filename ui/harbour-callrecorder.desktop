@@ -6,5 +6,5 @@ Exec=harbour-callrecorder
 Name=Call Recorder
 # translation example:
 # your app name in German locale (de)
-Name[de]=Call Recorder
+Name[ru]=Запись звонков
 
