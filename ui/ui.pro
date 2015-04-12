@@ -78,7 +78,7 @@ images.path = /usr/share/$${PACKAGE}/images
 INSTALLS += images
 
 lupdate_only {
-    SOURCES = $${QMLFILES}
+    SOURCES += $${QMLFILES}
 }
 
 # to disable building translations every time, comment out the
