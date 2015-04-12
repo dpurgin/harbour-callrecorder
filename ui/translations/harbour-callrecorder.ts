@@ -1,94 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it_IT">
+<TS version="2.1">
 <context>
     <name>About</name>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="43"/>
         <source>About</source>
-        <translation>Informazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="64"/>
         <source>Call Recorder</source>
-        <translation>Call Recorder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="76"/>
         <source>for SailfishOS</source>
-        <translation>per SailfishOS</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="87"/>
         <source>Version 0.4.2</source>
-        <translation>Versione 0.4.2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="102"/>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
-        <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="146"/>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
-        <translation>Sentiti ringraziamenti a Simonas Leleiva e a Juho Hämäläinen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="173"/>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Questo programma è distribuito SENZA ALCUNA GARANZIA, è software libero ed è possibile ridistribuirlo a determinate condizioni. Premere il pulsante qui sotto per i dettagli.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="183"/>
         <source>Show license</source>
-        <translation>Mostra licenza</translation>
-    </message>
-</context>
-<context>
-    <name>AboutPage</name>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Informazioni</translation>
-    </message>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Call Recorder</translation>
-    </message>
-    <message>
-        <source>for SailfishOS</source>
-        <translation type="vanished">per SailfishOS</translation>
-    </message>
-    <message>
-        <source>Version 0.4.2</source>
-        <translation type="obsolete">Versione 0.4.2</translation>
-    </message>
-    <message>
-        <source>Version 0.4.1</source>
-        <translation type="vanished">Versione 0.4.1</translation>
-    </message>
-    <message>
-        <source>Copyright © 2014-2015 Dmitriy Purgin</source>
-        <translation type="vanished">Copyright © 2014-2015 Dmitriy Purgin</translation>
-    </message>
-    <message>
-        <source>dpurgin@gmail.com</source>
-        <translation type="vanished">dpurgin@gmail.com</translation>
-    </message>
-    <message>
-        <source>https://github.com/dpurgin/harbour-callrecorder</source>
-        <translation type="vanished">https://github.com/dpurgin/harbour-callrecorder</translation>
-    </message>
-    <message>
-        <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
-        <translation type="vanished">Sentiti ringraziamenti a Simonas Leleiva e a Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation type="vanished">Questo programma è distribuito SENZA ALCUNA GARANZIA, è software libero ed è possibile ridistribuirlo a determinate condizioni. Premere il pulsante qui sotto per i dettagli.</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation type="vanished">Mostra licenza</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -106,12 +59,12 @@
     <message>
         <location filename="../qml/pages/settings/AudioSettings.qml" line="48"/>
         <source>Sample rate</source>
-        <translation>Frequenza di campionamento</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/AudioSettings.qml" line="94"/>
         <source>FLAC compression level</source>
-        <translation>Livello di compressione FLAC</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -119,7 +72,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="26"/>
         <source>Call Recorder</source>
-        <translation>Call Recorder</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -137,22 +90,22 @@
     <message>
         <location filename="../qml/pages/settings/Daemon.qml" line="52"/>
         <source>Active</source>
-        <translation>Attivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Daemon.qml" line="53"/>
         <source>Capture all incoming and outgoing calls</source>
-        <translation>Cattura tutte le chiamate in entrata e in uscita</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Daemon.qml" line="70"/>
         <source>Automatic startup</source>
-        <translation>Avvio automatico</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Daemon.qml" line="71"/>
         <source>Start automatically upon reboot</source>
-        <translation>Avvia automaticamente all&apos;accensione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Daemon.qml" line="82"/>
@@ -192,7 +145,7 @@
         <location filename="../qml/pages/DirectoryNameDialog.qml" line="39"/>
         <location filename="../qml/pages/DirectoryNameDialog.qml" line="40"/>
         <source>Directory name</source>
-        <translation>Nome directory</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -200,37 +153,37 @@
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="35"/>
         <source>Select %1</source>
-        <translation>Seleziona %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="44"/>
         <source>Select</source>
-        <translation>Seleziona</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="58"/>
         <source>No nested directories</source>
-        <translation>Nessuna directory annidata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="125"/>
         <source>Rename</source>
-        <translation>Rinomina</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="125"/>
         <source>Renaming is not allowed</source>
-        <translation>Non è permesso rinominare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="135"/>
         <source>Delete</source>
-        <translation>Elimina</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/DirectoryPickerDialog.qml" line="135"/>
         <source>Removal is not allowed</source>
-        <translation>Non è possibile rimuovere</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -238,22 +191,22 @@
     <message>
         <location filename="../qml/pages/EventPage.qml" line="67"/>
         <source>Details</source>
-        <translation>Dettagli</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventPage.qml" line="85"/>
         <source>Incoming call</source>
-        <translation>Chiamata in ingresso</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventPage.qml" line="87"/>
         <source>Outgoing call</source>
-        <translation>Chiamata in uscita</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventPage.qml" line="89"/>
         <source>Partial call</source>
-        <translation>Chiamata parziale</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -261,17 +214,17 @@
     <message>
         <location filename="../qml/pages/EventsDelegate.qml" line="130"/>
         <source>Armed for recording</source>
-        <translation>Pronto per registrare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsDelegate.qml" line="132"/>
         <source>Recording in progress</source>
-        <translation>Registrazione in corso</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsDelegate.qml" line="134"/>
         <source>Recording suspended</source>
-        <translation>Registrazione sospesa</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -289,7 +242,7 @@
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="62"/>
         <source>Recordings</source>
-        <translation>Registrazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="96"/>
@@ -299,7 +252,7 @@
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="120"/>
         <source>Delete</source>
-        <translation>Elimina</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="130"/>
@@ -344,26 +297,22 @@
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="226"/>
         <source>Deleting</source>
-        <translation>Cancellazione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="235"/>
         <source>No calls recorded yet</source>
-        <translation>Nessuna chiamata registrata</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Informazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="38"/>
         <source>Settings</source>
-        <translation>Impostazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="43"/>
         <source>Select recordings</source>
-        <translation>Seleziona registrazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -371,27 +320,27 @@
     <message>
         <location filename="../qml/pages/EventsPicker.qml" line="44"/>
         <source>Select Recordings</source>
-        <translation>Seleziona registrazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPicker.qml" line="84"/>
         <source>No calls recorded yet</source>
-        <translation>Nessuna chiamata registrata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPicker.qml" line="90"/>
         <source>Delete all</source>
-        <translation>Cancella tutto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPicker.qml" line="93"/>
         <source>Deleting all recordings</source>
-        <translation>Cancellazione di tutte le registrazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/EventsPicker.qml" line="126"/>
         <source>Deleting recordings</source>
-        <translation>Cancellazione registrazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -399,14 +348,15 @@
     <message>
         <location filename="../qml/pages/settings/License.qml" line="21"/>
         <source>License</source>
-        <translation>Licenza</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>LicensePage</name>
+    <name>LocaleListModel</name>
     <message>
-        <source>License</source>
-        <translation type="vanished">Licenza</translation>
+        <location filename="../src/localelistmodel.cpp" line="31"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -432,12 +382,12 @@
     <message>
         <location filename="../qml/pages/dialogs/PhoneNumbersListDialog.qml" line="56"/>
         <source>Delete all</source>
-        <translation type="unfinished">Cancella tutto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/dialogs/PhoneNumbersListDialog.qml" line="66"/>
         <source>Save</source>
-        <translation type="unfinished">Salva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/dialogs/PhoneNumbersListDialog.qml" line="93"/>
@@ -447,7 +397,7 @@
     <message>
         <location filename="../qml/pages/dialogs/PhoneNumbersListDialog.qml" line="129"/>
         <source>Delete</source>
-        <translation type="unfinished">Elimina</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/dialogs/PhoneNumbersListDialog.qml" line="144"/>
@@ -485,64 +435,12 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="30"/>
         <source>About</source>
-        <translation type="unfinished">Informazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="39"/>
         <source>Settings</source>
-        <translation>Impostazioni</translation>
-    </message>
-    <message>
-        <source>Recorder Daemon</source>
-        <translation type="vanished">Demone di registrazione</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">Attivo</translation>
-    </message>
-    <message>
-        <source>Capture all incoming and outgoing calls</source>
-        <translation type="vanished">Cattura tutte le chiamate in entrata e in uscita</translation>
-    </message>
-    <message>
-        <source>Automatic startup</source>
-        <translation type="vanished">Avvio automatico</translation>
-    </message>
-    <message>
-        <source>Start automatically upon reboot</source>
-        <translation type="vanished">Avvia automaticamente all&apos;accensione</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="vanished">Posizione</translation>
-    </message>
-    <message>
-        <source>Location for storing the recordings</source>
-        <translation type="vanished">Dove le registrazioni vengono memorizzate</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Sfoglia</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salva</translation>
-    </message>
-    <message>
-        <source>Relocating files</source>
-        <translation type="vanished">Rilocazione dei file</translation>
-    </message>
-    <message>
-        <source>Record Quality</source>
-        <translation type="vanished">Qualità di registrazione</translation>
-    </message>
-    <message>
-        <source>Sample rate</source>
-        <translation type="vanished">Frequenza di campionamento</translation>
-    </message>
-    <message>
-        <source>FLAC compression level</source>
-        <translation type="vanished">Livello di compressione FLAC</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -555,28 +453,28 @@
     <message>
         <location filename="../qml/pages/settings/Storage.qml" line="39"/>
         <source>Location</source>
-        <translation type="unfinished">Posizione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Storage.qml" line="51"/>
         <source>Location for storing the recordings</source>
-        <translation type="unfinished">Dove le registrazioni vengono memorizzate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Storage.qml" line="66"/>
         <source>Browse</source>
-        <translation type="unfinished">Sfoglia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Storage.qml" line="80"/>
         <source>Save</source>
-        <translation type="unfinished">Salva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/Storage.qml" line="93"/>
         <location filename="../qml/pages/settings/Storage.qml" line="106"/>
         <source>Relocating files</source>
-        <translation type="unfinished">Rilocazione dei file</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -593,7 +491,7 @@
     </message>
     <message>
         <location filename="../qml/pages/settings/UserInterface.qml" line="44"/>
-        <source>Please restart the application if the locale is changed</source>
+        <source>Please restart the application after locale is changed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

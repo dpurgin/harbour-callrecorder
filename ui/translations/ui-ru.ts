@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_KZ">
 <context>
-    <name>AboutPage</name>
+    <name>About</name>
     <message>
         <source>About</source>
         <translation>О программе</translation>
@@ -34,6 +34,41 @@
     <message>
         <source>Show license</source>
         <translation>Лицензия</translation>
+    </message>
+</context>
+<context>
+    <name>AboutPage</name>
+    <message>
+        <source>About</source>
+        <translation type="vanished">О программе</translation>
+    </message>
+    <message>
+        <source>Call Recorder</source>
+        <translation type="vanished">Запись звонков</translation>
+    </message>
+    <message>
+        <source>for SailfishOS</source>
+        <translation type="vanished">для SailfishOS</translation>
+    </message>
+    <message>
+        <source>Version 0.4.2</source>
+        <translation type="vanished">Версия 0.4.2</translation>
+    </message>
+    <message>
+        <source>Copyright © 2014-2015 Dmitriy Purgin</source>
+        <translation type="vanished">© 2014-2015 Дмитрий Пургин</translation>
+    </message>
+    <message>
+        <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
+        <translation type="vanished">Спасибо Симонасу Лелейве и Юхе Хямяляйнену</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
+        <translation type="vanished">Эта программа распространяется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ. Это свободное программное обеспечение, приветствуется её распространение на определённых условиях;  нажмите на кнопку ниже, чтобы прочитать подробности</translation>
+    </message>
+    <message>
+        <source>Show license</source>
+        <translation type="vanished">Лицензия</translation>
     </message>
 </context>
 <context>
@@ -237,7 +272,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation type="vanished">О программе</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -246,6 +281,18 @@
     <message>
         <source>Select recordings</source>
         <translation>Выбрать записи</translation>
+    </message>
+    <message>
+        <source>Enter phone number</source>
+        <translation>Введите номер</translation>
+    </message>
+    <message>
+        <source>Hide search</source>
+        <translation>Скрыть поиск</translation>
+    </message>
+    <message>
+        <source>Show search</source>
+        <translation>Показать поиск</translation>
     </message>
 </context>
 <context>
@@ -272,10 +319,17 @@
     </message>
 </context>
 <context>
-    <name>LicensePage</name>
+    <name>License</name>
     <message>
         <source>License</source>
         <translation>Лицензия</translation>
+    </message>
+</context>
+<context>
+    <name>LicensePage</name>
+    <message>
+        <source>License</source>
+        <translation type="vanished">Лицензия</translation>
     </message>
 </context>
 <context>
@@ -342,6 +396,10 @@
         <source>User interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
+    <message>
+        <source>About</source>
+        <translation>О программе</translation>
+    </message>
 </context>
 <context>
     <name>Storage</name>
@@ -368,6 +426,21 @@
     <message>
         <source>Relocating files</source>
         <translation>Перемещение файлов</translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface</name>
+    <message>
+        <source>User interface</source>
+        <translation>Интерфейс пользователя</translation>
+    </message>
+    <message>
+        <source>Locale</source>
+        <translation>Локализация</translation>
+    </message>
+    <message>
+        <source>Please restart the application if the locale is changed</source>
+        <translation>При изменении локализации необходимо перезапустить приложение</translation>
     </message>
 </context>
 </TS>

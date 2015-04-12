@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>AboutPage</name>
+    <name>About</name>
     <message>
         <source>About</source>
         <translation type="unfinished"></translation>
@@ -236,15 +236,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -272,7 +280,7 @@
     </message>
 </context>
 <context>
-    <name>LicensePage</name>
+    <name>License</name>
     <message>
         <source>License</source>
         <translation type="unfinished"></translation>
@@ -342,6 +350,10 @@
         <source>User interface</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Storage</name>
@@ -367,6 +379,21 @@
     </message>
     <message>
         <source>Relocating files</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface</name>
+    <message>
+        <source>User interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please restart the application if the locale is changed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
