@@ -47,13 +47,13 @@ Page {
                 }
             }
 
-            MenuItem {
-                text: searchVisible? qsTr('Hide search'): qsTr('Show search')
+//            MenuItem {
+//                text: searchVisible? qsTr('Hide search'): qsTr('Show search')
 
-                onClicked: {
-                    searchVisible = !searchVisible
-                }
-            }
+//                onClicked: {
+//                    searchVisible = !searchVisible
+//                }
+//            }
         }
 
         PageHeader {
