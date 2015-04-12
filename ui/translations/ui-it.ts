@@ -410,6 +410,14 @@
     </message>
 </context>
 <context>
+    <name>LocaleListModel</name>
+    <message>
+        <location filename="../src/localelistmodel.cpp" line="31"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PhoneNumberEntryField</name>
     <message>
         <location filename="../qml/widgets/PhoneNumberEntryField.qml" line="42"/>

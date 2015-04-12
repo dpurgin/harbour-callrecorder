@@ -333,6 +333,13 @@
     </message>
 </context>
 <context>
+    <name>LocaleListModel</name>
+    <message>
+        <source>System</source>
+        <translation>Системная</translation>
+    </message>
+</context>
+<context>
     <name>PhoneNumberEntryField</name>
     <message>
         <source>Search by name or number</source>
