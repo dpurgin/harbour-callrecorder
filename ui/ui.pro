@@ -35,12 +35,14 @@ LIBS += \
 
 HEADERS += \
     src/filerelocationworker.h \
-    src/filesystemhelper.h
+    src/filesystemhelper.h \
+    src/localelistmodel.h
 
 SOURCES += \
     src/filerelocationworker.cpp \
     src/filesystemhelper.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/localelistmodel.cpp
 
 RESOURCES += ui.qrc
 
@@ -52,6 +54,7 @@ QMLFILES = \
     qml/pages/settings/Daemon.qml \
     qml/pages/settings/License.qml \
     qml/pages/settings/Storage.qml \
+    qml/pages/settings/UserInterface.qml \
     qml/cover/CoverPage.qml \
     qml/pages/DirectoryNameDialog.qml \
     qml/pages/DirectoryPickerDialog.qml \
