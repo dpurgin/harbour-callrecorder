@@ -29,6 +29,7 @@ class LocaleListModel : public QAbstractListModel
 
 public:
     explicit LocaleListModel(QObject* parent = 0);
+    virtual ~LocaleListModel() {}
 
     Q_INVOKABLE QVariant data(const QModelIndex& index, int role) const;
 
