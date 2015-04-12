@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Version 0.4.2</source>
-        <translation>Версия 0.4.2</translation>
+        <translation type="vanished">Версия 0.4.2</translation>
     </message>
     <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
@@ -34,6 +34,10 @@
     <message>
         <source>Show license</source>
         <translation>Лицензия</translation>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation>Версия %1</translation>
     </message>
 </context>
 <context>
@@ -288,11 +292,11 @@
     </message>
     <message>
         <source>Hide search</source>
-        <translation>Скрыть поиск</translation>
+        <translation type="vanished">Скрыть поиск</translation>
     </message>
     <message>
         <source>Show search</source>
-        <translation>Показать поиск</translation>
+        <translation type="vanished">Показать поиск</translation>
     </message>
 </context>
 <context>

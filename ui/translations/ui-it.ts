@@ -19,9 +19,13 @@
         <translation>per SailfishOS</translation>
     </message>
     <message>
-        <location filename="../qml/pages/settings/About.qml" line="87"/>
         <source>Version 0.4.2</source>
-        <translation>Versione 0.4.2</translation>
+        <translation type="vanished">Versione 0.4.2</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/settings/About.qml" line="87"/>
+        <source>Version %1</source>
+        <translation>Versione %1</translation>
     </message>
     <message>
         <location filename="../qml/pages/settings/About.qml" line="102"/>
@@ -276,16 +280,6 @@
 </context>
 <context>
     <name>EventsPage</name>
-    <message>
-        <location filename="../qml/pages/EventsPage.qml" line="51"/>
-        <source>Hide search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/EventsPage.qml" line="51"/>
-        <source>Show search</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../qml/pages/EventsPage.qml" line="62"/>
         <source>Recordings</source>

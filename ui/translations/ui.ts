@@ -16,10 +16,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version 0.4.2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33,6 +29,10 @@
     </message>
     <message>
         <source>Show license</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -245,14 +245,6 @@
     </message>
     <message>
         <source>Enter phone number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
