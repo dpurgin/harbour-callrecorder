@@ -34,11 +34,14 @@
 #include <libcallrecorder/whitelisttablemodel.h>
 
 #include "filesystemhelper.h"
+#include "localelistmodel.h"
 
 int main(int argc, char *argv[])
 {
     LibCallRecorder::installMessageHandler();
 
+    qmlRegisterType< LocaleListModel >(
+                "kz.dpurgin.callrecorder.LocaleListModel", 1, 0, "LocaleListModel");
     qmlRegisterType< Settings >("kz.dpurgin.callrecorder.Settings", 1, 0, "Settings");
 
     int retval = -1;
@@ -50,13 +53,23 @@ int main(int argc, char *argv[])
         app->setOrganizationName("kz.dpurgin");
         app->setApplicationName("harbour-callrecorder");
 
+        QScopedPointer< Settings > settings(new Settings());
+
+        QLocale locale(settings->locale());
+
+        if (locale == QLocale::c())
+            locale = QLocale::system();
+
+        QLocale::setDefault(locale);
+
         QTranslator translator;
-        translator.load(QLocale().system(),
-                         "ui",
-                         "-",
-                         "/usr/share/harbour-callrecorder/translations");
+        translator.load(locale,
+                        "ui",
+                        "-",
+                        "/usr/share/harbour-callrecorder/translations");
         qApp->installTranslator(&translator);
 
+        settings.reset();
 
         QScopedPointer< Database > db(new Database());
 
