@@ -109,7 +109,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}
+%attr(755,-,-) %{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
