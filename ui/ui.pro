@@ -67,6 +67,7 @@ QMLFILES = \
     qml/main.qml
 
 OTHER_FILES += \
+    harbour-callrecorder-launcher.sh \
     harbour-callrecorder.desktop \
     $${QMLFILES}
 
@@ -75,7 +76,11 @@ images.files = \
     images/icon-cover-stop-recorder.png
 images.path = /usr/share/$${PACKAGE}/images
 
-INSTALLS += images
+scripts.files = \
+    harbour-callrecorder-launcher.sh
+scripts.path = /usr/bin
+
+INSTALLS += images scripts
 
 lupdate_only {
     SOURCES += $${QMLFILES}
