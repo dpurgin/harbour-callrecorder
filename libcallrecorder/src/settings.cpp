@@ -170,6 +170,21 @@ QString Settings::outputLocation() const
     return d->outputLocation;
 }
 
+QString Settings::readLocale()
+{
+    QString configPath =
+            QString(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
+                    QLatin1String("/harbour-callrecorder/callrecorder.ini"));
+
+    QSettings settings(configPath, QSettings::IniFormat);
+
+    settings.beginGroup("ui");
+        QString localeName = settings.value("locale", "system").toString();
+    settings.endGroup();
+
+    return localeName;
+}
+
 void Settings::reload()
 {
     qDebug();
