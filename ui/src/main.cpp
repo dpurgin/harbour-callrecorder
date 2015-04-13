@@ -48,19 +48,17 @@ int main(int argc, char *argv[])
 
     try
     {
-        QScopedPointer< QGuiApplication > app(SailfishApp::application(argc, argv));
-
-        app->setOrganizationName("kz.dpurgin");
-        app->setApplicationName("harbour-callrecorder");
-
-        QScopedPointer< Settings > settings(new Settings());
-
-        QLocale locale(settings->locale());
+        QLocale locale(Settings::readLocale());
 
         if (locale == QLocale::c())
             locale = QLocale::system();
 
         QLocale::setDefault(locale);
+
+        QScopedPointer< QGuiApplication > app(SailfishApp::application(argc, argv));
+
+        app->setOrganizationName("kz.dpurgin");
+        app->setApplicationName("harbour-callrecorder");
 
         QTranslator translator;
         translator.load(locale,
@@ -68,8 +66,6 @@ int main(int argc, char *argv[])
                         "-",
                         "/usr/share/harbour-callrecorder/translations");
         qApp->installTranslator(&translator);
-
-        settings.reset();
 
         QScopedPointer< Database > db(new Database());
 
