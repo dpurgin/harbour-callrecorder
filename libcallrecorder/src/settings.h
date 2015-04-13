@@ -87,9 +87,6 @@ public:
     int sampleRate() const;
     void setSampleRate(int sampleRate);
 
-public:
-    static QString readLocale();
-
 public slots:
     void reload();
     void save();
