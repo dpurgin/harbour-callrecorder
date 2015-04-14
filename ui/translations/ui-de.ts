@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -324,7 +322,7 @@
     </message>
     <message>
         <source>Add numbers with field above or use pull-down menu</source>
-        <translation>Fügen Sie Nummern im Eingabefeld oben oder verwenden Sie das Pulldown-Menü</translation>
+        <translation>Nummern oben eingeben oder das Pulldown-Menü verwenden</translation>
     </message>
 </context>
 <context>
