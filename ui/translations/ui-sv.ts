@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sv_SE">
+<TS version="2.1" language="sv_SE">
 <context>
     <name>About</name>
     <message>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Det här programmet distribueras UTAN NÅGON SOM HELST GARANTI. Det är fri mjukvara och du är välkommen att återdistribuera den under vissa omständigheter. Tryck på nedanstående knapp.för detaljer!</translation>
+        <translation>Det här programmet distribueras UTAN NÅGON SOM HELST GARANTI. Det är fri mjukvara och du är välkommen att återdistribuera den under vissa omständigheter. Tryck på nedanstående knapp.för detaljer</translation>
     </message>
     <message>
         <source>Show license</source>

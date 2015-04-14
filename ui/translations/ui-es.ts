@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="es">
 <context>
     <name>About</name>
     <message>
@@ -23,7 +25,7 @@
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Este programa no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Este software es libre y puedes redistribuirlo bajo ciertas condiciones; haz clic en el botón de abajo para más detalles.</translation>
+        <translation>Este programa no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Este software es libre y puedes redistribuirlo bajo ciertas condiciones; haz clic en el botón de abajo para más detalles</translation>
     </message>
     <message>
         <source>Show license</source>

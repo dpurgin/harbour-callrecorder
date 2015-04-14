@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="cs">
 <context>
     <name>About</name>
     <message>
@@ -23,7 +25,7 @@
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Tento program je poskytovaný BEZ JAKÉKOLI ZÁRUKY. Jedná s svobodný software a můžete jej za určitých podmínek dále šířit. Klikněte na tlačítko níže pro zobrazení podrobností.</translation>
+        <translation>Tento program je poskytovaný BEZ JAKÉKOLI ZÁRUKY. Jedná s svobodný software a můžete jej za určitých podmínek dále šířit. Klikněte na tlačítko níže pro zobrazení podrobností</translation>
     </message>
     <message>
         <source>Show license</source>
@@ -88,7 +90,7 @@
     </message>
     <message>
         <source>Operation mode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
@@ -130,7 +132,7 @@
     </message>
     <message>
         <source>No nested directories</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename</source>
@@ -333,7 +335,7 @@
     </message>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished"/>
+        <translation>Démon zázanamníku</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -387,7 +389,7 @@
     </message>
     <message>
         <source>Locale</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please restart the application if the locale is changed</source>
