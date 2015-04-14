@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
     <name>About</name>
     <message>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>Über Call Recorder</translation>
     </message>
     <message>
         <source>Call Recorder</source>
@@ -78,7 +76,7 @@
     </message>
     <message>
         <source>Capture all incoming and outgoing calls</source>
-        <translation>Erfassen Sie alle ein- und ausgehende Anrufe</translation>
+        <translation>Alle ein- und ausgehenden Anrufe aufnehmen</translation>
     </message>
     <message>
         <source>Automatic startup</source>
@@ -94,11 +92,11 @@
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
-        <translation>Alle Anrufe annehmen einer beliebigen Anzahl mit Ausnahme der in der schwarzen Liste</translation>
+        <translation>Alle Anrufe aufnehmen außer die Nummern in der schwarzen Liste</translation>
     </message>
     <message>
         <source>Do not record anything except numbers in the white list</source>
-        <translation>Nichts aufnehmen außer die Zahlen in der weißen Liste</translation>
+        <translation>Nichts aufnehmen außer die Nummern in der weißen Liste</translation>
     </message>
     <message>
         <source>Black list</source>
@@ -205,15 +203,15 @@
     </message>
     <message>
         <source>Always record this number</source>
-        <translation>Immer diese Nummer aufnehmen</translation>
+        <translation>Diese Nummer jedes Mal aufnehmen</translation>
     </message>
     <message>
         <source>Always record %1</source>
-        <translation>Endlose Aufnahme %1</translation>
+        <translation>Anruf jedes Mal aufnehmen %1</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation>Aufnahme %1</translation>
+        <translation>%1 wird aufgenommen</translation>
     </message>
     <message>
         <source>Never record this number</source>
@@ -221,11 +219,11 @@
     </message>
     <message>
         <source>Never record %1</source>
-        <translation>Keine Aufnahme %1</translation>
+        <translation>Anruf niemals aufnehmen %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation>Nicht aufgenommen %1</translation>
+        <translation>%1 wird nicht aufgenommen </translation>
     </message>
     <message>
         <source>Deleting</source>
@@ -324,7 +322,7 @@
     </message>
     <message>
         <source>Add numbers with field above or use pull-down menu</source>
-        <translation>Fügen Sie Nummern im Bereich oben oder verwenden Sie das Pulldown-Menü</translation>
+        <translation>Fügen Sie Nummern im Eingabefeld oben oder verwenden Sie das Pulldown-Menü</translation>
     </message>
 </context>
 <context>
@@ -351,7 +349,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>Über Call Recorder</translation>
     </message>
 </context>
 <context>
@@ -389,11 +387,11 @@
     </message>
     <message>
         <source>Locale</source>
-        <translation>Lokal</translation>
+        <translation>Spracheinstellungen</translation>
     </message>
     <message>
         <source>Please restart the application if the locale is changed</source>
-        <translation>Bitte starten Sie die Anwendung neu, wenn das Gebietsschema geändert wird</translation>
+        <translation>Bitte starten Sie die Anwendung neu, wenn die Länder- und Spracheinstellungen geändert werden</translation>
     </message>
 </context>
 </TS>
