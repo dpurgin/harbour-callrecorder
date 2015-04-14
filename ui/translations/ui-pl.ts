@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="pl">
 <context>
     <name>About</name>
     <message>
@@ -7,7 +9,7 @@
     </message>
     <message>
         <source>Call Recorder</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>for SailfishOS</source>
@@ -23,7 +25,7 @@
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show license</source>
@@ -42,7 +44,7 @@
     </message>
     <message>
         <source>FLAC Encoder</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sample rate</source>
@@ -57,26 +59,26 @@
     <name>CoverPage</name>
     <message>
         <source>Call Recorder</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Daemon</name>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Capture all incoming and outgoing calls</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Automatic startup</source>
@@ -92,7 +94,7 @@
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Do not record anything except numbers in the white list</source>
@@ -108,7 +110,7 @@
     </message>
     <message>
         <source>Edit list</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -130,11 +132,11 @@
     </message>
     <message>
         <source>No nested directories</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Renaming is not allowed</source>
@@ -165,14 +167,14 @@
     </message>
     <message>
         <source>Partial call</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>EventsDelegate</name>
     <message>
         <source>Armed for recording</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recording in progress</source>
@@ -223,7 +225,7 @@
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleting</source>
@@ -254,7 +256,7 @@
     </message>
     <message>
         <source>No calls recorded yet</source>
-        <translation type="unfinished"/>
+        <translation>Brak nagranych rozmów</translation>
     </message>
     <message>
         <source>Delete all</source>
@@ -318,11 +320,11 @@
     </message>
     <message>
         <source>No items in the list</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add numbers with field above or use pull-down menu</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -333,11 +335,11 @@
     </message>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Audio settings</source>
@@ -356,11 +358,11 @@
     <name>Storage</name>
     <message>
         <source>Storage</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Location for storing the recordings</source>
