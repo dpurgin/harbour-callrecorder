@@ -140,8 +140,10 @@ Page {
                     }
 
                     font.pixelSize: Theme.fontSizeExtraSmall
+                    width: parent.width
 
                     wrapMode: Text.Wrap
+                    horizontalAlignment: Text.Center
 
                     text: qsTr('Thanks to Simonas Leleiva and Juho Hämäläinen')
                 }
