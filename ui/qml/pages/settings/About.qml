@@ -26,16 +26,39 @@ Page {
         anchors {
             fill: parent
 
-            leftMargin: Theme.paddingLarge
-            rightMargin: Theme.paddingLarge
+//            leftMargin: Theme.paddingLarge
+//            rightMargin: Theme.paddingLarge
         }
 
         contentHeight: contentColumn.height
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr('Translators')
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl('Translators.qml'))
+                }
+            }
+
+            MenuItem {
+                text: qsTr('License')
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl('License.qml'))
+                }
+            }
+        }
 
         Column {
             id: contentColumn
 
             width: parent.width
+
+            anchors {
+                fill: parent
+
+                leftMargin: Theme.paddingLarge
+                rightMargin: Theme.paddingLarge
+            }
 
             PageHeader {
                 id: pageHeader
@@ -147,6 +170,20 @@ Page {
 
                     text: qsTr('Thanks to Simonas Leleiva and Juho Hämäläinen')
                 }
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    font.pixelSize: Theme.fontSizeTiny
+                    color: Theme.secondaryColor
+
+                    wrapMode: Text.Wrap
+                    horizontalAlignment: Text.Center
+
+                    text: qsTr('Use pull-down menu to see translators')
+                }
             }                        
 
             Item {
@@ -173,20 +210,8 @@ Page {
                     color: Theme.secondaryColor
 
                     text: qsTr('This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you ' +
-                               'are welcome to redistribute it under certain conditions; click on the button below ' +
+                               'are welcome to redistribute it under certain conditions; use pull-down menu ' +
                                'for details')
-                }
-
-                Button {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
-
-                    text: qsTr('Show license')
-
-                    onClicked: {
-                        pageStack.push(Qt.resolvedUrl('License.qml'))
-                    }
                 }
             }
         }
