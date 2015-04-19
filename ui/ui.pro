@@ -54,6 +54,7 @@ QMLFILES = \
     qml/pages/settings/Daemon.qml \
     qml/pages/settings/License.qml \
     qml/pages/settings/Storage.qml \
+    qml/pages/settings/Translators.qml \
     qml/pages/settings/UserInterface.qml \
     qml/cover/CoverPage.qml \
     qml/pages/DirectoryNameDialog.qml \
