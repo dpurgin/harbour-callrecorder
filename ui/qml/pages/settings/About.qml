@@ -72,9 +72,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeExtraLarge
                     color: Theme.primaryColor
@@ -83,10 +81,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
-
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeLarge
                     color: Theme.secondaryColor
@@ -95,9 +90,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
@@ -111,9 +104,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeExtraSmall
 
@@ -121,9 +112,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeTiny
                     color: Theme.secondaryColor
@@ -137,14 +126,21 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeTiny
                     color: Theme.highlightColor
 
                     text: "https://github.com/dpurgin/harbour-callrecorder"
+                }
+
+                Label {
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    font.pixelSize: Theme.fontSizeTiny
+                    color: Theme.highlightColor
+
+                    text: "https://www.transifex.com/projects/p/harbour-callrecorder/"
                 }
 
                 Item {
@@ -153,9 +149,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeExtraSmall
                     width: parent.width
@@ -167,9 +161,7 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeTiny
                     color: Theme.secondaryColor
