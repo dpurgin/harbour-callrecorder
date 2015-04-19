@@ -42,6 +42,7 @@ Dialog {
             id: header
 
             acceptText: qsTr('Select')
+            cancelText: qsTr('Cancel')
         }
 
         SilicaListView {

@@ -27,6 +27,9 @@ Dialog {
 
         DialogHeader {
             id: header
+
+            acceptText: qsTr('Accept')
+            cancelText: qsTr('Cancel')
         }
 
         TextField {
