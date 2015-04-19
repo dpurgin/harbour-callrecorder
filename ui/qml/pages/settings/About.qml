@@ -23,12 +23,7 @@ Page {
     id: aboutPage
 
     SilicaFlickable {
-        anchors {
-            fill: parent
-
-//            leftMargin: Theme.paddingLarge
-//            rightMargin: Theme.paddingLarge
-        }
+        anchors.fill: parent
 
         contentHeight: contentColumn.height
 
@@ -188,8 +183,8 @@ Page {
 
             Item {
                 width: parent.width
-                height: aboutPage.height - pageHeader.height - headerColumn.height - licenseColumn.height -
-                        Theme.paddingLarge
+                height: aboutPage.height - pageHeader.height - headerColumn.height -
+                        licenseColumn.height - Theme.paddingLarge
             }
 
             Column {
