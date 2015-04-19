@@ -131,6 +131,13 @@ Page {
                         ListElement { name: "Åke Engelbrektson" }
                     ]
                 }
+
+                ListElement {
+                    locale: "zh_TW"
+                    translators: [
+                        ListElement { name: "hanhsuan" }
+                    ]
+                }
             }
 
             delegate: Column {

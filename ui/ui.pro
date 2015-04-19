@@ -101,4 +101,5 @@ TRANSLATIONS += \
     translations/ui-it.ts \
     translations/ui-pl.ts \
     translations/ui-ru.ts \
-    translations/ui-sv.ts
+    translations/ui-sv.ts \
+    translations/ui-zh_TW.ts
