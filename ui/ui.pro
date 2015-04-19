@@ -96,6 +96,7 @@ TRANSLATIONS += \
     translations/ui-el.ts \
     translations/ui-es.ts \
     translations/ui-fi.ts \
+    translations/ui-fr.ts \
     translations/ui-it.ts \
     translations/ui-pl.ts \
     translations/ui-ru.ts \
