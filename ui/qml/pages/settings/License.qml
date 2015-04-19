@@ -7,6 +7,9 @@ Page {
     SilicaFlickable {
         anchors {
             fill: parent
+
+            leftMargin: Theme.paddingLarge
+            rightMargin: Theme.paddingLarge
         }
 
         contentHeight: contentColumn.height
