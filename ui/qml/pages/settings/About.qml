@@ -164,6 +164,8 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeTiny
+                    width: parent.width
+
                     color: Theme.secondaryColor
 
                     wrapMode: Text.Wrap
