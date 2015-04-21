@@ -23,7 +23,13 @@ CoverBackground {
     Label {
         id: label
         anchors.centerIn: parent
+
         text: qsTr("Call Recorder")
+
+        horizontalAlignment: Text.Center
+
+        wrapMode: Text.Wrap
+        width: parent.width
     }
 
     CoverActionList {
