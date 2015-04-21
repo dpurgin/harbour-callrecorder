@@ -64,8 +64,9 @@ Page {
                 ListElement {
                     locale: "de"
                     translators: [
-                        ListElement { name: "Wasilis Mandratzis-Walz" },
-                        ListElement { name: "Peter-Berlin" }
+                        ListElement { name: "blubdbibub" },
+                        ListElement { name: "peter_berlin" },
+                        ListElement { name: "Wasilis Mandratzis-Walz" }
                     ]
                 }
 
@@ -86,7 +87,7 @@ Page {
                 ListElement {
                     locale: "es"
                     translators: [
-                        ListElement { name: "Carmen Fernandéz" }
+                        ListElement { name: "Carmen Fernández B." }
                     ]
                 }
 
