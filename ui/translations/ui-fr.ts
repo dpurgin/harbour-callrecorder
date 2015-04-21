@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fr">
 <context>
     <name>About</name>
     <message>
@@ -7,7 +9,7 @@
     </message>
     <message>
         <source>Call Recorder</source>
-        <translation>Enregistreur d&apos;appels</translation>
+        <translation>Call Recorder</translation>
     </message>
     <message>
         <source>for SailfishOS</source>
@@ -22,16 +24,24 @@
         <translation>Merci à Simonas Leleiva et Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Ce programme est accompagné d&apos;ABSOLUMENT AUCUNE GARANTIE. C&apos;est un logiciel libre, et vous êtes invités à le redistribuer sous certaines conditions; cliquez sur le bouton ci-dessous pour plus de détails.</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Afficher la licence</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Version %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Traducteurs</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licence</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Utilisez le menu tirer-bas pour afficher les traducteurs</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Ce programme n&apos;est accompagné d&apos;ABSOLUMENT AUCUNE GARANTIE. C&apos;est un logiciel libre et vous êtes invités à le redistribuer sous certaines conditions; utilisez le menu tirer-bas pour plus de détails.</translation>
     </message>
 </context>
 <context>
@@ -57,7 +67,7 @@
     <name>CoverPage</name>
     <message>
         <source>Call Recorder</source>
-        <translation>Enregistreur d&apos;appels</translation>
+        <translation>Call Recorder</translation>
     </message>
 </context>
 <context>
@@ -117,6 +127,14 @@
         <source>Directory name</source>
         <translation>Nom du répertoire</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>Accepter</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -130,7 +148,7 @@
     </message>
     <message>
         <source>No nested directories</source>
-        <translation>Pas de répertoires imbriqués</translation>
+        <translation>Pas de sous-répertoires</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -148,12 +166,16 @@
         <source>Removal is not allowed</source>
         <translation>Suppression non autorisée</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
 </context>
 <context>
     <name>EventPage</name>
     <message>
         <source>Details</source>
-        <translation>Details</translation>
+        <translation>Détails</translation>
     </message>
     <message>
         <source>Incoming call</source>
@@ -199,7 +221,7 @@
     </message>
     <message>
         <source>%1 is blacklisted</source>
-        <translation>%1 est sur lsite noire</translation>
+        <translation>%1 est sur liste noire</translation>
     </message>
     <message>
         <source>Always record this number</source>
@@ -324,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>Ajouter les Nos dans le champs ci-dessus ou utiliser le menu tirer-bas</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -380,6 +406,17 @@
     </message>
 </context>
 <context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Traducteurs</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Call recorder est disponible en plusieurs langues grâce aux personnes suivantes. Les noms et les langues sont listés par ordre alphabétique.</translation>
+    </message>
+</context>
+<context>
     <name>UserInterface</name>
     <message>
         <source>User interface</source>
@@ -391,7 +428,7 @@
     </message>
     <message>
         <source>Please restart the application if the locale is changed</source>
-        <translation>Redémarrer l&apos;application après un changement de langue</translation>
+        <translation>Veuillez redémarrer l&apos;application après un changement de langue.</translation>
     </message>
 </context>
 </TS>

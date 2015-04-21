@@ -24,16 +24,24 @@
         <translation>Kiitos Simonas Leleiva ja Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Tämä ohjelma on lisensoitu ilmaiseksi ja tälle ohjelmalle ei myönnetä takuuta lain sallimissa rajoissa. Kuka tahansa voi muuttaa tai levittää ohjelmaa alla olevien GPL-lisenssiehtojen mukaisesti.</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Näytä lisenssi</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Versio %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Kääntäjät</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Lisenssi</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Käytä alasvetovalikkoa nähdäksesi kääntäjät</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Tämä sovellus on lisensoitu ilmaiseksi eikä sille myönnetä takuuta lain sallimissa rajoissa. Kuka tahansa voi muuttaa tai levittää sovellusta alla olevien GPL-lisenssiehtojen mukaisesti.</translation>
     </message>
 </context>
 <context>
@@ -119,6 +127,14 @@
         <source>Directory name</source>
         <translation>Hakemisto</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>Hyväksy</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -149,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>Poistaminen ei ole sallittua</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
     </message>
 </context>
 <context>
@@ -326,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>Lisää numeroita ylläolevaa kenttää tai alasvetovalikkoa käyttämällä</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -379,6 +403,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Siirretään tiedostoja</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Kääntäjät</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Kiitos näiden ihmisten &quot;Call Recorder&quot; on tarjolla eri kielillä. Nimet ja kielialueet on listattu aakkosjärjestyksessä.</translation>
     </message>
 </context>
 <context>

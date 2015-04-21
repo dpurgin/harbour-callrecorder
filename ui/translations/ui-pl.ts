@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Call Recorder</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejestrator Rozmów</translation>
     </message>
     <message>
         <source>for SailfishOS</source>
@@ -24,16 +24,24 @@
         <translation>Podziękowania dla Simonasa Leleivasa i Juho Hämäläinena</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Pokaż licencję</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Wersja %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Tłumacze</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licencja</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Użyj menu wysuwanego by zobaczyć tłumaczy</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Program wydawany jest ABSOLUTNIE BEZ ŻADNEJ GWARANCJI. To jest wolne oprogramowanie i mile widziane jest dalsze jego rozpowszechnianie, pod pewnymi warunkami. Użyj wysuwanego menu by poznać szczegóły</translation>
     </message>
 </context>
 <context>
@@ -44,7 +52,7 @@
     </message>
     <message>
         <source>FLAC Encoder</source>
-        <translation type="unfinished"></translation>
+        <translation>Koder FLAC</translation>
     </message>
     <message>
         <source>Sample rate</source>
@@ -59,26 +67,26 @@
     <name>CoverPage</name>
     <message>
         <source>Call Recorder</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejestrator Rozmów</translation>
     </message>
 </context>
 <context>
     <name>Daemon</name>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Demon nagrywania</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchamianie</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktywny</translation>
     </message>
     <message>
         <source>Capture all incoming and outgoing calls</source>
-        <translation type="unfinished"></translation>
+        <translation>Nagrywaj wszystkie rozmowy przychodzące i wychodzące</translation>
     </message>
     <message>
         <source>Automatic startup</source>
@@ -94,7 +102,7 @@
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
-        <translation type="unfinished"></translation>
+        <translation>Nagrywaj rozmowy ze wszystkimi numerami poza tymi na czarnej liście</translation>
     </message>
     <message>
         <source>Do not record anything except numbers in the white list</source>
@@ -110,7 +118,7 @@
     </message>
     <message>
         <source>Edit list</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytuj listę</translation>
     </message>
 </context>
 <context>
@@ -118,6 +126,14 @@
     <message>
         <source>Directory name</source>
         <translation>Nazwa katalogu</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Akceptuj</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -132,11 +148,11 @@
     </message>
     <message>
         <source>No nested directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak folderów zagnieżdżonych</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień nazwę</translation>
     </message>
     <message>
         <source>Renaming is not allowed</source>
@@ -149,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>Usunięcie niedozwolone</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -167,18 +187,18 @@
     </message>
     <message>
         <source>Partial call</source>
-        <translation type="unfinished"></translation>
+        <translation>Częściowa rozmowa</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegate</name>
     <message>
         <source>Armed for recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Gotowy do nagrania</translation>
     </message>
     <message>
         <source>Recording in progress</source>
-        <translation>Nagranie w trakcie</translation>
+        <translation>Nagrywanie w toku</translation>
     </message>
     <message>
         <source>Recording suspended</source>
@@ -225,7 +245,7 @@
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie nagrywa %1</translation>
     </message>
     <message>
         <source>Deleting</source>
@@ -264,11 +284,11 @@
     </message>
     <message>
         <source>Deleting all recordings</source>
-        <translation>Usuń wszystkie nagrania</translation>
+        <translation>Usuwanie wszystkich nagrań</translation>
     </message>
     <message>
         <source>Deleting recordings</source>
-        <translation>Usuń nagrania</translation>
+        <translation>Usuwanie nagrań</translation>
     </message>
 </context>
 <context>
@@ -320,11 +340,15 @@
     </message>
     <message>
         <source>No items in the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak elementów na liście</translation>
     </message>
     <message>
         <source>Add numbers with field above or use pull-down menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj numery używając pola powyżej, lub menu wysuwanego</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -335,11 +359,11 @@
     </message>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Demon nagrywania</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Miejsce zapisu</translation>
     </message>
     <message>
         <source>Audio settings</source>
@@ -358,11 +382,11 @@
     <name>Storage</name>
     <message>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Miejsce zapisu</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ścieżka</translation>
     </message>
     <message>
         <source>Location for storing the recordings</source>
@@ -379,6 +403,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Przenoszenie plików</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Tłumacze</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Dzięki tym ludziom Rejestrator Rozmów jest dostępny w różnych językach. Imiona i kody językowe w kolejności alfabetycznej.</translation>
     </message>
 </context>
 <context>

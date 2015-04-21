@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sv_SE">
+<TS version="2.1" language="sv">
 <context>
     <name>About</name>
     <message>
@@ -24,16 +24,24 @@
         <translation>Tack till Simonas Leleiva och Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Det här programmet distribueras UTAN NÅGON SOM HELST GARANTI. Det är fri mjukvara och du är välkommen att återdistribuera den under vissa omständigheter. Tryck på nedanstående knapp.för detaljer</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Visa licens</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Version %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Översättare</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licens</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Använd rullgardinsmenyn för att se översättare</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Det här programmet distribueras UTAN NÅGON SOM HELST GARANTI. Det är fri mjukvara och du är välkommen att återdistribuera den under vissa omständigheter. Använd rullgardinsmenyn för detaljer!</translation>
     </message>
 </context>
 <context>
@@ -119,6 +127,14 @@
         <source>Directory name</source>
         <translation>Katalognamn</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>Acceptera</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -149,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>Borttagning är inte tillåtet</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -324,7 +344,11 @@
     </message>
     <message>
         <source>Add numbers with field above or use pull-down menu</source>
-        <translation>Lägg till nummer i skrivfältet ovan, eller använd rullgardinsmenyn</translation>
+        <translation>Lägg till nummer i fältet ovan, eller använd rullgardinsmenyn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -379,6 +403,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Flyttar filer</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Översättare</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Tack vare dessa människor, finns Call Recorder tillgänglig på olika språk. Namn och språkkoder är listade i alfabetisk ordning.</translation>
     </message>
 </context>
 <context>

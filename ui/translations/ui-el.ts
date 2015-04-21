@@ -24,16 +24,24 @@
         <translation>Ευχαριστώ τους Simonas Leleiva και Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Το πρόγραμμα έρχεται με ΑΠΟΛΥΤΩΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ. Το παρόν είναι ελεύθερο λογισμικό, και είστε ευπρόσδεκτοι να το αναδιανείμετε κάτω από ορισμένες συνθήκες; κάντε κλικ στο κουμπί παρακάτω για λεπτομέρειες</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Εμφάνιση άδειας</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Έκδοση %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Μεταφραστές</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Άδεια Χρήσης</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Χρησιμοποιήστε το αναπτυσσόμενο μενού για να δείτε τους μεταφραστές</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Το πρόγραμμα έρχεται με ΑΠΟΛΥΤΩΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ. Το παρόν είναι ελεύθερο λογισμικό, και είστε ευπρόσδεκτοι να το αναδιανείμετε κάτω από ορισμένες συνθήκες; Χρησιμοποιήστε το αναπτυσσόμενο μενού για λεπτομέρειες</translation>
     </message>
 </context>
 <context>
@@ -119,6 +127,14 @@
         <source>Directory name</source>
         <translation>Ονομα καταλόγου</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>Αποδοχή</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -149,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>Διαγραφή δεν επιτρέπεται</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -326,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>Προσθέστε τους αριθμούς στο πεδίο επάνω ή χρησιμοποιήστε το pull-down μενού</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -379,6 +403,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Αλλαγή θέσης αρχείων</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Μεταφραστές</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Ευχαριστούμε αυτούς τους ανθρώπους που εκαναν το Call Recorder να είναι διαθέσιμο σε διάφορες γλώσσες. Τα ονόματα και οι κωδικοί τοπικής ρύθμισης αναφέρονται με αλφαβητική σειρά.</translation>
     </message>
 </context>
 <context>

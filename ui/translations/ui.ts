@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en_US">
 <context>
     <name>About</name>
     <message>
@@ -24,15 +24,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -119,6 +127,14 @@
         <source>Directory name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -148,6 +164,10 @@
     </message>
     <message>
         <source>Removal is not allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -326,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -378,6 +402,17 @@
     </message>
     <message>
         <source>Relocating files</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

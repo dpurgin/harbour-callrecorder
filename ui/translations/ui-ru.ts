@@ -29,15 +29,31 @@
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Эта программа распространяется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ. Это свободное программное обеспечение, приветствуется её распространение на определённых условиях;  нажмите на кнопку ниже, чтобы прочитать подробности</translation>
+        <translation type="vanished">Эта программа распространяется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ. Это свободное программное обеспечение, приветствуется её распространение на определённых условиях;  нажмите на кнопку ниже, чтобы прочитать подробности</translation>
     </message>
     <message>
         <source>Show license</source>
-        <translation>Лицензия</translation>
+        <translation type="vanished">Лицензия</translation>
     </message>
     <message>
         <source>Version %1</source>
         <translation>Версия %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Переводчики</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Лицензия</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Вытяните меню, чтобы узнать о переводчиках</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Эта программа распространяется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ. Это свободное программное обеспечение, приветствуется её распространение на определённых условиях; вытяните меню, чтобы узнать подробности</translation>
     </message>
 </context>
 <context>
@@ -158,6 +174,14 @@
         <source>Directory name</source>
         <translation>Имя директории</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>Принять</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отменить</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -188,6 +212,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>Удаление недоступно</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отменить</translation>
     </message>
 </context>
 <context>
@@ -384,6 +412,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>Введите номер в поле ввода или вытяните меню</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отменить</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -437,6 +469,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Перемещение файлов</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Переводчики</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Программа доступна на разных языках благодаря этим людям. Имена и коды локализаций указаны в алфавитном порядке.</translation>
     </message>
 </context>
 <context>

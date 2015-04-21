@@ -24,16 +24,24 @@
         <translation>Gracias a Simonas Leleiva y Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Este programa no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Este software es libre y puedes redistribuirlo bajo ciertas condiciones; haz clic en el botón de abajo para más detalles</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Mostrar licencia</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Versión %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Traductores</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licencia</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation>Desliza hacia abajo en el menú desplegable para ver a los traductores</translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation>Este programa viene ABSOLUTAMENTE SIN NINGUNA GARANTÍA. Este es un software libre, y puedes redistribuirlo bajo ciertas condiciones; desliza hacia abajo en el menú desplegable para más detalles</translation>
     </message>
 </context>
 <context>
@@ -119,6 +127,14 @@
         <source>Directory name</source>
         <translation>Nombre del directorio</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -149,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>No está permitido borrar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -326,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>Añade números usando el campo de arriba o el menú desplegable</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -379,6 +403,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Reubicación de ficheros</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation>Traductores</translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation>Gracias a esta gente Call Recorder está disponible en diferentes idiomas. Los nombres y los códigos regionales se enumeran en orden alfabético.</translation>
     </message>
 </context>
 <context>

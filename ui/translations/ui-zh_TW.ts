@@ -24,32 +24,24 @@
         <translation>感謝Simonas Leleiva 及 Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation type="vanished">本程式完全沒有保證，這是自由軟體並在某些情形下歡迎您轉發，閱讀相關說明請點擊下方按鈕</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation type="vanished">顯示版權</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>版本 %1</translation>
     </message>
     <message>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>翻譯者</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished">版權</translation>
+        <translation>版權</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
-        <translation type="unfinished"></translation>
+        <translation>使用下拉選單可檢視翻譯者</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation type="unfinished"></translation>
+        <translation>本程式完全沒有保證，這是自由軟體並在某些情形下歡迎您轉發，使用下拉選單閱讀相關說明</translation>
     </message>
 </context>
 <context>
@@ -135,6 +127,14 @@
         <source>Directory name</source>
         <translation>目錄名稱</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -165,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>不允許移除</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -342,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>使用上方區域或下拉選單新增號碼</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -401,11 +409,11 @@
     <name>Translators</name>
     <message>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>翻譯者</translation>
     </message>
     <message>
         <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
-        <translation type="unfinished"></translation>
+        <translation>感謝下列人員使得通話錄音器有了不同的語言介面，依字母序排列姓名及位置</translation>
     </message>
 </context>
 <context>

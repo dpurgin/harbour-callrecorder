@@ -24,16 +24,24 @@
         <translation>Poděkování Simonasovi Leleiva a Juhovi Hämäläinenovi</translation>
     </message>
     <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; click on the button below for details</source>
-        <translation>Tento program je poskytovaný BEZ JAKÉKOLI ZÁRUKY. Jedná s svobodný software a můžete jej za určitých podmínek dále šířit. Klikněte na tlačítko níže pro zobrazení podrobností</translation>
-    </message>
-    <message>
-        <source>Show license</source>
-        <translation>Zobrazit licenci</translation>
-    </message>
-    <message>
         <source>Version %1</source>
         <translation>Verze %1</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licence</translation>
+    </message>
+    <message>
+        <source>Use pull-down menu to see translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -119,6 +127,14 @@
         <source>Directory name</source>
         <translation>Jméno adresáře</translation>
     </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
@@ -149,6 +165,10 @@
     <message>
         <source>Removal is not allowed</source>
         <translation>Odstranění není povoleno</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -326,6 +346,10 @@
         <source>Add numbers with field above or use pull-down menu</source>
         <translation>Přidejte číslo pomocí pole výše nebo použijte stahovací menu</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -335,7 +359,7 @@
     </message>
     <message>
         <source>Recording daemon</source>
-        <translation>Démon zázanamníku</translation>
+        <translation type="unfinished">démon zázanamníku</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -379,6 +403,17 @@
     <message>
         <source>Relocating files</source>
         <translation>Přesouvají se soubory</translation>
+    </message>
+</context>
+<context>
+    <name>Translators</name>
+    <message>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
