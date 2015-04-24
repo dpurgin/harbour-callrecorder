@@ -4,7 +4,15 @@ X-Nemo-Application-Type=no-invoker
 Icon=harbour-callrecorder
 Exec=harbour-callrecorder-launcher.sh
 Name=Call Recorder
-# translation example:
-# your app name in German locale (de)
+Name[cs]=Záznamník hovorů
+Name[de]=Call Recorder
+Name[el]=Call Recorder
+Name[es]=Call Recorder
+Name[fi]=Puhelutallennus
+Name[fr]=Call Recorder
+Name[it]=Call Recorder
+Name[pl]=Rejestrator Rozmów
 Name[ru]=Запись звонков
+Name[sv]=Call Recorder
+Name[zh_TW]=通話錄音器
 
