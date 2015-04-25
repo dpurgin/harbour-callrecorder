@@ -35,6 +35,17 @@ ApplicationWindow {
         requiredProperty: PeopleModel.PhoneNumberRequired
     }
 
+    function logObject(o)
+    {
+        console.log('---- ' + o + ' ----');
+
+        if (typeof(o) == 'object')
+        {
+            for (var i in o)
+                console.log('    ' + i + ': ' + o[i]);
+        }
+    }
+
     function startOfDay(dt)
     {
         var dtObj = new Date(dt);
