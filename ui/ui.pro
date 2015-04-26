@@ -47,6 +47,9 @@ SOURCES += \
 RESOURCES += ui.qrc
 
 QMLFILES = \
+    qml/pages/dialogs/ContactPickerDelegate.qml \
+    qml/pages/dialogs/ContactPickerDelegateMenu.qml \
+    qml/pages/dialogs/ContactPickerDialog.qml \
     qml/pages/dialogs/PhoneNumbersListDelegate.qml \
     qml/pages/dialogs/PhoneNumbersListDialog.qml \
     qml/pages/settings/About.qml \
