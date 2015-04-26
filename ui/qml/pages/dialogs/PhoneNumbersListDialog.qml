@@ -33,6 +33,27 @@ Dialog {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr('Pick from contacts')
+
+                onClicked: {
+                    var dlg = pageStack.push(Qt.resolvedUrl("ContactPickerDialog.qml"));
+
+                    dlg.accepted.connect(function() {
+                        for (var i = 0; i < dlg.selectedPhoneNumbers.length; i++)
+                        {
+                            var model = phoneNumbersListView.model;
+                            var phoneNumberId =
+                                    phoneNumbersModel.getIdByLineIdentification(
+                                        dlg.selectedPhoneNumbers[i]);
+
+                            if (!model.contains(phoneNumberId))
+                                model.add(phoneNumberId);
+                        }
+                    });
+                }
+            }
+
+            MenuItem {
                 text: qsTr('Copy from white list')
                 visible: role == Settings.BlackList
                 enabled: whiteListModel.rowCount > 0
@@ -154,8 +175,5 @@ Dialog {
 
     onRejected: {
         phoneNumbersListView.model.revert();
-    }
-
-    Component.onCompleted: {
     }
 }
