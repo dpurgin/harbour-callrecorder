@@ -21,12 +21,12 @@ import Sailfish.Silica 1.0
 
 ListItem {
     property bool selected: false
-    property bool highlight: highlighted || selected
+    readonly property bool highlight: highlighted || selected
 
     showMenuOnPressAndHold: false
 
     _backgroundColor: Theme.rgba(Theme.highlightBackgroundColor,
-                                 (highlight) && !menuOpen?
+                                 highlight && !menuOpen?
                                      Theme.highlightBackgroundOpacity:
                                      0)
 
@@ -68,19 +68,9 @@ ListItem {
             }
 
             Label {
-                text: {
-                    var repr = '';
+                id: phoneNumbersLabel
 
-                    for (var i = 0; i < model.phoneNumbers.length; i++)
-                    {
-                        if (repr.length > 0)
-                            repr += ', '
-
-                        repr += model.phoneNumbers[i];
-                    }
-
-                    return repr;
-                }
+                text: getPhoneNumbers()
 
                 width: parent.width
 
@@ -109,6 +99,33 @@ ListItem {
         }
     }    
 
+    onStateChanged: {
+        console.log(Format._joinNames(model.primaryName, model.secondaryName) + ': ' + state)
+    }
+
+    states: [
+        State {
+            name: "selected"
+            when: selected
+
+            PropertyChanges {
+                target: phoneNumbersLabel
+                text: getPhoneNumbers()
+            }
+        },
+
+        State {
+            name: "unselected"
+            when: !selected
+
+            PropertyChanges {
+                target: phoneNumbersLabel
+                text: getPhoneNumbers()
+            }
+        }
+
+    ]
+
     onClicked: {
         if (model.phoneNumbers.length > 1)
             showMenu()
@@ -127,6 +144,28 @@ ListItem {
 
     Component.onCompleted: {
         updateSelected();
+    }
+
+    function getPhoneNumbers()
+    {
+        var repr = '';
+
+        for (var i = 0; i < model.phoneNumbers.length; i++)
+        {
+            if (repr.length > 0)
+                repr += ', '
+
+            var phoneNumber = model.phoneNumbers[i];
+
+            if (isSelected(phoneNumber))
+                repr += Theme.highlightText(phoneNumber,
+                                            phoneNumber,
+                                            Theme.highlightColor);
+            else
+                repr += phoneNumber;
+        }
+
+        return repr;
     }
 
     function updateSelected()
