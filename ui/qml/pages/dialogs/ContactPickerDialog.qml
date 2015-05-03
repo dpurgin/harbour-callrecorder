@@ -24,7 +24,11 @@ import kz.dpurgin.nemomobile.contacts 1.0
 Dialog {
     id: contactPickerDialog
 
+    // holds all selected phone numbers
     property var selectedPhoneNumbers: []
+
+    // holds a phone number in single-selection mode
+    property string selectedPhoneNumber: ''
 
     // multiSelect controls whether user is permitted to select
     // multiple contacts
@@ -68,6 +72,11 @@ Dialog {
     onSelectionChanged: {
         canAccept = selectedPhoneNumbers.length > 0;
 
+        if (selectedPhoneNumbers.length === 1 && selectedPhoneNumbers[0] !== selectedPhoneNumber)
+            selectedPhoneNumber = selectedPhoneNumbers[0];
+        else if (selectedPhoneNumbers.length !== 1)
+            selectedPhoneNumber = '';
+
         if (canAccept && !multiSelect && acceptOnSelect)
             accept();
     }
@@ -107,5 +116,10 @@ Dialog {
             selectedPhoneNumbers.splice(idx, 1);
             selectionChanged();
         }
+    }
+
+    Component.onCompleted: {
+        if (selectedPhoneNumber.length > 0)
+            selectedPhoneNumbers = [ selectedPhoneNumber ];
     }
 }
