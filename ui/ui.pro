@@ -47,6 +47,7 @@ SOURCES += \
 RESOURCES += ui.qrc
 
 QMLFILES = \
+    qml/pages/dialogs/EventsFilterDialog.qml \
     qml/pages/dialogs/ContactPickerDelegate.qml \
     qml/pages/dialogs/ContactPickerDelegateMenu.qml \
     qml/pages/dialogs/ContactPickerDialog.qml \
@@ -62,11 +63,12 @@ QMLFILES = \
     qml/cover/CoverPage.qml \
     qml/pages/DirectoryNameDialog.qml \
     qml/pages/DirectoryPickerDialog.qml \
-    qml/pages/EventsDelegate.qml \
     qml/pages/EventsPage.qml \
     qml/pages/EventsPicker.qml \
     qml/pages/EventPage.qml \
     qml/pages/SettingsPage.qml \
+    qml/widgets/EventsDelegate.qml \
+    qml/widgets/EventsView.qml \
     qml/widgets/PhoneNumberEntryField.qml \
     qml/main.qml
 
