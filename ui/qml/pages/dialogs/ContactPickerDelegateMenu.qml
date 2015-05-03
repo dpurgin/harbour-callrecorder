@@ -23,9 +23,9 @@ ContextMenu {
     property var phoneNumbers: null
 
     Repeater {
-        id: repeater
+        visible: multiSelect
 
-        model: phoneNumbers
+        model: multiSelect? phoneNumbers: null
 
         TextSwitch {
             text: model.modelData
@@ -38,5 +38,18 @@ ContextMenu {
                     removeFromSelection(model.modelData);
             }
         }
+    }
+
+    Repeater {
+        model: !multiSelect? phoneNumbers: null
+
+        MenuItem {
+            text: model.modelData
+
+            onClicked: {
+                addToSelection(model.modelData);
+            }
+        }
+
     }
 }
