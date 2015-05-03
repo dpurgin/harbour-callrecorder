@@ -20,7 +20,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 ListItem {
-    property bool selected: false
+    property bool selected: getSelected()
     readonly property bool highlight: highlighted || selected
 
     showMenuOnPressAndHold: false
@@ -93,15 +93,7 @@ ListItem {
 
     menu: ContactPickerDelegateMenu {
         phoneNumbers: model.phoneNumbers
-
-        onClosed: {
-            updateSelected();
-        }
     }    
-
-    onStateChanged: {
-        console.log(Format._joinNames(model.primaryName, model.secondaryName) + ': ' + state)
-    }
 
     states: [
         State {
@@ -137,13 +129,13 @@ ListItem {
                 removeFromSelection(phoneNumber);
             else
                 addToSelection(phoneNumber);
-
-            updateSelected();
         }
     }
 
-    Component.onCompleted: {
-        updateSelected();
+    Connections {
+        target: contactPickerDialog
+
+        onSelectionChanged: updateSelected()
     }
 
     function getPhoneNumbers()
@@ -168,15 +160,22 @@ ListItem {
         return repr;
     }
 
-    function updateSelected()
+    function getSelected()
     {
         var doSelect = false;
 
         for (var i = 0; i < model.phoneNumbers.length && !doSelect; i++)
         {
-            if (selectedPhoneNumbers.indexOf(model.phoneNumbers[i]) !== -1)
+            if (isSelected(model.phoneNumbers[i]))
                 doSelect = true;
         }
+
+        return doSelect;
+    }
+
+    function updateSelected()
+    {
+        var doSelect = getSelected();
 
         if (selected !== doSelect)
             selected = doSelect;

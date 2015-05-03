@@ -22,8 +22,12 @@ import Sailfish.Silica 1.0
 import kz.dpurgin.nemomobile.contacts 1.0
 
 Dialog {
+    id: contactPickerDialog
+
     property var selectedPhoneNumbers: []
     property bool multiSelect: true
+
+    signal selectionChanged()
 
     SilicaFlickable {
         anchors.fill: parent
@@ -59,10 +63,20 @@ Dialog {
         if (multiSelect)
         {
             if (selectedPhoneNumbers.indexOf(phoneNumber) === -1)
+            {
                 selectedPhoneNumbers.push(phoneNumber);
+                selectionChanged();
+            }
         }
         else
-            selectedPhoneNumbers = [ phoneNumber ];
+        {
+            if (selectedPhoneNumbers.length === 0 ||
+                    selectedPhoneNumbers[0] !== phoneNumber)
+            {
+                selectedPhoneNumbers = [ phoneNumber ];
+                selectionChanged();
+            }
+        }
     }
 
     function isSelected(phoneNumber)
@@ -75,6 +89,9 @@ Dialog {
         var idx = selectedPhoneNumbers.indexOf(phoneNumber);
 
         if (idx !== -1)
+        {
             selectedPhoneNumbers.splice(idx, 1);
+            selectionChanged();
+        }
     }
 }
