@@ -49,9 +49,29 @@ Dialog {
                 TextField {
                     id: phoneNumber
 
+//                    labelVisible: label.length > 0
+
+                    placeholderText: qsTr('Phone number')
+
                     width: parent.width - personButton.width
 
-                    labelVisible: false
+                    inputMethodHints: Qt.ImhDialableCharactersOnly
+
+                    onTextChanged: {
+                        phoneNumberSwitch.checked = (text.length > 0);
+
+                        if (text.length > 0)
+                        {
+                            var person = people.personByPhoneNumber(text);
+
+                            if (person)
+                                label = Format._joinNames(person.primaryName, person.secondaryName);
+                            else
+                                label = '';
+                        }
+                        else
+                            label = '';
+                    }
                 }
 
                 IconButton {
