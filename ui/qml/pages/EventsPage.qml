@@ -28,8 +28,6 @@ import "../widgets"
 Page {
     id: eventsPage
 
-    property bool searchVisible: false
-
     SilicaFlickable {
         anchors.fill: parent
 
@@ -42,18 +40,14 @@ Page {
             MenuItem {
                 text: qsTr('Select recordings')
                 enabled: eventsModel.rowCount > 0
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl('EventsPicker.qml'))
-                }
+                onClicked: pageStack.push(Qt.resolvedUrl('EventsPicker.qml'))
             }
 
-//            MenuItem {
-//                text: searchVisible? qsTr('Hide search'): qsTr('Show search')
-
-//                onClicked: {
-//                    searchVisible = !searchVisible
-//                }
-//            }
+            MenuItem {
+                text: qsTr('Filter')
+                enabled: eventsModel.rowCount > 0
+                onClicked: pageStack.push(Qt.resolvedUrl('dialogs/EventsFilterDialog.qml'))
+            }
         }
 
         PageHeader {
@@ -73,34 +67,6 @@ Page {
             }
 
             clip: true
-
-            header: Item {
-                width: eventsView.width
-                height: searchVisible? searchField.height: 0
-
-                Behavior on height {
-                    NumberAnimation {}
-                }
-
-                PhoneNumberEntryField {
-                    id: searchField
-
-                    width: parent.width
-                    visible: searchVisible
-                    opacity: searchVisible? 1: 0
-
-                    Behavior on opacity {
-                        FadeAnimation {}
-                    }
-
-                    placeholderText: qsTr("Enter phone number")
-
-                    onValueChanged: {
-                        console.log(value)
-    //                    eventsModel.filterByPhoneNumber(value)
-                    }
-                }
-            }
 
             VerticalScrollDecorator {}
 
