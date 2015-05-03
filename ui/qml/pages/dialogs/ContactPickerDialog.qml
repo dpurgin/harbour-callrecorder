@@ -25,7 +25,14 @@ Dialog {
     id: contactPickerDialog
 
     property var selectedPhoneNumbers: []
+
+    // multiSelect controls whether user is permitted to select
+    // multiple contacts
     property bool multiSelect: true
+
+    // acceptOnSelect allows automatically accept dialog if a phone number
+    // is selected in single-select mode
+    property bool acceptOnSelect: false
 
     signal selectionChanged()
 
@@ -56,6 +63,13 @@ Dialog {
 
             VerticalScrollDecorator { }
         }
+    }
+
+    onSelectionChanged: {
+        canAccept = selectedPhoneNumbers.length > 0;
+
+        if (canAccept && !multiSelect && acceptOnSelect)
+            accept();
     }
 
     function addToSelection(phoneNumber)
