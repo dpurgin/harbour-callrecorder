@@ -53,7 +53,7 @@ Column {
             icon.source: 'image://theme/icon-m-add'
 
             anchors.right: parent.right
-            anchors.rightMargin: Theme.paddingLarge
+//            anchors.rightMargin: Theme.paddingLarge
 
             onClicked: {
                 header.showMenu()
@@ -90,14 +90,6 @@ Column {
 
                 onClicked: addFilter("eventType")
             }
-
-//            MenuItem {
-//                text: qsTr("Duration")
-
-//                onClicked: {
-//                    addFilter("duration")
-//                }
-//            }
         }
     }
 
@@ -108,7 +100,7 @@ Column {
             width: root.width
 
             TextField {
-                width: parent.width - removeButton.width - Theme.paddingLarge
+                width: parent.width - removeButton.width
 
                 text: model.stringValue
 
@@ -116,7 +108,7 @@ Column {
             }
 
             ValueButton {
-                width: parent.width - removeButton.width - Theme.paddingLarge
+                width: parent.width - removeButton.width //- Theme.paddingLarge
 
                 label: {
                     var result = "";
@@ -146,7 +138,7 @@ Column {
             }
 
             ComboBox {
-                width: parent.width - removeButton.width - Theme.paddingLarge
+                width: parent.width - removeButton.width //- Theme.paddingLarge
 
                 label: qsTr("Call type")
 
@@ -181,31 +173,6 @@ Column {
                 }
             }
         }
-
-//        delegate: Item {
-//            width: root.width
-
-//            TextField {
-
-//                text: model.stringValue
-//            }
-
-//            Label {
-//                visible: model.type === "date"
-
-//                text: model.dateValue
-//            }
-
-//            Label {
-//                visible: model.type === "eventType"
-//            }
-
-//            Label {
-//                visible: model.type === "duration"
-//            }
-
-
-//        }
     }
     
     function addFilter(type)
