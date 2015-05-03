@@ -23,6 +23,7 @@ import kz.dpurgin.nemomobile.contacts 1.0
 
 Dialog {
     property var selectedPhoneNumbers: []
+    property bool multiSelect: true
 
     SilicaFlickable {
         anchors.fill: parent
@@ -55,8 +56,13 @@ Dialog {
 
     function addToSelection(phoneNumber)
     {
-        if (selectedPhoneNumbers.indexOf(phoneNumber) === -1)
-            selectedPhoneNumbers.push(phoneNumber);
+        if (multiSelect)
+        {
+            if (selectedPhoneNumbers.indexOf(phoneNumber) === -1)
+                selectedPhoneNumbers.push(phoneNumber);
+        }
+        else
+            selectedPhoneNumbers = [ phoneNumber ];
     }
 
     function isSelected(phoneNumber)
