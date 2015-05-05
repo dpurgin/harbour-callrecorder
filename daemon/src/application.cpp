@@ -111,6 +111,7 @@ Application::Application(int argc, char* argv[])
 
     d->qofonoManager.reset(new QOfonoManager());
 
+    while (!d->qofonoManager->available()) QThread::sleep(1);
     if (!d->qofonoManager->available())
         throw CallRecorderException(QLatin1String("Ofono is not available!"));
 

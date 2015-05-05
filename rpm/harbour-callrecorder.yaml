@@ -40,6 +40,7 @@ PkgConfigBR:
 PkgBR:
    - nemo-qml-plugin-dbus-qt5
    - qtcontacts-sqlite-qt5
+   - libsailfishapp-devel
 
 # Runtime dependencies which are not automatically detected
 Requires:
