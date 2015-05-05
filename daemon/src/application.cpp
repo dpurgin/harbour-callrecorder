@@ -111,9 +111,8 @@ Application::Application(int argc, char* argv[])
 
     d->qofonoManager.reset(new QOfonoManager());
 
-    while (!d->qofonoManager->available()) QThread::sleep(1);
-    if (!d->qofonoManager->available())
-        throw CallRecorderException(QLatin1String("Ofono is not available!"));
+    // Ofono availability check removed.
+    // See https://github.com/dpurgin/harbour-callrecorder/pull/22
 
     // check if modems available. If there are modems, take the first one and initialize app with it
     // If no modems available, wait for first modemAdded and initialize with this one
