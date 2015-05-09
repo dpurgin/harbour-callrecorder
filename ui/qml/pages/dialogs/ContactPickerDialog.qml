@@ -51,6 +51,8 @@ Dialog {
         }
 
         SilicaListView {
+            id: listView
+
             anchors {
                 top: header.bottom
                 bottom: parent.bottom
@@ -66,6 +68,11 @@ Dialog {
             delegate: ContactPickerDelegate { }
 
             VerticalScrollDecorator { }
+
+            ViewPlaceholder {
+                enabled: listView.count === 0
+                text: qsTr('Add people to contacts')
+            }
         }
     }
 
