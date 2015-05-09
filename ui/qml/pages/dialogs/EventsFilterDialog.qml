@@ -20,6 +20,18 @@ import QtQuick 2.2
 import Sailfish.Silica 1.0
 
 Dialog {
+    property alias phoneNumberActive: phoneNumberSwitch.checked
+    property alias phoneNumber: phoneNumberField.text
+
+    property alias onDateActive: onDateSwitch.checked
+    property date onDate: startOfDay(new Date())
+
+    property alias afterDateActive: afterDateSwitch.checked
+    property date afterDate: startOfDay(new Date())
+
+    property alias beforeDateActive: beforeDateSwitch.checked
+    property date beforeDate: startOfDay(new Date())
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -47,7 +59,7 @@ Dialog {
                 width: parent.width - phoneNumberSwitch.width
 
                 TextField {
-                    id: phoneNumber
+                    id: phoneNumberField
 
 //                    labelVisible: label.length > 0
 
@@ -84,68 +96,116 @@ Dialog {
                                     Qt.resolvedUrl('../dialogs/ContactPickerDialog.qml'), {
                                         multiSelect: false,
                                         acceptOnSelect: true,
-                                        selectedPhoneNumber: phoneNumber.text
+                                        selectedPhoneNumber: phoneNumberField.text
                                     });
 
                         dlg.accepted.connect(function() {
-                            phoneNumber.text = dlg.selectedPhoneNumber;
+                            phoneNumberField.text = dlg.selectedPhoneNumber;
                         })
                     }
                 }
             }
 
             Switch {
-
+                id: onDateSwitch
             }
 
             ValueButton {
                 label: qsTr('On')
-                value: Format.formatDate(new Date(), Formatter.DateFull)
+                value: Format.formatDate(onDate, Formatter.DateFull)
+
+                onClicked: {
+                    var config = {
+                        target: 'on',
+                        date: onDate
+                    };
+
+                    pageStack.push(datePickerDialog, config);
+                }
             }
 
             Switch {
-
+                id: afterDateSwitch
             }
 
             ValueButton {
                 label: qsTr('After')
-                value: Format.formatDate(new Date(), Formatter.DateFull)
+                value: Format.formatDate(afterDate, Formatter.DateFull)
+
+                onClicked: {
+                    var config = {
+                        target: 'after',
+                        date: afterDate
+                    };
+
+                    pageStack.push(datePickerDialog, config);
+                }
             }
 
             Switch {
-
+                id: beforeDateSwitch
             }
 
             ValueButton {
                 label: qsTr('Before')
-                value: Format.formatDate(new Date(), Formatter.DateFull)
+                value: Format.formatDate(beforeDate, Formatter.DateFull)
+
+                onClicked: {
+                    var config = {
+                        target: 'before',
+                        date: beforeDate
+                    }
+
+                    pageStack.push(datePickerDialog, config);
+                }
             }
         }
     }
 
-//    Column {
-//        anchors.fill: parent
+    Component {
+        id: datePickerDialog
 
+        DatePickerDialog {
+            property var target: null
 
-//        Row {
-//            Switch {
+            onAccepted: {
+                if (target === 'on')
+                {
+                    onDate = date;
+                    onDateActive = true;
+                }
+                else if (target === 'after')
+                {
+                    afterDate = date;
+                    afterDateActive = true;
+                }
+                else if (target === 'before')
+                {
+                    beforeDate = date;
+                    beforeDateActive = true;
+                }
+            }
+        }
+    }
 
-//            }
+    onAfterDateActiveChanged: {
+        if (afterDateActive && onDateActive)
+            onDateActive = false;
+    }
 
-//        }
+    onBeforeDateActiveChanged: {
+        if (beforeDateActive && onDateActive)
+            onDateActive = false
+    }
 
-//        Row {
-//            Switch {
+    onOnDateActiveChanged: {
+        if (onDateActive)
+        {
+            if (afterDateActive)
+                afterDateActive = false;
 
-//            }
-
-//            Label {
-//                text: 'date'
-//            }
-
-//            IconButton {
-//                icon.source: 'image://theme/icon-m-clear'
-//            }
-//        }
-//    }
+            if (beforeDateActive)
+                beforeDateActive = false;
+        }
+    }
 }
