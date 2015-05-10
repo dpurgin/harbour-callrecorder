@@ -18,6 +18,7 @@
 
 #include "eventstablemodel.h"
 
+#include <QDate>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -51,7 +52,21 @@ private:
 
         rowCount = 0;
 
-        QScopedPointer< SqlCursor > cursor(db->select("SELECT COUNT(ID) AS RowCount FROM Events"));
+        static const QString stmt(
+            "\nSELECT"
+            "\n    COUNT(ID) AS RowCount"
+            "\nFROM"
+            "\n    Events"
+            "\n%1");
+
+        QString whereClause;
+        Database::SqlParameters params;
+
+        makeWhereClause(&whereClause, &params);
+
+        QString selectStmt = stmt.arg(whereClause);
+
+        QScopedPointer< SqlCursor > cursor(db->select(selectStmt, params));
 
         while (cursor->next())
         {
@@ -69,7 +84,7 @@ private:
 
             qDebug() << "Fetching " << pageSize << " items starting from " << pageStart;
 
-            static QString stmt(
+            static const QString stmt(
                         "\nSELECT"
                         "\n    Events.*,"
                         "\n    PhoneNumbers.LineIdentification AS PhoneNumberIDRepresentation"
@@ -80,16 +95,23 @@ private:
                         "\n        PhoneNumbers"
                         "\n    ON"
                         "\n        PhoneNumbers.ID = Events.PhoneNumberID"
+                        "\n%1"
                         "\nORDER BY"
                         "\n    Events.TimeStamp DESC"
                         "\nLIMIT :pageSize"
                         "\nOFFSET :pageStart");
 
+            QString whereClause;
             Database::SqlParameters params;
+
+            makeWhereClause(&whereClause, &params);
+
+            QString selectStmt = stmt.arg(whereClause);
+
             params.insert(":pageSize", pageSize);
             params.insert(":pageStart", pageStart);
 
-            QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
+            QScopedPointer< SqlCursor > cursor(db->select(selectStmt, params));
 
             QStringList columns = cursor->columns();
 
@@ -121,6 +143,130 @@ private:
                 dataByRowIndex.remove(i);
             }
         }
+    }
+
+    void makeWhereClause(QString* whereClause, Database::SqlParameters* params)
+    {
+        QStringList whereStmts;
+
+        if (filters.contains(EventsTableModel::LineIdentification))
+        {
+            QString lineIdentificationPattern =
+                    QLatin1Char('%') %
+                    filters.value(EventsTableModel::LineIdentification).toString() %
+                    QLatin1Char('%');
+
+            whereStmts << "(PhoneNumbers.LineIdentification LIKE :lineIdentification)";
+            params->insert(":lineIdentification", lineIdentificationPattern);
+        }
+
+        if (filters.contains(EventsTableModel::TimeStampOn))
+        {
+            whereStmts << "(Events.TimeStamp >= :timeStampAfter and"
+                          " Events.TimeStamp < :timeStampBefore)";
+
+            QDate dt = filters.value(EventsTableModel::TimeStampOn).toDate();
+
+            params->insert(":timeStampAfter", dt.toString(Qt::ISODate));
+
+            params->insert(":timeStampBefore", dt.addDays(1).toString(Qt::ISODate));
+        }
+
+        if (filters.contains(EventsTableModel::TimeStampAfter))
+        {
+            whereStmts << "(Events.TimeStamp >= :timeStampAfter)";
+
+            params->insert(":timeStampAfter",
+                           filters.value(EventsTableModel::TimeStampAfter).toString());
+        }
+
+        if (filters.contains(EventsTableModel::TimeStampBefore))
+        {
+            whereStmts << "(Events.TimeStamp < :timeStampBefore)";
+
+            params->insert(":timeStampBefore",
+                           filters.value(EventsTableModel::TimeStampBefore).toString());
+        }
+
+        if (whereStmts.size() > 0)
+            *whereClause = QLatin1String("WHERE\n") % whereStmts.join(QLatin1String(" and "));
+    }
+
+    bool removeAll()
+    {
+        qDebug();
+
+        bool result = true;
+
+        static const QString staticDeleteStmt(
+                    "\nDELETE"
+                    "\nFROM"
+                    "\n    Events"
+                    "\n%1");
+
+        QDir outputLocationDir(Settings().outputLocation());
+
+        // if data is not filtered, it's safe to remove all files in the Output location.
+        // Otherwise we need to get list of files that meet filter criteria.
+
+        QString whereClause;
+        Database::SqlParameters params;
+
+        makeWhereClause(&whereClause, &params);
+
+        QString deleteStmt = staticDeleteStmt.arg(whereClause);
+
+        if (filters.size() > 0)
+        {
+            qDebug() << QLatin1String("Data is filtered, removing filtered files only");
+
+            static const QString staticSelectStmt(
+                        "\nSELECT"
+                        "\n    FileName"
+                        "\nFROM"
+                        "\n    Events"
+                        "\n%1");
+
+            QString stmt = staticSelectStmt.arg(whereClause);
+
+            QScopedPointer< SqlCursor > cursor(db->select(stmt, params));
+
+            // remove the filtered files now to avoid memory consumption
+            // in case if query result is large.
+
+            while (cursor->next())
+            {
+                QString fileName = cursor->value("FileName").toString();
+
+                qDebug() << QLatin1String("removing") << fileName;
+
+                outputLocationDir.remove(fileName);
+            }
+
+            // now delete from DB. In case of error we're in a bad situtation
+            // where files are already removed but DB records aren't.
+
+            db->execute(deleteStmt, params);
+        }
+        // data is not filtered, safe to remove everything
+        else
+        {
+            // with non-filtered data we can check if DB is cleaned up before removing files
+            if (db->execute(deleteStmt, params))
+            {
+                QStringList files = outputLocationDir.entryList(QDir::Files | QDir::NoDotAndDotDot);
+
+                foreach (QString file, files)
+                {
+                    qDebug() << "removing" << file;
+                    QFile(file).remove();
+                }
+            }
+            else
+                result = false;
+        }
+
+        return result;
     }
 
     bool removeOid(int oid)
@@ -184,6 +330,8 @@ private:
     QHash< int, QHash< QString, QVariant > > dataByRowIndex;
     QHash< int, int > oidToRowIndex;
 
+    QHash< EventsTableModel::Filter, QVariant > filters;
+
     int pageSize;
 
     int rowCount;
@@ -202,7 +350,7 @@ EventsTableModel::EventsTableModel(Database* db, QObject* parent)
 
 EventsTableModel::~EventsTableModel()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 
     delete d;
 }
@@ -218,6 +366,29 @@ QVariant EventsTableModel::data(const QModelIndex& item, int role) const
     QVariant result = record.value(fieldName);
 
     return result;
+}
+
+void EventsTableModel::filter(const QVariantMap& filters)
+{
+    qDebug();
+
+    d->filters.clear();
+
+    for (QVariantMap::const_iterator cit = filters.constBegin();
+         cit != filters.constEnd();
+         cit++)
+    {
+        if (cit.key() == QLatin1String("phoneNumber"))
+            d->filters.insert(LineIdentification, cit.value());
+        else if (cit.key() == QLatin1String("onDate"))
+            d->filters.insert(TimeStampOn, cit.value());
+        else if (cit.key() == QLatin1String("beforeDate"))
+            d->filters.insert(TimeStampBefore, cit.value());
+        else if (cit.key() == QLatin1String("afterDate"))
+            d->filters.insert(TimeStampAfter, cit.value());
+    }
+
+    refresh();
 }
 
 void EventsTableModel::refresh()
@@ -237,20 +408,8 @@ bool EventsTableModel::removeAll()
 
     qDebug() << "removing all";
 
-    if (d->db->execute("DELETE FROM Events"))
-    {
-        QDir dir(Settings().outputLocation());
-
-        QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot);
-
-        foreach (QString file, files)
-        {
-            qDebug() << "removing" << file;
-            QFile(file).remove();
-        }
-
+    if (removeAll())
         refresh();
-    }
     else
         result = false;
 

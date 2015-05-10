@@ -33,10 +33,21 @@ class LIBCALLRECORDER_DECL EventsTableModel : public QAbstractListModel
     Q_PROPERTY(int rowCount READ rowCount NOTIFY rowCountChanged)
 
 public:
+    enum Filter
+    {
+        TimeStampOn,
+        TimeStampBefore,
+        TimeStampAfter,
+        LineIdentification
+    };
+
+public:
     EventsTableModel(Database* db, QObject* parent = 0);
     virtual ~EventsTableModel();
 
     QVariant data(const QModelIndex& item, int role = Qt::DisplayRole) const;
+
+    Q_INVOKABLE void filter(const QVariantMap& filters);
 
     Q_INVOKABLE bool removeAll();
     Q_INVOKABLE bool removeOids(const QList< int >& oids);
