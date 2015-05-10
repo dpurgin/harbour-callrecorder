@@ -28,6 +28,10 @@ import "../widgets"
 Page {
     id: eventsPage
 
+    property var filtered: false
+    property var filters: null
+    property var filterItems: [ 'phoneNumber', 'onDate', 'beforeDate', 'afterDate' ]
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -45,8 +49,49 @@ Page {
 
             MenuItem {
                 text: qsTr('Filter')
-                enabled: eventsModel.rowCount > 0
-                onClicked: pageStack.push(Qt.resolvedUrl('dialogs/EventsFilterDialog.qml'))
+                enabled: filtered || eventsModel.rowCount > 0
+                onClicked: {
+                    var config = {};
+
+                    if (filters === null)
+                        filters = {};
+
+                    for (var i = 0; i < filterItems.length; i++)
+                    {
+                        var item = filterItems[i];
+
+                        if (filters[item])
+                        {
+                            config[item + 'Active'] = true;
+                            config[item] = filters[item];
+                        }
+                    }
+
+                    logObject(config, 'config');
+
+                    var dialog = pageStack.push(Qt.resolvedUrl('dialogs/EventsFilterDialog.qml'),
+                                                config)
+
+                    dialog.accepted.connect(function()
+                    {
+                        filtered = false;
+                        filters = {};
+
+                        for (var i = 0; i < filterItems.length; i++)
+                        {
+                            var item = filterItems[i];
+
+                            if (dialog[item + 'Active'])
+                            {
+                                filtered = true;
+                                filters[item] = dialog[item];
+                            }
+                        }
+
+                        logObject(filters, 'filters');
+                        eventsModel.filter(filters);
+                    });
+                }
             }
         }
 
@@ -198,7 +243,9 @@ Page {
             ViewPlaceholder {
                 id: eventsViewPlaceholder
 
-                text: qsTr("No calls recorded yet")
+                text: filtered?
+                          qsTr('No recordings meet filter criteria'):
+                          qsTr("No calls recorded yet")
                 enabled: eventsModel.rowCount === 0
             }
 
