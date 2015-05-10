@@ -35,9 +35,9 @@ ApplicationWindow {
         requiredProperty: PeopleModel.PhoneNumberRequired
     }
 
-    function logObject(o)
+    function logObject(o, name)
     {
-        console.log('---- ' + o + ' ----');
+        console.log('---- ' + (name? name + ': ': '') + o + ' ----');
 
         if (typeof(o) == 'object')
         {
