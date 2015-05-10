@@ -47,6 +47,8 @@ class EventsTableModel::EventsTableModelPrivate
 private:
     void clearCache()
     {
+        qDebug();
+
         dataByRowIndex.clear();
         oidToRowIndex.clear();
 
@@ -54,9 +56,13 @@ private:
 
         static const QString stmt(
             "\nSELECT"
-            "\n    COUNT(ID) AS RowCount"
+            "\n    COUNT(Events.ID) AS RowCount"
             "\nFROM"
             "\n    Events"
+            "\n    LEFT JOIN"
+            "\n        PhoneNumbers"
+            "\n    ON"
+            "\n        PhoneNumbers.ID = Events.PhoneNumberID"
             "\n%1");
 
         QString whereClause;
@@ -147,6 +153,8 @@ private:
 
     void makeWhereClause(QString* whereClause, Database::SqlParameters* params)
     {
+        qDebug();
+
         QStringList whereStmts;
 
         if (filters.contains(EventsTableModel::LineIdentification))
@@ -202,6 +210,12 @@ private:
                     "\nDELETE"
                     "\nFROM"
                     "\n    Events"
+                    "\nFROM"
+                    "\n    Events"
+                    "\n    LEFT JOIN"
+                    "\n        PhoneNumbers"
+                    "\n    ON"
+                    "\n        PhoneNumbers.ID = Events.PhoneNumberID"
                     "\n%1");
 
         QDir outputLocationDir(Settings().outputLocation());
@@ -222,9 +236,13 @@ private:
 
             static const QString staticSelectStmt(
                         "\nSELECT"
-                        "\n    FileName"
+                        "\n    Events.FileName"
                         "\nFROM"
                         "\n    Events"
+                        "\n    LEFT JOIN"
+                        "\n        PhoneNumbers"
+                        "\n    ON"
+                        "\n        PhoneNumbers.ID = Events.PhoneNumberID"
                         "\n%1");
 
             QString stmt = staticSelectStmt.arg(whereClause);
@@ -393,6 +411,8 @@ void EventsTableModel::filter(const QVariantMap& filters)
 
 void EventsTableModel::refresh()
 {
+    qDebug();
+
     emit beginResetModel();
 
     d->clearCache();    
