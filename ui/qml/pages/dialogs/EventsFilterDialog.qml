@@ -169,19 +169,21 @@ Dialog {
             property var target: null
 
             onAccepted: {
+                var value = startOfDay(date);
+
                 if (target === 'on')
                 {
-                    onDate = date;
+                    onDate = value;
                     onDateActive = true;
                 }
                 else if (target === 'after')
                 {
-                    afterDate = date;
+                    afterDate = value;
                     afterDateActive = true;
                 }
                 else if (target === 'before')
                 {
-                    beforeDate = date;
+                    beforeDate = value;
                     beforeDateActive = true;
                 }
             }
