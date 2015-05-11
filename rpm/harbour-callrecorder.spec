@@ -42,6 +42,7 @@ BuildRequires:  pkgconfig(qtcontacts-sqlite-qt5-extensions) >= 0.2.1
 BuildRequires:  nemo-qml-plugin-dbus-qt5
 BuildRequires:  qtcontacts-sqlite-qt5
 BuildRequires:  desktop-file-utils
+BuildRequires:  libsailfishapp-devel
 
 %description
 Simple call recorder for SailfishOS
