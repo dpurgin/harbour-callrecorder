@@ -23,8 +23,8 @@ import kz.dpurgin.nemomobile.contacts 1.0
 ListItem {
     id: delegate
 
-//    property bool selected: selectionMode && getSelected()
-//    readonly property bool highlight: highlighted || selected
+    property bool selected: selectionMode && isSelected(model.ID)
+    readonly property bool highlight: highlighted || selected
 
     property Person person: people.populated?
                                 people.personByPhoneNumber(model.PhoneNumberIDRepresentation):
@@ -32,7 +32,65 @@ ListItem {
 
     width: parent.width
 
+    _backgroundColor: Theme.rgba(Theme.highlightBackgroundColor,
+                                 highlight && !menuOpen?
+                                     Theme.highlightBackgroundOpacity:
+                                     0)
     menu: EventsDelegateMenu { }
 
     EventsDelegateContent { }
+
+    onClicked: {
+        if (selectionMode)
+        {
+            if (isSelected(model.ID))
+                removeFromSelection(model.ID);
+            else
+                addToSelection(model.ID);
+        }
+        else if (model.RecordingStateID === 4)
+        {
+            pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
+                timeStamp: model.TimeStamp,
+                lineIdentification: model.PhoneNumberIDRepresentation,
+                eventTypeId: model.EventTypeID,
+                fileName: model.FileName,
+                fileSize: model.FileSize,
+                duration: model.Duration
+            });
+        }
+    }
+
+    Connections {
+        target: eventsPage
+
+        onSelectionChanged: {
+            selected = isSelected(model.ID)
+        }
+    }
+
+    function addToList(listModel, phoneNumberId, remorseText)
+    {
+        remorseAction(remorseText, function() {
+            if (!listModel.contains(phoneNumberId))
+            {
+                listModel.add(phoneNumberId)
+                listModel.submit();
+            }
+        });
+    }
+
+    function removeFromList(listModel, phoneNumberId, remorseText)
+    {
+        remorseAction(remorseText, function() {
+            listModel.remove(phoneNumberId);
+        });
+    }
+
+    function removeItem()
+    {
+        remorseAction(qsTr('Deleting'), function() {
+            eventsModel.removeRow(model.index);
+        });
+    }
 }

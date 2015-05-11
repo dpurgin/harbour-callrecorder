@@ -56,7 +56,7 @@ Row {
 
                 truncationMode: TruncationMode.Fade
 
-                color: highlighted? Theme.highlightColor: Theme.primaryColor
+                color: highlight? Theme.highlightColor: Theme.primaryColor
             }
 
             Label {
@@ -68,7 +68,7 @@ Row {
 
                 truncationMode: TruncationMode.Fade
 
-                color: highlighted? Theme.highlightColor: Theme.primaryColor
+                color: highlight? Theme.highlightColor: Theme.primaryColor
             }
 
             Label {
@@ -80,7 +80,7 @@ Row {
 
                 truncationMode: TruncationMode.Fade
 
-                color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
+                color: highlight? Theme.secondaryHighlightColor: Theme.secondaryColor
 
             }
         }
@@ -123,7 +123,7 @@ Row {
 
             font.pixelSize: Theme.fontSizeExtraSmall
 
-            color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
+            color: highlight? Theme.secondaryHighlightColor: Theme.secondaryColor
         }
     }
 
@@ -147,7 +147,7 @@ Row {
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: Theme.fontSizeExtraSmall
 
-            color: highlighted? Theme.highlightColor: Theme.primaryColor
+            color: highlight? Theme.highlightColor: Theme.primaryColor
         }
 
         Label {
@@ -164,7 +164,7 @@ Row {
 
             horizontalAlignment: Text.AlignRight
 
-            color: highlighted? Theme.secondaryHighlightColor: Theme.secondaryColor
+            color: highlight? Theme.secondaryHighlightColor: Theme.secondaryColor
         }
     }
 }

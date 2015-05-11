@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,9 +28,53 @@ import "../widgets"
 Page {
     id: eventsPage
 
-    property var filtered: false
+    property bool filtered: false
     property var filters: null
     property var filterItems: [ 'phoneNumber', 'onDate', 'beforeDate', 'afterDate' ]
+
+    property bool selectionMode: false
+    property bool hasSelection: false
+    property var selectedOids: []
+
+    signal selectionChanged()
+
+    states: [
+        State {
+            when: !filtered && !selectionMode
+
+            PropertyChanges {
+                target: header
+                title: qsTr('Recordings')
+            }
+        },
+
+        State {
+            when: !filtered && selectionMode
+
+            PropertyChanges {
+                target: header
+                title: qsTr('Select recordings')
+            }
+        },
+
+        State {
+            when: filtered && !selectionMode
+
+            PropertyChanges {
+                target: header
+                title: qsTr('Filtered recordings')
+            }
+        },
+
+        State {
+            when: filtered && selectionMode
+
+            PropertyChanges {
+                target: header
+                title: qsTr('Select filtered recordings')
+            }
+        }
+    ]
 
     SilicaFlickable {
         anchors.fill: parent
@@ -42,9 +86,18 @@ Page {
             }
 
             MenuItem {
-                text: qsTr('Select recordings')
+                text: selectionMode?
+                          qsTr('View recordings'):
+                          qsTr('Select recordings')
+
                 enabled: eventsModel.rowCount > 0
-                onClicked: pageStack.push(Qt.resolvedUrl('EventsPicker.qml'))
+
+                onClicked: {
+                    selectionMode = !selectionMode;
+
+                    selectedOids = [];
+                    selectionChanged();
+                }
             }
 
             MenuItem {
@@ -93,6 +146,30 @@ Page {
                     });
                 }
             }
+
+            MenuItem {
+                text: filtered?
+                          qsTr('Delete all filtered'):
+                          qsTr('Delete all')
+
+                visible: selectionMode
+
+                enabled: eventsModel.rowCount > 0
+
+                onClicked: {
+                    var remorseText =
+                            filtered?
+                                qsTr('Deleting all filtered'):
+                                qsTr('Deleting all recordings');
+
+                    remorse.execute(remorseText, function() {
+                        eventsModel.removeAll();
+
+                        selectedOids = [];
+                        selectionChanged();
+                    }, 10000);
+                }
+            }
         }
 
         PageHeader {
@@ -101,12 +178,12 @@ Page {
             title: qsTr('Recordings')
         }
 
-        SilicaListView {
+        SilicaListView {            
             id: eventsView
 
             anchors {
                 top: header.bottom
-                bottom: parent.bottom
+                bottom: dockedPanel.top
                 left: parent.left
                 right: parent.right
             }
@@ -120,123 +197,11 @@ Page {
             delegate: EventsDelegate {
                 id: delegate
 
-                menu: Component {
-                    ContextMenu {
-                        property bool whiteListed: settings.operationMode === Settings.WhiteList &&
-                                                       whiteListModel.contains(model.PhoneNumberID)
-                        property bool blackListed: settings.operationMode === Settings.BlackList &&
-                                                       blackListModel.contains(model.PhoneNumberID)
-
-                        MenuItem {
-                            text: qsTr('Delete')
-                            onClicked: removeItem()
-                        }
-
-                        MenuLabel {
-                            text: {
-                                var result = '';
-
-                                if (settings.operationMode === Settings.WhiteList && whiteListed)
-                                {
-                                    result = qsTr('%1 is whitelisted')
-                                                .arg(model.PhoneNumberIDRepresentation)
-                                }
-                                else if (settings.operationMode === Settings.BlackList && blackListed)
-                                {
-                                    result = qsTr('%1 is blacklisted')
-                                                .arg(model.PhoneNumberIDRepresentation)
-                                }
-
-                                return result;
-                            }
-
-                            visible: whiteListed || blackListed
-                        }
-
-                        MenuItem {
-                            text: whiteListed || blackListed?
-                                      qsTr('Always record this number'):
-                                      qsTr('Always record %1').arg(model.PhoneNumberIDRepresentation)
-
-                            visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
-                                     (settings.operationMode === Settings.BlackList && blackListed)
-
-                            onClicked: {
-                                var remorseText = qsTr('Recording %1').arg(
-                                            model.PhoneNumberIDRepresentation);
-
-                                if (settings.operationMode === Settings.WhiteList)
-                                    addToList(whiteListModel, model.PhoneNumberID, remorseText)
-                                else if (settings.operationMode === Settings.BlackList)
-                                    removeFromList(blackListModel, model.PhoneNumberID, remorseText);
-                            }
-                        }
-
-                        MenuItem {
-                            text: whiteListed || blackListed?
-                                      qsTr('Never record this number'):
-                                      qsTr('Never record %1').arg(model.PhoneNumberIDRepresentation)
-
-                            visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
-                                     (settings.operationMode === Settings.WhiteList && whiteListed)
-
-                            onClicked: {
-                                var remorseText = qsTr('Not recording %1').arg(
-                                            model.PhoneNumberIDRepresentation);
-
-                                if (settings.operationMode === Settings.BlackList)
-                                    addToList(blackListModel, model.PhoneNumberID, remorseText);
-                                else if (settings.operationMode === Settings.WhiteList)
-                                    removeFromList(whiteListModel, model.PhoneNumberID, remorseText);
-                            }
-                        }
-                    }
-                }
-
                 ListView.onAdd: AddAnimation {
                     target: delegate
                 }
                 ListView.onRemove: RemoveAnimation {
                     target: delegate
-                }
-
-                onClicked: {
-                    if (model.RecordingStateID == 4)
-                    {
-                        pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
-                            timeStamp: model.TimeStamp,
-                            lineIdentification: model.PhoneNumberIDRepresentation,
-                            eventTypeId: model.EventTypeID,
-                            fileName: model.FileName,
-                            fileSize: model.FileSize,
-                            duration: model.Duration
-                        })
-                    }
-                }
-
-                function addToList(listModel, phoneNumberId, remorseText)
-                {
-                    remorseAction(remorseText, function() {
-                        if (!listModel.contains(phoneNumberId))
-                        {
-                            listModel.add(phoneNumberId)
-                            listModel.submit();
-                        }
-                    })
-                }
-
-                function removeFromList(listModel, phoneNumberId, remorseText)
-                {
-                    remorseAction(remorseText, function() {
-                        listModel.remove(phoneNumberId);
-                    })
-                }
-
-                function removeItem()
-                {
-                   remorseAction(qsTr('Deleting'), function() {
-                       eventsModel.removeRow(model.index);
-                   })
                 }
             }
 
@@ -245,11 +210,78 @@ Page {
 
                 text: filtered?
                           qsTr('No recordings meet filter criteria'):
-                          qsTr("No calls recorded yet")
+                          qsTr('No calls recorded yet')
                 enabled: eventsModel.rowCount === 0
             }
-
         }
+
+        RemorsePopup {
+            id: remorse
+        }
+
+        DockedPanel {
+            id: dockedPanel
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            dock: Dock.Bottom
+
+            height: Theme.itemSizeMedium
+
+            open: selectionMode
+
+            IconButton {
+                icon.source: 'image://theme/icon-m-delete'
+
+                anchors.centerIn: parent
+
+                enabled: hasSelection
+
+                onClicked: {
+                    var remorseTimeuot = (selectedOids.length === eventsModel.rowCount && !filtered?
+                                              10000:
+                                              5000);
+
+                    remorse.execute(qsTr('Deleting recordings'), function() {
+                        if (eventsModel.removeOids(selectedOids))
+                        {
+                            selectedOids = [];
+                            hasSelection = false;
+                        }
+                    }, remorseTimeout);
+                }
+            }
+        }
+    }
+
+    function addToSelection(oid)
+    {
+        if (selectedOids.indexOf(oid) === -1)
+        {
+            selectedOids.push(oid);
+            selectionChanged()
+        }
+    }
+
+    function isSelected(oid)
+    {
+        return selectionMode && selectedOids.indexOf(oid) !== -1;
+    }
+
+    function removeFromSelection(oid)
+    {
+        var idx = selectedOids.indexOf(oid);
+
+        if (idx !== -1)
+        {
+            selectedOids.splice(idx, 1);
+            selectionChanged()
+        }
+    }
+
+    onSelectionChanged: {
+        hasSelection = selectionMode && selectedOids.length > 0;
     }
 }
 
