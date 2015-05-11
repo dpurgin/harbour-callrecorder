@@ -8,5 +8,6 @@
         <file>images/icon-m-daemon.png</file>
         <file>images/icon-m-ui.png</file>
         <file>images/icon-m-about.png</file>
+        <file>images/icon-m-empty.png</file>
     </qresource>
 </RCC>
