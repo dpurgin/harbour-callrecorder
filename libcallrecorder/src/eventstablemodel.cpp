@@ -210,13 +210,19 @@ private:
                     "\nDELETE"
                     "\nFROM"
                     "\n    Events"
-                    "\nFROM"
-                    "\n    Events"
-                    "\n    LEFT JOIN"
-                    "\n        PhoneNumbers"
-                    "\n    ON"
-                    "\n        PhoneNumbers.ID = Events.PhoneNumberID"
-                    "\n%1");
+                    "\nWHERE"
+                    "\n    ID IN"
+                    "\n    ("
+                    "\n        SELECT"
+                    "\n            Events.ID"
+                    "\n        FROM"
+                    "\n            Events"
+                    "\n            LEFT JOIN"
+                    "\n                PhoneNumbers"
+                    "\n            ON"
+                    "\n                PhoneNumbers.ID = Events.PhoneNumberID"
+                    "\n        %1"
+                    "\n    )");
 
         QDir outputLocationDir(Settings().outputLocation());
 
@@ -428,7 +434,7 @@ bool EventsTableModel::removeAll()
 
     qDebug() << "removing all";
 
-    if (removeAll())
+    if (d->removeAll())
         refresh();
     else
         result = false;
