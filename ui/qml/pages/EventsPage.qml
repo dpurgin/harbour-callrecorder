@@ -239,7 +239,7 @@ Page {
                 enabled: hasSelection
 
                 onClicked: {
-                    var remorseTimeuot = (selectedOids.length === eventsModel.rowCount && !filtered?
+                    var remorseTimeout = (selectedOids.length === eventsModel.rowCount && !filtered?
                                               10000:
                                               5000);
 
