@@ -19,19 +19,22 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import kz.dpurgin.callrecorder.Settings 1.0
+
 Page {
+    property bool acceptChanges: false
+
     SilicaFlickable {
         anchors.fill: parent
+
         contentHeight: content.height
 
         Column {
             id: content
 
-            anchors.fill: parent
+            width: parent.width
 
             PageHeader {
-                id: pageHeader
-
                 title: qsTr('Storage')
             }
 
@@ -42,21 +45,18 @@ Page {
             TextField {
                 id: outputLocationField
 
+                label: qsTr('Location for storing the recordings')
+
                 width: parent.width
 
                 text: settings.outputLocation
 
                 errorHighlight: !fileSystemHelper.isWritable(text)
-
-                label: qsTr('Location for storing the recordings')
             }
 
             Row {
-                width: parent.width
-
                 anchors {
-                    left: parent.left
-                    right: parent.right
+                    horizontalCenter: parent.horizontalCenter
 
                     leftMargin: Theme.paddingLarge
                     rightMargin: Theme.paddingLarge
@@ -99,11 +99,9 @@ Page {
             }
 
             ProgressBar {
-                id: relocationProgress
+                label: qsTr('Relocating files')
 
                 width: parent.width
-
-                label: qsTr('Relocating files')
 
                 minimumValue: 0
 
@@ -111,10 +109,235 @@ Page {
                 value: fileSystemHelper.progress
                 maximumValue: fileSystemHelper.totalCount
             }
+
+            SectionHeader {
+                text: qsTr('Storage limits')
+
+                anchors.rightMargin: Theme.paddingLarge
+            }
+
+            TextSwitch {
+                text: qsTr('Limit storage by size or age')
+
+                checked: settings.limitStorage
+
+                onCheckedChanged: {
+                    settings.limitStorage = checked;
+                }
+            }
+
+            ComboBox {
+                id: storageAgeCombo
+
+                label: qsTr('By age')
+
+                visible: settings.limitStorage
+
+                opacity: visible? 1: 0
+
+                Behavior on opacity {
+                    FadeAnimation { }
+                }
+
+                menu: ContextMenu {
+                    MenuItem {
+                        property int value: 0
+
+                        text: qsTr('no limit')
+                    }
+
+                    MenuItem {
+                        property int value: 30
+
+                        text: qsTr('30 days')
+                    }
+
+                    MenuItem {
+                        property int value: 90
+
+                        text: qsTr('90 days')
+                    }
+
+                    MenuItem {
+                        property int value: 180
+
+                        text: qsTr('180 days')
+                    }
+
+                    MenuItem {
+                        property int value: 365
+
+                        text: qsTr('365 days')
+                    }
+
+                    MenuItem {
+                        property int value: -1
+
+                        text: qsTr('Custom')
+                    }
+                }
+
+                onCurrentItemChanged: {
+                    if (acceptChanges)
+                    {
+                        settings.maxStorageAge = (currentItem.value === -1? 365: currentItem.value);
+                    }
+                }
+            }
+
+            TextField {
+                label: qsTr('Custom age limit in days')
+
+                placeholderText: qsTr('Custom age limit in days')
+
+                text: settings.maxStorageAge
+
+                inputMethodHints: Qt.ImhDigitsOnly
+
+                width: parent.width
+
+                visible: settings.limitStorage && storageAgeCombo.currentItem.value === -1
+
+                opacity: visible? 1: 0
+
+                Behavior on opacity {
+                    FadeAnimation { }
+                }
+
+                validator: IntValidator {
+                    bottom: 1
+                }
+
+                onTextChanged: {
+                    if (acceptableInput)
+                        settings.maxStorageAge = text;
+                }
+            }
+
+            ComboBox {
+                id: storageSizeCombo
+
+                label: qsTr('By size')
+
+                visible: settings.limitStorage
+
+                opacity: visible? 1: 0
+
+                Behavior on opacity {
+                    FadeAnimation { }
+                }
+
+                menu: ContextMenu {
+                    MenuItem {
+                        property int value: 0
+
+                        text: qsTr('no limit')
+                    }
+
+                    MenuItem {
+                        property int value: 300
+
+                        text: qsTr('300 MB')
+                    }
+
+                    MenuItem {
+                        property int value: 500
+
+                        text: qsTr('500 MB')
+                    }
+
+                    MenuItem {
+                        property int value: 1024
+
+                        text: qsTr('1 GB')
+                    }
+
+                    MenuItem {
+                        property int value: 3072
+
+                        text: qsTr('3 GB')
+                    }
+
+                    MenuItem {
+                        property int value: 5120
+
+                        text: qsTr('5 GB')
+                    }
+
+                    MenuItem {
+                        property int value: -1
+
+                        text: qsTr('Custom')
+                    }
+                }
+
+                onCurrentItemChanged: {
+                    if (acceptChanges)
+                    {
+                        settings.maxStorageSize =
+                                (currentItem.value === -1?
+                                     1024:
+                                     currentItem.value);
+                    }
+                }
+            }
+
+            TextField {
+                label: qsTr('Custom size limit in MB')
+
+                placeholderText: qsTr('Custom size limit in MB')
+
+                text: settings.maxStorageSize
+
+                inputMethodHints: Qt.ImhDigitsOnly
+
+                width: parent.width
+
+                visible: settings.limitStorage && storageSizeCombo.currentItem.value === -1
+
+                opacity: visible? 1: 0
+
+                Behavior on opacity {
+                    FadeAnimation { }
+                }
+
+                validator: IntValidator {
+                    bottom: 1
+                }
+
+                onTextChanged: {
+                    if (acceptableInput)
+                        settings.maxStorageSize = text;
+                }
+            }
         }
     }
 
     RemorsePopup {
         id: remorse
+    }
+
+    Component.onCompleted: {
+        storageAgeCombo.menu._foreachMenuItem(function(item, index) {
+            if (item.value === settings.maxStorageAge || item.value === -1)
+            {
+                storageAgeCombo.currentIndex = index;
+                return false;
+            }
+
+            return true;
+        });
+
+        storageSizeCombo.menu._foreachMenuItem(function(item, index) {
+            if (item.value === settings.maxStorageSize || item.value === -1)
+            {
+                storageSizeCombo.currentIndex = index;
+                return false;
+            }
+
+            return true;
+        });
+
+        acceptChanges = true;
     }
 }
