@@ -59,6 +59,12 @@ class Settings::SettingsPrivate
         settings.beginGroup("ui");
             locale = settings.value("locale", "system").toString();
         settings.endGroup();
+
+        settings.beginGroup("storage");
+            limitStorage = settings.value("limitStorage", false).toBool();
+            maxStorageAge = settings.value("maxStorageAge", 365).toInt();
+            maxStorageSize = settings.value("maxStorageSize", 1024).toLongLong(); // 1GB
+        settings.endGroup();
     }
 
     void saveSettings()
@@ -81,6 +87,12 @@ class Settings::SettingsPrivate
         settings.beginGroup("ui");
             settings.setValue("locale", locale);
         settings.endGroup();
+
+        settings.beginGroup("storage");
+            settings.setValue("limitStorage", limitStorage);
+            settings.setValue("maxStorageAge", maxStorageAge);
+            settings.setValue("maxStorageSize", maxStorageSize);
+        settings.endGroup();
     }
 
     QAudioDeviceInfo inputDevice;
@@ -96,6 +108,10 @@ class Settings::SettingsPrivate
     int compression;
     int sampleRate;
     int sampleSize;
+
+    bool limitStorage;
+    int maxStorageAge;
+    int maxStorageSize;
 };
 
 Settings::Settings(QObject* parent)
@@ -155,9 +171,24 @@ QAudioDeviceInfo Settings::inputDevice() const
     return d->inputDevice;
 }
 
+bool Settings::limitStorage() const
+{
+    return d->limitStorage;
+}
+
 QString Settings::locale() const
 {
     return d->locale;
+}
+
+int Settings::maxStorageAge() const
+{
+    return d->maxStorageAge;
+}
+
+int Settings::maxStorageSize() const
+{
+    return d->maxStorageSize;
 }
 
 Settings::OperationMode Settings::operationMode() const
@@ -200,6 +231,17 @@ void Settings::setCompression(int compression)
     }
 }
 
+void Settings::setLimitStorage(bool limitStorage)
+{
+    if (d->limitStorage != limitStorage)
+    {
+        d->limitStorage = limitStorage;
+
+        emit limitStorageChanged(limitStorage);
+        emit settingsChanged();
+    }
+}
+
 void Settings::setLocale(const QString& locale)
 {
     if (d->locale != locale)
@@ -207,6 +249,28 @@ void Settings::setLocale(const QString& locale)
         d->locale = locale;
 
         emit localeChanged(locale);
+        emit settingsChanged();
+    }
+}
+
+void Settings::setMaxStorageAge(int age)
+{
+    if (d->maxStorageAge != age)
+    {
+        d->maxStorageAge = age;
+
+        emit maxStorageAgeChanged(age);
+        emit settingsChanged();
+    }
+}
+
+void Settings::setMaxStorageSize(int size)
+{
+    if (d->maxStorageSize != size)
+    {
+        d->maxStorageSize = size;
+
+        emit maxStorageSizeChanged(size);
         emit settingsChanged();
     }
 }

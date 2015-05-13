@@ -56,6 +56,20 @@ class LIBCALLRECORDER_DECL Settings : public QObject
                WRITE setOperationMode
                NOTIFY operationModeChanged)
 
+    Q_PROPERTY(bool limitStorage
+               READ limitStorage
+               WRITE setLimitStorage
+               NOTIFY limitStorageChanged)
+
+    Q_PROPERTY(int maxStorageAge
+               READ maxStorageAge
+               WRITE setMaxStorageAge
+               NOTIFY maxStorageAgeChanged)
+
+    Q_PROPERTY(int maxStorageSize
+               READ maxStorageSize
+               WRITE setMaxStorageSize
+               NOTIFY maxStorageSizeChanged)
 public:
     enum OperationMode
     {
@@ -75,8 +89,17 @@ public:
     int compression() const;
     void setCompression(int compression);
 
+    bool limitStorage() const;
+    void setLimitStorage(bool limitStorage);
+
     QString locale() const;
     void setLocale(const QString& locale);
+
+    int maxStorageAge() const;
+    void setMaxStorageAge(int age);
+
+    int maxStorageSize() const;
+    void setMaxStorageSize(int size);
 
     OperationMode operationMode() const;
     void setOperationMode(OperationMode operationMode);
@@ -93,7 +116,10 @@ public slots:
 
 signals:
     void compressionChanged(int compression);
+    void limitStorageChanged(bool limitStorage);
     void localeChanged(QString locale);
+    void maxStorageAgeChanged(int age);
+    void maxStorageSizeChanged(int size);
     void operationModeChanged(OperationMode operationMode);
     void outputLocationChanged(QString outputLocation);
     void sampleRateChanged(int sampleRate);
