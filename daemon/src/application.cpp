@@ -18,6 +18,7 @@
 
 #include "application.h"
 
+#include <QDir>
 #include <QTimer>
 
 #include <qofonomanager.h>
@@ -27,6 +28,7 @@
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/libcallrecorder.h>
 #include <libcallrecorder/settings.h>
+#include <libcallrecorder/sqlcursor.h>
 
 #include <qtpulseaudio/qtpulseaudioconnection.h>
 #include <qtpulseaudio/qtpulseaudiocard.h>
@@ -75,6 +77,7 @@ private:
     QScopedPointer< Settings > settings;
 
     QScopedPointer< QTimer > timer;
+    QScopedPointer< QTimer > storageLimitTimer;
 
     // stores object paths and its recorders
     QHash< QString, VoiceCallRecorder* > voiceCallRecorders;
@@ -141,11 +144,168 @@ Application::Application(int argc, char* argv[])
             this, SLOT(onPulseAudioError(QString)));
 
     d->pulseAudioConnection->connectToServer();
+
+    d->storageLimitTimer.reset(new QTimer());
+    d->storageLimitTimer->setInterval(3600000); // check once in an hour
+
+    connect(d->storageLimitTimer.data(), SIGNAL(timeout()),
+            this, SLOT(checkStorageLimits()));
+
+    d->storageLimitTimer->start();
 }
 
 Application::~Application()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
+}
+
+void Application::checkStorageAgeLimits()
+{
+    qDebug();
+
+    if (d->settings->limitStorage() && d->settings->maxStorageAge() > 0)
+    {
+        QDir outputLocationDir(d->settings->outputLocation());
+
+        // compute time stamp to keep recordings from
+        QDateTime sliceDt = QDateTime::currentDateTime().addDays(-d->settings->maxStorageAge());
+
+        // retrieve file names to remove
+        static QString selectStmt("SELECT ID, FileName FROM Events WHERE TimeStamp <= :timeStamp");
+
+        Database::SqlParameters params;
+        params.insert(":timeStamp", sliceDt);
+
+        QScopedPointer< SqlCursor > cursor(d->database->select(selectStmt, params));
+
+        if (cursor.isNull())
+        {
+            qWarning() << d->database->lastError();
+            return;
+        }
+
+        qDebug() << "files to remove: " << cursor->size();
+
+        while (cursor->next())
+        {
+            bool removeFromDb = true;
+
+            QString fileName = cursor->value("FileName").toString();
+
+            if (!fileName.isEmpty())
+            {
+                qDebug() << "removing" << fileName << "due to age limit";
+
+                QFile f(outputLocationDir.filePath(fileName));
+
+                if (!f.remove())
+                {
+                    qWarning() << "unable to remove" << f.fileName() << ": " << f.errorString();
+                    removeFromDb = false;
+                }
+            }
+
+            // remove from database if file was removed or file name was empty
+
+            if (removeFromDb)
+            {
+                static QString deleteStmt("DELETE FROM Events WHERE ID = :id");
+
+                Database::SqlParameters params;
+                params.insert(":id", cursor->value("ID").toInt());
+
+                if (!d->database->execute(deleteStmt, params))
+                    qWarning() << d->database->lastError();
+            }
+        }
+    }
+}
+
+void Application::checkStorageLimits()
+{
+    qDebug();
+
+    checkStorageAgeLimits();
+    checkStorageSizeLimits();
+
+    d->storageLimitTimer->start();
+}
+
+void Application::checkStorageSizeLimits()
+{
+    qDebug();
+
+    if (d->settings->limitStorage() && d->settings->maxStorageSize() > 0)
+    {
+        QDir outputLocationDir(d->settings->outputLocation());
+
+        // compute limit in bytes. Settings contain it in megabytes
+        quint64 byteLimit = d->settings->maxStorageSize() * 1024 * 1024;
+
+        // now select all files that are out of size limit
+
+        static QString selectStmt(
+            "\nSELECT"
+            "\n    Events.ID,"
+            "\n    Events.FileName,"
+            "\n    SUM(NextEvents.FileSize) AS AccumulatedFileSize"
+            "\nFROM"
+            "\n    Events"
+            "\n"
+            "\n    LEFT JOIN"
+            "\n        Events AS NextEvents"
+            "\n    ON"
+            "\n        Events.ID < NextEvents.ID"
+            "\nGROUP BY"
+            "\n    Events.ID,"
+            "\n    Events.FileName"
+            "\nHAVING"
+            "\n    SUM(NextEvents.FileSize) > %1"
+            "\nORDER BY"
+            "\n    Events.ID DESC");
+
+        QScopedPointer< SqlCursor > cursor(d->database->select(selectStmt.arg(byteLimit)));
+
+        if (cursor.isNull())
+        {
+            qWarning() << d->database->lastError();
+            return;
+        }
+
+        qDebug() << "files to remove:" << cursor->size();
+
+        while (cursor->next())
+        {
+            bool removeFromDb = true;
+
+            QString fileName = cursor->value("FileName").toString();
+
+            if (!fileName.isEmpty())
+            {
+                qDebug() << "removing" << fileName << "due to size limit";
+
+                QFile f(outputLocationDir.filePath(fileName));
+
+                if (!f.remove())
+                {
+                    qWarning() << "unable to remove" << f.fileName() << ": " << f.errorString();
+                    removeFromDb = false;
+                }
+            }
+
+            if (removeFromDb)
+            {
+                // remove from database
+                static QString deleteStmt("DELETE FROM Events WHERE ID = :id");
+
+                Database::SqlParameters params;
+                params.insert(":id", cursor->value("ID").toInt());
+
+                if (!d->database->execute(deleteStmt, params))
+                    qWarning() << d->database->lastError();
+            }
+        }
+    }
 }
 
 Database* Application::database() const
@@ -173,6 +333,8 @@ void Application::initVoiceCallManager(const QString& objectPath)
             this, SLOT(onVoiceCallAdded(QString)));
     connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
             this, SLOT(onVoiceCallRemoved(QString)));
+    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
+            this, SLOT(checkStorageLimits()));
 
     // check if there are any active calls on start
     QStringList activeCalls = d->qofonoVoiceCallManager->getCalls();

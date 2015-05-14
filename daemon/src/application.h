@@ -64,6 +64,8 @@ public:
 public slots:
 
 private slots:
+    void checkStorageLimits();
+
     void initVoiceCallManager(const QString& objectPath);
 
     void maybeSwitchProfile();
@@ -79,6 +81,10 @@ private slots:
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);
     void onVoiceCallRemoved(const QString& objectPath);
+
+private:
+    void checkStorageAgeLimits();
+    void checkStorageSizeLimits();
 
 private:
     class ApplicationPrivate;
