@@ -31,6 +31,7 @@
 class Database;
 class Model;
 class Settings;
+class SqlCursor;
 
 class QtPulseAudioSource;
 
@@ -85,6 +86,7 @@ private slots:
 private:
     void checkStorageAgeLimits();
     void checkStorageSizeLimits();
+    void removeEvents(SqlCursor* cursor);
 
 private:
     class ApplicationPrivate;

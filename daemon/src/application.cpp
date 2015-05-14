@@ -146,7 +146,7 @@ Application::Application(int argc, char* argv[])
     d->pulseAudioConnection->connectToServer();
 
     d->storageLimitTimer.reset(new QTimer());
-    d->storageLimitTimer->setInterval(3600000); // check once in an hour
+    d->storageLimitTimer->setInterval(60000); // check once in an hour
 
     connect(d->storageLimitTimer.data(), SIGNAL(timeout()),
             this, SLOT(checkStorageLimits()));
@@ -165,8 +165,6 @@ void Application::checkStorageAgeLimits()
 
     if (d->settings->limitStorage() && d->settings->maxStorageAge() > 0)
     {
-        QDir outputLocationDir(d->settings->outputLocation());
-
         // compute time stamp to keep recordings from
         QDateTime sliceDt = QDateTime::currentDateTime().addDays(-d->settings->maxStorageAge());
 
@@ -178,46 +176,10 @@ void Application::checkStorageAgeLimits()
 
         QScopedPointer< SqlCursor > cursor(d->database->select(selectStmt, params));
 
-        if (cursor.isNull())
-        {
+        if (!cursor.isNull())
+            removeEvents(cursor.data());
+        else
             qWarning() << d->database->lastError();
-            return;
-        }
-
-        qDebug() << "files to remove: " << cursor->size();
-
-        while (cursor->next())
-        {
-            bool removeFromDb = true;
-
-            QString fileName = cursor->value("FileName").toString();
-
-            if (!fileName.isEmpty())
-            {
-                qDebug() << "removing" << fileName << "due to age limit";
-
-                QFile f(outputLocationDir.filePath(fileName));
-
-                if (!f.remove())
-                {
-                    qWarning() << "unable to remove" << f.fileName() << ": " << f.errorString();
-                    removeFromDb = false;
-                }
-            }
-
-            // remove from database if file was removed or file name was empty
-
-            if (removeFromDb)
-            {
-                static QString deleteStmt("DELETE FROM Events WHERE ID = :id");
-
-                Database::SqlParameters params;
-                params.insert(":id", cursor->value("ID").toInt());
-
-                if (!d->database->execute(deleteStmt, params))
-                    qWarning() << d->database->lastError();
-            }
-        }
     }
 }
 
@@ -237,8 +199,6 @@ void Application::checkStorageSizeLimits()
 
     if (d->settings->limitStorage() && d->settings->maxStorageSize() > 0)
     {
-        QDir outputLocationDir(d->settings->outputLocation());
-
         // compute limit in bytes. Settings contain it in megabytes
         quint64 byteLimit = d->settings->maxStorageSize() * 1024 * 1024;
 
@@ -266,45 +226,10 @@ void Application::checkStorageSizeLimits()
 
         QScopedPointer< SqlCursor > cursor(d->database->select(selectStmt.arg(byteLimit)));
 
-        if (cursor.isNull())
-        {
+        if (!cursor.isNull())
+            removeEvents(cursor.data());
+        else
             qWarning() << d->database->lastError();
-            return;
-        }
-
-        qDebug() << "files to remove:" << cursor->size();
-
-        while (cursor->next())
-        {
-            bool removeFromDb = true;
-
-            QString fileName = cursor->value("FileName").toString();
-
-            if (!fileName.isEmpty())
-            {
-                qDebug() << "removing" << fileName << "due to size limit";
-
-                QFile f(outputLocationDir.filePath(fileName));
-
-                if (!f.remove())
-                {
-                    qWarning() << "unable to remove" << f.fileName() << ": " << f.errorString();
-                    removeFromDb = false;
-                }
-            }
-
-            if (removeFromDb)
-            {
-                // remove from database
-                static QString deleteStmt("DELETE FROM Events WHERE ID = :id");
-
-                Database::SqlParameters params;
-                params.insert(":id", cursor->value("ID").toInt());
-
-                if (!d->database->execute(deleteStmt, params))
-                    qWarning() << d->database->lastError();
-            }
-        }
     }
 }
 
@@ -521,6 +446,45 @@ void Application::onVoiceCallRemoved(const QString& objectPath)
 
         // workaround for Android mic issue
         d->needResetDefaultSource = true;
+    }
+}
+
+void Application::removeEvents(SqlCursor* cursor)
+{
+    qDebug() << "events to remove:" << cursor->size();
+
+    QDir outputLocationDir(d->settings->outputLocation());
+
+    while (cursor->next())
+    {
+        bool removeFromDb = true;
+
+        QString fileName = cursor->value("FileName").toString();
+
+        QFile file(outputLocationDir.absoluteFilePath(fileName));
+
+        if (!fileName.isEmpty() && file.exists())
+        {
+            qDebug() << "removing" << fileName << "due to limits";
+
+            if (!file.remove())
+            {
+                qWarning() << "unable to remove" << file.fileName() << ": " << file.errorString();
+                removeFromDb = false;
+            }
+        }
+
+        if (removeFromDb)
+        {
+            // remove from database
+            static QString deleteStmt("DELETE FROM Events WHERE ID = :id");
+
+            Database::SqlParameters params;
+            params.insert(":id", cursor->value("ID").toInt());
+
+            if (!d->database->execute(deleteStmt, params))
+                qWarning() << d->database->lastError();
+        }
     }
 }
 
