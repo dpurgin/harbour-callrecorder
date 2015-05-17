@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #ifndef HARBOUR_CALLRECORDERD_APPLICATION_H
 #define HARBOUR_CALLRECORDERD_APPLICATION_H
 
-#include <QCoreApplication>
+#include <QGuiApplication>
 #include <QDateTime>
 #include <QScopedPointer>
 #include <QSharedPointer>
@@ -35,7 +35,7 @@ class SqlCursor;
 
 class QtPulseAudioSource;
 
-class Application : public QCoreApplication
+class Application : public QGuiApplication
 {
     Q_OBJECT
     Q_DISABLE_COPY(Application)

@@ -20,6 +20,9 @@
 
 #include <QDir>
 #include <QTimer>
+#include <QQuickView>
+#include <QQmlEngine>
+#include <qpa/qplatformnativeinterface.h>
 
 #include <qofonomanager.h>
 #include <qofonovoicecallmanager.h>
@@ -79,6 +82,8 @@ private:
     QScopedPointer< QTimer > timer;
     QScopedPointer< QTimer > storageLimitTimer;
 
+    QScopedPointer< QQuickView > confirmationView;
+
     // stores object paths and its recorders
     QHash< QString, VoiceCallRecorder* > voiceCallRecorders;
 
@@ -91,10 +96,10 @@ private:
 
 
 Application::Application(int argc, char* argv[])
-    : QCoreApplication(argc, argv),
+    : QGuiApplication(argc, argv),
       d(new ApplicationPrivate())
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug();
 
     setApplicationName(QLatin1String("harbour-callrecorder"));
     setOrganizationName(QLatin1String("kz.dpurgin"));
@@ -152,6 +157,27 @@ Application::Application(int argc, char* argv[])
             this, SLOT(checkStorageLimits()));
 
     d->storageLimitTimer->start();
+
+    // create confirmation dialog
+    QQuickView::setDefaultAlphaBuffer(true);
+
+    d->confirmationView.reset(new QQuickView());
+
+    d->confirmationView->setColor(QColor(0, 0, 0, 0));
+    d->confirmationView->setClearBeforeRendering(true);
+
+
+    d->confirmationView->engine()->addImportPath("/usr/share/harbour-callrecorder/lib/imports");
+    d->confirmationView->setSource(
+                QUrl::fromLocalFile("/usr/share/harbour-callrecorder/qml/confirmation.qml"));    
+    d->confirmationView->create();
+
+    QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
+    native->setWindowProperty(d->confirmationView->handle(),
+                              QLatin1String("CATEGORY"),
+                              QLatin1String("notification"));
+
+    d->confirmationView->show();
 }
 
 Application::~Application()
