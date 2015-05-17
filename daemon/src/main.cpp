@@ -32,10 +32,14 @@ int main(int argc, char* argv[])
     {
         QScopedPointer< Application > a(new Application(argc, argv));
 
-        if (QDBusConnection::sessionBus().registerService("kz.dpurgin.DBus.CallRecorder"))
+        if (QDBusConnection::sessionBus().registerService("kz.dpurgin.CallRecorder"))
+        {
             QDBusConnection::sessionBus().registerObject("/Daemon", a.data());
+        }
         else
+        {
             qWarning() << "Unable to register DBus service";
+        }
 
         retval = a->exec();
     }
@@ -48,7 +52,7 @@ int main(int argc, char* argv[])
         qCritical() << "Unhandled exception occured";
     }
 
-    QDBusConnection::sessionBus().unregisterService("kz.dpurgin.DBus.CallRecorder");
+    QDBusConnection::sessionBus().unregisterService("kz.dpurgin.CallRecorder");
 
     return retval;
 }

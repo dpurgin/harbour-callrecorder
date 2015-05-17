@@ -26,7 +26,7 @@ class Application;
 class DBusAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "kz.dpurgin.DBus.CallRecorder")
+    Q_CLASSINFO("D-Bus Interface", "kz.dpurgin.CallRecorder")
 
 public:
     explicit DBusAdaptor(Application* parent);
