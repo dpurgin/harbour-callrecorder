@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 UiDBusInterface::UiDBusInterface(QObject *parent)
     : QDBusAbstractInterface("",
                              "/UI",
-                             "kz.dpurgin.DBus.CallRecorder",
+                             "kz.dpurgin.CallRecorder",
                              QDBusConnection::sessionBus(),
                              parent)
 {
