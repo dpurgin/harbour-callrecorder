@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 20142-2015 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
-import "widgets" as Widgets
 
 import kz.dpurgin.nemomobile.contacts 1.0
 import org.nemomobile.dbus 2.0
