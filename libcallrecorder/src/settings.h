@@ -46,6 +46,11 @@ class LIBCALLRECORDER_DECL Settings : public QObject
                WRITE setOutputLocation
                NOTIFY outputLocationChanged)
 
+    Q_PROPERTY(bool requireApproval
+               READ requireApproval
+               WRITE setRequireApproval
+               NOTIFY requireApprovalChanged)
+
     Q_PROPERTY(int sampleRate
                READ sampleRate
                WRITE setSampleRate
@@ -107,6 +112,9 @@ public:
     QString outputLocation() const;
     void setOutputLocation(const QString& outputLocation);
 
+    bool requireApproval() const;
+    void setRequireApproval(bool requireApproval);
+
     int sampleRate() const;
     void setSampleRate(int sampleRate);
 
@@ -122,6 +130,7 @@ signals:
     void maxStorageSizeChanged(int size);
     void operationModeChanged(OperationMode operationMode);
     void outputLocationChanged(QString outputLocation);
+    void requireApprovalChanged(bool requireApproval);
     void sampleRateChanged(int sampleRate);
     void settingsChanged();
 

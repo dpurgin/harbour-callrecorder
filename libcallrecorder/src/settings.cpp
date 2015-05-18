@@ -64,6 +64,7 @@ class Settings::SettingsPrivate
             limitStorage = settings.value("limitStorage", false).toBool();
             maxStorageAge = settings.value("maxStorageAge", 365).toInt();
             maxStorageSize = settings.value("maxStorageSize", 1024).toLongLong(); // 1GB
+            requireApproval = settings.value("requireApproval", false).toBool();
         settings.endGroup();
     }
 
@@ -92,6 +93,7 @@ class Settings::SettingsPrivate
             settings.setValue("limitStorage", limitStorage);
             settings.setValue("maxStorageAge", maxStorageAge);
             settings.setValue("maxStorageSize", maxStorageSize);
+            settings.setValue("requireApproval", requireApproval);
         settings.endGroup();
     }
 
@@ -112,6 +114,7 @@ class Settings::SettingsPrivate
     bool limitStorage;
     int maxStorageAge;
     int maxStorageSize;
+    bool requireApproval;
 };
 
 Settings::Settings(QObject* parent)
@@ -208,6 +211,11 @@ void Settings::reload()
     d->readSettings();
 }
 
+bool Settings::requireApproval() const
+{
+    return d->requireApproval;
+}
+
 int Settings::sampleRate() const
 {
     return d->sampleRate;
@@ -293,6 +301,17 @@ void Settings::setOutputLocation(const QString& outputLocation)
         d->outputLocation = outputLocation;
 
         emit outputLocationChanged(outputLocation);
+        emit settingsChanged();
+    }
+}
+
+void Settings::setRequireApproval(bool requireApproval)
+{
+    if (d->requireApproval != requireApproval)
+    {
+        d->requireApproval = requireApproval;
+
+        emit requireApprovalChanged(requireApproval);
         emit settingsChanged();
     }
 }
