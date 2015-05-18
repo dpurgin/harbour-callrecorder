@@ -71,6 +71,10 @@ private slots:
 
     void maybeSwitchProfile();
 
+    void onApprovalDialogAskLater(int eventId);
+    void onApprovalDialogRemove(int eventId);
+    void onApprovalDialogStore(int eventId);
+
     void onPulseAudioConnected();
     void onPulseAudioError(QString error);
 
@@ -83,7 +87,11 @@ private slots:
     void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);
     void onVoiceCallRemoved(const QString& objectPath);
 
+    void showApprovalDialog();
+
 private:
+    void createApprovalDialog();
+
     void checkStorageAgeLimits();
     void checkStorageSizeLimits();
     void removeEvents(SqlCursor* cursor);

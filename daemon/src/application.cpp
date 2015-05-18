@@ -20,9 +20,10 @@
 
 #include <QDir>
 #include <QTimer>
+#include <QQmlContext>
+#include <QQuickItem>
 #include <QQuickView>
 #include <QQmlEngine>
-#include <qpa/qplatformnativeinterface.h>
 
 #include <qofonomanager.h>
 #include <qofonovoicecallmanager.h>
@@ -33,6 +34,8 @@
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/sqlcursor.h>
 
+#include <qpa/qplatformnativeinterface.h>
+
 #include <qtpulseaudio/qtpulseaudioconnection.h>
 #include <qtpulseaudio/qtpulseaudiocard.h>
 #include <qtpulseaudio/qtpulseaudiocardprofile.h>
@@ -42,6 +45,7 @@
 #include <qtpulseaudio/qtpulseaudiosource.h>
 
 #include "dbusadaptor.h"
+#include "eventstablemodel.h"
 #include "uidbusinterface.h"
 #include "model.h"
 #include "voicecallrecorder.h"
@@ -151,33 +155,14 @@ Application::Application(int argc, char* argv[])
     d->pulseAudioConnection->connectToServer();
 
     d->storageLimitTimer.reset(new QTimer());
-    d->storageLimitTimer->setInterval(60000); // check once in an hour
+    d->storageLimitTimer->setInterval(15000); // check once in an hour
 
     connect(d->storageLimitTimer.data(), SIGNAL(timeout()),
             this, SLOT(checkStorageLimits()));
 
     d->storageLimitTimer->start();
 
-    // create approval dialog
-
-    QQuickView::setDefaultAlphaBuffer(true);
-
-    d->approvalView.reset(new QQuickView());
-
-    d->approvalView->setColor(QColor(0, 0, 0, 0));
-    d->approvalView->setClearBeforeRendering(true);
-
-    d->approvalView->engine()->addImportPath("/usr/share/harbour-callrecorder/lib/imports");
-    d->approvalView->setSource(
-                QUrl::fromLocalFile("/usr/share/harbour-callrecorder/qml/approval.qml"));
-    d->approvalView->create();
-
-    QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
-    native->setWindowProperty(d->approvalView->handle(),
-                              QLatin1String("CATEGORY"),
-                              QLatin1String("notification"));
-
-    d->approvalView->show();
+    createApprovalDialog();
 }
 
 Application::~Application()
@@ -259,6 +244,55 @@ void Application::checkStorageSizeLimits()
     }
 }
 
+void Application::createApprovalDialog()
+{
+    qDebug();
+
+    // taken from libsailfishapp
+    QQuickView::setDefaultAlphaBuffer(true);
+
+    d->approvalView.reset(new QQuickView());
+
+    // set transparent background
+
+    d->approvalView->setColor(QColor(0, 0, 0, 0));
+    d->approvalView->setClearBeforeRendering(true);
+
+    // set up QML scene
+
+    d->approvalView->engine()->addImportPath("/usr/share/harbour-callrecorder/lib/imports");
+    d->approvalView->setSource(
+                QUrl::fromLocalFile("/usr/share/harbour-callrecorder/qml/approval.qml"));
+    d->approvalView->create();
+
+    // connect to QML signals to react to user actions
+
+    QQuickItem* dialog =
+            d->approvalView->rootObject()->findChild< QQuickItem* >("approvalDialogWindow");
+
+    connect(dialog, SIGNAL(askLaterClicked(int)),
+            this, SLOT(onApprovalDialogAskLater(int)));
+
+    connect(dialog, SIGNAL(removeClicked(int)),
+            this, SLOT(onApprovalDialogRemove(int)));
+
+    connect(dialog, SIGNAL(storeClicked(int)),
+            this, SLOT(onApprovalDialogStore(int)));
+
+    // set window category for lipstick compositor
+
+    QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
+    native->setWindowProperty(d->approvalView->handle(),
+                              QLatin1String("CATEGORY"),
+                              QLatin1String("notification"));
+
+    // --> debug
+    // TODO: remove this code!!!
+    connect(d->storageLimitTimer.data(), SIGNAL(timeout()),
+            SLOT(showApprovalDialog()));
+    // <-- debug
+}
+
 Database* Application::database() const
 {
     return d->database.data();
@@ -335,6 +369,34 @@ void Application::maybeSwitchProfile()
     }
     else
         qDebug() << "Not managing profile " << d->pulseAudioCard->activeProfile()->name();
+}
+
+void Application::onApprovalDialogAskLater(int eventId)
+{
+    qDebug();
+
+    d->approvalView->setVisible(false);
+}
+
+void Application::onApprovalDialogRemove(int eventId)
+{
+    qDebug();
+
+    model()->events()->remove(eventId);
+
+    showApprovalDialog();
+}
+
+void Application::onApprovalDialogStore(int eventId)
+{
+    qDebug();
+
+    QVariantMap params;
+    params.insert("RecordingStateID", static_cast< int >(EventsTableModel::Done));
+
+    model()->events()->update(eventId, params);
+
+    showApprovalDialog();
 }
 
 void Application::onPulseAudioCardActiveProfileChanged(QString profileName)
@@ -472,6 +534,10 @@ void Application::onVoiceCallRemoved(const QString& objectPath)
 
         // workaround for Android mic issue
         d->needResetDefaultSource = true;
+
+        // show approval dialog if needed
+        if (settings()->requireApproval())
+            showApprovalDialog();
     }
 }
 
@@ -517,4 +583,61 @@ void Application::removeEvents(SqlCursor* cursor)
 Settings* Application::settings() const
 {
     return d->settings.data();
+}
+
+void Application::showApprovalDialog()
+{
+    qDebug();
+
+    // select next recording requiring approval
+
+    static QString stmt(
+                "\nSELECT"
+                "\n    Events.ID,"
+                "\n    Events.EventTypeID,"
+                "\n    Events.TimeStamp,"
+                "\n    Events.Duration,"
+                "\n    Events.FileSize,"
+                "\n    PhoneNumbers.LineIdentification"
+                "\nFROM"
+                "\n    Events"
+                "\n    LEFT JOIN"
+                "\n        PhoneNumbers"
+                "\n    ON"
+                "\n        PhoneNumbers.ID = Events.PhoneNumberID"
+                "\nWHERE"
+                "\n    Events.RecordingStateID = 5"
+                "\nORDER BY"
+                "\n    Events.TimeStamp DESC"
+                "\nLIMIT"
+                "\n    1");
+
+    QScopedPointer< SqlCursor > cursor(d->database->select(stmt));
+
+    if (cursor.isNull())
+    {
+        qDebug() << d->database->lastError();
+    }
+    else if (cursor->next())
+    {
+        QQuickItem* window =
+                d->approvalView->rootObject()->findChild< QQuickItem* >("approvalDialogWindow");
+
+        window->setProperty("eventId", cursor->value("ID"));
+        window->setProperty("eventTypeId", cursor->value("EventTypeID"));
+        window->setProperty("timeStamp", cursor->value("TimeStamp"));
+        window->setProperty("duration", cursor->value("Duration"));
+        window->setProperty("fileSize", cursor->value("FileSize"));
+        window->setProperty("lineIdentification", cursor->value("LineIdentification"));
+
+        qDebug() << "approvalView visible: " << d->approvalView->isVisible();
+
+        d->approvalView->setVisible(true);
+    }
+    else
+    {
+        qDebug() << "no events to approve";
+
+        d->approvalView->setVisible(false);
+    }
 }
