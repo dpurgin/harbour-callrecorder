@@ -27,8 +27,9 @@ import "widgets" as Widgets
 ApplicationWindow {
     height: 1
 
-
     initialPage: Component {
-        Dialogs.ApprovalDialog { }
+        Dialogs.ApprovalDialog {
+            objectName: "approvalDialogWindow"
+        }
     }
 }
