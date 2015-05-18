@@ -18,6 +18,9 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+
+import kz.dpurgin.callrecorder.Settings 1.0
+
 import kz.dpurgin.nemomobile.contacts 1.0
 
 import QtMultimedia 5.0
@@ -25,18 +28,20 @@ import QtMultimedia 5.0
 Page {
     id: eventPage
 
-    property string timeStamp
-    property string lineIdentification
-    property int eventTypeId
-    property string fileName
-    property int fileSize
-    property int duration
-    property Person person: people.populated? people.personByPhoneNumber(lineIdentification): null
+    property var eventItem
+
+    property bool whiteListed
+    property bool blackListed
+
+    property Person person:
+        people.populated?
+            people.personByPhoneNumber(eventItem.PhoneNumberIDRepresentation):
+            null
 
     MediaPlayer {
         id: mediaPlayer
 
-        source: settings.outputLocation + '/' + fileName
+        source: settings.outputLocation + '/' + eventItem.FileName
 
         onPositionChanged: {
             slider.mediaPlayerChange = true
@@ -49,11 +54,82 @@ Page {
     }
 
     SilicaFlickable {        
-        anchors {
-            fill: parent
+        anchors.fill: parent
 
-            leftMargin: Theme.paddingLarge
-            rightMargin: Theme.paddingLarge
+        PullDownMenu {
+            MenuItem {
+                text: qsTr('Approve and store')
+
+                visible: eventItem.RecordingStateID === 5
+
+                onClicked: maybeApproveItem(eventItem.ID)
+            }
+
+            MenuLabel {
+                text: {
+                    var result = '';
+
+                    if (settings.operationMode === Settings.WhiteList && whiteListed)
+                    {
+                        result = qsTr('Number is whitelisted')
+                    }
+                    else if (settings.operationMode === Settings.BlackList && blackListed)
+                    {
+                        result = qsTr('Number is blacklisted')
+                    }
+
+                    return result;
+                }
+
+                visible: whiteListed || blackListed
+            }
+
+            MenuItem {
+                text: qsTr('Always record this number')
+
+                visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
+                         (settings.operationMode === Settings.BlackList && blackListed)
+
+                onClicked: {
+                    var remorseText = qsTr('Recording %1').arg(
+                                eventItem.PhoneNumberIDRepresentation);
+
+                    if (settings.operationMode === Settings.WhiteList)
+                        maybeAddToList(whiteListModel, eventItem.PhoneNumberID, remorseText)
+                    else if (settings.operationMode === Settings.BlackList)
+                        maybeRemoveFromList(blackListModel, eventItem.PhoneNumberID, remorseText);
+                }
+            }
+
+            MenuItem {
+                text: qsTr('Never record this number')
+
+                visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
+                         (settings.operationMode === Settings.WhiteList && whiteListed)
+
+                onClicked: {
+                    var remorseText = qsTr('Not recording %1').arg(
+                                eventItem.PhoneNumberIDRepresentation);
+
+                    if (settings.operationMode === Settings.BlackList)
+                        maybeAddToList(blackListModel, eventItem.PhoneNumberID, remorseText);
+                    else if (settings.operationMode === Settings.WhiteList)
+                        maybeRemoveFromList(whiteListModel, eventItem.PhoneNumberID, remorseText);
+                }
+            }
+        }
+
+        PushUpMenu {
+            highlightColor: "#ff8084"
+            backgroundColor: "#ff1a22"
+
+            MenuItem {
+                text: qsTr('Delete')
+
+                color: "#FF8080"
+
+                onClicked: maybeRemoveItem(eventItem.ID)
+            }
         }
 
         contentHeight: contentColumn.height
@@ -61,33 +137,32 @@ Page {
         Column {
             id: contentColumn
 
+            width: parent.width
+
             PageHeader {
                 id: pageHeader
 
-                title: qsTr("Details")
+                title: qsTr('Details')
             }
-
-            width: parent.width
 
             Column {
                 id: detailsColumn
 
                 width: parent.width
+
                 spacing: Theme.paddingLarge
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
-
                     text: {
-                        if (eventTypeId == 1)
+                        if (eventItem.EventTypeID === 1)
                             return qsTr('Incoming call');
-                        else if (eventTypeId == 2)
+                        else if (eventItem.EventTypeID === 2)
                             return qsTr('Outgoing call');
                         else
                             return qsTr('Partial call');
                     }
+
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Item {
@@ -96,47 +171,26 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    text: eventItem.PhoneNumberIDRepresentation
+
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeExtraLarge
 
                     color: Theme.highlightColor
 
-                    text: lineIdentification
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    text: person? Format._joinNames(person.primaryName, person.secondaryName): ''
+
+                    visible: person != null
+
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeSmall
 
                     color: Theme.secondaryHighlightColor
-
-                    visible: person != null
-
-                    text: {
-                        var val = "";
-
-                        if (person)
-                        {
-                            if (person.primaryName.length > 0)
-                                val += person.primaryName;
-
-                            if (person.secondaryName.length > 0)
-                            {
-                                if (val != "")
-                                    val += " ";
-
-                                val += person.secondaryName;
-                            }
-                        }
-
-                        return val;
-                    }
                 }
 
                 Item {
@@ -145,30 +199,31 @@ Page {
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    text: Format.formatDate(eventItem.TimeStamp, Formatter.CallTimeRelative)
 
-                    text: Format.formatDate(timeStamp, Formatter.CallTimeRelative)
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Label {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    text: Format.formatDuration(eventItem.Duration, Formatter.DurationShort) +
+                          ' \u2022 ' + Format.formatFileSize(eventItem.FileSize)
+
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     font.pixelSize: Theme.fontSizeTiny
-
-                    text: Format.formatDuration(duration, Formatter.DurationShort) + ' \u2022 ' + Format.formatFileSize(fileSize)
                 }
             }
 
             Item {
+                id: spacer
+
                 width: parent.width
-                height: eventPage.height - pageHeader.height - detailsColumn.height - Theme.paddingLarge -
-                        (mediaPlayer.error == MediaPlayer.NoError?
-                             mediaPlayerControls.height:
-                             errorMessageLabel.height)
+                height: eventPage.height -
+                            pageHeader.height -
+                            detailsColumn.height -
+                            (mediaPlayerControls.visible? mediaPlayerControls.height: 0) -
+                            (errorMessageLabel.visible? errorMessageLabel.height: 0) -
+                            Theme.paddingLarge * 2
             }
 
             Column {
@@ -176,7 +231,7 @@ Page {
 
                 width: parent.width
 
-                visible: mediaPlayer.error == MediaPlayer.NoError
+                visible: mediaPlayer.error === MediaPlayer.NoError
 
                 Slider {
                     id: slider
@@ -197,28 +252,16 @@ Page {
                     }
                 }
 
-                Row {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                IconButton {
+                    icon.source: mediaPlayer.playbackState == MediaPlayer.PlayingState?
+                                     'image://theme/icon-l-pause':
+                                     'image://theme/icon-l-play'
 
-//                    IconButton {
-//                        icon.source: 'image://theme/icon-l-left'
-//                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-                    IconButton {
-                        icon.source: mediaPlayer.playbackState == MediaPlayer.PlayingState?
-                                         'image://theme/icon-l-pause':
-                                         'image://theme/icon-l-play'
-
-                        onClicked: mediaPlayer.playbackState == MediaPlayer.PlayingState?
-                                       mediaPlayer.pause():
-                                       mediaPlayer.play()
-                    }
-
-//                    IconButton {
-//                        icon.source: 'image://theme/icon-l-right'
-//                    }
+                    onClicked: mediaPlayer.playbackState == MediaPlayer.PlayingState?
+                                   mediaPlayer.pause():
+                                   mediaPlayer.play()
                 }
             }
 
@@ -227,18 +270,73 @@ Page {
 
                 width: parent.width
 
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                visible: mediaPlayer.error != MediaPlayer.NoError
+                visible: mediaPlayer.error !== MediaPlayer.NoError
 
                 text: mediaPlayer.errorString
             }
-        }
+        }        
+    }
+
+    RemorsePopup {
+        id: remorse
+    }
+
+    function maybeApproveItem()
+    {
+        remorse.execute(qsTr('Storing'), function() {
+            approveEvent(eventItem.ID);
+        });
+    }
+
+    function maybeAddToList(listModel, phoneNumberId, remorseText)
+    {
+        remorse.execute(remorseText, function() {
+            addToList(listModel, phoneNumberId);
+        });
+    }
+
+    function maybeRemoveItem()
+    {
+        remorse.execute(qsTr('Deleting'), function() {
+            removeEvent(eventItem.ID);
+            pageStack.pop();
+        });
+    }
+
+    function maybeRemoveFromList(listModel, phoneNumberId, remorseText)
+    {
+        remorse.execute(remorseText, function() {
+            removeFromList(listModel, phoneNumberId);
+        });
+    }
+
+    function updateListProperties()
+    {
+        whiteListed = (settings.operationMode === Settings.WhiteList &&
+                       whiteListModel.contains(eventItem.PhoneNumberID));
+        blackListed = (settings.operationMode === Settings.BlackList &&
+                       blackListModel.contains(eventItem.PhoneNumberID));
+    }
+
+    Connections {
+        target: app
+
+        onPhoneNumberListsChanged: updateListProperties()
+    }
+
+    Connections {
+        target: settings
+
+        onOperationModeChanged: updateListProperties();
+    }
+
+    Component.onCompleted: {
+        updateListProperties();
     }
 }
 
