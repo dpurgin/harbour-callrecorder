@@ -27,15 +27,28 @@ INSTALLS += target service
 
 TEMPLATE = app
 
-CONFIG += console link_pkgconfig
+CONFIG += qml_debug link_pkgconfig
 
-QT += core dbus sql multimedia
+QT += core dbus sql multimedia quick qml gui-private
 
-INCLUDEPATH += ../libcallrecorder/include ../qtpulseaudio/qtpulseaudio/lib/include
+INCLUDEPATH += \
+    ../libcallrecorder/include \
+    ../qtpulseaudio/qtpulseaudio/lib/include
 
 LIBS += -L../libcallrecorder -lcallrecorder -L../qtpulseaudio -lqtpulse
 
 PKGCONFIG += flac qofono-qt5
+
+QMLFILES = \
+    qml/pages/dialogs/ApprovalDialog.qml \
+    qml/widgets/SystemDialogButton.qml \
+    qml/widgets/SystemWindow.qml \
+    qml/approval.qml
+
+qml.files = qml
+qml.path = /usr/share/$${PACKAGE}
+
+INSTALLS += qml
 
 SOURCES += \
     src/application.cpp \
@@ -56,5 +69,10 @@ HEADERS += \
     src/dbusadaptor.h \
     src/uidbusinterface.h
 
+lupdate_only {
+    SOURCES += $${QMLFILES}
+}
+
 OTHER_FILES += \
-    $${TARGET}.service
+    $${TARGET}.service \
+    $${QMLFILES}
