@@ -31,7 +31,8 @@ public:
         Armed = 1,
         InProgress,
         Suspended,
-        Done
+        Done,
+        WaitingForApproval
     };
 
     enum EventType
