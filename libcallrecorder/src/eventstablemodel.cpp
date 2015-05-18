@@ -459,6 +459,30 @@ void EventsTableModel::refresh()
     emit rowCountChanged();
 }
 
+bool EventsTableModel::remove(int oid)
+{
+    qDebug();
+
+    int displayIdx = d->oidToRowIndex.value(oid, -1);
+
+    if (displayIdx != -1)
+        emit beginRemoveRows(QModelIndex(), displayIdx, displayIdx);
+
+    bool result = d->removeOid(oid);
+
+    if (displayIdx != -1)
+        emit endRemoveRows();
+
+    if (result)
+    {
+        d->clearCache();
+
+        emit rowCountChanged();
+    }
+
+    return result;
+}
+
 bool EventsTableModel::removeAll()
 {
     bool result = true;

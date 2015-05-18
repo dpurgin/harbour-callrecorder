@@ -49,6 +49,7 @@ public:
 
     Q_INVOKABLE void filter(const QVariantMap& filters);
 
+    Q_INVOKABLE bool remove(int oid);
     Q_INVOKABLE bool removeAll();
     Q_INVOKABLE bool removeOids(const QList< int >& oids);
     Q_INVOKABLE bool removeRows(int rowIndex, int count, const QModelIndex& = QModelIndex());
