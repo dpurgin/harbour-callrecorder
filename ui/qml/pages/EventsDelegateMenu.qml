@@ -33,13 +33,13 @@ Component {
 
             visible: model.RecordingStateID === 5
 
-            onClicked: approveItem()
+            onClicked: maybeApproveItem()
         }
 
         MenuItem {
             text: qsTr('Delete')
 
-            onClicked: removeItem()
+            onClicked: maybeRemoveItem()
         }
 
         MenuLabel {
@@ -72,9 +72,9 @@ Component {
                             model.PhoneNumberIDRepresentation);
 
                 if (settings.operationMode === Settings.WhiteList)
-                    addToList(whiteListModel, model.PhoneNumberID, remorseText)
+                    maybeAddToList(whiteListModel, model.PhoneNumberID, remorseText)
                 else if (settings.operationMode === Settings.BlackList)
-                    removeFromList(blackListModel, model.PhoneNumberID, remorseText);
+                    maybeRemoveFromList(blackListModel, model.PhoneNumberID, remorseText);
             }
         }
 
@@ -89,9 +89,9 @@ Component {
                             model.PhoneNumberIDRepresentation);
 
                 if (settings.operationMode === Settings.BlackList)
-                    addToList(blackListModel, model.PhoneNumberID, remorseText);
+                    maybeAddToList(blackListModel, model.PhoneNumberID, remorseText);
                 else if (settings.operationMode === Settings.WhiteList)
-                    removeFromList(whiteListModel, model.PhoneNumberID, remorseText);
+                    maybeRemoveFromList(whiteListModel, model.PhoneNumberID, remorseText);
             }
         }
     }

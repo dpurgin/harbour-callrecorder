@@ -52,12 +52,7 @@ ListItem {
                  model.RecordingStateID === 5)
         {
             pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
-                timeStamp: model.TimeStamp,
-                lineIdentification: model.PhoneNumberIDRepresentation,
-                eventTypeId: model.EventTypeID,
-                fileName: model.FileName,
-                fileSize: model.FileSize,
-                duration: model.Duration
+                eventItem: model
             });
         }
     }
@@ -70,35 +65,31 @@ ListItem {
         }
     }
 
-    function addToList(listModel, phoneNumberId, remorseText)
+    function maybeAddToList(listModel, phoneNumberId, remorseText)
     {
         remorseAction(remorseText, function() {
-            if (!listModel.contains(phoneNumberId))
-            {
-                listModel.add(phoneNumberId)
-                listModel.submit();
-            }
+            addToList(listModel, phoneNumberId);
         });
     }
 
-    function approveItem()
+    function maybeApproveItem()
     {
         remorseAction(qsTr('Storing'), function() {
-            eventsModel.update(model.ID, { 'RecordingStateID': 4 });
+            approveEvent(model.ID);
         });
     }
 
-    function removeFromList(listModel, phoneNumberId, remorseText)
+    function maybeRemoveFromList(listModel, phoneNumberId, remorseText)
     {
         remorseAction(remorseText, function() {
-            listModel.remove(phoneNumberId);
+            removeFromList(listModel, phoneNumberId);
         });
     }
 
-    function removeItem()
+    function maybeRemoveItem()
     {
         remorseAction(qsTr('Deleting'), function() {
-            eventsModel.removeRow(model.index);
+            removeEvent(model.ID);
         });
     }
 }
