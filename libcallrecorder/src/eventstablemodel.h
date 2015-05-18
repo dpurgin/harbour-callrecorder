@@ -60,6 +60,8 @@ public:
 
     int rowCount(const QModelIndex& = QModelIndex()) const;
 
+    Q_INVOKABLE bool update(int oid, const QVariantMap& items);
+
 signals:
     void rowCountChanged();
 

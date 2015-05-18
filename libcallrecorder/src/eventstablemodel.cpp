@@ -348,6 +348,37 @@ private:
         return result;
     }
 
+    bool update(int oid, const QVariantMap& items)
+    {
+        qDebug() << oid << items;
+
+        bool result = true;
+
+        static QString stmt("UPDATE Events SET %1 WHERE ID = :id");
+
+        QStringList setList;
+
+        Database::SqlParameters params;
+
+        params.insert(":id", oid);
+
+        for (QVariantMap::const_iterator cit = items.cbegin();
+             cit != items.cend();
+             cit++)
+        {
+            params.insert(QLatin1Char(':') % cit.key(), cit.value());
+            setList << QString(cit.key() % QLatin1String(" = :") % cit.key());
+        }
+
+        if (!db->execute(stmt.arg(setList.join(QChar(','))), params))
+        {
+            qWarning() << db->lastError();
+            result = false;
+        }
+
+        return result;
+    }
+
 private:
     Database* db;
 
@@ -534,4 +565,21 @@ QHash< int, QByteArray > EventsTableModel::roleNames() const
 int EventsTableModel::rowCount(const QModelIndex&) const
 {
     return d->rowCount;
+}
+
+bool EventsTableModel::update(int oid, const QVariantMap& items)
+{
+    qDebug();
+
+    bool result = d->update(oid, items);
+
+    if (result && d->oidToRowIndex.contains(oid))
+    {
+        d->invalidatePage(d->oidToRowIndex.value(oid));
+
+        emit dataChanged(index(d->oidToRowIndex.value(oid)),
+                         index(d->oidToRowIndex.value(oid)));
+    }
+
+    return result;
 }
