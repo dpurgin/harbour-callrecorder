@@ -48,13 +48,11 @@ Component {
 
                 if (settings.operationMode === Settings.WhiteList && whiteListed)
                 {
-                    result = qsTr('%1 is whitelisted')
-                                .arg(model.PhoneNumberIDRepresentation)
+                    result = qsTr('Number is whitelisted')
                 }
                 else if (settings.operationMode === Settings.BlackList && blackListed)
                 {
-                    result = qsTr('%1 is blacklisted')
-                                .arg(model.PhoneNumberIDRepresentation)
+                    result = qsTr('Number is blacklisted')
                 }
 
                 return result;
@@ -64,9 +62,7 @@ Component {
         }
 
         MenuItem {
-            text: whiteListed || blackListed?
-                      qsTr('Always record this number'):
-                      qsTr('Always record %1').arg(model.PhoneNumberIDRepresentation)
+            text: qsTr('Always record this number')
 
             visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
                      (settings.operationMode === Settings.BlackList && blackListed)
@@ -83,9 +79,7 @@ Component {
         }
 
         MenuItem {
-            text: whiteListed || blackListed?
-                      qsTr('Never record this number'):
-                      qsTr('Never record %1').arg(model.PhoneNumberIDRepresentation)
+            text: qsTr('Never record this number')
 
             visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
                      (settings.operationMode === Settings.WhiteList && whiteListed)
