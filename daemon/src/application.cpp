@@ -82,7 +82,7 @@ private:
     QScopedPointer< QTimer > timer;
     QScopedPointer< QTimer > storageLimitTimer;
 
-    QScopedPointer< QQuickView > confirmationView;
+    QScopedPointer< QQuickView > approvalView;
 
     // stores object paths and its recorders
     QHash< QString, VoiceCallRecorder* > voiceCallRecorders;
@@ -158,26 +158,26 @@ Application::Application(int argc, char* argv[])
 
     d->storageLimitTimer->start();
 
-    // create confirmation dialog
+    // create approval dialog
+
     QQuickView::setDefaultAlphaBuffer(true);
 
-    d->confirmationView.reset(new QQuickView());
+    d->approvalView.reset(new QQuickView());
 
-    d->confirmationView->setColor(QColor(0, 0, 0, 0));
-    d->confirmationView->setClearBeforeRendering(true);
+    d->approvalView->setColor(QColor(0, 0, 0, 0));
+    d->approvalView->setClearBeforeRendering(true);
 
-
-    d->confirmationView->engine()->addImportPath("/usr/share/harbour-callrecorder/lib/imports");
-    d->confirmationView->setSource(
-                QUrl::fromLocalFile("/usr/share/harbour-callrecorder/qml/confirmation.qml"));    
-    d->confirmationView->create();
+    d->approvalView->engine()->addImportPath("/usr/share/harbour-callrecorder/lib/imports");
+    d->approvalView->setSource(
+                QUrl::fromLocalFile("/usr/share/harbour-callrecorder/qml/approval.qml"));
+    d->approvalView->create();
 
     QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
-    native->setWindowProperty(d->confirmationView->handle(),
+    native->setWindowProperty(d->approvalView->handle(),
                               QLatin1String("CATEGORY"),
                               QLatin1String("notification"));
 
-    d->confirmationView->show();
+    d->approvalView->show();
 }
 
 Application::~Application()
