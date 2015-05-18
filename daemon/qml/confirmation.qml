@@ -37,7 +37,7 @@ ApplicationWindow {
         Widgets.SystemWindow {
             id: window
 
-            property Item selectedItem: storeButton
+            property Item selectedItem: askLaterButton
             property alias lineIdentification: lineIdentificationLabel.text
             property var person:
                 people.populated && lineIdentification?
@@ -128,7 +128,7 @@ ApplicationWindow {
                     }
 
                     Row {
-                        property real buttonWidth: parent.width / 2
+                        property real buttonWidth: parent.width / 3
 
                         width: parent.width
 
@@ -146,9 +146,6 @@ ApplicationWindow {
                                 console.log('store button clicked')
 
                                 selectedItem = storeButton
-
-                                console.log('width:' + width)
-                                console.log('height: ' + height)
                             }
                         }
 
@@ -164,9 +161,21 @@ ApplicationWindow {
                                 console.log('remove button clicked')
 
                                 selectedItem = removeButton
+                            }
+                        }
 
-                                console.log('width:' + width)
-                                console.log('height: ' + height)
+                        Widgets.SystemDialogButton {
+                            id: askLaterButton
+
+                            width: parent.buttonWidth
+
+                            text: qsTr('Ask later')
+                            iconSource: 'image://theme/icon-l-clock?#000000'
+
+                            onClicked: {
+                                console.log('ask later')
+
+                                selectedItem = askLaterButton
                             }
                         }
                     }
