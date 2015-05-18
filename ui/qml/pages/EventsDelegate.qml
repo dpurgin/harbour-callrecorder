@@ -48,7 +48,8 @@ ListItem {
             else
                 addToSelection(model.ID);
         }
-        else if (model.RecordingStateID === 4)
+        else if (model.RecordingStateID === 4 ||
+                 model.RecordingStateID === 5)
         {
             pageStack.push(Qt.resolvedUrl('EventPage.qml'), {
                 timeStamp: model.TimeStamp,
@@ -77,6 +78,13 @@ ListItem {
                 listModel.add(phoneNumberId)
                 listModel.submit();
             }
+        });
+    }
+
+    function approveItem()
+    {
+        remorseAction(qsTr('Storing'), function() {
+            eventsModel.update(model.ID, { 'RecordingStateID': 4 });
         });
     }
 

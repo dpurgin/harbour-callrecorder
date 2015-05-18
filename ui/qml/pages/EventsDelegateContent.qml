@@ -105,6 +105,10 @@ Row {
                              ' \u2022 ' +
                              Format.formatFileSize(model.FileSize);
                 }
+                else if (model.RecordingStateID === 5)
+                {
+                    result = qsTr('Waiting for approval')
+                }
 
                 if (person)
                 {

@@ -29,6 +29,14 @@ Component {
                                        blackListModel.contains(model.PhoneNumberID)
 
         MenuItem {
+            text: qsTr('Approve and store')
+
+            visible: model.RecordingStateID === 5
+
+            onClicked: approveItem()
+        }
+
+        MenuItem {
             text: qsTr('Delete')
 
             onClicked: removeItem()
