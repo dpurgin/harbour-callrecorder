@@ -34,6 +34,10 @@ Widgets.SystemWindow {
     }
 
     property int eventId
+    property int eventTypeId
+    property date timeStamp
+    property int duration
+    property int fileSize
     property alias lineIdentification: lineIdentificationLabel.text
 
     property Item selectedItem: askLaterButton
@@ -65,7 +69,14 @@ Widgets.SystemWindow {
             y: Theme.paddingLarge
 
             Label {
-                text: 'A call was recorded'
+                text: {
+                    if (eventTypeId == 1)
+                        return qsTr('An incoming call was recorded');
+                    else if (eventTypeId == 2)
+                        return qsTr('An outgoing call was recorded');
+                    else
+                        return qsTr('A call was recorded');
+                }
 
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -76,17 +87,17 @@ Widgets.SystemWindow {
                 font.pixelSize: Theme.fontSizeLarge
 
                 color: Theme.rgba("black", 0.6)
+
+                wrapMode: Text.Wrap
             }
 
             Item {
                 width: parent.width
-                height: Theme.paddingLarge
+                height: Theme.paddingLarge * 2
             }
 
             Label {
                 id: lineIdentificationLabel
-
-                text: '+77072501528'
 
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -110,21 +121,39 @@ Widgets.SystemWindow {
                 anchors.right: parent.right
                 anchors.margins: Theme.paddingLarge
 
-                horizontalAlignment:
-//                            contentWidth > Math.ceil(width)?
-//                                Text.AlignLeft:
-                        Text.AlignHCenter
+                horizontalAlignment: Text.AlignHCenter
 
                 font.pixelSize: Theme.fontSizeSmall
 
                 color: Theme.rgba("black", 0.8)
 
-                truncationMode: TruncationMode.Fade
+                wrapMode: Text.Wrap
             }
 
             Item {
                 width: parent.width
-                height: Theme.paddingLarge
+                height: Theme.paddingMedium
+            }
+
+            Label {
+                text: Format.formatDate(timeStamp, Formatter.CallTimeRelative) + ' \u2022 ' +
+                      Format.formatDuration(duration, Formatter.DurationShort) + ' \u2022 ' +
+                      Format.formatFileSize(fileSize)
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.margins: Theme.paddingLarge
+
+                horizontalAlignment: Text.AlignHCenter
+
+                font.pixelSize: Theme.fontSizeTiny
+
+                color: Theme.rgba("black", 0.6)
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge * 2
             }
 
             Row {
