@@ -19,6 +19,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import "widgets" as Widgets
 
 import kz.dpurgin.nemomobile.contacts 1.0
 import org.nemomobile.dbus 2.0
@@ -26,13 +27,37 @@ import org.nemomobile.dbus 2.0
 import kz.dpurgin.callrecorder.Settings 1.0
 
 ApplicationWindow {
-    initialPage: Component { EventsPage { } }
+    id: app
+
+    // emitted whenever blacklist or whitelist are
+    // changed using addToList(), removeFromList()
+    signal phoneNumberListsChanged()
+
+    initialPage: Component {
+        EventsPage { }
+    }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
     PeopleModel {
         id: people
         filterType: PeopleModel.FilterAll
         requiredProperty: PeopleModel.PhoneNumberRequired
+    }
+
+    function addToList(listModel, phoneNumberId)
+    {
+        if (!listModel.contains(phoneNumberId))
+        {
+            listModel.add(phoneNumberId);
+            listModel.submit();
+
+            phoneNumberListsChanged();
+        }
+    }
+
+    function approveEvent(eventId)
+    {
+        eventsModel.update(eventId, { 'RecordingStateID': 4 });
     }
 
     function logObject(o, name)
@@ -44,6 +69,19 @@ ApplicationWindow {
             for (var i in o)
                 console.log('    ' + i + ': ' + o[i]);
         }
+    }
+
+    function removeEvent(eventId)
+    {
+        eventsModel.remove(eventId);
+    }
+
+    function removeFromList(listModel, phoneNumberId)
+    {
+        listModel.remove(phoneNumberId);
+        listModel.submit();
+
+        phoneNumberListsChanged()
     }
 
     function startOfDay(dt)
@@ -72,15 +110,15 @@ ApplicationWindow {
     DBusAdaptor {
         id: dbusAdaptor
 
-        service: 'kz.dpurgin.DBus.CallRecorder'
+        service: 'kz.dpurgin.CallRecorder'
         path: '/UI'
-        iface: 'kz.dpurgin.DBus.CallRecorder'
+        iface: 'kz.dpurgin.CallRecorder'
     }
 
     DBusInterface {
-        service: 'kz.dpurgin.DBus.CallRecorder'
+        service: 'kz.dpurgin.CallRecorder'
         path: '/Daemon'
-        iface: 'kz.dpurgin.DBus.CallRecorder'
+        iface: 'kz.dpurgin.CallRecorder'
 
         signalsEnabled: true
 
