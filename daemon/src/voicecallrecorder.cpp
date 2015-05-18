@@ -106,13 +106,19 @@ VoiceCallRecorder::~VoiceCallRecorder()
         FLAC__stream_encoder_finish(d->flacEncoder);
         FLAC__stream_encoder_delete(d->flacEncoder);
 
-        // update recording state to Done
+        // update recording state to Waiting for Approval or Done
         if (d->eventId != -1)
         {
             QFileInfo fi(d->outputLocation);
 
             QVariantMap params;
-            params.insert(QLatin1String("RecordingStateID"), QVariant(static_cast< int >(EventsTableModel::Done)));
+
+            EventsTableModel::RecordingState recordingState =
+                    daemon->settings()->requireApproval()?
+                        EventsTableModel::WaitingForApproval:
+                        EventsTableModel::Done;
+
+            params.insert(QLatin1String("RecordingStateID"), static_cast< int >(recordingState));
             params.insert(QLatin1String("FileName"), fi.fileName());
             params.insert(QLatin1String("FileSize"), fi.size());
             params.insert(QLatin1String("Duration"), d->duration / 1000); // duration is stored in seconds
