@@ -46,6 +46,10 @@ Widgets.SystemWindow {
             people.personByPhoneNumber(lineIdentification):
             null
 
+    signal askLaterClicked(int eventId)
+    signal storeClicked(int eventId)
+    signal removeClicked(int eventId)
+
     Rectangle {
         anchors.fill: parent
         color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
@@ -170,9 +174,11 @@ Widgets.SystemWindow {
                     iconSource: 'image://theme/icon-l-check?#000000'
 
                     onClicked: {
-                        console.log('store button clicked')
+                        console.log('store clicked');
 
                         selectedItem = storeButton
+
+                        storeClicked(eventId)
                     }
                 }
 
@@ -185,9 +191,11 @@ Widgets.SystemWindow {
                     iconSource: 'image://theme/icon-l-dismiss?#000000'
 
                     onClicked: {
-                        console.log('remove button clicked')
+                        console.log('remove clicked');
 
                         selectedItem = removeButton
+
+                        removeClicked(eventId)
                     }
                 }
 
@@ -200,9 +208,11 @@ Widgets.SystemWindow {
                     iconSource: 'image://theme/icon-l-clock?#000000'
 
                     onClicked: {
-                        console.log('ask later')
+                        console.log('ask later clicked');
 
                         selectedItem = askLaterButton
+
+                        askLaterClicked(eventId)
                     }
                 }
             }
@@ -218,7 +228,19 @@ Widgets.SystemWindow {
         }
 
         onClicked: {
-            console.log('default clicked')
+            console.log('default area clicked');
+
+            // default to Ask Later for safety
+            askLaterClicked(eventId);
+
+//            if (selectedItem === storeButton)
+//                storeClicked(eventId);
+
+//            else if (selectedItem === removeButton)
+//                removeClicked(eventId);
+
+//            else if (selectedItem === askLaterButton)
+//                askLaterClicked(eventId);
         }
     }
 }
