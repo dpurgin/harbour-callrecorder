@@ -173,7 +173,7 @@ Page {
                     MenuItem {
                         property int value: -1
 
-                        text: qsTr('Custom')
+                        text: qsTr('custom')
                     }
                 }
 
@@ -267,7 +267,7 @@ Page {
                     MenuItem {
                         property int value: -1
 
-                        text: qsTr('Custom')
+                        text: qsTr('custom')
                     }
                 }
 
@@ -309,6 +309,26 @@ Page {
                     if (acceptableInput)
                         settings.maxStorageSize = text;
                 }
+            }
+
+            SectionHeader {
+                text: qsTr('Approval for storage')
+            }
+
+            TextSwitch {
+                text: qsTr('Require approval')
+                description: qsTr('If checked, an approval of storage will be shown after each recorded call')
+
+                checked: settings.requireApproval
+
+                onCheckedChanged: {
+                    settings.requireApproval = checked;
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
             }
         }
     }
