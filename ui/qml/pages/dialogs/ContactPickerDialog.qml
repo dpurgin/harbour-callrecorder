@@ -71,7 +71,7 @@ Dialog {
 
             ViewPlaceholder {
                 enabled: listView.count === 0
-                text: qsTr('Add people to contacts')
+                text: qsTr('No contacts available')
             }
         }
     }
