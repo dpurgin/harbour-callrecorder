@@ -109,6 +109,67 @@
         <source>FLAC compression level</source>
         <translation>Уровень сжатия FLAC</translation>
     </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation>44,1 кГц</translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation>32 кГц</translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation>22,05 кГц</translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation>16 кГц</translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation>11,025 кГц</translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation>8 кГц</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPicker</name>
+    <message>
+        <source>Accept</source>
+        <translation type="obsolete">Принять</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Отменить</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Принять</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation>У вас еще нет контактов</translation>
+    </message>
+</context>
+<context>
+    <name>ContactSelectionDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation type="obsolete">Принять</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Отменить</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -236,9 +297,72 @@
         <source>Partial call</source>
         <translation>Отрывок</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation>Подтвердить и сохранить</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>Номер в белом списке</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>Номер в чёрном списке</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation>Записывать этот номер</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation>Не записывать этот номер</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation>%1 записывается</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation>%1 не записывается</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>Сохранение</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Удаление</translation>
+    </message>
 </context>
 <context>
     <name>EventsDelegate</name>
+    <message>
+        <source>Armed for recording</source>
+        <translation type="vanished">Готово к записи</translation>
+    </message>
+    <message>
+        <source>Recording in progress</source>
+        <translation type="vanished">Идёт запись</translation>
+    </message>
+    <message>
+        <source>Recording suspended</source>
+        <translation type="vanished">Запись приостановлена</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Удаление</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>Сохранение</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
         <translation>Готово к записи</translation>
@@ -251,24 +375,24 @@
         <source>Recording suspended</source>
         <translation>Запись приостановлена</translation>
     </message>
+    <message>
+        <source>Waiting for approval</source>
+        <translation>Ожидает подтверждения</translation>
+    </message>
 </context>
 <context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation>Записи</translation>
-    </message>
+    <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
         <source>%1 is whitelisted</source>
-        <translation>%1 в белом списке</translation>
+        <translation type="obsolete">%1 в белом списке</translation>
     </message>
     <message>
         <source>%1 is blacklisted</source>
-        <translation>%1 в чёрном списке</translation>
+        <translation type="obsolete">%1 в чёрном списке</translation>
     </message>
     <message>
         <source>Always record this number</source>
@@ -276,7 +400,7 @@
     </message>
     <message>
         <source>Always record %1</source>
-        <translation>Записывать %1</translation>
+        <translation type="obsolete">Записывать %1</translation>
     </message>
     <message>
         <source>Recording %1</source>
@@ -288,15 +412,104 @@
     </message>
     <message>
         <source>Never record %1</source>
-        <translation>Не записывать %1</translation>
+        <translation type="obsolete">Не записывать %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
         <translation>%1 не записывается</translation>
     </message>
     <message>
+        <source>Approve and store</source>
+        <translation>Подтвердить и сохранить</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>Номер в белом списке</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>Номер в чёрном списке</translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Принять</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation>До</translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation>После</translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation>Номер телефона</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>На дату</translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterPanel</name>
+    <message>
+        <source>Enter phone number</source>
+        <translation type="obsolete">Введите номер</translation>
+    </message>
+</context>
+<context>
+    <name>EventsPage</name>
+    <message>
+        <source>Recordings</source>
+        <translation>Записи</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="vanished">Удалить</translation>
+    </message>
+    <message>
+        <source>%1 is whitelisted</source>
+        <translation type="vanished">%1 в белом списке</translation>
+    </message>
+    <message>
+        <source>%1 is blacklisted</source>
+        <translation type="vanished">%1 в чёрном списке</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation type="vanished">Записывать этот номер</translation>
+    </message>
+    <message>
+        <source>Always record %1</source>
+        <translation type="vanished">Записывать %1</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation type="vanished">%1 записывается</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation type="vanished">Не записывать этот номер</translation>
+    </message>
+    <message>
+        <source>Never record %1</source>
+        <translation type="vanished">Не записывать %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation type="vanished">%1 не записывается</translation>
+    </message>
+    <message>
         <source>Deleting</source>
-        <translation>Удаление</translation>
+        <translation type="vanished">Удаление</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
@@ -316,7 +529,7 @@
     </message>
     <message>
         <source>Enter phone number</source>
-        <translation>Введите номер</translation>
+        <translation type="vanished">Введите номер</translation>
     </message>
     <message>
         <source>Hide search</source>
@@ -326,28 +539,119 @@
         <source>Show search</source>
         <translation type="vanished">Показать поиск</translation>
     </message>
-</context>
-<context>
-    <name>EventsPicker</name>
     <message>
-        <source>Select Recordings</source>
-        <translation>Выбор записей</translation>
+        <source>Filtered recordings</source>
+        <translation>Отфильтрованные записи</translation>
     </message>
     <message>
-        <source>No calls recorded yet</source>
-        <translation>Нет записанных звонков</translation>
+        <source>Select filtered recordings</source>
+        <translation>Выбор отфильтрованных записей</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>Фильтр</translation>
+    </message>
+    <message>
+        <source>No recordings meet filter criteria</source>
+        <translation>Нет записей, соответствующих критериям отбора</translation>
+    </message>
+    <message>
+        <source>View recordings</source>
+        <translation>Просмотр записей</translation>
+    </message>
+    <message>
+        <source>Deleting recordings</source>
+        <translation>Удаление записей</translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation>Удалить отфильтрованные</translation>
     </message>
     <message>
         <source>Delete all</source>
         <translation>Удалить все</translation>
     </message>
     <message>
+        <source>Deleting all filtered</source>
+        <translation>Удаление отфильтрованных</translation>
+    </message>
+    <message>
         <source>Deleting all recordings</source>
         <translation>Удаление всех записей</translation>
     </message>
+</context>
+<context>
+    <name>EventsPicker</name>
+    <message>
+        <source>Select Recordings</source>
+        <translation type="vanished">Выбор записей</translation>
+    </message>
+    <message>
+        <source>No calls recorded yet</source>
+        <translation type="vanished">Нет записанных звонков</translation>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation type="vanished">Удалить все</translation>
+    </message>
+    <message>
+        <source>Deleting all recordings</source>
+        <translation type="vanished">Удаление всех записей</translation>
+    </message>
     <message>
         <source>Deleting recordings</source>
-        <translation>Удаление записей</translation>
+        <translation type="vanished">Удаление записей</translation>
+    </message>
+</context>
+<context>
+    <name>EventsView</name>
+    <message>
+        <source>Recordings</source>
+        <translation type="obsolete">Записи</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Удалить</translation>
+    </message>
+    <message>
+        <source>%1 is whitelisted</source>
+        <translation type="obsolete">%1 в белом списке</translation>
+    </message>
+    <message>
+        <source>%1 is blacklisted</source>
+        <translation type="obsolete">%1 в чёрном списке</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation type="obsolete">Записывать этот номер</translation>
+    </message>
+    <message>
+        <source>Always record %1</source>
+        <translation type="obsolete">Записывать %1</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation type="obsolete">%1 записывается</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation type="obsolete">Не записывать этот номер</translation>
+    </message>
+    <message>
+        <source>Never record %1</source>
+        <translation type="obsolete">Не записывать %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation type="obsolete">%1 не записывается</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="obsolete">Удаление</translation>
+    </message>
+    <message>
+        <source>No calls recorded yet</source>
+        <translation type="obsolete">Нет записанных звонков</translation>
     </message>
 </context>
 <context>
@@ -416,6 +720,10 @@
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation>Подобрать из контактов</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -469,6 +777,86 @@
     <message>
         <source>Relocating files</source>
         <translation>Перемещение файлов</translation>
+    </message>
+    <message>
+        <source>Storage limits</source>
+        <translation>Ограничения на объём данных</translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation>Ограничивать по размеру или сроку хранения</translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation>По сроку хранения</translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation>без ограничения</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 дней</translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation>90 дней</translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation>180 дней</translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation>365 дней</translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation>Ограничение в днях</translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation>По объёму</translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation>300 МБ</translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation>500 МБ</translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation>1 ГБ</translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation>3 ГБ</translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation>5 ГБ</translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation>Ограничение на объём в МБ</translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation>Подтверждение сохранения</translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation>Запрашивать подтверждение</translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation>Если включено, то после каждого записанного звонка будет запрашиваться подтверждение на сохранение</translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation>другое</translation>
     </message>
 </context>
 <context>
