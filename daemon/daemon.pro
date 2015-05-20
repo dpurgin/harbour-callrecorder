@@ -76,3 +76,7 @@ lupdate_only {
 OTHER_FILES += \
     $${TARGET}.service \
     $${QMLFILES}
+
+TRANSLATIONS += \
+    translations/daemon.ts \
+    translations/daemon-ru.ts
