@@ -62,6 +62,45 @@
         <source>FLAC compression level</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -189,9 +228,60 @@
         <source>Partial call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventsDelegate</name>
+    <message>
+        <source>Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
         <translation type="unfinished"></translation>
@@ -204,31 +294,19 @@
         <source>Recording suspended</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>EventsPage</name>
     <message>
-        <source>Recordings</source>
+        <source>Waiting for approval</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Always record this number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -240,23 +318,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Never record %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Not recording %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Deleting</source>
+        <source>Approve and store</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No calls recorded yet</source>
+        <source>Number is whitelisted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
+        <source>Number is blacklisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsPage</name>
+    <message>
+        <source>Recordings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -264,14 +372,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter phone number</source>
+        <source>Filtered recordings</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>EventsPicker</name>
     <message>
-        <source>Select Recordings</source>
+        <source>Select filtered recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No recordings meet filter criteria</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -279,15 +396,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
+        <source>View recordings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleting recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting all filtered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting all recordings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -350,6 +479,10 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -402,6 +535,86 @@
     </message>
     <message>
         <source>Relocating files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage limits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>custom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
