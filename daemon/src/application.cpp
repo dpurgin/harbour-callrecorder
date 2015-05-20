@@ -155,7 +155,7 @@ Application::Application(int argc, char* argv[])
     d->pulseAudioConnection->connectToServer();
 
     d->storageLimitTimer.reset(new QTimer());
-    d->storageLimitTimer->setInterval(15000); // check once in an hour
+    d->storageLimitTimer->setInterval(3600000); // check once in an hour
 
     connect(d->storageLimitTimer.data(), SIGNAL(timeout()),
             this, SLOT(checkStorageLimits()));
@@ -285,12 +285,6 @@ void Application::createApprovalDialog()
     native->setWindowProperty(d->approvalView->handle(),
                               QLatin1String("CATEGORY"),
                               QLatin1String("notification"));
-
-    // --> debug
-    // TODO: remove this code!!!
-    connect(d->storageLimitTimer.data(), SIGNAL(timeout()),
-            SLOT(showApprovalDialog()));
-    // <-- debug
 }
 
 Database* Application::database() const
