@@ -19,9 +19,12 @@
 #ifndef LIBCALLRECORDER_H
 #define LIBCALLRECORDER_H
 
+#include <QString>
+
 namespace LibCallRecorder
 {
     void installMessageHandler();
+    void installTranslator(const QString& resource);
 }
 
 #endif // LIBCALLRECORDER_H

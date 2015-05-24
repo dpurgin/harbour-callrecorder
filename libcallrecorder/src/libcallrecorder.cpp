@@ -22,15 +22,21 @@
 
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QDebug>
 #include <QFile>
 #include <QFileInfo>
+#include <QLocale>
 #include <QMutex>
 #include <QMutexLocker>
+#include <QScopedPointer>
 #include <QStandardPaths>
 #include <QStringBuilder>
 #include <QThread>
+#include <QTranslator>
 
 #include <iostream>
+
+#include "settings.h"
 
 namespace LibCallRecorder
 {
@@ -60,7 +66,15 @@ namespace LibCallRecorder
 
         QByteArray entry;
 
-        entry.append(QCoreApplication::applicationName());
+        static QString appName;
+
+        if (appName.isEmpty())
+        {
+            QFileInfo fi(QCoreApplication::applicationFilePath());
+            appName = fi.fileName();
+        }
+
+        entry.append(appName);
         entry.append(": ", 2);
         entry.append(QDateTime::currentDateTime().toString());
         entry.append(": ", 2);
@@ -112,5 +126,25 @@ namespace LibCallRecorder
     void installMessageHandler()
     {
         qInstallMessageHandler(messageHandler);
+    }
+
+    void installTranslator(const QString& resource)
+    {
+        QScopedPointer< Settings > settings(new Settings());
+
+        QTranslator translator;
+        QLocale locale = (settings->locale() == QLatin1String("system")?
+                              QLocale::system():
+                              QLocale(settings->locale()));
+
+        qDebug() << "loading translations for resource "<< resource <<
+                    ", locale " << locale <<
+                    ", translations dir " << QLatin1String(TRANSLATIONSDIR);
+
+        if (translator.load(locale, resource, "-", QLatin1String(TRANSLATIONSDIR)))
+            qApp->installTranslator(&translator);
+        else
+            qWarning() << "unable to load translations!";
+
     }
 }
