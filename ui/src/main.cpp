@@ -53,16 +53,7 @@ int main(int argc, char *argv[])
         app->setOrganizationName("kz.dpurgin");
         app->setApplicationName("harbour-callrecorder");
 
-        QScopedPointer< Settings > settings(new Settings());
-
-        QTranslator translator;
-        translator.load(QLocale(settings->locale()),
-                        "ui",
-                        "-",
-                        "/usr/share/harbour-callrecorder/translations");
-        qApp->installTranslator(&translator);
-
-        settings.reset();
+        LibCallRecorder::installTranslator("ui");
 
         QScopedPointer< Database > db(new Database());
 
