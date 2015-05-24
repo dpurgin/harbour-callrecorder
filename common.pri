@@ -15,6 +15,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 PACKAGE=harbour-callrecorder
-VERSION=0.4.2
+VERSION=0.6.0
 
-QMAKE_RPATHDIR += /usr/share/$${PACKAGE}/lib
+TARGETDIR = /usr/share/$${PACKAGE}
+QMAKE_RPATHDIR += $${TARGETDIR}/lib
