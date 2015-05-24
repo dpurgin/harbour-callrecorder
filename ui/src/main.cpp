@@ -99,6 +99,8 @@ int main(int argc, char *argv[])
                                                 "\nYou should have received a copy of the GNU General Public License"
                                                 " along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 
+        view->rootContext()->setContextProperty("VERSION", QLatin1String(VERSION));
+
     //    view->rootContext()->setContextProperty("settings", settings.data());
 
         retval = app->exec();
