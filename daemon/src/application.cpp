@@ -109,6 +109,7 @@ Application::Application(int argc, char* argv[])
     setOrganizationName(QLatin1String("kz.dpurgin"));
 
     LibCallRecorder::installMessageHandler();
+    LibCallRecorder::installTranslator("daemon");
 
     d->settings.reset(new Settings());
 
