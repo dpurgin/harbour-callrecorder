@@ -53,7 +53,23 @@ int main(int argc, char *argv[])
         app->setOrganizationName("kz.dpurgin");
         app->setApplicationName("harbour-callrecorder");
 
-        LibCallRecorder::installTranslator("ui");
+        QScopedPointer< Settings > settings(new Settings());
+
+        QTranslator translator;
+        QLocale locale = (settings->locale() == QLatin1String("system")?
+                              QLocale::system():
+                              QLocale(settings->locale()));
+
+        qDebug() << "loading translations for resource ui" <<
+                    ", locale " << locale <<
+                    ", translations dir " << QLatin1String(TRANSLATIONSDIR);
+
+        if (translator.load(locale, "ui", "-", QLatin1String(TRANSLATIONSDIR), ".qm"))
+            qApp->installTranslator(&translator);
+        else
+            qWarning() << "unable to load translations!";
+
+        settings.reset();
 
         QScopedPointer< Database > db(new Database());
 

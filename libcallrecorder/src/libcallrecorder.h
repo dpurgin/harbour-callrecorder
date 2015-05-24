@@ -21,10 +21,11 @@
 
 #include <QString>
 
+class QGuiApplication;
+
 namespace LibCallRecorder
 {
     void installMessageHandler();
-    void installTranslator(const QString& resource);
 }
 
 #endif // LIBCALLRECORDER_H

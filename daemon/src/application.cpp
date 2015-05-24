@@ -109,9 +109,22 @@ Application::Application(int argc, char* argv[])
     setOrganizationName(QLatin1String("kz.dpurgin"));
 
     LibCallRecorder::installMessageHandler();
-    LibCallRecorder::installTranslator("daemon");
 
     d->settings.reset(new Settings());
+
+    QTranslator translator;
+    QLocale locale = (d->settings->locale() == QLatin1String("system")?
+                          QLocale::system():
+                          QLocale(d->settings->locale()));
+
+    qDebug() << "loading translations for resource daemon" <<
+                ", locale " << locale <<
+                ", translations dir " << QLatin1String(TRANSLATIONSDIR);
+
+    if (translator.load(locale, "daemon", "-", QLatin1String(TRANSLATIONSDIR), ".qm"))
+        qApp->installTranslator(&translator);
+    else
+        qWarning() << "unable to load translations!";
 
     d->dbusAdaptor.reset(new DBusAdaptor(this));
     d->uiInterface.reset(new UiDBusInterface(this));

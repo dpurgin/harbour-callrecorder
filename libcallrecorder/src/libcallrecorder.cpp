@@ -25,14 +25,12 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
-#include <QLocale>
 #include <QMutex>
 #include <QMutexLocker>
 #include <QScopedPointer>
 #include <QStandardPaths>
 #include <QStringBuilder>
 #include <QThread>
-#include <QTranslator>
 
 #include <iostream>
 
@@ -126,25 +124,5 @@ namespace LibCallRecorder
     void installMessageHandler()
     {
         qInstallMessageHandler(messageHandler);
-    }
-
-    void installTranslator(const QString& resource)
-    {
-        QScopedPointer< Settings > settings(new Settings());
-
-        QTranslator translator;
-        QLocale locale = (settings->locale() == QLatin1String("system")?
-                              QLocale::system():
-                              QLocale(settings->locale()));
-
-        qDebug() << "loading translations for resource "<< resource <<
-                    ", locale " << locale <<
-                    ", translations dir " << QLatin1String(TRANSLATIONSDIR);
-
-        if (translator.load(locale, resource, "-", QLatin1String(TRANSLATIONSDIR)))
-            qApp->installTranslator(&translator);
-        else
-            qWarning() << "unable to load translations!";
-
     }
 }
