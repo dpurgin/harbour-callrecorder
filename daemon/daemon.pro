@@ -80,3 +80,22 @@ OTHER_FILES += \
 TRANSLATIONS += \
     translations/daemon.ts \
     translations/daemon-ru.ts
+
+qm.path = $${TARGETDIR}/translations
+qm.commands += \
+    mkdir -p translations; \
+    cp --update $${_PRO_FILE_PWD_}/translations/*.ts $${OUT_PWD}/translations/; \
+    lrelease $${OUT_PWD}/translations/*.ts;
+
+QMFILES =
+
+for(ts, TRANSLATIONS) {
+    QMFILES += $$replace(ts, .ts, .qm)
+}
+
+qm.files = $${QMFILES}
+
+INSTALLS += qm
+
+
+
