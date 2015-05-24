@@ -96,6 +96,9 @@ private:
 
     // workaround for Android mic issue
     bool needResetDefaultSource;
+
+    QScopedPointer< QTranslator > daemonTranslator;
+    QScopedPointer< QTranslator > silicaTranslator;
 };
 
 
@@ -112,19 +115,27 @@ Application::Application(int argc, char* argv[])
 
     d->settings.reset(new Settings());
 
-    QTranslator translator;
     QLocale locale = (d->settings->locale() == QLatin1String("system")?
                           QLocale::system():
                           QLocale(d->settings->locale()));
+
+    d->daemonTranslator.reset(new QTranslator());
 
     qDebug() << "loading translations for resource daemon" <<
                 ", locale " << locale <<
                 ", translations dir " << QLatin1String(TRANSLATIONSDIR);
 
-    if (translator.load(locale, "daemon", "-", QLatin1String(TRANSLATIONSDIR), ".qm"))
-        qApp->installTranslator(&translator);
+    if (d->daemonTranslator->load(locale, "daemon", "-", QLatin1String(TRANSLATIONSDIR), ".qm"))
+        qApp->installTranslator(d->daemonTranslator.data());
     else
-        qWarning() << "unable to load translations!";
+        qWarning() << "unable to load daemon translations!";
+
+    d->silicaTranslator.reset(new QTranslator());
+
+    if (d->silicaTranslator->load(locale, "sailfishsilica-qt5", "-", "/usr/share/translations", ".qm"))
+        qApp->installTranslator(d->silicaTranslator.data());
+    else
+        qWarning() << "unable to load silica translations!";
 
     d->dbusAdaptor.reset(new DBusAdaptor(this));
     d->uiInterface.reset(new UiDBusInterface(this));
