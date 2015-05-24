@@ -63,6 +63,7 @@ public:
     Settings* settings() const;
 
 public slots:
+    void showApprovalDialog();
 
 private slots:
     void checkStorageLimits();
@@ -86,8 +87,6 @@ private slots:
     void onVoiceCallAdded(const QString& objectPath);
     void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);
     void onVoiceCallRemoved(const QString& objectPath);
-
-    void showApprovalDialog();
 
 private:
     void createApprovalDialog();

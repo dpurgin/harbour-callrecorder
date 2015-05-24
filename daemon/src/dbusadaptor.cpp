@@ -38,3 +38,8 @@ DBusAdaptor::~DBusAdaptor()
 {
     delete d;
 }
+
+void DBusAdaptor::ShowApprovalDialog()
+{
+    d->application->showApprovalDialog();
+}
