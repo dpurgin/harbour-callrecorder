@@ -18,4 +18,10 @@ PACKAGE=harbour-callrecorder
 VERSION=0.6.0
 
 TARGETDIR = /usr/share/$${PACKAGE}
+TRANSLATIONSDIR = $${TARGETDIR}/translations
 QMAKE_RPATHDIR += $${TARGETDIR}/lib
+
+DEFINES += \
+    TARGETDIR=\\\"$${TARGETDIR}\\\" \
+    TRANSLATIONSDIR=\\\"$${TRANSLATIONSDIR}\\\" \
+    VERSION=\\\"$${VERSION}\\\"
