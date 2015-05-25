@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     {
         QScopedPointer< Application > a(new Application(argc, argv));
 
-        if (!QDBusConnection::sessionBus().registerService("kz.dpurgin.CallRecorder"))
+        if (!QDBusConnection::sessionBus().registerService("kz.dpurgin.CallRecorder.Daemon"))
         {
             QDBusError error = QDBusConnection::sessionBus().lastError();
 
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
             dbusServiceRegistered = false;
         }
 
-        if (!QDBusConnection::sessionBus().registerObject("/Daemon", a.data()))
+        if (!QDBusConnection::sessionBus().registerObject("/kz/dpurgin/CallRecorder/Daemon", a.data()))
         {
             QDBusError error = QDBusConnection::sessionBus().lastError();
 
