@@ -109,14 +109,14 @@ ApplicationWindow {
     DBusAdaptor {
         id: dbusAdaptor
 
-        service: 'kz.dpurgin.CallRecorder'
-        path: '/UI'
+        service: 'kz.dpurgin.CallRecorder.UI'
+        path: '/kz/dpurgin/CallRecorder/UI'
         iface: 'kz.dpurgin.CallRecorder'
     }
 
     DBusInterface {
-        service: 'kz.dpurgin.CallRecorder'
-        path: '/Daemon'
+        service: 'kz.dpurgin.CallRecorder.Daemon'
+        path: '/kz/dpurgin/CallRecorder/Daemon'
         iface: 'kz.dpurgin.CallRecorder'
 
         signalsEnabled: true
