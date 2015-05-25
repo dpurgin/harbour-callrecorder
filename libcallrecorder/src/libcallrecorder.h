@@ -21,10 +21,12 @@
 
 #include <QString>
 
-class QGuiApplication;
+class QTranslator;
 
 namespace LibCallRecorder
 {
+    QTranslator* createTranslator(const QString& resource,
+                                  const QString& path = QLatin1String(TRANSLATIONSDIR));
     void installMessageHandler();
 }
 

@@ -31,6 +31,7 @@
 #include <QStandardPaths>
 #include <QStringBuilder>
 #include <QThread>
+#include <QTranslator>
 
 #include <iostream>
 
@@ -38,6 +39,26 @@
 
 namespace LibCallRecorder
 {
+    QTranslator* createTranslator(const QString& resource, const QString& path)
+    {
+        QScopedPointer< Settings > settings(new Settings());
+
+        QLocale locale = (settings->locale() == QLatin1String("system")?
+                              QLocale::system():
+                              QLocale(settings->locale()));
+
+        QScopedPointer< QTranslator > translator(new QTranslator());
+
+        qDebug() << "loading translations for resource " << resource <<
+                    ", locale " << locale <<
+                    ", translations dir " << path;
+
+        if (!translator->load(locale, resource, "-", path, ".qm"))
+            qWarning() << "unable to load translations";
+
+        return translator.take();
+    }
+
     void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
     {
         Q_UNUSED(type)
