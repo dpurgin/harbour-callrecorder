@@ -20,7 +20,7 @@
 
 UiDBusInterface::UiDBusInterface(QObject *parent)
     : QDBusAbstractInterface("",
-                             "/UI",
+                             "/kz/dpurgin/CallRecorder/UI",
                              "kz.dpurgin.CallRecorder",
                              QDBusConnection::sessionBus(),
                              parent)
