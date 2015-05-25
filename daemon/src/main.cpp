@@ -20,6 +20,7 @@
 
 #include <QDebug>
 #include <QDBusConnection>
+#include <QDBusError>
 #include <QScopedPointer>
 
 #include <libcallrecorder/callrecorderexception.h>
@@ -27,18 +28,33 @@
 int main(int argc, char* argv[])
 {
     int retval = -1;
+    bool dbusServiceRegistered = true;
+    bool dbusObjectRegistered = true;
 
     try
     {
         QScopedPointer< Application > a(new Application(argc, argv));
 
-        if (QDBusConnection::sessionBus().registerService("kz.dpurgin.CallRecorder"))
+        if (!QDBusConnection::sessionBus().registerService("kz.dpurgin.CallRecorder"))
         {
-            QDBusConnection::sessionBus().registerObject("/Daemon", a.data());
+            QDBusError error = QDBusConnection::sessionBus().lastError();
+
+            qWarning() << "Unable to register DBus service: " <<
+                          QDBusError::errorString(error.type()) << ": " <<
+                          error.message();
+
+            dbusServiceRegistered = false;
         }
-        else
+
+        if (!QDBusConnection::sessionBus().registerObject("/Daemon", a.data()))
         {
-            qWarning() << "Unable to register DBus service";
+            QDBusError error = QDBusConnection::sessionBus().lastError();
+
+            qWarning() << "Unable to register DBus object: " <<
+                          QDBusError::errorString(error.type()) << ": " <<
+                          error.message();
+
+            dbusObjectRegistered = false;
         }
 
         retval = a->exec();
@@ -52,7 +68,11 @@ int main(int argc, char* argv[])
         qCritical() << "Unhandled exception occured";
     }
 
-    QDBusConnection::sessionBus().unregisterService("kz.dpurgin.CallRecorder");
+    if (dbusServiceRegistered)
+        QDBusConnection::sessionBus().unregisterService("kz.dpurgin.CallRecorder");
+
+    if (dbusObjectRegistered)
+        QDBusConnection::sessionBus().unregisterObject("/Daemon");
 
     return retval;
 }
