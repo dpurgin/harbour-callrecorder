@@ -54,8 +54,6 @@ public:
     State state() const;
     QDateTime timeStamp() const;
 
-    void processState();
-
 signals:
     void stateChanged(VoiceCallRecorder::State state);
 
@@ -65,12 +63,11 @@ private slots:
     void onAudioInputDeviceReadyRead();
     void onAudioInputStateChanged(QAudio::State state);
     void onVoiceCallLineIdentificationChanged(const QString& lineIdentification);
-    void onVoiceCallStateChanged(const QString& state);
+
+    void processOfonoState(const QString& state);
 
 private:
     void arm();
-
-    void processOfonoState(const QString& state);
 
     void setCallType(CallType callType);
     void setState(State state);

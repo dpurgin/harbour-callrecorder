@@ -83,16 +83,11 @@ VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
     d->qofonoVoiceCall.reset(new QOfonoVoiceCall());
     d->qofonoVoiceCall->setVoiceCallPath(dbusObjectPath);
 
-    // recording process should be started only when line id is known
-    // what if someone calls from a hidden number? needs researching
-    if (d->qofonoVoiceCall->lineIdentification().isEmpty())
-    {
-        connect(d->qofonoVoiceCall.data(), SIGNAL(lineIdentificationChanged(QString)),
-                this, SLOT(onVoiceCallLineIdentificationChanged(QString)));
-    }
+    connect(d->qofonoVoiceCall.data(), &QOfonoVoiceCall::lineIdentificationChanged,
+            this, &VoiceCallRecorder::onVoiceCallLineIdentificationChanged);
 
-    connect(d->qofonoVoiceCall.data(), SIGNAL(stateChanged(QString)),
-            this, SLOT(onVoiceCallStateChanged(QString)));
+    connect(d->qofonoVoiceCall.data(), &QOfonoVoiceCall::stateChanged,
+            this, &VoiceCallRecorder::processOfonoState);
 }
 
 VoiceCallRecorder::~VoiceCallRecorder()
@@ -146,7 +141,7 @@ void VoiceCallRecorder::arm()
 
     const QAudioFormat audioFormat = daemon->settings()->audioFormat();
 
-    qDebug() << "Audio format is: " << audioFormat;
+    qDebug() << QLatin1String("Audio format is: ") << audioFormat;
 
     // create audio input device
     if (d->audioInput.isNull())
@@ -156,7 +151,7 @@ void VoiceCallRecorder::arm()
                 this, SLOT(onAudioInputStateChanged(QAudio::State)));
     }
     else
-        qWarning() << ": d->audioInput expected to be NULL but it wasn't!";
+        qWarning() << QLatin1String(": d->audioInput expected to be NULL but it wasn't!");
 
     // initialize FLAC encoder
     if (d->flacEncoder == NULL)
@@ -164,27 +159,23 @@ void VoiceCallRecorder::arm()
         d->flacEncoder = FLAC__stream_encoder_new();
 
         if (d->flacEncoder == NULL)
-            qCritical() << __PRETTY_FUNCTION__ << ": unable to create FLAC encoder!";
+            qCritical() << QLatin1String("unable to create FLAC encoder!");
 
         if (!FLAC__stream_encoder_set_channels(d->flacEncoder, audioFormat.channelCount()))
-            qCritical() << __PRETTY_FUNCTION__ <<
-                         ": unable to set FLAC channels: " <<
-                         FLAC__stream_encoder_get_state(d->flacEncoder);
+            qCritical() << QLatin1String(": unable to set FLAC channels: ") <<
+                           FLAC__stream_encoder_get_state(d->flacEncoder);
 
         if (!FLAC__stream_encoder_set_bits_per_sample(d->flacEncoder, audioFormat.sampleSize()))
-            qCritical() << __PRETTY_FUNCTION__ <<
-                         ": unable to set FLAC bits per sample: " <<
-                         FLAC__stream_encoder_get_state(d->flacEncoder);
+            qCritical() << QLatin1String(": unable to set FLAC bits per sample: ") <<
+                           FLAC__stream_encoder_get_state(d->flacEncoder);
 
         if (!FLAC__stream_encoder_set_sample_rate(d->flacEncoder, audioFormat.sampleRate()))
-            qCritical() << __PRETTY_FUNCTION__ <<
-                         ": unable to set FLAC sample rate: " <<
-                         FLAC__stream_encoder_get_state(d->flacEncoder);
+            qCritical() << QLatin1String(": unable to set FLAC sample rate: ") <<
+                           FLAC__stream_encoder_get_state(d->flacEncoder);
 
         if (!FLAC__stream_encoder_set_compression_level(d->flacEncoder, daemon->settings()->compression()))
-            qCritical() << __PRETTY_FUNCTION__ <<
-                         ": unable to set FLAC compression level: " <<
-                         FLAC__stream_encoder_get_state(d->flacEncoder);
+            qCritical() << QLatin1String(": unable to set FLAC compression level: ") <<
+                           FLAC__stream_encoder_get_state(d->flacEncoder);
 
         QString callTypeSuffix;
 
@@ -196,8 +187,6 @@ void VoiceCallRecorder::arm()
             callTypeSuffix = QLatin1String("part");
 
         // form output location with file name based on current date, phone number, call direction (in/out).
-        // if line ID does not exist, we should wait for the corresponding signal from Ofono,
-        // but maybe it is always known at this stage. Needs checking.
         // File name is set to "{timestamp}_{phoneNumber}_{type}.flac"
         d->outputLocation = (daemon->settings()->outputLocation() %
                              QLatin1Char('/') %
@@ -206,7 +195,7 @@ void VoiceCallRecorder::arm()
                              callTypeSuffix %
                              QLatin1String(".flac"));
 
-        qDebug() << "Writing to " << d->outputLocation;
+        qDebug() << QLatin1String("Writing to ") << d->outputLocation;
 
         FLAC__StreamEncoderInitStatus status =
                 FLAC__stream_encoder_init_file(d->flacEncoder,
@@ -216,13 +205,14 @@ void VoiceCallRecorder::arm()
 
         if (status != FLAC__STREAM_ENCODER_INIT_STATUS_OK)
         {
-            qCritical() <<
-                ": unable to init FLAC file: " << status <<
-                ", current encoder status is " << FLAC__stream_encoder_get_state(d->flacEncoder);
+            qCritical() << QLatin1String(": unable to init FLAC file: ") <<
+                           status <<
+                           QLatin1String(", current encoder status is ") <<
+                           FLAC__stream_encoder_get_state(d->flacEncoder);
         }
     }
     else
-        qWarning() << ": d->flacEncoder expected to be NULL but it wasn't!";
+        qWarning() << QLatin1String(": d->flacEncoder expected to be NULL but it wasn't!");
 
     // add new event to events table
     if (d->eventId == -1)
@@ -244,7 +234,7 @@ void VoiceCallRecorder::arm()
                     EventsTableModel::Armed);                      // initial recording state
     }
     else
-        qWarning() << ": d->eventId expected to be -1 but it wasn't!";
+        qWarning() << QLatin1String(": d->eventId expected to be -1 but it wasn't!");
 
     setState(Armed);
 }
@@ -297,15 +287,19 @@ void VoiceCallRecorder::onVoiceCallLineIdentificationChanged(const QString& line
 {
     qDebug() << lineIdentification;
 
-    if (!lineIdentification.isEmpty() && !d->qofonoVoiceCall->state().isEmpty())
-        processOfonoState(d->qofonoVoiceCall->state());
-}
+    // if eventId exists, it means that the recorder was armed with another phoneNumberId.
+    // update it with the current one
 
-void VoiceCallRecorder::onVoiceCallStateChanged(const QString& state)
-{
-    qDebug() << d->dbusObjectPath << state;
+    if (d->eventId != -1)
+    {
+        QVariantMap params;
 
-    processOfonoState(state);
+        params.insert(
+            QLatin1String("PhoneNumberID"),
+            daemon->model()->phoneNumbers()->getIdByLineIdentification(lineIdentification));
+
+        daemon->model()->events()->update(d->eventId, params);
+    }
 }
 
 void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
@@ -325,7 +319,7 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
         setTimeStamp(QDateTime::currentDateTime());
 
         // if line identification received, arm the recording if operation mode allows.
-        // Wait for lineIdentificationChanged otherwise
+        // All calls from private numbers are recorded.
 
         QString lineIdentification = d->qofonoVoiceCall->lineIdentification();
 
@@ -349,6 +343,11 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             else
                 qWarning() << "Not arming for " << lineIdentification
                            << " due to operation mode " << opMode;
+        }
+        else
+        {
+            qWarning() << "call from private number, arming recorder";
+            arm();
         }
     }
 
@@ -434,15 +433,6 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
                 d->duration += QDateTime::currentMSecsSinceEpoch() - d->lastRecordStart;
             }
         }
-    }
-}
-
-void VoiceCallRecorder::processState()
-{
-    if (!d->qofonoVoiceCall->state().isEmpty() &&
-            !d->qofonoVoiceCall->lineIdentification().isEmpty())
-    {
-        processOfonoState(d->qofonoVoiceCall->state());
     }
 }
 
