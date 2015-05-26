@@ -495,9 +495,6 @@ void Application::onVoiceCallAdded(const QString& objectPath)
     connect(voiceCallRecorder.data(), SIGNAL(stateChanged(VoiceCallRecorder::State)),
             d->dbusAdaptor.data(), SIGNAL(RecorderStateChanged()));
 
-    // for qofono < 0.61 (SailfishOS prior to 1.1.2.15) state is already known after constructing
-    voiceCallRecorder->processState();
-
     d->voiceCallRecorders.insert(objectPath, voiceCallRecorder.take());        
 }
 
