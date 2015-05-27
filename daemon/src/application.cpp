@@ -112,6 +112,8 @@ Application::Application(int argc, char* argv[])
 
     LibCallRecorder::installMessageHandler();
 
+    d->settings.reset(new Settings());
+
     d->daemonTranslator.reset(LibCallRecorder::createTranslator("daemon"));
     installTranslator(d->daemonTranslator.data());
 
@@ -138,8 +140,8 @@ Application::Application(int argc, char* argv[])
     {
         qWarning() << QLatin1String("No modems available! Waiting for modemAdded");
 
-        connect(d->qofonoManager.data(), SIGNAL(modemAdded(QString)),
-                this, SLOT(initVoiceCallManager(QString)));
+        connect(d->qofonoManager.data(), &QOfonoManager::modemAdded,
+                this, &Application::initVoiceCallManager);
     }
     else
         initVoiceCallManager(modems.first());
