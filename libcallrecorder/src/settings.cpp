@@ -143,7 +143,12 @@ Settings::Settings(QObject* parent)
         qDebug() << ": fallen back to " << d->inputDevice.deviceName();
     }
 
-    QDir().mkpath(outputLocation());
+    QDir outputLocationDir(outputLocation());
+
+    if (!outputLocationDir.exists())
+        QDir().mkpath(outputLocation());
+
+    createNoMediaFile();
 }
 
 Settings::~Settings()
@@ -162,6 +167,28 @@ QAudioFormat Settings::audioFormat() const
     format.setSampleType(QAudioFormat::SignedInt);
 
     return d->inputDevice.nearestFormat(format);
+}
+
+void Settings::createNoMediaFile()
+{
+    // create a .nomedia file in output location
+    // this will tell tracker-miner that the output location
+    // doesn't contain media files
+
+    QFile nomediaFile(QDir(outputLocation()).filePath(".nomedia"));
+
+    if (!nomediaFile.exists())
+    {
+        if (!nomediaFile.open(QFile::WriteOnly | QFile::Truncate))
+        {
+            qWarning() << "unable to open " <<
+                          nomediaFile.fileName() <<
+                          ": " <<
+                          nomediaFile.errorString();
+        }
+
+        nomediaFile.close();
+    }
 }
 
 int Settings::compression() const
@@ -299,6 +326,8 @@ void Settings::setOutputLocation(const QString& outputLocation)
     if (d->outputLocation != outputLocation)
     {
         d->outputLocation = outputLocation;
+
+        createNoMediaFile();
 
         emit outputLocationChanged(outputLocation);
         emit settingsChanged();

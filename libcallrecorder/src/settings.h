@@ -135,6 +135,9 @@ signals:
     void settingsChanged();
 
 private:
+    void createNoMediaFile();
+
+private:
     class SettingsPrivate;
     QScopedPointer< SettingsPrivate > d;
 };
