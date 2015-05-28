@@ -41,8 +41,7 @@ PKGCONFIG += flac qofono-qt5
 
 QMLFILES = \
     qml/pages/dialogs/ApprovalDialog.qml \
-    qml/widgets/SystemDialogButton.qml \
-    qml/widgets/SystemWindow.qml \
+    qml/widgets/ApprovalDialogButton.qml \
     qml/approval.qml
 
 qml.files = qml

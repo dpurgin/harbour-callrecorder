@@ -17,14 +17,15 @@
 */
 
 import QtQuick 2.2
+import QtQuick.Window 2.0
 import Sailfish.Silica 1.0
 
 import kz.dpurgin.nemomobile.contacts 1.0
 
 import "../../widgets" as Widgets
 
-Widgets.SystemWindow {
-    id: window
+Item {
+    id: window   
 
     PeopleModel {
         id: people
@@ -49,6 +50,9 @@ Widgets.SystemWindow {
     signal askLaterClicked(int eventId)
     signal storeClicked(int eventId)
     signal removeClicked(int eventId)
+
+    width: Screen.width
+    height: Screen.height
 
     Rectangle {
         anchors.fill: parent
@@ -163,9 +167,10 @@ Widgets.SystemWindow {
             Row {
                 property real buttonWidth: parent.width / 3
 
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
-                Widgets.SystemDialogButton {
+                Widgets.ApprovalDialogButton {
                     id: storeButton
 
                     width: parent.buttonWidth
@@ -182,7 +187,7 @@ Widgets.SystemWindow {
                     }
                 }
 
-                Widgets.SystemDialogButton {
+                Widgets.ApprovalDialogButton {
                     id: removeButton
 
                     width: parent.buttonWidth
@@ -199,7 +204,7 @@ Widgets.SystemWindow {
                     }
                 }
 
-                Widgets.SystemDialogButton {
+                Widgets.ApprovalDialogButton {
                     id: askLaterButton
 
                     width: parent.buttonWidth
