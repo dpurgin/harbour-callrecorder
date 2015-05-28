@@ -41,6 +41,8 @@ Item {
     property int fileSize
     property alias lineIdentification: lineIdentificationLabel.text
 
+    property bool shouldBeVisible
+
     property Item selectedItem: askLaterButton
     property var person:
         people.populated && lineIdentification?
@@ -53,6 +55,29 @@ Item {
 
     width: Screen.width
     height: Screen.height
+
+    opacity: shouldBeVisible? 1: 0
+
+    Behavior on opacity {
+        SequentialAnimation {
+            FadeAnimation { }
+            ScriptAction {
+                script: {
+                    if (!shouldBeVisible && eventId > -1)
+                    {
+                        if (selectedItem === storeButton)
+                            storeClicked(eventId)
+                        else if (selectedItem === removeButton)
+                            removeClicked(eventId)
+                        else if (selectedItem === askLaterButton)
+                            askLaterClicked(eventId)
+
+                        eventId = -1
+                    }
+                }
+            }
+        }
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -182,8 +207,7 @@ Item {
                         console.log('store clicked');
 
                         selectedItem = storeButton
-
-                        storeClicked(eventId)
+                        shouldBeVisible = false
                     }
                 }
 
@@ -199,8 +223,7 @@ Item {
                         console.log('remove clicked');
 
                         selectedItem = removeButton
-
-                        removeClicked(eventId)
+                        shouldBeVisible = false
                     }
                 }
 
@@ -216,8 +239,7 @@ Item {
                         console.log('ask later clicked');
 
                         selectedItem = askLaterButton
-
-                        askLaterClicked(eventId)
+                        shouldBeVisible = false
                     }
                 }
             }
@@ -236,7 +258,9 @@ Item {
             console.log('default area clicked');
 
             // default to Ask Later for safety
-            askLaterClicked(eventId);
+            selectedItem = askLaterButton
+            shouldBeVisible = false
+//            askLaterClicked(eventId);
 
 //            if (selectedItem === storeButton)
 //                storeClicked(eventId);

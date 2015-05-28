@@ -625,6 +625,7 @@ void Application::showApprovalDialog()
         window->setProperty("duration", cursor->value("Duration"));
         window->setProperty("fileSize", cursor->value("FileSize"));
         window->setProperty("lineIdentification", cursor->value("LineIdentification"));
+        window->setProperty("shouldBeVisible", true);
 
         qDebug() << "approvalView visible: " << d->approvalView->isVisible();
 
