@@ -71,8 +71,6 @@ Item {
                             removeClicked(eventId)
                         else if (selectedItem === askLaterButton)
                             askLaterClicked(eventId)
-
-                        eventId = -1
                     }
                 }
             }
@@ -260,16 +258,28 @@ Item {
             // default to Ask Later for safety
             selectedItem = askLaterButton
             shouldBeVisible = false
-//            askLaterClicked(eventId);
-
-//            if (selectedItem === storeButton)
-//                storeClicked(eventId);
-
-//            else if (selectedItem === removeButton)
-//                removeClicked(eventId);
-
-//            else if (selectedItem === askLaterButton)
-//                askLaterClicked(eventId);
         }
+    }
+
+    Timer {
+        id: timer
+
+        repeat: false
+
+        interval: 30000
+
+        onTriggered: {
+            console.log('selection timed out')
+
+            selectedItem = askLaterButton
+            shouldBeVisible = false
+        }
+    }
+
+    onShouldBeVisibleChanged: {
+        if (shouldBeVisible)
+            timer.restart()
+        else
+            timer.stop()
     }
 }
