@@ -22,7 +22,6 @@ import Sailfish.Silica 1.0
 import kz.dpurgin.nemomobile.contacts 1.0
 
 import "pages/dialogs" as Dialogs
-import "widgets" as Widgets
 
 ApplicationWindow {
     height: 1
