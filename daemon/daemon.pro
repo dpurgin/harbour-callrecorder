@@ -23,7 +23,10 @@ target.path = /usr/bin
 service.files = $${TARGET}.service
 service.path = /usr/lib/systemd/user
 
-INSTALLS += target service
+scripts.files = $${TARGET}-pre.sh
+scripts.path = /usr/bin
+
+INSTALLS += target service scripts
 
 TEMPLATE = app
 
@@ -74,7 +77,8 @@ lupdate_only {
 
 OTHER_FILES += \
     $${TARGET}.service \
-    $${QMLFILES}
+    $${TARGET}-pre.sh \
+    $${QMLFILES} \
 
 TRANSLATIONS += \
     translations/daemon.ts \
