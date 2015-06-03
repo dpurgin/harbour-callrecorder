@@ -167,6 +167,13 @@ Application::Application(int argc, char* argv[])
 
     d->storageLimitTimer->start();
 
+    // restart storage limit timer after settings were changed.
+    // this is needed to avoid firing cleanup when user is in
+    // process of changing limit values
+
+    connect(d->uiInterface.data(), SIGNAL(SettingsChanged()),
+            d->storageLimitTimer.data(), SLOT(start()));
+
     createApprovalDialog();
 }
 
@@ -383,6 +390,8 @@ void Application::onApprovalDialogRemove(int eventId)
 
     model()->events()->remove(eventId);
 
+    emit d->dbusAdaptor->RecorderStateChanged();
+
     showApprovalDialog();
 }
 
@@ -394,6 +403,8 @@ void Application::onApprovalDialogStore(int eventId)
     params.insert("RecordingStateID", static_cast< int >(EventsTableModel::Done));
 
     model()->events()->update(eventId, params);
+
+    emit d->dbusAdaptor->RecorderStateChanged();
 
     showApprovalDialog();
 }
