@@ -27,14 +27,14 @@
 LocaleListModel::LocaleListModel(QObject* parent)
     : QAbstractListModel(parent)
 {
-    // system locale always presents on the list
+    // system locale is always present on the list
     mLocales.append(QPair< QString, QString >("system", tr("System")));
 
     // read all .qm files from the following location and transform them into locale list
-    QDir dir("/usr/share/harbour-callrecorder/translations");
+    QDir dir(QLatin1String(TRANSLATIONSDIR));
 
     QStringList qmFilter;
-    qmFilter << "*.qm";
+    qmFilter << "ui-*.qm";
 
     foreach (QFileInfo entry,
              dir.entryInfoList(qmFilter, QDir::Files | QDir::Readable, QDir::Name))
