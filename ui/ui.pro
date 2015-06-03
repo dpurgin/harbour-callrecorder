@@ -104,6 +104,7 @@ TRANSLATIONS += \
     translations/ui-fi.ts \
     translations/ui-fr.ts \
     translations/ui-it.ts \
+    translations/ui-nl.ts \
     translations/ui-pl.ts \
     translations/ui-ru.ts \
     translations/ui-sv.ts \
