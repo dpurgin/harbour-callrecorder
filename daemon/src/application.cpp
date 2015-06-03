@@ -213,6 +213,9 @@ void Application::checkStorageLimits()
     checkStorageAgeLimits();
     checkStorageSizeLimits();
 
+    // this is clumsy but will cause UI to reload its list
+    emit d->dbusAdaptor->RecorderStateChanged();
+
     d->storageLimitTimer->start();
 }
 
