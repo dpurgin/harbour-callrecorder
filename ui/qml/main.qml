@@ -236,6 +236,13 @@ ApplicationWindow {
             });
         }
 
+        function restart()
+        {
+            console.log('');
+
+            systemdUnit.typedCall('Restart', [{ type: 's', value: 'replace' }]);
+        }
+
         function start()
         {
             console.log('');
