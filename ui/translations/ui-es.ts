@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -62,6 +60,45 @@
         <source>FLAC compression level</source>
         <translation>Nivel de compresión FLAC</translation>
     </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation>44.1 kHz</translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation>32 kHz</translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation>22.05 kHz</translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation>16 kHz</translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation>11.025 kHz</translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation>8 kHz</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation>No hay contactos disponibles</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -102,11 +139,11 @@
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
-        <translation>Grabar las llamadas a cualquier número excepto a los incluidos en la lista negra</translation>
+        <translation>Graba las llamadas a cualquier número excepto a los incluidos en la lista negra</translation>
     </message>
     <message>
         <source>Do not record anything except numbers in the white list</source>
-        <translation>No grabar ninguna llamada salvo a los números incluidos en la lista blanca</translation>
+        <translation>No graba ninguna llamada salvo a los números incluidos en la lista blanca</translation>
     </message>
     <message>
         <source>Black list</source>
@@ -189,9 +226,60 @@
         <source>Partial call</source>
         <translation>Llamada parcial</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>Borrar</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation>Aprobar y almacenar</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>El número está en la lista blanca</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>El número está en la lista negra</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation>Grabar siempre a este número</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation>No grabar nunca a este número</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation>Grabando a %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation>No va a grabar a %1</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>Almacenando</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Borrando</translation>
+    </message>
 </context>
 <context>
     <name>EventsDelegate</name>
+    <message>
+        <source>Deleting</source>
+        <translation>Borrando</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>Almacenando</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
         <translation>Listo para grabar</translation>
@@ -204,6 +292,72 @@
         <source>Recording suspended</source>
         <translation>Grabación cancelada</translation>
     </message>
+    <message>
+        <source>Waiting for approval</source>
+        <translation>Esperando aprobación</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateMenu</name>
+    <message>
+        <source>Delete</source>
+        <translation>Borrar</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation>Grabar siempre a este número</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation>Grabando a %1</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation>No grabar nunca a este número</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation>No va a grabar a %1</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation>Aprobar y almacenar</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>El número está en la lista blanca</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>El número está en la lista negra</translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation>Antes</translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation>Después</translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation>Número de teléfono</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>En</translation>
+    </message>
 </context>
 <context>
     <name>EventsPage</name>
@@ -212,83 +366,56 @@
         <translation>Grabaciones</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Borrar</translation>
+        <source>Select recordings</source>
+        <translation>Seleccionar grabaciones</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation>%1 en lista blanca</translation>
+        <source>Filtered recordings</source>
+        <translation>Grabaciones filtradas</translation>
     </message>
     <message>
-        <source>%1 is blacklisted</source>
-        <translation>%1 en lista negra</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation>Grabar siempre llamadas de este número</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation>Grabar siempre a %1</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation>Grabando a %1</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation>No grabar nunca llamadas de este número</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation>No grabar nunca a %1</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation>No está grabando a %1</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation>Borrando</translation>
-    </message>
-    <message>
-        <source>No calls recorded yet</source>
-        <translation>No hay llamadas grabadas todavía</translation>
+        <source>Select filtered recordings</source>
+        <translation>Seleccionar grabaciones filtradas</translation>
     </message>
     <message>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <source>Select recordings</source>
-        <translation>Seleccionar grabaciones</translation>
+        <source>Filter</source>
+        <translation>Filtro</translation>
     </message>
     <message>
-        <source>Enter phone number</source>
-        <translation>Introduce número de teléfono</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPicker</name>
-    <message>
-        <source>Select Recordings</source>
-        <translation>Seleccionar grabaciones</translation>
+        <source>No recordings meet filter criteria</source>
+        <translation>Ninguna grabación cumple el criterio del filtro</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
         <translation>No hay llamadas grabadas todavía</translation>
     </message>
     <message>
-        <source>Delete all</source>
-        <translation>Borrar todo</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation>Borrando todas las grabaciones</translation>
+        <source>View recordings</source>
+        <translation>Vista de las grabaciones</translation>
     </message>
     <message>
         <source>Deleting recordings</source>
         <translation>Borrando grabaciones</translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation>Borrar todos los filtros</translation>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation>Borrar todo</translation>
+    </message>
+    <message>
+        <source>Deleting all filtered</source>
+        <translation>Borrando todos los filtros</translation>
+    </message>
+    <message>
+        <source>Deleting all recordings</source>
+        <translation>Borrando todas las grabaciones</translation>
     </message>
 </context>
 <context>
@@ -350,6 +477,10 @@
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation>Elegir de los contactos</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -390,7 +521,7 @@
     </message>
     <message>
         <source>Location for storing the recordings</source>
-        <translation>Ubicación para el almacenamiento de grabaciones</translation>
+        <translation>Ubicación de las grabaciones</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -404,6 +535,86 @@
         <source>Relocating files</source>
         <translation>Reubicación de ficheros</translation>
     </message>
+    <message>
+        <source>Storage limits</source>
+        <translation>Limites de almacenamiento</translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation>Limitar almacenamiento por tamaño o antigüedad</translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation>Por antigüedad</translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation>Sin límite</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 días</translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation>90 días</translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation>180 días</translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation>365 días</translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation>Personalizar límite de antigüedad en días</translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation>Por tamaño</translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation>300 MB</translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation>500 MB</translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation>1 GB</translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation>3 GB</translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation>5 GB</translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation>Personalizar límite del tamaño en MB</translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation>Aprobar y almacenar</translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation>Requir aprobación</translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation>Si lo activas, se mostrará la aprobación de almacenamiento después de cada llamada</translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation>personalizado</translation>
+    </message>
 </context>
 <context>
     <name>Translators</name>
@@ -413,7 +624,7 @@
     </message>
     <message>
         <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
-        <translation>Gracias a esta gente Call Recorder está disponible en diferentes idiomas. Los nombres y los códigos regionales se enumeran en orden alfabético.</translation>
+        <translation>Gracias a estas personas Call Recorder está disponible en diferentes idiomas. Los nombres y los códigos regionales se enumeran en orden alfabético.</translation>
     </message>
 </context>
 <context>
@@ -424,11 +635,11 @@
     </message>
     <message>
         <source>Locale</source>
-        <translation>Ubicar</translation>
+        <translation>Región</translation>
     </message>
     <message>
         <source>Please restart the application if the locale is changed</source>
-        <translation>Por favor, reinicia la aplicacion si has cambiado la ubicación</translation>
+        <translation>Por favor, reinicia la aplicación si has cambiado la región</translation>
     </message>
 </context>
 </TS>

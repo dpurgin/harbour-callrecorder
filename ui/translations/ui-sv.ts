@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="sv">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sv" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -61,6 +59,45 @@
     <message>
         <source>FLAC compression level</source>
         <translation>FLAC komprimeringsnivå</translation>
+    </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation>44.1 kHz</translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation>32 kHz</translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation>22.05 kHz</translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation>16 kHz</translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation>11.025 kHz</translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation>8 kHz</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Acceptera</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation>Det finns inga kontakter</translation>
     </message>
 </context>
 <context>
@@ -189,9 +226,60 @@
         <source>Partial call</source>
         <translation>Partiellt samtal</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ta bort</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation>Godkänn och lagra</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>Nummret är vitlistat</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>Numret är svartlistat</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation>Spela alltid in detta nummer</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation>Spela aldrig in detta nummer</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation>Spelar in %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation>Spelar inte in %1</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>Lagrar</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Tar bort</translation>
+    </message>
 </context>
 <context>
     <name>EventsDelegate</name>
+    <message>
+        <source>Deleting</source>
+        <translation>Tar bort</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>Lagrar</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
         <translation>Redo för inspelning</translation>
@@ -204,32 +292,20 @@
         <source>Recording suspended</source>
         <translation>Inspelning avslutad</translation>
     </message>
+    <message>
+        <source>Waiting for approval</source>
+        <translation>Väntar på godkännande</translation>
+    </message>
 </context>
 <context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation>Inspelningar</translation>
-    </message>
+    <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation>%1 är vitlistad</translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation>%1 är svartlistad</translation>
-    </message>
-    <message>
         <source>Always record this number</source>
         <translation>Spela alltid in detta nummer</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation>Spela alltid in %1</translation>
     </message>
     <message>
         <source>Recording %1</source>
@@ -240,55 +316,106 @@
         <translation>Spela aldrig in detta nummer</translation>
     </message>
     <message>
-        <source>Never record %1</source>
-        <translation>Spela aldrig in %1</translation>
-    </message>
-    <message>
         <source>Not recording %1</source>
         <translation>Spelar inte in %1</translation>
     </message>
     <message>
-        <source>Deleting</source>
-        <translation>Tar bort</translation>
+        <source>Approve and store</source>
+        <translation>Godkänn och lagra</translation>
     </message>
     <message>
-        <source>No calls recorded yet</source>
-        <translation>Inga samtal inspelade än</translation>
+        <source>Number is whitelisted</source>
+        <translation>Numret är vitlistat</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Inställningar</translation>
+        <source>Number is blacklisted</source>
+        <translation>Numret är svartlistat</translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Acceptera</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation>Före</translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation>Efter</translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation>Telefonnummer</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>På</translation>
+    </message>
+</context>
+<context>
+    <name>EventsPage</name>
+    <message>
+        <source>Recordings</source>
+        <translation>Inspelningar</translation>
     </message>
     <message>
         <source>Select recordings</source>
         <translation>Välj inspelningar</translation>
     </message>
     <message>
-        <source>Enter phone number</source>
-        <translation>Ange telefonnummer</translation>
+        <source>Filtered recordings</source>
+        <translation>Filtrerade inspelningar</translation>
     </message>
-</context>
-<context>
-    <name>EventsPicker</name>
     <message>
-        <source>Select Recordings</source>
-        <translation>Välj inspelningar</translation>
+        <source>Select filtered recordings</source>
+        <translation>Välj filtrerade inspelningar</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Inställningar</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>Filter</translation>
+    </message>
+    <message>
+        <source>No recordings meet filter criteria</source>
+        <translation>Inga inspelningar stämmer med filterkriteria</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
         <translation>Inga samtal inspelade än</translation>
     </message>
     <message>
-        <source>Delete all</source>
-        <translation>Ta bort alla</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation>Tar bort alla inspelningar</translation>
+        <source>View recordings</source>
+        <translation>Visa inspelningar</translation>
     </message>
     <message>
         <source>Deleting recordings</source>
         <translation>Tar bort inspelningar</translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation>Ta bort alla filtrerade</translation>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation>Ta bort alla</translation>
+    </message>
+    <message>
+        <source>Deleting all filtered</source>
+        <translation>Tar bort alla filtrerade</translation>
+    </message>
+    <message>
+        <source>Deleting all recordings</source>
+        <translation>Tar bort alla inspelningar</translation>
     </message>
 </context>
 <context>
@@ -350,6 +477,10 @@
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation>Hämta från kontakter</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -403,6 +534,86 @@
     <message>
         <source>Relocating files</source>
         <translation>Flyttar filer</translation>
+    </message>
+    <message>
+        <source>Storage limits</source>
+        <translation>Lagringsbegränsning</translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation>Begränsa lagring efter storlek eller ålder</translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation>Efter ålder</translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation>Ingen begränsning</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 dagar</translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation>90 dagar</translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation>180 dagar</translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation>365 dagar</translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation>Anpassad åldersgräns i dagar</translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation>Efter storlek</translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation>300 MB</translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation>500 MB</translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation>1 GB</translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation>3 GB</translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation>5 GB</translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation>Anpassad storleksgräns i MB</translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation>Godkännande för lagring</translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation>Kräv godkännande</translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation>Vid aktivering kommer en bekräftelsedialog att visas efter varje inspelat samtal</translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation>Anpassa</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_TW">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_TW" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -61,6 +59,45 @@
     <message>
         <source>FLAC compression level</source>
         <translation>FLAC 壓縮等級</translation>
+    </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation>44.1 kHz</translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation>32 kHz</translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation>22.05 kHz</translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation>16 kHz</translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation>11.025 kHz</translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation>8 kHz</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation>無聯絡人</translation>
     </message>
 </context>
 <context>
@@ -189,9 +226,60 @@
         <source>Partial call</source>
         <translation>問題來電</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>刪除</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation>允許並儲存</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>此號碼為白名單</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>此號碼為黑名單</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation>永遠對此號碼錄音</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation>永不對此號碼錄音</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation>%1 錄音中</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation>不對 %1 錄音</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>儲存中</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>刪除中</translation>
+    </message>
 </context>
 <context>
     <name>EventsDelegate</name>
+    <message>
+        <source>Deleting</source>
+        <translation>刪除中</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation>儲存中</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
         <translation>強制錄音</translation>
@@ -204,32 +292,20 @@
         <source>Recording suspended</source>
         <translation>錄音暫停</translation>
     </message>
+    <message>
+        <source>Waiting for approval</source>
+        <translation>等待許可</translation>
+    </message>
 </context>
 <context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation>錄音</translation>
-    </message>
+    <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation>%1 於白名單</translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation>%1 於黑名單</translation>
-    </message>
-    <message>
         <source>Always record this number</source>
         <translation>永遠對此號碼錄音</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation>永遠對 %1 錄音</translation>
     </message>
     <message>
         <source>Recording %1</source>
@@ -240,55 +316,106 @@
         <translation>永不對此號碼錄音</translation>
     </message>
     <message>
-        <source>Never record %1</source>
-        <translation>%1 永不錄音</translation>
-    </message>
-    <message>
         <source>Not recording %1</source>
         <translation>不對 %1 錄音</translation>
     </message>
     <message>
-        <source>Deleting</source>
-        <translation>刪除中</translation>
+        <source>Approve and store</source>
+        <translation>允許並儲存</translation>
     </message>
     <message>
-        <source>No calls recorded yet</source>
-        <translation>尚無通話錄音</translation>
+        <source>Number is whitelisted</source>
+        <translation>此號碼為白名單</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>設定</translation>
+        <source>Number is blacklisted</source>
+        <translation>此號碼為黑名單</translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation>前</translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation>後</translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation>電話號碼</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>即時</translation>
+    </message>
+</context>
+<context>
+    <name>EventsPage</name>
+    <message>
+        <source>Recordings</source>
+        <translation>錄音</translation>
     </message>
     <message>
         <source>Select recordings</source>
         <translation>選取錄音</translation>
     </message>
     <message>
-        <source>Enter phone number</source>
-        <translation>輸入電話號碼</translation>
+        <source>Filtered recordings</source>
+        <translation>錄音篩選結果</translation>
     </message>
-</context>
-<context>
-    <name>EventsPicker</name>
     <message>
-        <source>Select Recordings</source>
-        <translation>選取錄音</translation>
+        <source>Select filtered recordings</source>
+        <translation>選取錄音篩選結果</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>篩選</translation>
+    </message>
+    <message>
+        <source>No recordings meet filter criteria</source>
+        <translation>無符合篩選標準之錄音</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
         <translation>尚無通話錄音</translation>
     </message>
     <message>
-        <source>Delete all</source>
-        <translation>全部刪除</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation>刪除所有錄音中</translation>
+        <source>View recordings</source>
+        <translation>檢視錄音</translation>
     </message>
     <message>
         <source>Deleting recordings</source>
         <translation>刪除錄音中</translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation>刪除所有篩選結果</translation>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation>全部刪除</translation>
+    </message>
+    <message>
+        <source>Deleting all filtered</source>
+        <translation>刪除所有篩選結果中</translation>
+    </message>
+    <message>
+        <source>Deleting all recordings</source>
+        <translation>刪除所有錄音中</translation>
     </message>
 </context>
 <context>
@@ -350,6 +477,10 @@
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation>從聯絡人中選取</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -403,6 +534,86 @@
     <message>
         <source>Relocating files</source>
         <translation>轉存檔案</translation>
+    </message>
+    <message>
+        <source>Storage limits</source>
+        <translation>儲存限制</translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation>依容量或時間限制儲存</translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation>依時間</translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation>無限制</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 天</translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation>90 天</translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation>180 天</translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation>365 天</translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation>自訂時間限制</translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation>依容量</translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation>300 MB</translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation>500 MB</translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation>1 GB</translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation>3 GB</translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation>5 GB</translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation>自訂容量限制</translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation>儲存許可</translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation>需要許可</translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation>若勾選此項，於每次錄音後皆會顯示是否許可儲存</translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation>自訂</translation>
     </message>
 </context>
 <context>

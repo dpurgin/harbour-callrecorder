@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -29,7 +27,7 @@
     </message>
     <message>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>Překladatelé</translation>
     </message>
     <message>
         <source>License</source>
@@ -37,11 +35,11 @@
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte stahovací menu pro zobrazení překladatelů</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento program je šířený BEZ JAKÝCHKOLI ZÁRUK. Je to svobodný software, který můžete šiřit pokud budou splňeny určité podmínky. Použijte stahovací meny k zobrazení detailů.</translation>
     </message>
 </context>
 <context>
@@ -62,6 +60,45 @@
         <source>FLAC compression level</source>
         <translation>Úroveň komprese FLAC</translation>
     </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation>44.1 kHz</translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation>32 kHz</translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation>22.05 kHz</translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation>16 kHz</translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation>11.025 kHz</translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation>8 kHz</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Příjmout</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation>Není k dispozici žádný kontakt</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -74,7 +111,7 @@
     <name>Daemon</name>
     <message>
         <source>Recording daemon</source>
-        <translation>démon zázanamníku</translation>
+        <translation>Démon zázanamníku</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -98,7 +135,7 @@
     </message>
     <message>
         <source>Operation mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim činnosti</translation>
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
@@ -129,11 +166,11 @@
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Příjmout</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>
@@ -148,7 +185,7 @@
     </message>
     <message>
         <source>No nested directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné vnořené adresáře</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -168,7 +205,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>
@@ -189,106 +226,196 @@
         <source>Partial call</source>
         <translation>Částečný hovor</translation>
     </message>
-</context>
-<context>
-    <name>EventsDelegate</name>
-    <message>
-        <source>Armed for recording</source>
-        <translation>Připraveno pro záznam</translation>
-    </message>
-    <message>
-        <source>Recording in progress</source>
-        <translation>Probíhá záznam</translation>
-    </message>
-    <message>
-        <source>Recording suspended</source>
-        <translation>Záznam je pozastaven</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation>Záznamy</translation>
-    </message>
     <message>
         <source>Delete</source>
         <translation>Odstranit</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation>%1 je povolen</translation>
+        <source>Approve and store</source>
+        <translation>Schválit a uložit</translation>
     </message>
     <message>
-        <source>%1 is blacklisted</source>
-        <translation>%1 je zakázan</translation>
+        <source>Number is whitelisted</source>
+        <translation>Číslo je na seznamu povolených</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>Číslo je na seznamu zakázaných</translation>
     </message>
     <message>
         <source>Always record this number</source>
         <translation>Vždy nahrávat toto číslo</translation>
     </message>
     <message>
-        <source>Always record %1</source>
-        <translation>Vždy nahrávat %1</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation>Zaznamenávání %1</translation>
-    </message>
-    <message>
         <source>Never record this number</source>
         <translation>Nikdy nenahrávat toto číslo</translation>
     </message>
     <message>
-        <source>Never record %1</source>
-        <translation>Nikdy nenahrávat %1</translation>
+        <source>Recording %1</source>
+        <translation>Nahrává se %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
         <translation>Nenahrává se %1</translation>
     </message>
     <message>
+        <source>Storing</source>
+        <translation>Ukládá se</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Maže se</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegate</name>
+    <message>
         <source>Deleting</source>
         <translation>Maže se</translation>
     </message>
     <message>
-        <source>No calls recorded yet</source>
-        <translation>Ještě nebyl zaznamenaný žádný hovor</translation>
+        <source>Storing</source>
+        <translation>Ukládá se</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
+    <message>
+        <source>Armed for recording</source>
+        <translation>Připraveno pro nahrávání</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Nastavení</translation>
+        <source>Recording in progress</source>
+        <translation>Probíhá nahrávání</translation>
+    </message>
+    <message>
+        <source>Recording suspended</source>
+        <translation>Nahrávání pozastaveno</translation>
+    </message>
+    <message>
+        <source>Waiting for approval</source>
+        <translation>Čeká se na potvrzení</translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateMenu</name>
+    <message>
+        <source>Delete</source>
+        <translation>Odstranit</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation>Vždy nahrávat toto číslo</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation>Nahrává se %1</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation>Nikdy nenahrávat toto číslo</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation>Nenahrává se %1</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation>Schválit a uložit</translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation>Číslo je na seznamu povolených</translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation>Číslo je na seznamu zakázaných</translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation>Příjmout</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation>Předtím</translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation>Potom</translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation>Telefonní číslo</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Zapnuto</translation>
+    </message>
+</context>
+<context>
+    <name>EventsPage</name>
+    <message>
+        <source>Recordings</source>
+        <translation>Nahrávky</translation>
     </message>
     <message>
         <source>Select recordings</source>
         <translation>Vybrat nahrávky</translation>
     </message>
     <message>
-        <source>Enter phone number</source>
-        <translation>Zadejte telefoní číslo</translation>
+        <source>Filtered recordings</source>
+        <translation>Filtrovat nahrávky</translation>
     </message>
-</context>
-<context>
-    <name>EventsPicker</name>
     <message>
-        <source>Select Recordings</source>
-        <translation>Vybrat nahrávky</translation>
+        <source>Select filtered recordings</source>
+        <translation>Vybrat filtrované nahrávky</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Nastavení</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>Filtr</translation>
+    </message>
+    <message>
+        <source>No recordings meet filter criteria</source>
+        <translation>Žádné nahrávky nesplnili zvolené kriteria filtru</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
         <translation>Ještě nebyl zaznamenaný žádný hovor</translation>
     </message>
     <message>
+        <source>View recordings</source>
+        <translation>Zobrazit nahrávky</translation>
+    </message>
+    <message>
+        <source>Deleting recordings</source>
+        <translation>Odstranit nahrávky</translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation>Smazat všechny vyfiltrované</translation>
+    </message>
+    <message>
         <source>Delete all</source>
         <translation>Odstranit vše</translation>
     </message>
     <message>
-        <source>Deleting all recordings</source>
-        <translation>Odstranit všechny záznamy</translation>
+        <source>Deleting all filtered</source>
+        <translation>Mažou se všechny vyfiltrované</translation>
     </message>
     <message>
-        <source>Deleting recordings</source>
-        <translation>Odstraňují se záznamy</translation>
+        <source>Deleting all recordings</source>
+        <translation>Mažou se všechny nahrávky</translation>
     </message>
 </context>
 <context>
@@ -348,7 +475,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation>Vybrat ze seznamu kontaktů</translation>
     </message>
 </context>
 <context>
@@ -359,7 +490,7 @@
     </message>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished">démon zázanamníku</translation>
+        <translation>Démon zázanamníku</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -390,7 +521,7 @@
     </message>
     <message>
         <source>Location for storing the recordings</source>
-        <translation>Umístění pro ukládaní záznamů</translation>
+        <translation>Umístění pro ukládaní nahrávky</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -404,16 +535,96 @@
         <source>Relocating files</source>
         <translation>Přesouvají se soubory</translation>
     </message>
+    <message>
+        <source>Storage limits</source>
+        <translation>Omezení uložiště</translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation>Omezit uložiště velikostí nebo stářím</translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation>Podle stáří</translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation>bez omezení</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 dní</translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation>90 dní</translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation>180 dní</translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation>365 dní</translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation>Vlastní limit stáří ve dnech</translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation>Podle velikosti</translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation>300 MB</translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation>500 MB</translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation>1 GB</translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation>3 GB</translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation>5 GB</translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation>Vlastní limit velikosti v MB</translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation>Potvrdit jako uložiště</translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation>Vyžadovat schválení</translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation>Pokud je zaškrtnuté, tak po každém hovoru bude nutné schválit uložení</translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation>vlastní</translation>
+    </message>
 </context>
 <context>
     <name>Translators</name>
     <message>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>Překladtatelé</translation>
     </message>
     <message>
         <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Díky těmto lidem je Call Recorder dostupný v různých jazycích. Jejich jména a jméno jazyka jsou seřazeny podle abecedy.</translation>
     </message>
 </context>
 <context>
@@ -424,7 +635,7 @@
     </message>
     <message>
         <source>Locale</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení jazyka</translation>
     </message>
     <message>
         <source>Please restart the application if the locale is changed</source>

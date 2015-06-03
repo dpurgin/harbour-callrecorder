@@ -62,6 +62,67 @@
         <source>FLAC compression level</source>
         <translation>Livello di compressione FLAC</translation>
     </message>
+    <message>
+        <source>44.1 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>32 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>22.05 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>16 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>11.025 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8 kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ContactPicker</name>
+    <message>
+        <source>Accept</source>
+        <translation type="obsolete">Accetta</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annulla</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPickerDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">Accetta</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annulla</translation>
+    </message>
+    <message>
+        <source>No contacts available</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ContactSelectionDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation type="obsolete">Accetta</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annulla</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -189,20 +250,172 @@
         <source>Partial call</source>
         <translation>Chiamata parziale</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation type="unfinished">Registra sempre questo numero</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation type="unfinished">Non registrare mai questo numero</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation type="unfinished">Sta registrando %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation type="unfinished">Non sta registrando %1</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="unfinished">Cancellazione</translation>
+    </message>
 </context>
 <context>
     <name>EventsDelegate</name>
     <message>
         <source>Armed for recording</source>
-        <translation>Pronto per registrare</translation>
+        <translation type="vanished">Pronto per registrare</translation>
     </message>
     <message>
         <source>Recording in progress</source>
-        <translation>Registrazione in corso</translation>
+        <translation type="vanished">Registrazione in corso</translation>
     </message>
     <message>
         <source>Recording suspended</source>
-        <translation>Registrazione sospesa</translation>
+        <translation type="vanished">Registrazione sospesa</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="unfinished">Cancellazione</translation>
+    </message>
+    <message>
+        <source>Storing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateContent</name>
+    <message>
+        <source>Armed for recording</source>
+        <translation type="unfinished">Pronto per registrare</translation>
+    </message>
+    <message>
+        <source>Recording in progress</source>
+        <translation type="unfinished">Registrazione in corso</translation>
+    </message>
+    <message>
+        <source>Recording suspended</source>
+        <translation type="unfinished">Registrazione sospesa</translation>
+    </message>
+    <message>
+        <source>Waiting for approval</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsDelegateMenu</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is whitelisted</source>
+        <translation type="obsolete">%1 è in lista bianca</translation>
+    </message>
+    <message>
+        <source>%1 is blacklisted</source>
+        <translation type="obsolete">%1 è in lista nera</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation type="unfinished">Registra sempre questo numero</translation>
+    </message>
+    <message>
+        <source>Always record %1</source>
+        <translation type="obsolete">Registra sempre %1</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation type="unfinished">Sta registrando %1</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation type="unfinished">Non registrare mai questo numero</translation>
+    </message>
+    <message>
+        <source>Never record %1</source>
+        <translation type="obsolete">Non registrare mai %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation type="unfinished">Non sta registrando %1</translation>
+    </message>
+    <message>
+        <source>Approve and store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number is whitelisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number is blacklisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterDialog</name>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">Accetta</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annulla</translation>
+    </message>
+    <message>
+        <source>Before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventsFilterPanel</name>
+    <message>
+        <source>Enter phone number</source>
+        <translation type="obsolete">Inserire il numero di telefono</translation>
     </message>
 </context>
 <context>
@@ -213,43 +426,43 @@
     </message>
     <message>
         <source>Delete</source>
-        <translation>Elimina</translation>
+        <translation type="vanished">Elimina</translation>
     </message>
     <message>
         <source>%1 is whitelisted</source>
-        <translation>%1 è in lista bianca</translation>
+        <translation type="vanished">%1 è in lista bianca</translation>
     </message>
     <message>
         <source>%1 is blacklisted</source>
-        <translation>%1 è in lista nera</translation>
+        <translation type="vanished">%1 è in lista nera</translation>
     </message>
     <message>
         <source>Always record this number</source>
-        <translation>Registra sempre questo numero</translation>
+        <translation type="vanished">Registra sempre questo numero</translation>
     </message>
     <message>
         <source>Always record %1</source>
-        <translation>Registra sempre %1</translation>
+        <translation type="vanished">Registra sempre %1</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation>Sta registrando %1</translation>
+        <translation type="vanished">Sta registrando %1</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation>Non registrare mai questo numero</translation>
+        <translation type="vanished">Non registrare mai questo numero</translation>
     </message>
     <message>
         <source>Never record %1</source>
-        <translation>Non registrare mai %1</translation>
+        <translation type="vanished">Non registrare mai %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation>Non sta registrando %1</translation>
+        <translation type="vanished">Non sta registrando %1</translation>
     </message>
     <message>
         <source>Deleting</source>
-        <translation>Cancellazione</translation>
+        <translation type="vanished">Cancellazione</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
@@ -265,30 +478,117 @@
     </message>
     <message>
         <source>Enter phone number</source>
-        <translation>Inserire il numero di telefono</translation>
+        <translation type="vanished">Inserire il numero di telefono</translation>
+    </message>
+    <message>
+        <source>Filtered recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select filtered recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No recordings meet filter criteria</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View recordings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting recordings</source>
+        <translation type="unfinished">Cancellazione registrazioni</translation>
+    </message>
+    <message>
+        <source>Delete all filtered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete all</source>
+        <translation type="unfinished">Cancella tutto</translation>
+    </message>
+    <message>
+        <source>Deleting all filtered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting all recordings</source>
+        <translation type="unfinished">Cancellazione di tutte le registrazioni</translation>
     </message>
 </context>
 <context>
     <name>EventsPicker</name>
     <message>
         <source>Select Recordings</source>
-        <translation>Seleziona registrazioni</translation>
+        <translation type="vanished">Seleziona registrazioni</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
-        <translation>Nessuna chiamata registrata</translation>
+        <translation type="vanished">Nessuna chiamata registrata</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Cancella tutto</translation>
+        <translation type="vanished">Cancella tutto</translation>
     </message>
     <message>
         <source>Deleting all recordings</source>
-        <translation>Cancellazione di tutte le registrazioni</translation>
+        <translation type="vanished">Cancellazione di tutte le registrazioni</translation>
     </message>
     <message>
         <source>Deleting recordings</source>
-        <translation>Cancellazione registrazioni</translation>
+        <translation type="vanished">Cancellazione registrazioni</translation>
+    </message>
+</context>
+<context>
+    <name>EventsView</name>
+    <message>
+        <source>Recordings</source>
+        <translation type="obsolete">Registrazioni</translation>
+    </message>
+    <message>
+        <source>%1 is whitelisted</source>
+        <translation type="obsolete">%1 è in lista bianca</translation>
+    </message>
+    <message>
+        <source>%1 is blacklisted</source>
+        <translation type="obsolete">%1 è in lista nera</translation>
+    </message>
+    <message>
+        <source>Always record this number</source>
+        <translation type="obsolete">Registra sempre questo numero</translation>
+    </message>
+    <message>
+        <source>Always record %1</source>
+        <translation type="obsolete">Registra sempre %1</translation>
+    </message>
+    <message>
+        <source>Recording %1</source>
+        <translation type="obsolete">Sta registrando %1</translation>
+    </message>
+    <message>
+        <source>Never record this number</source>
+        <translation type="obsolete">Non registrare mai questo numero</translation>
+    </message>
+    <message>
+        <source>Never record %1</source>
+        <translation type="obsolete">Non registrare mai %1</translation>
+    </message>
+    <message>
+        <source>Not recording %1</source>
+        <translation type="obsolete">Non sta registrando %1</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="obsolete">Cancellazione</translation>
+    </message>
+    <message>
+        <source>No calls recorded yet</source>
+        <translation type="obsolete">Nessuna chiamata registrata</translation>
     </message>
 </context>
 <context>
@@ -350,6 +650,10 @@
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
+    <message>
+        <source>Pick from contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -403,6 +707,86 @@
     <message>
         <source>Relocating files</source>
         <translation>Spostamento file</translation>
+    </message>
+    <message>
+        <source>Storage limits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit storage by size or age</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By age</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>90 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>180 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>365 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom age limit in days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>300 MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>500 MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 GB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3 GB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5 GB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom size limit in MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Approval for storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Require approval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, an approval of storage will be shown after each recorded call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
