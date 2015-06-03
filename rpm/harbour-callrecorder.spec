@@ -13,7 +13,11 @@ Name:       harbour-callrecorder
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
+<<<<<<< HEAD
 Version:    0.6.0
+=======
+Version:    0.5.2
+>>>>>>> master
 Release:    1
 Group:      Applications/Communications
 License:    GPLv3

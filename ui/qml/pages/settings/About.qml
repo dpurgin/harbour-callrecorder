@@ -105,7 +105,11 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
 
+<<<<<<< HEAD
                     text: qsTr('Version %1').arg(VERSION)
+=======
+                    text: qsTr('Version %1').arg('0.5.2')
+>>>>>>> master
                 }
 
                 Item {
