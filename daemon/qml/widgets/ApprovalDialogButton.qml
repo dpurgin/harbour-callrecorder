@@ -71,6 +71,8 @@ MouseArea {
             horizontalAlignment: Text.AlignHCenter
 
             color: Theme.rgba("black", 0.4)
+
+            wrapMode: Text.WordWrap
         }
     }
 }
