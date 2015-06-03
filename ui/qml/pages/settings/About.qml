@@ -72,25 +72,35 @@ Page {
                 }
 
                 Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    horizontalAlignment: Text.AlignHCenter
+
+                    width: parent.width
 
                     font.pixelSize: Theme.fontSizeExtraLarge
                     color: Theme.primaryColor
 
                     text: qsTr('Call Recorder')
+
+                    wrapMode: Text.Wrap
                 }
 
                 Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    horizontalAlignment: Text.AlignHCenter
+
+                    width: parent.width
 
                     font.pixelSize: Theme.fontSizeLarge
                     color: Theme.secondaryColor
 
                     text: qsTr('for SailfishOS')
+
+                    wrapMode: Text.Wrap
                 }
 
                 Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    horizontalAlignment: Text.AlignHCenter
+
+                    width: parent.width
 
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
@@ -103,12 +113,14 @@ Page {
                     height: Theme.paddingLarge * 2
                 }
 
-                Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                Label {                   
+                    text: qsTr('Copyright \u00a9 2014-2015 Dmitriy Purgin')
+
+                    horizontalAlignment: Text.AlignHCenter
+
+                    width: parent.width
 
                     font.pixelSize: Theme.fontSizeExtraSmall
-
-                    text: qsTr('Copyright \u00a9 2014-2015 Dmitriy Purgin')
                 }
 
                 Label {
@@ -148,20 +160,18 @@ Page {
                     height: Theme.paddingLarge * 2
                 }
 
-                Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                Label {                    
+                    text: qsTr('Thanks to Simonas Leleiva and Juho Hämäläinen')
 
                     font.pixelSize: Theme.fontSizeExtraSmall
                     width: parent.width
 
                     wrapMode: Text.Wrap
-                    horizontalAlignment: Text.Center
-
-                    text: qsTr('Thanks to Simonas Leleiva and Juho Hämäläinen')
+                    horizontalAlignment: Text.AlignHCenter
                 }
 
                 Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr('Use pull-down menu to see translators')
 
                     font.pixelSize: Theme.fontSizeTiny
                     width: parent.width
@@ -169,9 +179,7 @@ Page {
                     color: Theme.secondaryColor
 
                     wrapMode: Text.Wrap
-                    horizontalAlignment: Text.Center
-
-                    text: qsTr('Use pull-down menu to see translators')
+                    horizontalAlignment: Text.AlignHCenter
                 }
             }                        
 
