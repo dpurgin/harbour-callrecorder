@@ -58,7 +58,13 @@ Page {
 
             onCurrentItemChanged: {
                 if (acceptChanges)
+                {
                     settings.locale = currentItem.value
+
+                    // restart daemon to pick up new locale
+                    if (systemdUnit.isActive)
+                        systemdUnit.restart();
+                }
             }
         }
     }
