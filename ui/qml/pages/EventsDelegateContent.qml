@@ -128,6 +128,8 @@ Row {
             font.pixelSize: Theme.fontSizeExtraSmall
 
             color: highlight? Theme.secondaryHighlightColor: Theme.secondaryColor
+
+            truncationMode: TruncationMode.Fade
         }
     }
 
