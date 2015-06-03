@@ -82,7 +82,15 @@ OTHER_FILES += \
 
 TRANSLATIONS += \
     translations/daemon.ts \
-    translations/daemon-ru.ts
+    translations/daemon-cs.ts \
+    translations/daemon-de.ts \
+    translations/daemon-es.ts \
+    translations/daemon-fr.ts \
+    translations/daemon-nl.ts \
+    translations/daemon-pl.ts \
+    translations/daemon-ru.ts \
+    translations/daemon-sv.ts \
+    translations/daemon-zh_TW.ts
 
 qm.path = $${TARGETDIR}/translations
 qm.commands += \
