@@ -66,6 +66,7 @@ Page {
                     translators: [
                         ListElement { name: "blubdbibub" },
                         ListElement { name: "peter_berlin" },
+                        ListElement { name: "Timo Könnecke" },
                         ListElement { name: "Wasilis Mandratzis-Walz" }
                     ]
                 }
@@ -109,6 +110,14 @@ Page {
                     locale: "it"
                     translators: [
                         ListElement { name: "Yuri Bongiorno" }
+                    ]
+                }
+
+                ListElement {
+                    locale: "nl"
+                    translators: [
+                        ListElement { name: "Heimen Stoffels" },
+                        ListElement { name: "HtheB" }
                     ]
                 }
 
