@@ -36,6 +36,7 @@ signals:
     void RecorderStateChanged();
 
 public slots:
+    Q_NOREPLY void CheckStorageLimits();
     Q_NOREPLY void ShowApprovalDialog();
 
 private:

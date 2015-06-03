@@ -39,6 +39,11 @@ DBusAdaptor::~DBusAdaptor()
     delete d;
 }
 
+void DBusAdaptor::CheckStorageLimits()
+{
+    d->application->checkStorageLimits();
+}
+
 void DBusAdaptor::ShowApprovalDialog()
 {
     d->application->showApprovalDialog();

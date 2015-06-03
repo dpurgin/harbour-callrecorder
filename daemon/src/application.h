@@ -63,11 +63,10 @@ public:
     Settings* settings() const;
 
 public slots:
+    void checkStorageLimits();
     void showApprovalDialog();
 
 private slots:
-    void checkStorageLimits();
-
     void initVoiceCallManager(const QString& objectPath);
 
     void maybeSwitchProfile();
