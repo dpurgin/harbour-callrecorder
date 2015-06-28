@@ -4,7 +4,7 @@ CONFIGDIR=/home/nemo/.config/harbour-callrecorder
 CONFIG="$CONFIGDIR/callrecorder.ini"
 ENVFILE="$CONFIGDIR/environment"
 
-LOCALE=`grep -F "locale=" "$CONFIG" | awk -F '=' '{print($2)}'`
+LOCALE=$(awk -F '=' '/locale=/{print($2)}' "$CONFIG")
 
 if [ -z "$LOCALE" ] || [ "$LOCALE" = "system" ]; then
         echo "" > "$ENVFILE"
