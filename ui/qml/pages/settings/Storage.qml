@@ -24,10 +24,14 @@ import kz.dpurgin.callrecorder.Settings 1.0
 Page {
     property bool acceptChanges: false
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
 
         contentHeight: content.height
+
+        VerticalScrollDecorator { }
 
         Column {
             id: content

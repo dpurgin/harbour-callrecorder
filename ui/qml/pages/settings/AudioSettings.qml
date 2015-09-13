@@ -23,6 +23,8 @@ Page {
     property bool acceptChanges: false // this is set to true when the page is complete, any change
                                        // is made by the user
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height

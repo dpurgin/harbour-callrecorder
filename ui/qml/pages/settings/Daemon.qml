@@ -23,14 +23,18 @@ Page {
     property bool acceptChanges: false; // set to true when the page is initialized and settings are
                                         // actually changed by the user
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height
 
+        VerticalScrollDecorator {}
+
         Column {
             id: content
 
-            anchors.fill: parent
+            width: parent.width
 
             PageHeader {
                 id: pageHeader

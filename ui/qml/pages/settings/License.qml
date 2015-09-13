@@ -4,6 +4,8 @@ import Sailfish.Silica 1.0
 Page {
     id: licensePage
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors {
             fill: parent
