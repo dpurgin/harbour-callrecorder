@@ -19,11 +19,13 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import QtMultimedia 5.0
+
 import kz.dpurgin.callrecorder.Settings 1.0
 
 import kz.dpurgin.nemomobile.contacts 1.0
 
-import QtMultimedia 5.0
+//import "."
 
 Page {
     id: eventPage
@@ -38,15 +40,12 @@ Page {
             people.personByPhoneNumber(eventItem.PhoneNumberIDRepresentation):
             null
 
+    allowedOrientations: Orientation.All
+
     MediaPlayer {
         id: mediaPlayer
 
         source: settings.outputLocation + '/' + eventItem.FileName
-
-        onPositionChanged: {
-            slider.mediaPlayerChange = true
-            slider.value = position
-        }
 
         onError: {
             console.log(mediaPlayer.errorString)
@@ -142,144 +141,24 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                title: qsTr('Details')
+                title: {
+                    if (eventItem.EventTypeID === 1)
+                        return qsTr('Incoming call');
+                    else if (eventItem.EventTypeID === 2)
+                        return qsTr('Outgoing call');
+                    else
+                        return qsTr('Partial call');
+                }
             }
 
-            Column {
-                id: detailsColumn
+            Loader {
+                id: contentLoader
 
                 width: parent.width
 
-                spacing: Theme.paddingLarge
-
-                Label {
-                    text: {
-                        if (eventItem.EventTypeID === 1)
-                            return qsTr('Incoming call');
-                        else if (eventItem.EventTypeID === 2)
-                            return qsTr('Outgoing call');
-                        else
-                            return qsTr('Partial call');
-                    }
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-
-                Item {
-                    width: parent.width
-                    height: Theme.paddingLarge * 2
-                }
-
-                Label {
-                    text: eventItem.PhoneNumberIDRepresentation
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    font.pixelSize: Theme.fontSizeExtraLarge
-
-                    color: Theme.highlightColor
-
-                }
-
-                Label {
-                    text: person? Format._joinNames(person.primaryName, person.secondaryName): ''
-
-                    visible: person != null
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    font.pixelSize: Theme.fontSizeSmall
-
-                    color: Theme.secondaryHighlightColor
-                }
-
-                Item {
-                    width: parent.width
-                    height: Theme.paddingLarge * 2
-                }
-
-                Label {
-                    text: Format.formatDate(eventItem.TimeStamp, Formatter.CallTimeRelative)
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-
-                Label {
-                    text: Format.formatDuration(eventItem.Duration, Formatter.DurationShort) +
-                          ' \u2022 ' + Format.formatFileSize(eventItem.FileSize)
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    font.pixelSize: Theme.fontSizeTiny
-                }
+                sourceComponent: isPortrait? eventPagePortrait: eventPageLandscape
             }
-
-            Item {
-                id: spacer
-
-                width: parent.width
-                height: eventPage.height -
-                            pageHeader.height -
-                            detailsColumn.height -
-                            (mediaPlayerControls.visible? mediaPlayerControls.height: 0) -
-                            (errorMessageLabel.visible? errorMessageLabel.height: 0) -
-                            Theme.paddingLarge * 2
-            }
-
-            Column {
-                id: mediaPlayerControls
-
-                width: parent.width
-
-                visible: mediaPlayer.error === MediaPlayer.NoError
-
-                Slider {
-                    id: slider
-
-                    property bool mediaPlayerChange: false
-
-                    width: parent.width
-
-                    maximumValue: mediaPlayer.duration
-
-                    valueText: Format.formatDuration(value / 1000, Formatter.DurationShort);
-
-                    onValueChanged: {
-                        if (!mediaPlayerChange)
-                            mediaPlayer.seek(value);
-                        else
-                            mediaPlayerChange = false;
-                    }
-                }
-
-                IconButton {
-                    icon.source: mediaPlayer.playbackState == MediaPlayer.PlayingState?
-                                     'image://theme/icon-l-pause':
-                                     'image://theme/icon-l-play'
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    onClicked: mediaPlayer.playbackState == MediaPlayer.PlayingState?
-                                   mediaPlayer.pause():
-                                   mediaPlayer.play()
-                }
-            }
-
-            Label {
-                id: errorMessageLabel
-
-                width: parent.width
-
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                wrapMode: Text.Wrap
-                horizontalAlignment: Text.AlignHCenter
-
-                visible: mediaPlayer.error !== MediaPlayer.NoError
-
-                text: mediaPlayer.errorString
-            }
-        }        
+        }
     }
 
     RemorsePopup {
@@ -337,6 +216,14 @@ Page {
 
     Component.onCompleted: {
         updateListProperties();
+    }
+
+    EventPagePortrait {
+        id: eventPagePortrait
+    }
+
+    EventPageLandscape {
+        id: eventPageLandscape
     }
 }
 

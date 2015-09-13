@@ -64,6 +64,8 @@ QMLFILES = \
     qml/pages/DirectoryNameDialog.qml \
     qml/pages/DirectoryPickerDialog.qml \
     qml/pages/EventPage.qml \
+    qml/pages/EventPageLandscape.qml \
+    qml/pages/EventPagePortrait.qml \
     qml/pages/EventsDelegate.qml \
     qml/pages/EventsDelegateContent.qml \
     qml/pages/EventsDelegateMenu.qml \
