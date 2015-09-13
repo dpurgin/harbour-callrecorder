@@ -101,7 +101,10 @@ Row {
                     result = qsTr('Recording suspended')
                 else if (model.RecordingStateID === 4)
                 {
-                    result = Format.formatDuration(model.Duration, Formatter.DurationShort) +
+                    result = Format.formatDuration(model.Duration,
+                                                   model.Duration >= 3600?
+                                                       Formatter.DurationLong:
+                                                       Formatter.DurationShort) +
                              ' \u2022 ' +
                              Format.formatFileSize(model.FileSize);
                 }
