@@ -88,17 +88,6 @@
     </message>
 </context>
 <context>
-    <name>ContactPicker</name>
-    <message>
-        <source>Accept</source>
-        <translation type="obsolete">Αποδοχή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Ακύρωση</translation>
-    </message>
-</context>
-<context>
     <name>ContactPickerDialog</name>
     <message>
         <source>Accept</source>
@@ -111,17 +100,6 @@
     <message>
         <source>No contacts available</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ContactSelectionDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="obsolete">Αποδοχή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -294,18 +272,6 @@
 <context>
     <name>EventsDelegate</name>
     <message>
-        <source>Armed for recording</source>
-        <translation type="vanished">Εξοπλισμένοι για καταγραφή</translation>
-    </message>
-    <message>
-        <source>Recording in progress</source>
-        <translation type="vanished">Καταγραφή σε εξέλιξη</translation>
-    </message>
-    <message>
-        <source>Recording suspended</source>
-        <translation type="vanished">Η καταγραφή αναστέλλεται</translation>
-    </message>
-    <message>
         <source>Deleting</source>
         <translation type="unfinished">Διαγραφθηκε</translation>
     </message>
@@ -340,20 +306,8 @@
         <translation type="unfinished">Διαγραφή</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation type="obsolete">%1 είναι στη λίστα επιτρεπόμενων</translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation type="obsolete">%1 είναι στη μαύρη λίστα</translation>
-    </message>
-    <message>
         <source>Always record this number</source>
         <translation type="unfinished">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation type="obsolete">Πάντα να καταγράφετε %1</translation>
     </message>
     <message>
         <source>Recording %1</source>
@@ -362,10 +316,6 @@
     <message>
         <source>Never record this number</source>
         <translation type="unfinished">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation type="obsolete">Ποτέ να μην καταγράφει %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
@@ -412,57 +362,10 @@
     </message>
 </context>
 <context>
-    <name>EventsFilterPanel</name>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="obsolete">Εισάγετε τον αριθμό τηλεφώνου</translation>
-    </message>
-</context>
-<context>
     <name>EventsPage</name>
     <message>
         <source>Recordings</source>
         <translation>Καταγραφές</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Διαγραφή</translation>
-    </message>
-    <message>
-        <source>%1 is whitelisted</source>
-        <translation type="vanished">%1 είναι στη λίστα επιτρεπόμενων</translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation type="vanished">%1 είναι στη μαύρη λίστα</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="vanished">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation type="vanished">Πάντα να καταγράφετε %1</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="vanished">Καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="vanished">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation type="vanished">Ποτέ να μην καταγράφει %1</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">Καμμια καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Διαγραφθηκε</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
@@ -475,10 +378,6 @@
     <message>
         <source>Select recordings</source>
         <translation>Επιλογή καταγραφων</translation>
-    </message>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="vanished">Εισάγετε τον αριθμό τηλεφώνου</translation>
     </message>
     <message>
         <source>Filtered recordings</source>
@@ -510,7 +409,7 @@
     </message>
     <message>
         <source>Delete all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Διαγραφή ολων</translation>
     </message>
     <message>
         <source>Deleting all filtered</source>
@@ -519,80 +418,6 @@
     <message>
         <source>Deleting all recordings</source>
         <translation type="unfinished">Διαγραφή όλων των καταγραφών</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPicker</name>
-    <message>
-        <source>Select Recordings</source>
-        <translation type="vanished">Επιλογή καταγραφων</translation>
-    </message>
-    <message>
-        <source>No calls recorded yet</source>
-        <translation type="vanished">Δεν υπάρχουν κλήσεις που καταγράφονται ακόμα</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Διαγραφή όλων</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation type="vanished">Διαγραφή όλων των καταγραφών</translation>
-    </message>
-    <message>
-        <source>Deleting recordings</source>
-        <translation type="vanished">Διαγραφή καταγραφών</translation>
-    </message>
-</context>
-<context>
-    <name>EventsView</name>
-    <message>
-        <source>Recordings</source>
-        <translation type="obsolete">Καταγραφές</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Διαγραφή</translation>
-    </message>
-    <message>
-        <source>%1 is whitelisted</source>
-        <translation type="obsolete">%1 είναι στη λίστα επιτρεπόμενων</translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation type="obsolete">%1 είναι στη μαύρη λίστα</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="obsolete">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation type="obsolete">Πάντα να καταγράφετε %1</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="obsolete">Καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="obsolete">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation type="obsolete">Ποτέ να μην καταγράφει %1</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="obsolete">Καμμια καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="obsolete">Διαγραφθηκε</translation>
-    </message>
-    <message>
-        <source>No calls recorded yet</source>
-        <translation type="obsolete">Δεν υπάρχουν κλήσεις που καταγράφονται ακόμα</translation>
     </message>
 </context>
 <context>

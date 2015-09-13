@@ -64,64 +64,42 @@
     </message>
     <message>
         <source>44.1 kHz</source>
-        <translation type="unfinished"></translation>
+        <translation>44.1 kHz</translation>
     </message>
     <message>
         <source>32 kHz</source>
-        <translation type="unfinished"></translation>
+        <translation>32 kHz</translation>
     </message>
     <message>
         <source>22.05 kHz</source>
-        <translation type="unfinished"></translation>
+        <translation>22.05 kHz</translation>
     </message>
     <message>
         <source>16 kHz</source>
-        <translation type="unfinished"></translation>
+        <translation>16 kHz</translation>
     </message>
     <message>
         <source>11.025 kHz</source>
-        <translation type="unfinished"></translation>
+        <translation>11.025 kHz</translation>
     </message>
     <message>
         <source>8 kHz</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ContactPicker</name>
-    <message>
-        <source>Accept</source>
-        <translation type="obsolete">Hyväksy</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Peruuta</translation>
+        <translation>8 kHz</translation>
     </message>
 </context>
 <context>
     <name>ContactPickerDialog</name>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Hyväksy</translation>
+        <translation>Hyväksy</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Peruuta</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <source>No contacts available</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ContactSelectionDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="obsolete">Hyväksy</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Peruuta</translation>
+        <translation>Ei yhteystietoja</translation>
     </message>
 </context>
 <context>
@@ -151,7 +129,7 @@
     </message>
     <message>
         <source>Automatic startup</source>
-        <translation>Automaatiinen käynnistäminen</translation>
+        <translation>Automaattinen käynnistäminen</translation>
     </message>
     <message>
         <source>Start automatically upon reboot</source>
@@ -252,170 +230,135 @@
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Poista</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <source>Approve and store</source>
-        <translation type="unfinished"></translation>
+        <translation>Hyväksy ja talle</translation>
     </message>
     <message>
         <source>Number is whitelisted</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero listattu sallituksi</translation>
     </message>
     <message>
         <source>Number is blacklisted</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero listattu estetyksi</translation>
     </message>
     <message>
         <source>Always record this number</source>
-        <translation type="unfinished">Tallenna aina puhelut</translation>
+        <translation>Tallenna aina tästä numerosta</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation type="unfinished">Älä tallenna puheluita</translation>
+        <translation>Älä koskaan tallenna tästä numerosta</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation type="unfinished">Tallennetaan %1</translation>
+        <translation>Tallennetaan %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished">Ei tallenneta puheluita %1</translation>
+        <translation>Ei tallenneta puheluita %1</translation>
     </message>
     <message>
         <source>Storing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennetaan</translation>
     </message>
     <message>
         <source>Deleting</source>
-        <translation type="unfinished">Poistetaan</translation>
+        <translation>Poistetaan</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegate</name>
     <message>
-        <source>Armed for recording</source>
-        <translation type="vanished">Valmis tallentamaan</translation>
-    </message>
-    <message>
-        <source>Recording in progress</source>
-        <translation type="vanished">Tallennus käynnissä</translation>
-    </message>
-    <message>
-        <source>Recording suspended</source>
-        <translation type="vanished">Tallennus keskeytetty</translation>
-    </message>
-    <message>
         <source>Deleting</source>
-        <translation type="unfinished">Poistetaan</translation>
+        <translation>Poistetaan</translation>
     </message>
     <message>
         <source>Storing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennetaan</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
-        <translation type="unfinished">Valmis tallentamaan</translation>
+        <translation>Valmis tallentamaan</translation>
     </message>
     <message>
         <source>Recording in progress</source>
-        <translation type="unfinished">Tallennus käynnissä</translation>
+        <translation>Tallennus käynnissä</translation>
     </message>
     <message>
         <source>Recording suspended</source>
-        <translation type="unfinished">Tallennus keskeytetty</translation>
+        <translation>Tallennus keskeytetty</translation>
     </message>
     <message>
         <source>Waiting for approval</source>
-        <translation type="unfinished"></translation>
+        <translation>Odotetaan hyväksyntää</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Poista</translation>
-    </message>
-    <message>
-        <source>%1 is whitelisted</source>
-        <translation type="obsolete">%1 on lisätty sallittujen listalle</translation>
-    </message>
-    <message>
-        <source>%1 is blacklisted</source>
-        <translation type="obsolete">%1 on lisätty estolistalle</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <source>Always record this number</source>
-        <translation type="unfinished">Tallenna aina puhelut</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation type="obsolete">Tallenna aina %1</translation>
+        <translation>Tallenna aina tästä numerosta</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation type="unfinished">Tallennetaan %1</translation>
+        <translation>Tallennetaan %1</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation type="unfinished">Älä tallenna puheluita</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation type="obsolete">Älä tallenna %1</translation>
+        <translation>Älä koskaan tallenna tästä numerosta</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished">Ei tallenneta puheluita %1</translation>
+        <translation>Ei tallenneta puheluita %1</translation>
     </message>
     <message>
         <source>Approve and store</source>
-        <translation type="unfinished"></translation>
+        <translation>Hyväksy ja tallenna</translation>
     </message>
     <message>
         <source>Number is whitelisted</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero listattu sallituksi</translation>
     </message>
     <message>
         <source>Number is blacklisted</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero listattu estetyksi</translation>
     </message>
 </context>
 <context>
     <name>EventsFilterDialog</name>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Hyväksy</translation>
+        <translation>Hyväksy</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Peruuta</translation>
+        <translation>Peru</translation>
     </message>
     <message>
         <source>Before</source>
-        <translation type="unfinished"></translation>
+        <translation>Ennen</translation>
     </message>
     <message>
         <source>After</source>
-        <translation type="unfinished"></translation>
+        <translation>Jälkeen</translation>
     </message>
     <message>
         <source>Phone number</source>
-        <translation type="unfinished"></translation>
+        <translation>Puhelinnumero</translation>
     </message>
     <message>
         <source>On</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>EventsFilterPanel</name>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="obsolete">Puhelinnumero</translation>
+        <translation>On</translation>
     </message>
 </context>
 <context>
@@ -425,170 +368,56 @@
         <translation>Tallennukset</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="vanished">Poista</translation>
+        <source>Select recordings</source>
+        <translation>Valitse tallennuksia</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation type="vanished">%1 on lisätty sallittujen listalle</translation>
+        <source>Filtered recordings</source>
+        <translation>Suodatetut tallennukset</translation>
     </message>
     <message>
-        <source>%1 is blacklisted</source>
-        <translation type="vanished">%1 on lisätty estolistalle</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="vanished">Tallenna aina puhelut</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation type="vanished">Tallenna aina %1</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="vanished">Tallennetaan %1</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="vanished">Älä tallenna puheluita</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation type="vanished">Älä tallenna %1</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">Ei tallenneta puheluita %1</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Poistetaan</translation>
-    </message>
-    <message>
-        <source>No calls recorded yet</source>
-        <translation>Ei tallennettuja puheluita</translation>
+        <source>Select filtered recordings</source>
+        <translation>Valitse suodatettuja tallennuksia</translation>
     </message>
     <message>
         <source>Settings</source>
         <translation>Asetukset</translation>
     </message>
     <message>
-        <source>Select recordings</source>
-        <translation>Valitse tallennuksia</translation>
-    </message>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="vanished">Puhelinnumero</translation>
-    </message>
-    <message>
-        <source>Filtered recordings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select filtered recordings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Suodata</translation>
     </message>
     <message>
         <source>No recordings meet filter criteria</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View recordings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting recordings</source>
-        <translation type="unfinished">Tallenuksia poistetaan</translation>
-    </message>
-    <message>
-        <source>Delete all filtered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="unfinished">Poista kaikki</translation>
-    </message>
-    <message>
-        <source>Deleting all filtered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation type="unfinished">Poistetaan kaikki tallennukset</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPicker</name>
-    <message>
-        <source>Select Recordings</source>
-        <translation type="vanished">Valitse tallennuksia</translation>
+        <translation>Ehtojen mukaisia  tallennuksia ei löydy</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
-        <translation type="vanished">Ei tallennetttuja puheluita</translation>
+        <translation>Ei tallennettuja puheluita</translation>
     </message>
     <message>
-        <source>Delete all</source>
-        <translation type="vanished">Poista kaikki</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation type="vanished">Poistetaan kaikki tallennukset</translation>
+        <source>View recordings</source>
+        <translation>Näytä talletukset</translation>
     </message>
     <message>
         <source>Deleting recordings</source>
-        <translation type="vanished">Tallenuksia poistetaan</translation>
-    </message>
-</context>
-<context>
-    <name>EventsView</name>
-    <message>
-        <source>Recordings</source>
-        <translation type="obsolete">Tallennukset</translation>
+        <translation>Tallenteita poistetaan</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="obsolete">Poista</translation>
+        <source>Delete all filtered</source>
+        <translation>Poista kaikki suodatetut</translation>
     </message>
     <message>
-        <source>%1 is whitelisted</source>
-        <translation type="obsolete">%1 on lisätty sallittujen listalle</translation>
+        <source>Delete all</source>
+        <translation>Poista kaikki</translation>
     </message>
     <message>
-        <source>%1 is blacklisted</source>
-        <translation type="obsolete">%1 on lisätty estolistalle</translation>
+        <source>Deleting all filtered</source>
+        <translation>Poistetaan kaikki suodatetut</translation>
     </message>
     <message>
-        <source>Always record this number</source>
-        <translation type="obsolete">Tallenna aina puhelut</translation>
-    </message>
-    <message>
-        <source>Always record %1</source>
-        <translation type="obsolete">Tallenna aina %1</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="obsolete">Tallennetaan %1</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="obsolete">Älä tallenna puheluita</translation>
-    </message>
-    <message>
-        <source>Never record %1</source>
-        <translation type="obsolete">Älä tallenna %1</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="obsolete">Ei tallenneta puheluita %1</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="obsolete">Poistetaan</translation>
+        <source>Deleting all recordings</source>
+        <translation>Poistetaan kaikki tallenteet</translation>
     </message>
 </context>
 <context>
@@ -652,7 +481,7 @@
     </message>
     <message>
         <source>Pick from contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse yhteystiedoista</translation>
     </message>
 </context>
 <context>
@@ -710,83 +539,83 @@
     </message>
     <message>
         <source>Storage limits</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennustilan rajat</translation>
     </message>
     <message>
         <source>Limit storage by size or age</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajoita tallennustilaa koon tai tallenteiden iän perusteellä</translation>
     </message>
     <message>
         <source>By age</source>
-        <translation type="unfinished"></translation>
+        <translation>Iän mukaan</translation>
     </message>
     <message>
         <source>no limit</source>
-        <translation type="unfinished"></translation>
+        <translation>ei rajoitusta</translation>
     </message>
     <message>
         <source>30 days</source>
-        <translation type="unfinished"></translation>
+        <translation>30 päivää</translation>
     </message>
     <message>
         <source>90 days</source>
-        <translation type="unfinished"></translation>
+        <translation>90 päivää</translation>
     </message>
     <message>
         <source>180 days</source>
-        <translation type="unfinished"></translation>
+        <translation>180 päivää</translation>
     </message>
     <message>
         <source>365 days</source>
-        <translation type="unfinished"></translation>
+        <translation>365 päivää</translation>
     </message>
     <message>
         <source>Custom age limit in days</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse ikä päivissä</translation>
     </message>
     <message>
         <source>By size</source>
-        <translation type="unfinished"></translation>
+        <translation>Koon mukaan</translation>
     </message>
     <message>
         <source>300 MB</source>
-        <translation type="unfinished"></translation>
+        <translation>300 MB</translation>
     </message>
     <message>
         <source>500 MB</source>
-        <translation type="unfinished"></translation>
+        <translation>500 MB</translation>
     </message>
     <message>
         <source>1 GB</source>
-        <translation type="unfinished"></translation>
+        <translation>1 GB</translation>
     </message>
     <message>
         <source>3 GB</source>
-        <translation type="unfinished"></translation>
+        <translation>3 GB</translation>
     </message>
     <message>
         <source>5 GB</source>
-        <translation type="unfinished"></translation>
+        <translation>5 GB</translation>
     </message>
     <message>
         <source>Custom size limit in MB</source>
-        <translation type="unfinished"></translation>
+        <translation>Haluttu kokoraja, MB</translation>
     </message>
     <message>
         <source>Approval for storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennuksen hyväksyminen</translation>
     </message>
     <message>
         <source>Require approval</source>
-        <translation type="unfinished"></translation>
+        <translation>Vahvista tallennus</translation>
     </message>
     <message>
         <source>If checked, an approval of storage will be shown after each recorded call</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämän valinnan ollessa päällä tallennuksen hyväksymistä kysytään jokaisen puhelun jälkeen</translation>
     </message>
     <message>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>haluttu</translation>
     </message>
 </context>
 <context>
