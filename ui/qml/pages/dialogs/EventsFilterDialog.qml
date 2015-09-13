@@ -32,6 +32,8 @@ Dialog {
     property alias beforeDateActive: beforeDateSwitch.checked
     property date beforeDate: startOfDay(new Date())
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
 

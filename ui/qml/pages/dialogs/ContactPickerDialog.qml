@@ -40,6 +40,8 @@ Dialog {
 
     signal selectionChanged()
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
 
