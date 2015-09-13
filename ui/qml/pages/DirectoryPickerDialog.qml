@@ -27,6 +27,8 @@ Dialog {
     property string directoryPath: '';
     property string directoryName: '';
 
+    allowedOrientations: Orientation.All
+
     onDirectoryPathChanged: {
         canAccept = fileSystemHelper.isWritable(directoryPath)
     }

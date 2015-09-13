@@ -22,6 +22,8 @@ import Sailfish.Silica 1.0
 Dialog {
     property alias directoryName: textField.text
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
 
