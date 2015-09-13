@@ -28,6 +28,8 @@ import "../../widgets"
 Dialog {
     property int role; // contains BlackList or WhiteList
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
 
