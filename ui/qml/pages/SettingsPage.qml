@@ -20,7 +20,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-    id: settingsPage
+    id: settingsPage        
 
     property var entries: [
         qsTr('Recording daemon'),
@@ -29,6 +29,8 @@ Page {
         qsTr('User interface'),
         qsTr('About')
     ]
+
+    allowedOrientations: Orientation.All
 
     SilicaListView {
         id: settingsView

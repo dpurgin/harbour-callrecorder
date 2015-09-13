@@ -26,7 +26,7 @@ import kz.dpurgin.callrecorder.Settings 1.0
 import "../widgets"
 
 Page {
-    id: eventsPage
+    id: eventsPage   
 
     property bool filtered: false
     property var filters: null
@@ -37,6 +37,8 @@ Page {
     property var selectedOids: []
 
     signal selectionChanged()
+
+    allowedOrientations: Orientation.All
 
     states: [
         State {
