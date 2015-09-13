@@ -98,14 +98,17 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += \
     translations/ui.ts \
     translations/ui-cs.ts \
+    translations/ui-da.ts \
     translations/ui-de.ts \
     translations/ui-el.ts \
     translations/ui-es.ts \
     translations/ui-fi.ts \
     translations/ui-fr.ts \
+#    translations/ui-he.ts \
     translations/ui-it.ts \
     translations/ui-nl.ts \
     translations/ui-pl.ts \
     translations/ui-ru.ts \
+    translations/ui-sk.ts \
     translations/ui-sv.ts \
     translations/ui-zh_TW.ts

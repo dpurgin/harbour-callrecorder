@@ -83,12 +83,16 @@ OTHER_FILES += \
 TRANSLATIONS += \
     translations/daemon.ts \
     translations/daemon-cs.ts \
+    translations/daemon-da.ts \
     translations/daemon-de.ts \
     translations/daemon-es.ts \
+    translations/daemon-fi.ts \
     translations/daemon-fr.ts \
+#    translations/daemon-he.ts \
     translations/daemon-nl.ts \
     translations/daemon-pl.ts \
     translations/daemon-ru.ts \
+    translations/daemon-sk.ts \
     translations/daemon-sv.ts \
     translations/daemon-zh_TW.ts
 
