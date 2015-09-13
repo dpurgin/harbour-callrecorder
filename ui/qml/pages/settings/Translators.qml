@@ -34,10 +34,11 @@ Page {
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
-
-                leftMargin: Theme.paddingLarge
-                rightMargin: Theme.paddingLarge
             }
+
+            clip: true
+
+            VerticalScrollDecorator {}
 
             header: Label {
                 id: disclaimer
@@ -58,6 +59,13 @@ Page {
                     locale: "cs"
                     translators: [
                         ListElement { name: "Jozef Mlích" }
+                    ]
+                }
+
+                ListElement {
+                    locale: "da"
+                    translators: [
+                        ListElement { name: "Peter Jespersen" }
                     ]
                 }
 
@@ -95,7 +103,8 @@ Page {
                 ListElement {
                     locale: "fi"
                     translators: [
-                        ListElement { name: "Jukka Aaltonen" }
+                        ListElement { name: "Jukka Aaltonen" },
+                        ListElement { name: "Simo Ruoho" }
                     ]
                 }
 
@@ -109,6 +118,7 @@ Page {
                 ListElement {
                     locale: "it"
                     translators: [
+                        ListElement { name: "lorenzo facca" },
                         ListElement { name: "Yuri Bongiorno" }
                     ]
                 }
@@ -136,6 +146,13 @@ Page {
                 }
 
                 ListElement {
+                    locale: "sk"
+                    translators: [
+                        ListElement { name: "pyler" }
+                    ]
+                }
+
+                ListElement {
                     locale: "sv"
                     translators: [
                         ListElement { name: "Åke Engelbrektson" }
@@ -151,8 +168,9 @@ Page {
             }
 
             delegate: Column {
-                width: parent.width
+                width: parent.width - 2 * Theme.paddingLarge
                 height: spacer.height + contentRow.height
+                x: Theme.paddingLarge
 
                 Item {
                     id: spacer
