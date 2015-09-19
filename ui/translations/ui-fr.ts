@@ -4,8 +4,16 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Traducteurs</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licence</translation>
+    </message>
+    <message>
         <source>About</source>
-        <translation>A propos </translation>
+        <translation>A propos</translation>
     </message>
     <message>
         <source>Call Recorder</source>
@@ -16,6 +24,10 @@
         <translation>Pour SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Version %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
@@ -24,24 +36,12 @@
         <translation>Merci à Simonas Leleiva et Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Traducteurs</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licence</translation>
-    </message>
-    <message>
         <source>Use pull-down menu to see translators</source>
         <translation>Utilisez le menu tirer-bas pour afficher les traducteurs</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation>Ce programme n&apos;est accompagné d&apos;ABSOLUMENT AUCUNE GARANTIE. C&apos;est un logiciel libre et vous êtes invités à le redistribuer sous certaines conditions; utilisez le menu tirer-bas pour plus de détails.</translation>
+        <translation>Ce programme n&apos;est accompagné d&apos;ABSOLUMENT AUCUNE GARANTIE. C&apos;est un logiciel libre et vous êtes invités à le redistribuer sous certaines conditions; utilisez le menu tirer-bas pour plus de détails</translation>
     </message>
 </context>
 <context>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Détails</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Appel entrant</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Appel sortant</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Appel partiel</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Suppression</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Appel entrant</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Appel sortant</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Appel partiel</translation>
     </message>
 </context>
 <context>
@@ -641,7 +637,7 @@
     </message>
     <message>
         <source>Please restart the application if the locale is changed</source>
-        <translation>Veuillez redémarrer l&apos;application après un changement de langue.</translation>
+        <translation>Veuillez redémarrer l&apos;application après un changement de langue</translation>
     </message>
 </context>
 </TS>

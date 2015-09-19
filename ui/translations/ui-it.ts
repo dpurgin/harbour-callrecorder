@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Traduttori</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licenza</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Informazioni</translation>
     </message>
@@ -16,6 +24,10 @@
         <translation>per SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Versione %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
@@ -24,24 +36,12 @@
         <translation>Sentiti ringraziamenti a Simonas Leleiva e a Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>Version %1</source>
-        <translation>Versione %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Traduttori</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licenza</translation>
-    </message>
-    <message>
         <source>Use pull-down menu to see translators</source>
         <translation>Usa il menu a discesa per vedere i traduttori</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation>Questo programma è distribuito SENZA ALCUNA GARANZIA, è software libero ed è possibile ridistribuirlo a determinate condizioni. Usa il menu a discesa per i dettagli.</translation>
+        <translation>Questo programma è distribuito SENZA ALCUNA GARANZIA, è software libero ed è possibile ridistribuirlo a determinate condizioni. Usa il menu a discesa per i dettagli</translation>
     </message>
 </context>
 <context>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Dettagli</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Chiamata in ingresso</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Chiamata in uscita</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Chiamata parziale</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Elimina</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Eliminazione</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Chiamata in ingresso</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Chiamata in uscita</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Chiamata parziale</translation>
     </message>
 </context>
 <context>

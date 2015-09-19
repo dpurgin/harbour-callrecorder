@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>翻譯者</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>版權</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>關於</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>SailfishOS版</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>版本 %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>感謝Simonas Leleiva 及 Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>版本 %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>翻譯者</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>版權</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>細節</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>來電</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>撥出</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>問題來電</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>刪除中</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>來電</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>撥出</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>問題來電</translation>
     </message>
 </context>
 <context>
@@ -626,7 +622,7 @@
     </message>
     <message>
         <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
-        <translation>感謝下列人員使得通話錄音器有了不同的語言介面，依字母序排列姓名及位置</translation>
+        <translation>感謝下列人員使得通話錄音器有了不同的語言介面，依字母序排列姓名及位置.</translation>
     </message>
 </context>
 <context>

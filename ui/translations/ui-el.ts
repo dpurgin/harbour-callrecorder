@@ -4,16 +4,28 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Μεταφραστές</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Άδεια Χρήσης</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Σχετικά με</translation>
     </message>
     <message>
         <source>Call Recorder</source>
-        <translation>Call Recorder</translation>
+        <translation>Εγγραφέας κλήσεων </translation>
     </message>
     <message>
         <source>for SailfishOS</source>
         <translation>για το SailfishOS</translation>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation>Έκδοση %1</translation>
     </message>
     <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
@@ -22,18 +34,6 @@
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Ευχαριστώ τους Simonas Leleiva και Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Έκδοση %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Μεταφραστές</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Άδεια Χρήσης</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -91,11 +91,11 @@
     <name>ContactPickerDialog</name>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Αποδοχή</translation>
+        <translation>Αποδοχή</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>No contacts available</source>
@@ -213,24 +213,8 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Λεπτομέρειες</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Εισερχόμενη κλήση</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Εξερχόμενη κλήση</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Μερική κλήση</translation>
-    </message>
-    <message>
         <source>Delete</source>
-        <translation type="unfinished">Διαγραφή</translation>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <source>Approve and store</source>
@@ -246,19 +230,19 @@
     </message>
     <message>
         <source>Always record this number</source>
-        <translation type="unfinished">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
+        <translation>Πάντα να καταγράφετε ο αριθμός αυτός</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation type="unfinished">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
+        <translation>Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation type="unfinished">Καταγραφή %1</translation>
+        <translation>Καταγραφή %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished">Καμμια καταγραφή %1</translation>
+        <translation>Καμμια καταγραφή %1</translation>
     </message>
     <message>
         <source>Storing</source>
@@ -266,14 +250,26 @@
     </message>
     <message>
         <source>Deleting</source>
-        <translation type="unfinished">Διαγραφθηκε</translation>
+        <translation>Διαγραφθηκε</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Εισερχόμενη κλήση</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Εξερχόμενη κλήση</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Μερική κλήση</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegate</name>
     <message>
         <source>Deleting</source>
-        <translation type="unfinished">Διαγραφθηκε</translation>
+        <translation>Διαγραφθηκε</translation>
     </message>
     <message>
         <source>Storing</source>
@@ -284,15 +280,15 @@
     <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
-        <translation type="unfinished">Εξοπλισμένοι για καταγραφή</translation>
+        <translation>Εξοπλισμένοι για καταγραφή</translation>
     </message>
     <message>
         <source>Recording in progress</source>
-        <translation type="unfinished">Καταγραφή σε εξέλιξη</translation>
+        <translation>Καταγραφή σε εξέλιξη</translation>
     </message>
     <message>
         <source>Recording suspended</source>
-        <translation type="unfinished">Η καταγραφή αναστέλλεται</translation>
+        <translation>Η καταγραφή αναστέλλεται</translation>
     </message>
     <message>
         <source>Waiting for approval</source>
@@ -303,23 +299,23 @@
     <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Διαγραφή</translation>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <source>Always record this number</source>
-        <translation type="unfinished">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
+        <translation>Πάντα να καταγράφετε ο αριθμός αυτός</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation type="unfinished">Καταγραφή %1</translation>
+        <translation>Καταγραφή %1</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation type="unfinished">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
+        <translation>Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished">Καμμια καταγραφή %1</translation>
+        <translation>Καμμια καταγραφή %1</translation>
     </message>
     <message>
         <source>Approve and store</source>
@@ -338,11 +334,11 @@
     <name>EventsFilterDialog</name>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Αποδοχή</translation>
+        <translation>Αποδοχή</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Before</source>
@@ -401,7 +397,7 @@
     </message>
     <message>
         <source>Deleting recordings</source>
-        <translation type="unfinished">Διαγραφή καταγραφών</translation>
+        <translation>Διαγραφή καταγραφών</translation>
     </message>
     <message>
         <source>Delete all filtered</source>
@@ -409,7 +405,7 @@
     </message>
     <message>
         <source>Delete all</source>
-        <translation type="unfinished">Διαγραφή ολων</translation>
+        <translation>Διαγραφή ολων</translation>
     </message>
     <message>
         <source>Deleting all filtered</source>
@@ -417,7 +413,7 @@
     </message>
     <message>
         <source>Deleting all recordings</source>
-        <translation type="unfinished">Διαγραφή όλων των καταγραφών</translation>
+        <translation>Διαγραφή όλων των καταγραφών</translation>
     </message>
 </context>
 <context>

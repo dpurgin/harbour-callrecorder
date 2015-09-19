@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Übersetzer</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Lizenz</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Über Call Recorder</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>für SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Version %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Danke an Simonas Leleiva und Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Übersetzer</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Lizenz</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Details</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Eingehender Anruf</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Ausgehender Anruf</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Partieller Anruf</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Lösche</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Eingehender Anruf</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Ausgehender Anruf</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Partieller Anruf</translation>
     </message>
 </context>
 <context>

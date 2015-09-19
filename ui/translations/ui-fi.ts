@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Kääntäjät</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Lisenssi</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Tietoja</translation>
     </message>
@@ -16,6 +24,10 @@
         <translation>SailfishOS:lle</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Versio %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Tekijänoikeudet © 2014-2015 Dmitriy Purgin</translation>
     </message>
@@ -24,24 +36,12 @@
         <translation>Kiitos Simonas Leleiva ja Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>Version %1</source>
-        <translation>Versio %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Kääntäjät</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Lisenssi</translation>
-    </message>
-    <message>
         <source>Use pull-down menu to see translators</source>
         <translation>Käytä alasvetovalikkoa nähdäksesi kääntäjät</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation>Tämä sovellus on lisensoitu ilmaiseksi eikä sille myönnetä takuuta lain sallimissa rajoissa. Kuka tahansa voi muuttaa tai levittää sovellusta alla olevien GPL-lisenssiehtojen mukaisesti.</translation>
+        <translation>Tämä sovellus on lisensoitu ilmaiseksi eikä sille myönnetä takuuta lain sallimissa rajoissa. Kuka tahansa voi muuttaa tai levittää sovellusta alla olevien GPL-lisenssiehtojen mukaisesti</translation>
     </message>
 </context>
 <context>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Lisätiedot</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Saapunut puhelu</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Soitettu puhelu</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Osittainen puhelu</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Poistetaan</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Saapunut puhelu</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Soitettu puhelu</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Osittainen puhelu</translation>
     </message>
 </context>
 <context>

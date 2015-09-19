@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Překladatelé</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licence</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>O programu</translation>
     </message>
@@ -16,6 +24,10 @@
         <translation>pro SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Verze %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
@@ -24,24 +36,12 @@
         <translation>Poděkování Simonasovi Leleiva a Juhovi Hämäläinenovi</translation>
     </message>
     <message>
-        <source>Version %1</source>
-        <translation>Verze %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Překladatelé</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licence</translation>
-    </message>
-    <message>
         <source>Use pull-down menu to see translators</source>
         <translation>Použijte stahovací menu pro zobrazení překladatelů</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation>Tento program je šířený BEZ JAKÝCHKOLI ZÁRUK. Je to svobodný software, který můžete šiřit pokud budou splňeny určité podmínky. Použijte stahovací meny k zobrazení detailů.</translation>
+        <translation>Tento program je šířený BEZ JAKÝCHKOLI ZÁRUK. Je to svobodný software, který můžete šiřit pokud budou splňeny určité podmínky. Použijte stahovací meny k zobrazení detailů</translation>
     </message>
 </context>
 <context>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Podrobnosti</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Příchozí hovor</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Odchozí hovor</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Částečný hovor</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Odstranit</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Maže se</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Příchozí hovor</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Odchozí hovor</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Částečný hovor</translation>
     </message>
 </context>
 <context>

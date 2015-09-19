@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Översättare</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licens</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Om</translation>
     </message>
@@ -16,6 +24,10 @@
         <translation>för SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Version %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
@@ -24,24 +36,12 @@
         <translation>Tack till Simonas Leleiva och Juho Hämäläinen</translation>
     </message>
     <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Översättare</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licens</translation>
-    </message>
-    <message>
         <source>Use pull-down menu to see translators</source>
         <translation>Använd rullgardinsmenyn för att se översättare</translation>
     </message>
     <message>
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation>Det här programmet distribueras UTAN NÅGON SOM HELST GARANTI. Det är fri mjukvara och du är välkommen att återdistribuera den under vissa omständigheter. Använd rullgardinsmenyn för detaljer!</translation>
+        <translation>Det här programmet distribueras UTAN NÅGON SOM HELST GARANTI. Det är fri mjukvara och du är välkommen att återdistribuera den under vissa omständigheter. Använd rullgardinsmenyn för detaljer</translation>
     </message>
 </context>
 <context>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Detaljer</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Inkommande samtal</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Utgående samtal</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Partiellt samtal</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Tar bort</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Inkommande samtal</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Utgående samtal</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Partiellt samtal</translation>
     </message>
 </context>
 <context>

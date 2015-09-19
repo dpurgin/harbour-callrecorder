@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16,23 +24,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -266,6 +250,18 @@
     </message>
     <message>
         <source>Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partial call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Переводчики</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Лицензия</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>О программе</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>для SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Версия %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>© 2014-2015 Дмитрий Пургин</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Спасибо Симонасу Лелейве и Юхе Хямяляйнену</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Версия %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Переводчики</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Лицензия</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Подробности</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Входящий звонок</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Исходящий звонок</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Отрывок</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Удаление</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Входящий звонок</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Исходящий звонок</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Частичная запись</translation>
     </message>
 </context>
 <context>

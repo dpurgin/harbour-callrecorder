@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Vertalers</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licentie</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Over</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>voor Sailfish OS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Versie %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Met dank aan Simonas Leleiva en Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Versie %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Vertalers</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licentie</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Details</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Inkomende oproep</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Uitgaande oproep</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Gedeeltelijke oproep</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Bezig met verwijderen</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Inkomende oproep</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Uitgaande oproep</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Gedeeltelijke oproep</translation>
     </message>
 </context>
 <context>

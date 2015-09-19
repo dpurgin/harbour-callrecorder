@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Tłumacze</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licencja</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>O programie</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>dla SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Wersja %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Prawa autorskie © 2014-2015 Dmitriy Purgin</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Podziękowania dla Simonasa Leleivasa i Juho Hämäläinena</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Wersja %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Tłumacze</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licencja</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Szczegóły</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Rozmowa przychodząca</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Rozmowa wychodząca</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Częściowa rozmowa</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Usuwanie</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Rozmowa przychodząca</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Rozmowa wychodząca</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Częściowa rozmowa</translation>
     </message>
 </context>
 <context>

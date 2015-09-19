@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Oversættere</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licens</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Om</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>for SailfishOS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Version %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Copyright © 2014-2015 Dmitriy Purgin</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Tak til Simonas Leleiva og Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Oversættere</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licens</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Detaljer</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Indgående opkald</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Udgående opkald</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Delvise opkald</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Sletter</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Indgående opkald</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Udgående opkald</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Delvise opkald</translation>
     </message>
 </context>
 <context>

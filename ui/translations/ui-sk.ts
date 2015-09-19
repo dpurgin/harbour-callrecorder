@@ -4,6 +4,14 @@
 <context>
     <name>About</name>
     <message>
+        <source>Translators</source>
+        <translation>Prekladatelia</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Licencia</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>O aplikácii</translation>
     </message>
@@ -16,24 +24,16 @@
         <translation>pre Sailfish OS</translation>
     </message>
     <message>
+        <source>Version %1</source>
+        <translation>Verzia %1</translation>
+    </message>
+    <message>
         <source>Copyright © 2014-2015 Dmitriy Purgin</source>
         <translation>Autorské práva © 2014-2015 Dmitriy Purgin</translation>
     </message>
     <message>
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
         <translation>Poďakovanie patrí ľudom: Simonas Leleiva a Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Verzia %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation>Prekladatelia</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation>Licencia</translation>
     </message>
     <message>
         <source>Use pull-down menu to see translators</source>
@@ -213,22 +213,6 @@
 <context>
     <name>EventPage</name>
     <message>
-        <source>Details</source>
-        <translation>Podrobnosti</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation>Prichádzajúci hovor</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation>Odchádzajúci hovor</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation>Čiastočný hovor</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Vymazať</translation>
     </message>
@@ -267,6 +251,18 @@
     <message>
         <source>Deleting</source>
         <translation>Mazanie</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Prichádzajúci hovor</translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation>Odchádzajúci hovor</translation>
+    </message>
+    <message>
+        <source>Partial call</source>
+        <translation>Čiastočný hovor</translation>
     </message>
 </context>
 <context>
