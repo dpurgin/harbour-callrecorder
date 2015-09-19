@@ -22,6 +22,10 @@ import Sailfish.Silica 1.0
 Page {
     id: aboutPage
 
+    property int spacerHeight: isPortrait? Theme.paddingLarge * 2: Theme.paddingMedium
+
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -68,7 +72,7 @@ Page {
 
                 Item {
                     width: parent.width
-                    height: Theme.paddingLarge * 2
+                    height: spacerHeight
                 }
 
                 Label {
@@ -110,7 +114,7 @@ Page {
 
                 Item {
                     width: parent.width
-                    height: Theme.paddingLarge * 2
+                    height: spacerHeight
                 }
 
                 Label {                   
@@ -157,7 +161,7 @@ Page {
 
                 Item {
                     width: parent.width
-                    height: Theme.paddingLarge * 2
+                    height: spacerHeight
                 }
 
                 Label {                    
