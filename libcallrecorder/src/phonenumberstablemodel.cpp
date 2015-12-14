@@ -47,7 +47,7 @@ PhoneNumbersTableModel::~PhoneNumbersTableModel()
 bool PhoneNumbersTableModel::contains(const QString& lineIdentification)
 {
     static QString stmt(
-                "SELECT ID FROM PhoneNumbers WHERE LineIdentification = :lineIdentificaiton");
+                "SELECT ID FROM PhoneNumbers WHERE LineIdentification = :lineIdentification");
 
     Database::SqlParameters params;
     params.insert(QLatin1String(":lineIdentification"), lineIdentification);
