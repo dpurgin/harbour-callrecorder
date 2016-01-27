@@ -87,6 +87,8 @@ private slots:
     void onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state);
     void onVoiceCallRemoved(const QString& objectPath);
 
+    void onOfonoAvailableChanged(bool available);
+
 private:
     void createApprovalDialog();
 

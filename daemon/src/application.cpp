@@ -138,10 +138,10 @@ Application::Application(int argc, char* argv[])
 
     if (modems.length() == 0)
     {
-        qWarning() << QLatin1String("No modems available! Waiting for modemAdded");
+        qWarning() << QLatin1String("No modems available! Waiting for availableChanged");
 
-        connect(d->qofonoManager.data(), &QOfonoManager::modemAdded,
-                this, &Application::initVoiceCallManager);
+        connect(d->qofonoManager.data(), &QOfonoManager::availableChanged,
+                this, &Application::onOfonoAvailableChanged);
     }
     else
         initVoiceCallManager(modems.first());
@@ -410,6 +410,12 @@ void Application::onApprovalDialogStore(int eventId)
     emit d->dbusAdaptor->RecorderStateChanged();
 
     showApprovalDialog();
+}
+
+void Application::onOfonoAvailableChanged(bool available)
+{
+    if (available && d->qofonoManager->modems().size() > 0)
+        initVoiceCallManager(d->qofonoManager->modems().first());
 }
 
 void Application::onPulseAudioCardActiveProfileChanged(QString profileName)
