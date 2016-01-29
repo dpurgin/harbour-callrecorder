@@ -118,7 +118,7 @@ Page {
                 }
 
                 Label {                   
-                    text: qsTr('Copyright \u00a9 2014-2015 Dmitriy Purgin')
+                    text: qsTr('Copyright \u00a9 2014-2016 Dmitriy Purgin')
 
                     horizontalAlignment: Text.AlignHCenter
 
