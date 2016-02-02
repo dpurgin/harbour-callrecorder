@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de">
+<TS version="2.0" language="de">
 <context>
     <name>About</name>
     <message>
@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>A hívásrögzítőről</translation>
+        <translation>A Hívásrögzítőről</translation>
     </message>
     <message>
         <source>Call Recorder</source>
@@ -141,73 +141,73 @@
     </message>
     <message>
         <source>Record calls to any number except those in the black list</source>
-        <translation type="unfinished">Alle Anrufe aufnehmen außer die Nummern in der schwarzen Liste</translation>
+        <translation>Minden hívás rögzítése kivéve azoké akik a &apos;feketelistán&apos; vannak</translation>
     </message>
     <message>
         <source>Do not record anything except numbers in the white list</source>
-        <translation type="unfinished">Nichts aufnehmen außer die Nummern in der weißen Liste</translation>
+        <translation>Csak a &apos;fehérlistán&apos; lévő számok hívásainak rögzítése</translation>
     </message>
     <message>
         <source>Black list</source>
-        <translation type="unfinished">Schwarze Liste</translation>
+        <translation>Feketelista</translation>
     </message>
     <message>
         <source>White list</source>
-        <translation type="unfinished">Weiße Liste</translation>
+        <translation>Fehérlista</translation>
     </message>
     <message>
         <source>Edit list</source>
-        <translation type="unfinished">Liste bearbeiten</translation>
+        <translation>Lista szerkesztése</translation>
     </message>
 </context>
 <context>
     <name>DirectoryNameDialog</name>
     <message>
         <source>Directory name</source>
-        <translation type="unfinished">Verzeichnisname</translation>
+        <translation>Könyvtárnév</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Übernehmen</translation>
+        <translation>Elfogadás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>DirectoryPickerDialog</name>
     <message>
         <source>Select %1</source>
-        <translation type="unfinished">Auswählen  %1</translation>
+        <translation>Kiválasztás  %1</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Auswählen</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <source>No nested directories</source>
-        <translation type="unfinished">Keine verschachtelten Verzeichnisse</translation>
+        <translation>Nincs alkönyvtár</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished">Umbenennen</translation>
+        <translation>Átnevezés</translation>
     </message>
     <message>
         <source>Renaming is not allowed</source>
-        <translation type="unfinished">Umbenennen ist nicht erlaubt</translation>
+        <translation>Átnevezés nem engedélyezett</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Removal is not allowed</source>
-        <translation type="unfinished">Löschen ist nicht erlaubt</translation>
+        <translation>Törlés nem engedélyezett</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
@@ -218,35 +218,35 @@
     </message>
     <message>
         <source>Approve and store</source>
-        <translation type="unfinished">Zustimmen und speichern</translation>
+        <translation>Felvétel mentése</translation>
     </message>
     <message>
         <source>Number is whitelisted</source>
-        <translation type="unfinished">Nummer ist auf der &quot;Whitelist&quot;</translation>
+        <translation>A szám a fehérlistán van</translation>
     </message>
     <message>
         <source>Number is blacklisted</source>
-        <translation type="unfinished">Nummer ist auf der &quot;Blacklist&quot;</translation>
+        <translation>A szám a feketelistán van</translation>
     </message>
     <message>
         <source>Always record this number</source>
-        <translation type="unfinished">Diese Nummer stets aufnehmen</translation>
+        <translation>Hívások rögzítése mindig erről a számról</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation type="unfinished">Diese Nummer niemals aufnehmen</translation>
+        <translation>Hívások sose legyenek rögzítve erről a számról</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation type="unfinished">Aufnahme %1</translation>
+        <translation>Felvétel %1</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished">Nimmt nicht auf %1</translation>
+        <translation>Nincs felvétel %1</translation>
     </message>
     <message>
         <source>Storing</source>
-        <translation type="unfinished">Speichere</translation>
+        <translation>Tárolás</translation>
     </message>
     <message>
         <source>Deleting</source>
@@ -254,103 +254,103 @@
     </message>
     <message>
         <source>Incoming call</source>
-        <translation type="unfinished">Eingehender Anruf</translation>
+        <translation>Bejövő hívás</translation>
     </message>
     <message>
         <source>Outgoing call</source>
-        <translation type="unfinished">Ausgehender Anruf</translation>
+        <translation>Kimenő hívás</translation>
     </message>
     <message>
         <source>Partial call</source>
-        <translation type="unfinished">Partieller Anruf</translation>
+        <translation>Részleges hívás</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegate</name>
     <message>
         <source>Deleting</source>
-        <translation type="unfinished">Lösche</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Storing</source>
-        <translation type="unfinished">Speichere</translation>
+        <translation>Tárolás</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegateContent</name>
     <message>
         <source>Armed for recording</source>
-        <translation type="unfinished">Aufnahmebereit</translation>
+        <translation>Felvételhez beélesítve</translation>
     </message>
     <message>
         <source>Recording in progress</source>
-        <translation type="unfinished">Aufname läuft</translation>
+        <translation>Felvétel folyamatban</translation>
     </message>
     <message>
         <source>Recording suspended</source>
-        <translation type="unfinished">Aufnahme ausgesetzt</translation>
+        <translation>Felvétel szüneteltetve</translation>
     </message>
     <message>
         <source>Waiting for approval</source>
-        <translation type="unfinished">Warte auf Bestätigung</translation>
+        <translation>Jóváhagyásra vár</translation>
     </message>
 </context>
 <context>
     <name>EventsDelegateMenu</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Always record this number</source>
-        <translation type="unfinished">Diese Nummer stets aufnehmen</translation>
+        <translation>Hívások rögzítése mindig erről a számról</translation>
     </message>
     <message>
         <source>Recording %1</source>
-        <translation type="unfinished">Aufnahme %1</translation>
+        <translation>Felvétel %1</translation>
     </message>
     <message>
         <source>Never record this number</source>
-        <translation type="unfinished">Diese Nummer niemals aufnehmen</translation>
+        <translation>Hívások sose legyenek rögzítve erről a számról</translation>
     </message>
     <message>
         <source>Not recording %1</source>
-        <translation type="unfinished">Nimmt nicht auf %1</translation>
+        <translation>Nincs felvétel %1</translation>
     </message>
     <message>
         <source>Approve and store</source>
-        <translation type="unfinished">Bestätigen und speichern</translation>
+        <translation>Jóváhagyás és mentés</translation>
     </message>
     <message>
         <source>Number is whitelisted</source>
-        <translation type="unfinished">Nummer ist auf der &quot;Whitelist&quot;</translation>
+        <translation>A szám a fehérlistán van</translation>
     </message>
     <message>
         <source>Number is blacklisted</source>
-        <translation type="unfinished">Nummer ist auf der &quot;Blacklist&quot;</translation>
+        <translation>A szám a feketelistán van</translation>
     </message>
 </context>
 <context>
     <name>EventsFilterDialog</name>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Annehmen</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Before</source>
-        <translation type="unfinished">Vor</translation>
+        <translation>Ezelőtt</translation>
     </message>
     <message>
         <source>After</source>
-        <translation type="unfinished">Nach</translation>
+        <translation>Ezután</translation>
     </message>
     <message>
         <source>Phone number</source>
-        <translation type="unfinished">Telefonnummer</translation>
+        <translation>Telefonszám</translation>
     </message>
     <message>
         <source>On</source>
@@ -385,11 +385,11 @@
     </message>
     <message>
         <source>No recordings meet filter criteria</source>
-        <translation>Nincs a szűrésnek megfelelő rögzített hívás</translation>
+        <translation>Nincsenek a szűrésnek megfelelő felvételek</translation>
     </message>
     <message>
         <source>No calls recorded yet</source>
-        <translation>Nincsenek rögzített hívások</translation>
+        <translation>Nincsenek felvételek</translation>
     </message>
     <message>
         <source>View recordings</source>
@@ -409,11 +409,11 @@
     </message>
     <message>
         <source>Deleting all filtered</source>
-        <translation>Leszűrt felvételek törlése...</translation>
+        <translation>Leszűrt felvételek törlése</translation>
     </message>
     <message>
         <source>Deleting all recordings</source>
-        <translation>Felvételek törlése...</translation>
+        <translation>Felvételek törlése</translation>
     </message>
 </context>
 <context>
@@ -453,7 +453,7 @@
     </message>
     <message>
         <source>Save</source>
-        <translation>Mentés</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <source>Enter phone number</source>
@@ -469,7 +469,7 @@
     </message>
     <message>
         <source>Add numbers with field above or use pull-down menu</source>
-        <translation type="unfinished">Nummern oben eingeben oder das Pulldown-Menü verwenden</translation>
+        <translation>Számokat a lehúzható menüből vagy a fenti mezőből adhatsz hozzá</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -484,23 +484,23 @@
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Recording daemon</source>
-        <translation type="unfinished">Aufnahme-Daemon</translation>
+        <translation>Rögzítési szolgáltatás</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Speicherung</translation>
+        <translation>Tárhely</translation>
     </message>
     <message>
         <source>Audio settings</source>
-        <translation type="unfinished">Audio Einstellungen</translation>
+        <translation>Hangbeállítások</translation>
     </message>
     <message>
         <source>User interface</source>
-        <translation type="unfinished">Benutzeroberfläche</translation>
+        <translation>Felhasználói felület</translation>
     </message>
     <message>
         <source>About</source>
@@ -511,107 +511,107 @@
     <name>Storage</name>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Speicherung</translation>
+        <translation>Tárhely</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished">Standort</translation>
+        <translation>Elérési út</translation>
     </message>
     <message>
         <source>Location for storing the recordings</source>
-        <translation type="unfinished">Standort zum Speichern der Aufnahmen</translation>
+        <translation>Felvételek könyvtára</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Durchsuchen</translation>
+        <translation>Tallózás</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>Relocating files</source>
-        <translation type="unfinished">Dateien verlagern</translation>
+        <translation>Fájlok áthelyezése</translation>
     </message>
     <message>
         <source>Storage limits</source>
-        <translation type="unfinished">Speichergrenze</translation>
+        <translation>Tárhely korlátozások</translation>
     </message>
     <message>
         <source>Limit storage by size or age</source>
-        <translation type="unfinished">Begrenze Speicher nach Größe oder Alter</translation>
+        <translation>Tárolás mérethez vagy korhoz kötése</translation>
     </message>
     <message>
         <source>By age</source>
-        <translation type="unfinished">Nach Alter</translation>
+        <translation>Kor szerint</translation>
     </message>
     <message>
         <source>no limit</source>
-        <translation type="unfinished">Keine Begrenzung</translation>
+        <translation>nincs korlát</translation>
     </message>
     <message>
         <source>30 days</source>
-        <translation type="unfinished">30 Tage</translation>
+        <translation>30 nap</translation>
     </message>
     <message>
         <source>90 days</source>
-        <translation type="unfinished">90 Tage</translation>
+        <translation>90 nap</translation>
     </message>
     <message>
         <source>180 days</source>
-        <translation type="unfinished">180 Tage</translation>
+        <translation>180 nap</translation>
     </message>
     <message>
         <source>365 days</source>
-        <translation type="unfinished">365 Tage</translation>
+        <translation>365 nap</translation>
     </message>
     <message>
         <source>Custom age limit in days</source>
-        <translation type="unfinished">Begrenzung in Tagen</translation>
+        <translation>Egyedi korlát napokban</translation>
     </message>
     <message>
         <source>By size</source>
-        <translation type="unfinished">Nach Größe</translation>
+        <translation>Méret alapján</translation>
     </message>
     <message>
         <source>300 MB</source>
-        <translation type="unfinished">300 MB</translation>
+        <translation>300 MB</translation>
     </message>
     <message>
         <source>500 MB</source>
-        <translation type="unfinished">500 MB</translation>
+        <translation>500 MB</translation>
     </message>
     <message>
         <source>1 GB</source>
-        <translation type="unfinished">1 GB</translation>
+        <translation>1 GB</translation>
     </message>
     <message>
         <source>3 GB</source>
-        <translation type="unfinished">3 GB</translation>
+        <translation>3 GB</translation>
     </message>
     <message>
         <source>5 GB</source>
-        <translation type="unfinished">5 GB</translation>
+        <translation>5 GB</translation>
     </message>
     <message>
         <source>Custom size limit in MB</source>
-        <translation type="unfinished">Begrenzung durch Größe in MB</translation>
+        <translation>Egyedi méretkorlát (MB)</translation>
     </message>
     <message>
         <source>Approval for storage</source>
-        <translation type="unfinished">Zustimmung zum Speichern</translation>
+        <translation>Jóváhagyás a felvétel mentéséhez</translation>
     </message>
     <message>
         <source>Require approval</source>
-        <translation type="unfinished">Zustimmung benötigt</translation>
+        <translation>Jóváhagyás szükséges</translation>
     </message>
     <message>
         <source>If checked, an approval of storage will be shown after each recorded call</source>
-        <translation type="unfinished">Zustimmung zur Speicherung nach jeder Aufnahme abfragen</translation>
+        <translation>Ha ez engedélyezve van minden rögzített hívás végén meg lesz kérdezve, hogy a felvétel el legyen-e mentve</translation>
     </message>
     <message>
         <source>custom</source>
-        <translation type="unfinished">Eigene</translation>
+        <translation>egyedi</translation>
     </message>
 </context>
 <context>
