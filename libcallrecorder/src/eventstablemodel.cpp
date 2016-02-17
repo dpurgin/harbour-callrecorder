@@ -283,7 +283,7 @@ private:
                 foreach (QString file, files)
                 {
                     qDebug() << "removing" << file;
-                    QQFile(outputLocationDir.filePath(file)).remove();
+                    QFile(outputLocationDir.filePath(file)).remove();
                 }
             }
             else
