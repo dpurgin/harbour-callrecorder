@@ -21,10 +21,13 @@
 #include <QDebug>
 #include <QStringBuilder>
 #include <QStringList>
+#include <QDir>
 
 #include "application.h"
 
 #include <libcallrecorder/database.h>
+#include <libcallrecorder/settings.h>
+#include <libcallrecorder/sqlcursor.h>
 
 class EventsTableModel::EventsTableModelPrivate
 {
@@ -75,6 +78,25 @@ int EventsTableModel::add(const QDateTime& timeStamp, int phoneNumberId, EventTy
 void EventsTableModel::remove(int id)
 {
     qDebug() << id;
+
+    QDir outputLocationDir(Settings().outputLocation());
+
+    static QString selectStatement("SELECT Events.FileName FROM Events WHERE ID = :id;");
+
+    Database::SqlParameters selectparams;
+    selectparams.insert(QLatin1String(":id"), id);
+
+    //daemon->database()->select(selectStatement, selectparams);
+    QScopedPointer< SqlCursor > cursor(daemon->database()->select(selectStatement, selectparams));
+
+    while (cursor->next())
+        {
+            QString fileName = cursor->value("FileName").toString();
+
+            qDebug() << QLatin1String("removing") << fileName;
+
+            outputLocationDir.remove(fileName);
+        }
 
     static QString statement("DELETE FROM Events WHERE ID = :id;");
 
