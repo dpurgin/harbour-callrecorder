@@ -2,7 +2,9 @@
 
 CONFIG=/home/nemo/.config/harbour-callrecorder/callrecorder.ini
 
-LOCALE=$(awk -F '=' '/locale=/{print($2)}' "$CONFIG")
+if [ -f $CONFIG ]; then
+    LOCALE=$(awk -F '=' '/locale=/{print($2)}' "$CONFIG")
+fi
 
 if [ -z "$LOCALE" ] || [ "$LOCALE" = "system" ]; then
 	harbour-callrecorder "$@"
