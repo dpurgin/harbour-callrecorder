@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -44,10 +44,7 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
                                       Database* _db)
         : q(qptr),
           db(_db),
-          tableName(_tableName),
-          dirtyIndex(0),
-          removedAll(false),
-          rowCount(0)
+          tableName(_tableName)
     {
         QString stmt("SELECT COUNT(ID) AS Total FROM " % tableName);
 
@@ -412,7 +409,7 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
         return result;
     }
 
-    PhoneNumbersListTableModel* q;
+    PhoneNumbersListTableModel* q = nullptr;
 
     // table contents
     Rowset data;
@@ -426,17 +423,17 @@ class PhoneNumbersListTableModel::PhoneNumbersListTableModelPrivate
     // added non-persistent data
     // OIDs are generated virtually starting from -1 to -inf
     Rowset dirtyData;
-    int dirtyIndex;
+    int dirtyIndex = 0;
 
     // flag for removing all data
-    bool removedAll;
+    bool removedAll = false;
 
     // persistent OIDs scheduled for removal
     QSet< int > removedData;
 
-    int rowCount;
+    int rowCount = 0;
 
-    Database* db;    
+    Database* db = nullptr;
     QString tableName;   
 };
 

@@ -29,6 +29,8 @@ QT += core sql multimedia
 
 DEFINES += LIBCALLRECORDER
 
+QMAKE_CXXFLAGS += -std=c++11 -Wall -Werror
+
 SOURCES += \
     src/blacklisttablemodel.cpp \
     src/callrecorderexception.cpp \
