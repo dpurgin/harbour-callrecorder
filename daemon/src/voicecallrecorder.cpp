@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,12 +27,12 @@
 #include <qofono-qt5/qofonovoicecall.h>
 
 #include <libcallrecorder/blacklisttablemodel.h>
+#include <libcallrecorder/eventstablemodel.h>
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/whitelisttablemodel.h>
 
 #include "application.h"
 #include "model.h"
-#include "eventstablemodel.h"
 #include "phonenumberstablemodel.h"
 
 class VoiceCallRecorder::VoiceCallRecorderPrivate
@@ -226,7 +226,8 @@ void VoiceCallRecorder::arm()
         else
             eventType = EventsTableModel::Partial;
 
-        d->eventId = daemon->model()->events()->add(
+        d->eventId =
+                daemon->model()->events()->add(
                     timeStamp(),                                   // time stamp of recording
                     daemon->model()->phoneNumbers()->getIdByLineIdentification(
                         d->qofonoVoiceCall->lineIdentification()), // phone number ref

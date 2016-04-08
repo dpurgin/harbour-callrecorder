@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@
 
 #include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/database.h>
+#include <libcallrecorder/eventstablemodel.h>
 #include <libcallrecorder/whitelisttablemodel.h>
 
-#include "eventstablemodel.h"
+//#include "eventstablemodel.h"
 #include "phonenumberstablemodel.h"
 
 class Model::ModelPrivate
@@ -33,7 +34,7 @@ class Model::ModelPrivate
 
     ModelPrivate(Database* db)
         : blackList(new BlackListTableModel(db)),
-          events(new EventsTableModel()),
+          events(new EventsTableModel(db)),
           phoneNumbers(new PhoneNumbersTableModel()),
           whiteList(new WhiteListTableModel(db))
     {

@@ -57,7 +57,6 @@ SOURCES += \
     src/main.cpp \
     src/voicecallrecorder.cpp \
     src/phonenumberstablemodel.cpp \
-    src/eventstablemodel.cpp \
     src/model.cpp \
     src/dbusadaptor.cpp \
     src/uidbusinterface.cpp
@@ -66,7 +65,6 @@ HEADERS += \
     src/application.h \
     src/voicecallrecorder.h \
     src/phonenumberstablemodel.h \
-    src/eventstablemodel.h \
     src/model.h \
     src/dbusadaptor.h \
     src/uidbusinterface.h
