@@ -382,6 +382,8 @@ void Application::maybeSwitchProfile()
 
 void Application::onApprovalDialogAskLater(int eventId)
 {
+    Q_UNUSED(eventId);
+
     qDebug();
 
     d->approvalView->setVisible(false);
