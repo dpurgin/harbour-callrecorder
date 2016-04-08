@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,6 +45,32 @@ class EventsTableModel::EventsTableModelPrivate
     }
 
 private:
+    int add(const QVariantMap& items)
+    {
+        qDebug() << items;
+
+        static QString insertStmt("INSERT INTO Events(%1) VALUES(%2)");
+
+        Database::SqlParameters params;
+
+        for (QVariantMap::const_iterator cit = items.begin();
+             cit != items.end();
+             ++cit)
+        {
+            params.insert(QLatin1Char(':') % cit.key(), cit.value());
+        }
+
+        QString columns = QStringList(items.keys()).join(", ");
+        QString values = QStringList(params.keys()).join(", ");
+
+        int oid = db->insert(insertStmt.arg(columns).arg(values), params);
+
+        if (oid != -1)
+            clearCache();
+
+        return oid;
+    }
+
     void clearCache()
     {
         qDebug();
@@ -364,7 +390,7 @@ private:
 
         for (QVariantMap::const_iterator cit = items.cbegin();
              cit != items.cend();
-             cit++)
+             ++cit)
         {
             params.insert(QLatin1Char(':') % cit.key(), cit.value());
             setList << QString(cit.key() % QLatin1String(" = :") % cit.key());
@@ -408,6 +434,26 @@ EventsTableModel::~EventsTableModel()
     qDebug();
 
     delete d;
+}
+
+int EventsTableModel::add(QDateTime timeStamp,
+                          int phoneNumberId,
+                          EventType eventTypeId,
+                          RecordingState recordingStateId)
+{
+    QVariantMap items;
+
+    items.insert("TimeStamp", timeStamp);
+    items.insert("PhoneNumberID", phoneNumberId);
+    items.insert("EventTypeID", eventTypeId);
+    items.insert("RecordingStateID", recordingStateId);
+
+    int oid = d->add(items);
+
+    if (oid != -1)
+        emit rowCountChanged();
+
+    return oid;
 }
 
 QVariant EventsTableModel::data(const QModelIndex& item, int role) const

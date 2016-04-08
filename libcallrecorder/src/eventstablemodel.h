@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 
 class Database;
 
+/*! Model for Events table in the database
+ */
 class LIBCALLRECORDER_DECL EventsTableModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -41,11 +43,38 @@ public:
         LineIdentification
     };
 
+    enum RecordingState
+    {
+        Armed = 1,
+        InProgress,
+        Suspended,
+        Done,
+        WaitingForApproval
+    };
+
+    enum EventType
+    {
+        Incoming = 1,
+        Outgoing,
+        Partial
+    };
+
 public:
     EventsTableModel(Database* db, QObject* parent = 0);
     virtual ~EventsTableModel();
 
     QVariant data(const QModelIndex& item, int role = Qt::DisplayRole) const;
+
+    /*! Adds a new row to the table
+     *
+     * Is not Q_INVOKABLE as only the daemon can call this method
+     *
+     * \return OID of the inserted row
+     */
+    int add(QDateTime timeStamp,
+            int phoneNumberId,
+            EventType eventTypeId,
+            RecordingState recordingStateId);
 
     Q_INVOKABLE void filter(const QVariantMap& filters);
 
