@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
+#include <libcallrecorder/eventstablemodel.h>
 #include <libcallrecorder/libcallrecorder.h>
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/sqlcursor.h>
@@ -45,7 +46,6 @@
 #include <qtpulseaudio/qtpulseaudiosource.h>
 
 #include "dbusadaptor.h"
-#include "eventstablemodel.h"
 #include "uidbusinterface.h"
 #include "model.h"
 #include "voicecallrecorder.h"

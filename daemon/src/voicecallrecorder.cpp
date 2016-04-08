@@ -28,12 +28,12 @@
 
 #include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/eventstablemodel.h>
+#include <libcallrecorder/phonenumberstablemodel.h>
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/whitelisttablemodel.h>
 
 #include "application.h"
 #include "model.h"
-#include "phonenumberstablemodel.h"
 
 class VoiceCallRecorder::VoiceCallRecorderPrivate
 {

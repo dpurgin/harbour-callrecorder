@@ -23,10 +23,8 @@
 #include <libcallrecorder/blacklisttablemodel.h>
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/eventstablemodel.h>
+#include <libcallrecorder/phonenumberstablemodel.h>
 #include <libcallrecorder/whitelisttablemodel.h>
-
-//#include "eventstablemodel.h"
-#include "phonenumberstablemodel.h"
 
 class Model::ModelPrivate
 {
@@ -35,7 +33,7 @@ class Model::ModelPrivate
     ModelPrivate(Database* db)
         : blackList(new BlackListTableModel(db)),
           events(new EventsTableModel(db)),
-          phoneNumbers(new PhoneNumbersTableModel()),
+          phoneNumbers(new PhoneNumbersTableModel(db)),
           whiteList(new WhiteListTableModel(db))
     {
     }
