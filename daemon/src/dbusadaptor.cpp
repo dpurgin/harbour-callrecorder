@@ -20,6 +20,12 @@
 
 #include "application.h"
 
+#ifndef Q_NO_DEBUG
+#include "model.h"
+
+#include <libcallrecorder/phonenumberstablemodel.h>
+#endif
+
 class DBusAdaptor::DBusAdaptorPrivate
 {
     friend class DBusAdaptor;
@@ -48,3 +54,10 @@ void DBusAdaptor::ShowApprovalDialog()
 {
     d->application->showApprovalDialog();
 }
+
+#ifndef Q_NO_DEBUG
+int DBusAdaptor::GetPhoneNumberIdByLineIdentification(QString lineIdentification)
+{
+    return d->application->model()->phoneNumbers()->getIdByLineIdentification(lineIdentification);
+}
+#endif
