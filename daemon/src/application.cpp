@@ -146,6 +146,13 @@ Application::Application(int argc, char* argv[])
     else
         initVoiceCallManager(modems.first());
 
+#ifdef QT_DEBUG
+    connect(d->dbusAdaptor.data(), &DBusAdaptor::EmulatedVoiceCallAdded,
+            this, &Application::onVoiceCallAdded);
+    connect(d->dbusAdaptor.data(), &DBusAdaptor::EmulatedVoiceCallRemoved,
+            this, &Application::onVoiceCallRemoved);
+#endif // QT_DEBUG
+
     d->pulseAudioConnection.reset(
         new QtPulseAudioConnection(QtPulseAudio::Card |
                                    QtPulseAudio::Server |
@@ -307,6 +314,11 @@ Database* Application::database() const
     return d->database.data();
 }
 
+DBusAdaptor* Application::dbusAdaptor() const
+{
+    return d->dbusAdaptor.data();
+}
+
 Model* Application::model() const
 {
     return d->model.data();
@@ -342,6 +354,12 @@ void Application::initVoiceCallManager(const QString& objectPath)
 
 void Application::maybeSwitchProfile()
 {
+    if (d->pulseAudioCard.isNull() || d->pulseAudioSink.isNull())
+    {
+        qWarning() << "Not managing PulseAudio: unexpected card and sink detected (see the startup logs)";
+        return;
+    }
+
     qDebug() << QThread::currentThread() <<
                 "Card profile: " << d->pulseAudioCard->activeProfile()->name() <<
                 ", sink port: " << d->pulseAudioSink->activePort()->name() <<

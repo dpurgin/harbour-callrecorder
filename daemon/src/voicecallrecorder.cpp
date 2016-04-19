@@ -33,6 +33,7 @@
 #include <libcallrecorder/whitelisttablemodel.h>
 
 #include "application.h"
+#include "dbusadaptor.h"
 #include "model.h"
 
 class VoiceCallRecorder::VoiceCallRecorderPrivate
@@ -59,6 +60,7 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
     quint64 duration; // recording duration
 
     int eventId;
+    QString lineIdentification;
 
     FLAC__StreamEncoder* flacEncoder;
 
@@ -70,7 +72,7 @@ class VoiceCallRecorder::VoiceCallRecorderPrivate
 
     VoiceCallRecorder::State state;
 
-    QDateTime timeStamp;
+    QDateTime timeStamp;    
 };
 
 VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
@@ -83,11 +85,20 @@ VoiceCallRecorder::VoiceCallRecorder(const QString& dbusObjectPath)
     d->qofonoVoiceCall.reset(new QOfonoVoiceCall());
     d->qofonoVoiceCall->setVoiceCallPath(dbusObjectPath);
 
+    d->lineIdentification = d->qofonoVoiceCall->lineIdentification();
+
     connect(d->qofonoVoiceCall.data(), &QOfonoVoiceCall::lineIdentificationChanged,
             this, &VoiceCallRecorder::onVoiceCallLineIdentificationChanged);
 
     connect(d->qofonoVoiceCall.data(), &QOfonoVoiceCall::stateChanged,
             this, &VoiceCallRecorder::processOfonoState);
+
+#ifdef QT_DEBUG
+    connect(daemon->dbusAdaptor(), &DBusAdaptor::EmulatedLineIdentificationChanged,
+            this, &VoiceCallRecorder::onVoiceCallLineIdentificationChanged);
+    connect(daemon->dbusAdaptor(), &DBusAdaptor::EmulatedVoiceCallStateChanged,
+            this, &VoiceCallRecorder::processOfonoState);
+#endif // QT_DEBUG
 }
 
 VoiceCallRecorder::~VoiceCallRecorder()
@@ -114,7 +125,6 @@ VoiceCallRecorder::~VoiceCallRecorder()
                         EventsTableModel::Done;
 
             params.insert(QLatin1String("RecordingStateID"), static_cast< int >(recordingState));
-            params.insert(QLatin1String("FileName"), fi.fileName());
             params.insert(QLatin1String("FileSize"), fi.size());
             params.insert(QLatin1String("Duration"), d->duration / 1000); // duration is stored in seconds
 
@@ -191,7 +201,7 @@ void VoiceCallRecorder::arm()
         d->outputLocation = (daemon->settings()->outputLocation() %
                              QLatin1Char('/') %
                              Application::getIsoTimeStamp(timeStamp()).replace(QChar(':'), QChar('_')) % QLatin1Char('_') %
-                             d->qofonoVoiceCall->lineIdentification() % QLatin1Char('_') %
+                             d->lineIdentification % QLatin1Char('_') %
                              callTypeSuffix %
                              QLatin1String(".flac"));
 
@@ -230,8 +240,9 @@ void VoiceCallRecorder::arm()
                 daemon->model()->events()->add(
                     timeStamp(),                                   // time stamp of recording
                     daemon->model()->phoneNumbers()->getIdByLineIdentification(
-                        d->qofonoVoiceCall->lineIdentification()), // phone number ref
+                        d->lineIdentification),                    // phone number ref
                     eventType,
+                    QFileInfo(d->outputLocation).fileName(),
                     EventsTableModel::Armed);                      // initial recording state
     }
     else
@@ -288,6 +299,8 @@ void VoiceCallRecorder::onVoiceCallLineIdentificationChanged(const QString& line
 {
     qDebug() << lineIdentification;
 
+    d->lineIdentification = lineIdentification;
+
     // if eventId exists, it means that the recorder was armed with another phoneNumberId.
     // update it with the current one
 
@@ -322,9 +335,10 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
         // if line identification received, arm the recording if operation mode allows.
         // All calls from private numbers are recorded.
 
-        QString lineIdentification = d->qofonoVoiceCall->lineIdentification();
+        if (!d->qofonoVoiceCall->lineIdentification().isEmpty())
+            d->lineIdentification = d->qofonoVoiceCall->lineIdentification();
 
-        if (!lineIdentification.isEmpty())
+        if (!d->lineIdentification.isEmpty())
         {
             // check the operation mode
             // If operating in BlackList mode, the call is recorded if it doesn't belong to
@@ -335,14 +349,14 @@ void VoiceCallRecorder::processOfonoState(const QString& ofonoState)
             Settings::OperationMode opMode = daemon->settings()->operationMode();
 
             if ((opMode == Settings::BlackList &&
-                    !daemon->model()->blackList()->contains(lineIdentification)) ||
+                    !daemon->model()->blackList()->contains(d->lineIdentification)) ||
                 (opMode == Settings::WhiteList &&
-                    daemon->model()->whiteList()->contains(lineIdentification)))
+                    daemon->model()->whiteList()->contains(d->lineIdentification)))
             {
                 arm();
             }
             else
-                qWarning() << "Not arming for " << lineIdentification
+                qWarning() << "Not arming for " << d->lineIdentification
                            << " due to operation mode " << opMode;
         }
         else

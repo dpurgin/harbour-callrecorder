@@ -35,13 +35,24 @@ public:
 signals:
     void RecorderStateChanged();
 
+#ifdef QT_DEBUG
+    void EmulatedLineIdentificationChanged(QString lineIdentification);
+    void EmulatedVoiceCallAdded(QString objectPath);
+    void EmulatedVoiceCallRemoved(QString objectPath);
+    void EmulatedVoiceCallStateChanged(QString state);
+#endif // QT_DEBUG
+
 public slots:
     Q_NOREPLY void CheckStorageLimits();
     Q_NOREPLY void ShowApprovalDialog();
 
-#ifndef Q_NODEBUG
+#ifdef QT_DEBUG
+    Q_NOREPLY void EmulateLineIdentification(QString lineIdentification);
+    Q_NOREPLY void EmulateVoiceCallAdded(QString objectPath);
+    Q_NOREPLY void EmulateVoiceCallRemoved(QString objectPath);
+    Q_NOREPLY void EmulateVoiceCallState(QString state);
     int GetPhoneNumberIdByLineIdentification(QString lineIdentification);
-#endif
+#endif // QT_DEBUG
 
 private:
     class DBusAdaptorPrivate;

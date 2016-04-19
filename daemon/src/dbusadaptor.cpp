@@ -16,15 +16,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QtGlobal>
+
 #include "dbusadaptor.h"
 
 #include "application.h"
 
-#ifndef Q_NO_DEBUG
-#include "model.h"
+#ifdef QT_DEBUG
+#include <QDebug>
 
 #include <libcallrecorder/phonenumberstablemodel.h>
-#endif
+
+#include "model.h"
+#endif // QT_DEBUG
 
 class DBusAdaptor::DBusAdaptorPrivate
 {
@@ -50,14 +54,51 @@ void DBusAdaptor::CheckStorageLimits()
     d->application->checkStorageLimits();
 }
 
+#ifdef QT_DEBUG
+void DBusAdaptor::EmulateLineIdentification(QString lineIdentification)
+{
+    qDebug() << lineIdentification;
+
+    emit EmulatedLineIdentificationChanged(lineIdentification);
+}
+#endif // QT_DEBUG
+
+#ifdef QT_DEBUG
+void DBusAdaptor::EmulateVoiceCallAdded(QString objectPath)
+{
+    qDebug() << objectPath;
+
+    emit EmulatedVoiceCallAdded(objectPath);
+}
+#endif // QT_DEBUG
+
+#ifdef QT_DEBUG
+void DBusAdaptor::EmulateVoiceCallRemoved(QString objectPath)
+{
+    qDebug() << objectPath;
+
+    emit EmulatedVoiceCallRemoved(objectPath);
+}
+#endif // QT_DEBUG
+
+#ifdef QT_DEBUG
+void DBusAdaptor::EmulateVoiceCallState(QString state)
+{
+    qDebug() << state;
+
+    emit EmulatedVoiceCallStateChanged(state);
+}
+#endif // QT_DEBUG
+
+#ifdef QT_DEBUG
+int DBusAdaptor::GetPhoneNumberIdByLineIdentification(QString lineIdentification)
+{
+    return d->application->model()->phoneNumbers()->getIdByLineIdentification(lineIdentification);
+}
+#endif // QT_DEBUG
+
 void DBusAdaptor::ShowApprovalDialog()
 {
     d->application->showApprovalDialog();
 }
 
-#ifndef Q_NO_DEBUG
-int DBusAdaptor::GetPhoneNumberIdByLineIdentification(QString lineIdentification)
-{
-    return d->application->model()->phoneNumbers()->getIdByLineIdentification(lineIdentification);
-}
-#endif

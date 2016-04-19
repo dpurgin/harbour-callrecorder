@@ -29,6 +29,7 @@
 #define daemon (reinterpret_cast< Application* >(qApp))
 
 class Database;
+class DBusAdaptor;
 class Model;
 class Settings;
 class SqlCursor;
@@ -58,6 +59,7 @@ public:
     explicit Application(int argc, char* argv[]);
     virtual ~Application();
 
+    DBusAdaptor* dbusAdaptor() const;
     Database* database() const;
     Model* model() const;    
     Settings* settings() const;
