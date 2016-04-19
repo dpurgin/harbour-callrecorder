@@ -74,6 +74,7 @@ public:
     int add(QDateTime timeStamp,
             int phoneNumberId,
             EventType eventTypeId,
+            QString fileName,
             RecordingState recordingStateId);
 
     Q_INVOKABLE void filter(const QVariantMap& filters);

@@ -338,7 +338,8 @@ private:
         }
         else
         {
-            QScopedPointer< SqlCursor > cursor(db->select("SELECT FileName FROM Events WHERE ID = :id", params));
+            QScopedPointer< SqlCursor > cursor(
+                        db->select("SELECT FileName FROM Events WHERE ID = :id", params));
 
             while (cursor->next())
                 fileName = cursor->value("FileName").toString();
@@ -347,21 +348,23 @@ private:
         }
 
         if (db->execute("DELETE FROM Events WHERE ID = :id", params))
-        {
-            Settings settings;
-
-            QString location = settings.outputLocation() % QLatin1Char('/') % fileName;
-
-            qDebug() << "Removing" << location;
-
-            QFile file(location);
-
-            if (!file.remove())
+        {            
+            if (!fileName.isEmpty())
             {
-                qWarning() << "Unable to remove file " << location << ": " << file.errorString();
+                QString location = Settings().outputLocation() % QLatin1Char('/') % fileName;
 
-                // result = false is not set since database row was deleted and there's need to emit
-                // rowCountChanged
+                qDebug() << "Removing" << location;
+
+                QFile file(location);
+
+                if (!file.remove())
+                {
+                    qWarning() << "Unable to remove file " << location << ": " <<
+                                  file.errorString();
+
+                    // result = false is not set since database row was deleted and
+                    // we need to emit rowCountChanged
+                }
             }
         }
         else
@@ -439,6 +442,7 @@ EventsTableModel::~EventsTableModel()
 int EventsTableModel::add(QDateTime timeStamp,
                           int phoneNumberId,
                           EventType eventTypeId,
+                          QString fileName,
                           RecordingState recordingStateId)
 {
     QVariantMap items;
@@ -446,6 +450,7 @@ int EventsTableModel::add(QDateTime timeStamp,
     items.insert("TimeStamp", timeStamp);
     items.insert("PhoneNumberID", phoneNumberId);
     items.insert("EventTypeID", eventTypeId);
+    items.insert("FileName", fileName);
     items.insert("RecordingStateID", recordingStateId);
 
     int oid = d->add(items);
