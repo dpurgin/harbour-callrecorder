@@ -24,6 +24,12 @@
 #include <QStringBuilder>
 #include <QStringList>
 
+// Constructor reads all files from TRANSLATIONSDIR and builds human readable list of locales.
+//
+// System locale is always present in the list.
+// All translation files have the following naming convention: ui-<language>_<COUNTRY>.qm.
+// <language>_<COUNTRY> part is fed to QLocale to get locale name. Special cases like dialects (see
+// ui-de_AT-4.qm) are treated separately.
 LocaleListModel::LocaleListModel(QObject* parent)
     : QAbstractListModel(parent)
 {
@@ -39,22 +45,29 @@ LocaleListModel::LocaleListModel(QObject* parent)
     foreach (QFileInfo entry,
              dir.entryInfoList(qmFilter, QDir::Files | QDir::Readable, QDir::Name))
     {
-        // locale code is separated with dash
-        if (entry.baseName().contains(QChar('-')))
+        QString baseName = entry.baseName();
+
+        // locale code is separated with dash. Get locale code after dash and retrieve its name
+        // using QLocale
+        if (baseName.contains(QChar('-')))
         {
-            QStringList items = entry.baseName().split(QChar('-'));
+            QString localeString = baseName.mid(baseName.indexOf(QLatin1Char('-')) + 1);
+            QString nativeName;
 
-            // get locale code after dash and retrieve it's name via QLocale
-            if (items.size() > 1 && !items.back().isEmpty())
+            // special case of Lower Austrian dialect (not in QLocale database)
+            if (localeString == QLatin1String("de_AT-3"))
             {
-                QLocale locale(items.back());
-
-                QString nativeName =
-                        locale.nativeLanguageName() %
-                        QString(" (") % locale.nativeCountryName() % QString(")");
-
-                mLocales.append(QPair< QString, QString >(locale.name(), nativeName));
+                nativeName = QString::fromUtf8("Niadaöstreichisches Deidsch (Östareich)");
             }
+            else
+            {
+                QLocale locale(localeString);
+
+                nativeName = locale.nativeLanguageName() %
+                        QString(" (") % locale.nativeCountryName() % QString(")");
+            }
+
+            mLocales.append(QPair< QString, QString >(localeString, nativeName));
         }
     }
 }
