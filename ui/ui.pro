@@ -103,6 +103,7 @@ TRANSLATIONS += \
     translations/ui-cs.ts \
     translations/ui-da.ts \
     translations/ui-de.ts \
+    translations/ui-de_AT-3.ts \
     translations/ui-el.ts \
     translations/ui-es.ts \
     translations/ui-fi.ts \

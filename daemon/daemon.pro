@@ -83,6 +83,7 @@ TRANSLATIONS += \
     translations/daemon-cs.ts \
     translations/daemon-da.ts \
     translations/daemon-de.ts \
+    translations/daemon-de_AT-3.ts \
     translations/daemon-es.ts \
     translations/daemon-fi.ts \
     translations/daemon-fr.ts \
