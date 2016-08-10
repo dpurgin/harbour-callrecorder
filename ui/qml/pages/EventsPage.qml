@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -84,21 +84,24 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr('Settings')
+
+                visible: !selectionMode
+
                 onClicked: pageStack.push(Qt.resolvedUrl('SettingsPage.qml'))
             }
 
             MenuItem {
-                text: selectionMode?
-                          qsTr('View recordings'):
-                          qsTr('Select recordings')
+                text: qsTr('Select recordings')
 
+                visible: !selectionMode
                 enabled: eventsModel.rowCount > 0
 
                 onClicked: {
-                    selectionMode = !selectionMode;
-
-                    selectedOids = [];
-                    selectionChanged();
+                    pageStack.push(Qt.resolvedUrl('EventsPage.qml'), {
+                        selectionMode: true,
+                        filtered: filtered,
+                        filters: filters
+                    })
                 }
             }
 
@@ -145,6 +148,19 @@ Page {
 
                         logObject(filters, 'filters');
                         eventsModel.filter(filters);
+
+                        // If filtering on the Selection page, pass current filters to the main
+                        // page, as they share the list model and it is filtered on both pages
+                        // anyway. This is needed for correct displaying
+                        if (selectionMode)
+                        {
+                            // Filter dialog is now on top of the page. Underneath it is the
+                            // selection page. Main page is the third from the top
+                            var mainPage = pageStack.previousPage(pageStack.previousPage());
+
+                            mainPage.filtered = filtered;
+                            mainPage.filters = filters;
+                        }
                     });
                 }
             }
@@ -286,5 +302,3 @@ Page {
         hasSelection = selectionMode && selectedOids.length > 0;
     }
 }
-
-
