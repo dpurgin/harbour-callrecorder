@@ -42,18 +42,15 @@ namespace LibCallRecorder
     QTranslator* createTranslator(const QString& resource, const QString& path)
     {
         QScopedPointer< Settings > settings(new Settings());
-
-        QLocale locale = (settings->locale() == QLatin1String("system")?
-                              QLocale::system():
-                              QLocale(settings->locale()));
+        QString fileName(resource % QLatin1Char('-') % settings->locale());
 
         QScopedPointer< QTranslator > translator(new QTranslator());
 
-        qDebug() << "loading translations for resource " << resource <<
-                    ", locale " << locale <<
+        qDebug() << "loading translations for " << resource <<
+                    ", file name " << fileName <<
                     ", translations dir " << path;
 
-        if (!translator->load(locale, resource, "-", path, ".qm"))
+        if (!translator->load(fileName, path))
             qWarning() << "unable to load translations";
 
         return translator.take();
