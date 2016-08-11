@@ -33,6 +33,7 @@
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/whitelisttablemodel.h>
 
+#include "backuphelper.h"
 #include "filesystemhelper.h"
 #include "localelistmodel.h"
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
     qmlRegisterType< LocaleListModel >(
                 "kz.dpurgin.callrecorder.LocaleListModel", 1, 0, "LocaleListModel");
     qmlRegisterType< Settings >("kz.dpurgin.callrecorder.Settings", 1, 0, "Settings");
+    qmlRegisterType< BackupHelper >("kz.dpurgin.callrecorder.BackupHelper", 1, 0, "BackupHelper");
 
     int retval = -1;
 
