@@ -34,6 +34,7 @@ QMAKE_CXXFLAGS += -std=c++11 -Wall -Werror
 SOURCES += \
     src/blacklisttablemodel.cpp \
     src/callrecorderexception.cpp \
+    src/corruptfileslistmodel.cpp \
     src/database.cpp \
     src/eventstablemodel.cpp \
     src/libcallrecorder.cpp \
@@ -46,6 +47,7 @@ SOURCES += \
 HEADERS += \
     include/libcallrecorder/blacklisttablemodel.h \
     include/libcallrecorder/callrecorderexception.h \
+    include/libcallrecorder/corruptfileslistmodel.h \
     include/libcallrecorder/database.h \
     include/libcallrecorder/eventstablemodel.h \
     include/libcallrecorder/libcallrecorder.h \
@@ -56,6 +58,7 @@ HEADERS += \
     src/blacklisttablemodel.h \
     src/config.h \
     src/callrecorderexception.h \
+    src/corruptfileslistmodel.h \
     src/database.h \
     src/eventstablemodel.h \
     src/libcallrecorder.h \
