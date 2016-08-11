@@ -62,6 +62,7 @@ QMLFILES = \
     qml/pages/settings/Storage.qml \
     qml/pages/settings/Translators.qml \
     qml/pages/settings/UserInterface.qml \
+    qml/pages/settings/Utilities.qml \
     qml/pages/DirectoryNameDialog.qml \
     qml/pages/DirectoryPickerDialog.qml \
     qml/pages/EventPage.qml \

@@ -27,6 +27,7 @@ Page {
         qsTr('Storage'),
         qsTr('Audio settings'),
         qsTr('User interface'),
+        qsTr('Utilities'),
         qsTr('About')
     ]
 
@@ -60,6 +61,11 @@ Page {
             ListElement {
                 img: 'qrc:/images/icon-m-ui.png'
                 target: 'UserInterface.qml'
+            }
+
+            ListElement {
+                img: 'qrc:/images/icon-m-utilities.png'
+                target: 'Utilities.qml'
             }
 
             ListElement {
