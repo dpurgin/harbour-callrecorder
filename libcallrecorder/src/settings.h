@@ -86,7 +86,7 @@ public:
 
 public:
     Settings(QObject* parent = NULL);
-    ~Settings();
+    virtual ~Settings();
 
     QAudioFormat audioFormat() const;
     QAudioDeviceInfo inputDevice() const;
