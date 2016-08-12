@@ -21,117 +21,93 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
-#include <QFileInfoList>
-#include <QStringBuilder>
+#include <QThreadPool>
 
-#include <archive.h>
-#include <archive_entry.h>
-
-#include <libcallrecorder/callrecorderexception.h>
-#include <libcallrecorder/libcallrecorder.h>
 #include <libcallrecorder/settings.h>
 
-void _writeToArchive(archive* arc, const QFileInfo& fi);
-void _writeToArchive(archive* arc, const QString& filePath);
+#include "backupexception.h"
+#include "backupworker.h"
 
-void _writeToArchive(archive* arc, const QString& filePath)
+QDebug operator<<(QDebug dbg, BackupHelper::ErrorCode errorCode)
 {
-    _writeToArchive(arc, QFileInfo(filePath));
-}
-
-void _writeToArchive(archive* arc, const QFileInfo& fi)
-{
-    qDebug() << "adding to archive: " << fi.absoluteFilePath();
-
-    auto* entry = archive_entry_new();
-
-    archive_entry_set_pathname(entry, fi.absoluteFilePath().toUtf8().data());
-    archive_entry_set_size(entry, fi.size());
-    archive_entry_set_filetype(entry, AE_IFREG);
-    archive_entry_set_perm(entry, static_cast< int >(fi.permissions()));
-
-    archive_write_header(arc, entry);
-
-    QFile f(fi.absoluteFilePath());
-
-    if (f.open(QFile::ReadOnly))
+    switch (errorCode)
     {
-        const int bufferSize = 32768;
-        char buffer[bufferSize];
-        qint64 len = 0;
-
-        while (!f.atEnd())
-        {
-            len = f.read(buffer, bufferSize);
-
-            archive_write_data(arc, buffer, len);
-        }
+        case BackupHelper::ErrorCode::None: dbg << "No error"; break;
+        case BackupHelper::ErrorCode::FileExists: dbg << "File exists"; break;
+        case BackupHelper::ErrorCode::FileNotExists: dbg << "File doesn't exist"; break;
+        case BackupHelper::ErrorCode::UnableToWrite: dbg << "Unable to write"; break;
+        case BackupHelper::ErrorCode::UnableToStart: dbg << "Unable to start thread"; break;
+        default: dbg << "Unknown";
     }
 
-    archive_entry_free(entry);
+    return dbg;
 }
 
 BackupHelper::BackupHelper(QObject* parent)
     : QObject(parent)
 {
+    qDebug();
 }
 
 BackupHelper::~BackupHelper()
 {
+    qDebug();
 }
 
-bool BackupHelper::backup(const QString& fileName)
+void BackupHelper::backup(const QString& fileName, bool compress, bool overwrite)
 {
     qDebug() << "backing up to " << fileName;
 
-    bool result = false;
+    setErrorCode(ErrorCode::None);
+    setBusy(true);
 
     try
     {
         QFileInfo backupFileInfo(fileName);
 
-        if (backupFileInfo.exists())
-            throw CallRecorderException(QLatin1String("Backup file exists!"));
+        if (!overwrite && backupFileInfo.exists())
+            throw BackupException(ErrorCode::FileExists, fileName);
 
         if (!backupFileInfo.absoluteDir().exists())
         {
             if (!QDir().mkpath(backupFileInfo.absolutePath()))
             {
-                throw CallRecorderException(QLatin1String("Unable to make path ") %
-                                            backupFileInfo.absolutePath());
+                throw BackupException(ErrorCode::UnableToWrite,
+                                      backupFileInfo.absolutePath());
             }
         }
 
-        QScopedPointer< Settings > settings(new Settings());
+        QFile file(backupFileInfo.absoluteFilePath());
 
-        auto fiList = QDir(settings->outputLocation()).entryInfoList(
-                    QDir::Files | QDir::Readable, QDir::NoSort);
+        if (!file.open(QFile::WriteOnly))
+            throw BackupException(ErrorCode::UnableToWrite, backupFileInfo.absoluteFilePath());
 
-        auto* arc = archive_write_new();
-        archive_write_add_filter_none(arc);
-        archive_write_set_format_ustar(arc);
+        file.close();
 
-        archive_write_open_filename(arc, fileName.toUtf8().data());
+        BackupWorker* worker = new BackupWorker(BackupWorker::Mode::Backup, fileName, compress);
 
-        foreach (QFileInfo fi, fiList)
-            _writeToArchive(arc, fi);
+        connect(worker, &BackupWorker::started,
+                [this]() { setBusy(true); });
 
-        _writeToArchive(arc, LibCallRecorder::databaseFilePath());
-        _writeToArchive(arc, LibCallRecorder::settingsFilePath());
+        connect(worker, &BackupWorker::finished,
+                [this](ErrorCode errorCode) { setBusy(false); setErrorCode(errorCode); });
 
-        archive_write_close(arc);
-        archive_write_free(arc);
+        connect(worker, &BackupWorker::progressChanged,
+                this, &BackupHelper::setProgress);
 
-        result = true;
+        connect(worker, &BackupWorker::totalCountChanged,
+                this, &BackupHelper::setTotalCount);
+
+        if (!QThreadPool::globalInstance()->tryStart(worker))
+            throw BackupException(ErrorCode::UnableToStart, QString());
     }
-    catch (CallRecorderException& e)
+    catch (BackupException& e)
     {
-        qDebug() << e.qWhat();
+        qDebug() << e.errorCode() << e.qWhat();
 
-        result = false;
+        setBusy(false);
+        setErrorCode(e.errorCode());
     }
-
-    return result;
 }
 
 void BackupHelper::restore(const QString&)
