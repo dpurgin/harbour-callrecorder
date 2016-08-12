@@ -29,7 +29,7 @@ class LIBCALLRECORDER_DECL CallRecorderException : public std::exception
 {
 public:
     CallRecorderException(const QString& what): mWhat(what) { }
-    ~CallRecorderException() throw()
+    virtual ~CallRecorderException() throw()
     {
     }
 
