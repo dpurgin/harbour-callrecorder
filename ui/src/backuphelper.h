@@ -21,6 +21,8 @@
 
 #include <QObject>
 
+class BackupWorker;
+
 class BackupHelper : public QObject
 {
     Q_OBJECT
@@ -32,6 +34,10 @@ class BackupHelper : public QObject
     Q_PROPERTY(ErrorCode errorCode
                READ errorCode
                NOTIFY errorCodeChanged)
+
+    Q_PROPERTY(qint64 estimatedBackupSize
+               READ estimatedBackupSize
+               NOTIFY estimatedBackupSizeChanged)
 
     Q_PROPERTY(int progress
                READ progress
@@ -59,15 +65,18 @@ public:
 
     Q_INVOKABLE void backup(const QString& fileName, bool compress, bool overwrite);
     Q_INVOKABLE void restore(const QString& fileName);
+    Q_INVOKABLE void estimateBackupSize();
 
     bool busy() const { return mBusy; }
     ErrorCode errorCode() const { return mErrorCode; }
+    qint64 estimatedBackupSize() const { return mEstimatedBackupSize; }
     int progress() const { return mProgress; }
     int totalCount() const { return mTotalCount; }
 
 signals:
     void busyChanged(bool);
     void errorCodeChanged(ErrorCode);
+    void estimatedBackupSizeChanged(qint64);
     void totalCountChanged(int);
     void progressChanged(int);
 
@@ -83,6 +92,14 @@ private:
         if (errorCode != mErrorCode)
             emit errorCodeChanged(mErrorCode = errorCode);
     }
+
+    void setEstimatedBackupSize(qint64 size)
+    {
+        if (size != mEstimatedBackupSize)
+            emit estimatedBackupSizeChanged(mEstimatedBackupSize = size);
+    }
+
+    bool tryStartWorker(BackupWorker* worker);
 
 private slots:
     void setProgress(int progress)
@@ -101,6 +118,7 @@ private:
     bool mBusy = false;
     int mProgress = -1;
     int mTotalCount = -1;
+    qint64 mEstimatedBackupSize = -1;
 
     ErrorCode mErrorCode = ErrorCode::None;
 };

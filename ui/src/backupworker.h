@@ -33,14 +33,22 @@ public:
     enum class Mode
     {
         Backup,
-        Restore
+        Restore,
+        EstimateSize
     };
 
 public:
-    BackupWorker(Mode mode, QString fileName, bool compress, QObject* parent = nullptr)
+    BackupWorker(QObject* parent = nullptr)
         : QObject(parent),
           QRunnable(),
-          mMode(mode),
+          mMode(Mode::EstimateSize)
+    {
+    }
+
+    BackupWorker(QString fileName, bool compress, QObject* parent = nullptr)
+        : QObject(parent),
+          QRunnable(),
+          mMode(Mode::Backup),
           mFileName(fileName),
           mCompress(compress)
     {
@@ -56,8 +64,13 @@ signals:
     void finished(BackupHelper::ErrorCode);
     void progressChanged(int);
     void totalCountChanged(int);
+    void estimatedBackupSizeChanged(qint64);
 
 private:
+    void backup();
+    void restore();
+    void estimateSize();
+
     void writeToArchive(QFileInfo fileInfo, QString pathInArchive = QString());
     void writeToArchive(QString fileName, QString pathInArchive = QString());
 

@@ -20,8 +20,12 @@ import QtQuick 2.2
 
 import Sailfish.Silica 1.0
 
+import kz.dpurgin.callrecorder.BackupHelper 1.0
+
 Page
 {
+    BackupHelper { id: backupHelper }
+
     Column
     {
         anchors.fill: parent
@@ -42,6 +46,73 @@ Page
             color: Theme.highlightColor
             font.pixelSize: Theme.fontSizeSmall
             wrapMode: Text.Wrap
+        }
+
+        Item
+        {
+            x: Theme.horizontalPageMargin
+            width: parent.width - x * 2
+            height: busyIndicator.height + Theme.paddingLarge
+
+            BusyIndicator
+            {
+                id: busyIndicator
+
+                anchors.left: parent.left
+
+                size: BusyIndicatorSize.Small
+                running: backupHelper.estimatedBackupSize < 0
+            }
+
+            Label
+            {
+                text: qsTr('Estimating backup size...')
+
+                anchors
+                {
+                    left: busyIndicator.right
+                    right: parent.right
+
+                    leftMargin: Theme.paddingMedium
+
+                }
+
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.highlightColor
+                wrapMode: Text.Wrap
+
+                opacity: backupHelper.estimatedBackupSize < 0? 1: 0
+
+                Behavior on opacity
+                {
+                    FadeAnimation { }
+                }
+            }
+
+            Label
+            {
+                text: qsTr('Estimated backup size: %1').arg(
+                          Format.formatFileSize(backupHelper.estimatedBackupSize))
+
+                anchors
+                {
+                    left: busyIndicator.right
+                    right: parent.right
+
+                    leftMargin: Theme.paddingMedium
+                }
+
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.highlightColor
+                wrapMode: Text.Wrap
+
+                opacity: backupHelper.estimatedBackupSize < 0? 0: 1
+
+                Behavior on opacity
+                {
+                    FadeAnimation { }
+                }
+            }
         }
 
         TextField
@@ -127,6 +198,12 @@ Page
                     pageStack.push(Qt.resolvedUrl('BackupWorker.qml'), config);
             }
         }
+    }
+
+    onStatusChanged:
+    {
+        if (status == PageStatus.Active)
+            backupHelper.estimateBackupSize();
     }
 
     function endsWith(str, ends)

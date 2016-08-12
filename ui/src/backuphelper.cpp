@@ -84,22 +84,9 @@ void BackupHelper::backup(const QString& fileName, bool compress, bool overwrite
 
         file.close();
 
-        BackupWorker* worker = new BackupWorker(BackupWorker::Mode::Backup, fileName, compress);
-
-        connect(worker, &BackupWorker::started,
-                [this]() { setBusy(true); });
-
-        connect(worker, &BackupWorker::finished,
-                [this](ErrorCode errorCode) { setBusy(false); setErrorCode(errorCode); });
-
-        connect(worker, &BackupWorker::progressChanged,
-                this, &BackupHelper::setProgress);
-
-        connect(worker, &BackupWorker::totalCountChanged,
-                this, &BackupHelper::setTotalCount);
-
-        if (!QThreadPool::globalInstance()->tryStart(worker))
+        if (!tryStartWorker(new BackupWorker(fileName, compress)))
             throw BackupException(ErrorCode::UnableToStart, QString());
+
     }
     catch (BackupException& e)
     {
@@ -110,6 +97,40 @@ void BackupHelper::backup(const QString& fileName, bool compress, bool overwrite
     }
 }
 
+void BackupHelper::estimateBackupSize()
+{
+    qDebug();
+
+    setErrorCode(ErrorCode::None);
+    setBusy(true);
+
+    if (!tryStartWorker(new BackupWorker()))
+    {
+        setErrorCode(ErrorCode::UnableToStart);
+        setBusy(false);
+    }
+}
+
 void BackupHelper::restore(const QString&)
 {
+}
+
+bool BackupHelper::tryStartWorker(BackupWorker* worker)
+{
+    connect(worker, &BackupWorker::started,
+            [this]() { setBusy(true); });
+
+    connect(worker, &BackupWorker::finished,
+            [this](ErrorCode errorCode) { setBusy(false); setErrorCode(errorCode); });
+
+    connect(worker, &BackupWorker::progressChanged,
+            this, &BackupHelper::setProgress);
+
+    connect(worker, &BackupWorker::totalCountChanged,
+            this, &BackupHelper::setTotalCount);
+
+    connect(worker, &BackupWorker::estimatedBackupSizeChanged,
+            this, &BackupHelper::setEstimatedBackupSize);
+
+    return QThreadPool::globalInstance()->tryStart(worker);
 }

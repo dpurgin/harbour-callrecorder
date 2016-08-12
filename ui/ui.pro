@@ -65,6 +65,7 @@ QMLFILES = \
     qml/pages/settings/About.qml \
     qml/pages/settings/AudioSettings.qml \
     qml/pages/settings/Backup.qml \
+    qml/pages/settings/BackupFileExists.qml \
     qml/pages/settings/BackupWorker.qml \
     qml/pages/settings/Daemon.qml \
     qml/pages/settings/License.qml \
@@ -82,6 +83,7 @@ QMLFILES = \
     qml/pages/EventsPage.qml \
     qml/pages/SettingsPage.qml \
     qml/widgets/PhoneNumberEntryField.qml \
+    qml/widgets/StyledLabel.qml \
     qml/main.qml
 
 OTHER_FILES += \

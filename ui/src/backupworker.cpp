@@ -48,54 +48,85 @@ BackupWorker::~BackupWorker()
     }
 }
 
+void BackupWorker::backup()
+{
+    QScopedPointer< Settings > settings(new Settings());
+
+    auto fiList = QDir(settings->outputLocation()).entryInfoList(
+                QDir::Files | QDir::Readable, QDir::NoSort);
+
+    emit totalCountChanged(fiList.size() + 2);
+
+    mArchive = archive_write_new();
+    mArchiveEntry = archive_entry_new();
+
+    if (mCompress)
+        archive_write_add_filter_bzip2(mArchive);
+    else
+        archive_write_add_filter_none(mArchive);
+
+    archive_write_set_format_ustar(mArchive);
+
+    int progress = 0;
+
+    archive_write_open_filename(mArchive, mFileName.toUtf8().data());
+
+    foreach (auto fi, fiList)
+    {
+        writeToArchive(fi, "data");
+
+        emit progressChanged(++progress);
+    }
+
+    writeToArchive(LibCallRecorder::databaseFilePath());
+    emit progressChanged(++progress);
+
+    writeToArchive(LibCallRecorder::settingsFilePath());
+    emit progressChanged(++progress);
+
+    qDebug() << "before write archive_write_close()";
+
+    archive_entry_free(mArchiveEntry);
+    mArchiveEntry = nullptr;
+
+    archive_write_close(mArchive);
+}
+
+void BackupWorker::estimateSize()
+{
+    QScopedPointer< Settings > settings(new Settings());
+
+    auto fiList = QDir(settings->outputLocation()).entryInfoList(
+                QDir::Files | QDir::Readable, QDir::NoSort);
+
+    qint64 totalSize = 0;
+
+    foreach (auto fi, fiList)
+        totalSize += fi.size();
+
+    totalSize += QFileInfo(LibCallRecorder::settingsFilePath()).size() +
+                 QFileInfo(LibCallRecorder::databaseFilePath()).size();
+
+    emit estimatedBackupSizeChanged(totalSize);
+}
+
+void BackupWorker::restore()
+{
+
+}
+
 void BackupWorker::run()
 {
     emit started();
 
-    BackupHelper::ErrorCode errorCode = BackupHelper::ErrorCode::None;
+    auto errorCode = BackupHelper::ErrorCode::None;
 
     try
     {
-        QScopedPointer< Settings > settings(new Settings());
-
-        auto fiList = QDir(settings->outputLocation()).entryInfoList(
-                    QDir::Files | QDir::Readable, QDir::NoSort);
-
-        emit totalCountChanged(fiList.size() + 2);
-
-        mArchive = archive_write_new();
-        mArchiveEntry = archive_entry_new();
-
-        if (mCompress)
-            archive_write_add_filter_bzip2(mArchive);
-        else
-            archive_write_add_filter_none(mArchive);
-
-        archive_write_set_format_ustar(mArchive);
-
-        int progress = 0;
-
-        archive_write_open_filename(mArchive, mFileName.toUtf8().data());
-
-        foreach (auto fi, fiList)
-        {
-            writeToArchive(fi, "data");
-
-            emit progressChanged(++progress);
-        }
-
-        writeToArchive(LibCallRecorder::databaseFilePath());
-        emit progressChanged(++progress);
-
-        writeToArchive(LibCallRecorder::settingsFilePath());
-        emit progressChanged(++progress);
-
-        qDebug() << "before write archive_write_close()";
-
-        archive_entry_free(mArchiveEntry);
-        mArchiveEntry = nullptr;
-
-        archive_write_close(mArchive);
+        if (mMode == Mode::Backup)
+            backup();
+        else if (mMode == Mode::EstimateSize)
+            estimateSize();
     }
     catch (BackupException& e)
     {
@@ -107,6 +138,7 @@ void BackupWorker::run()
     qDebug() << "before finished";
 
     emit finished(errorCode);
+
 }
 
 void BackupWorker::writeToArchive(QFileInfo fileInfo, QString pathInArchive)
