@@ -33,6 +33,8 @@ class FileSystemHelper : public QObject
 public:
     explicit FileSystemHelper(QObject *parent = 0);
 
+    Q_INVOKABLE QString absolutePath(const QString& fileName) const;
+
     Q_INVOKABLE bool dirIsEmpty(const QString& dirPath) const;
     Q_INVOKABLE bool exists(const QString& filePath) const;
     Q_INVOKABLE QStringList fileList(const QString& dirPath) const;

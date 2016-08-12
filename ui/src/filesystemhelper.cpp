@@ -33,6 +33,11 @@ FileSystemHelper::FileSystemHelper(QObject *parent) :
 {
 }
 
+QString FileSystemHelper::absolutePath(const QString& fileName) const
+{
+    return QFileInfo(fileName).absolutePath();
+}
+
 bool FileSystemHelper::dirIsEmpty(const QString& dirPath) const
 {
     return QFileInfo(dirPath).isDir() &&
