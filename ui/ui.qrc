@@ -9,5 +9,7 @@
         <file>images/icon-m-ui.png</file>
         <file>images/icon-m-about.png</file>
         <file>images/icon-m-empty.png</file>
+        <file>images/icon-m-utilities.png</file>
+        <file>images/icon-m-backup.png</file>
     </qresource>
 </RCC>

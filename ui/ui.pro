@@ -29,17 +29,24 @@ INCLUDEPATH += \
 
 LIBS += \
     -L../libcallrecorder -lcallrecorder \
-    -L../libcontacts -lcontactcache-qt5
+    -L../libcontacts -lcontactcache-qt5 \
+    -larchive
 #    -L../nemo-qml-plugin-contacts -lnemocontacts \
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Werror
 
 HEADERS += \
+    src/backupexception.h \
+    src/backuphelper.h \
+    src/backupworker.h \
     src/filerelocationworker.h \
     src/filesystemhelper.h \
     src/localelistmodel.h
 
 SOURCES += \
+    src/backupexception.cpp \
+    src/backuphelper.cpp \
+    src/backupworker.cpp \
     src/filerelocationworker.cpp \
     src/filesystemhelper.cpp \
     src/main.cpp \
@@ -57,6 +64,8 @@ QMLFILES = \
     qml/pages/dialogs/PhoneNumbersListDialog.qml \
     qml/pages/settings/About.qml \
     qml/pages/settings/AudioSettings.qml \
+    qml/pages/settings/Backup.qml \
+    qml/pages/settings/BackupWorker.qml \
     qml/pages/settings/Daemon.qml \
     qml/pages/settings/License.qml \
     qml/pages/settings/Storage.qml \
@@ -116,3 +125,4 @@ TRANSLATIONS += \
     translations/ui-sk.ts \
     translations/ui-sv.ts \
     translations/ui-zh_TW.ts
+
