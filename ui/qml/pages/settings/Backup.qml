@@ -107,11 +107,24 @@ Page
 
             onClicked:
             {
-                pageStack.push(Qt.resolvedUrl('BackupWorker.qml'), {
+                var config = {
                     fileName: backupPath.text,
                     compress: compressSwitch.checked,
                     overwrite: true
-                });
+                };
+
+                if (fileSystemHelper.exists(backupPath.text))
+                {
+                    pageStack.push(Qt.resolvedUrl('BackupFileExists.qml'), {
+                        acceptDestination: Qt.resolvedUrl('BackupWorker.qml'),
+                        acceptDestinationAction: PageStackAction.Replace,
+                        acceptDestinationProperties: config,
+
+                        fileName: backupPath.text
+                    });
+                }
+                else
+                    pageStack.push(Qt.resolvedUrl('BackupWorker.qml'), config);
             }
         }
     }
