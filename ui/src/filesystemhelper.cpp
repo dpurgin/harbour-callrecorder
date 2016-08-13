@@ -54,6 +54,13 @@ QStringList FileSystemHelper::fileList(const QString& dirPath) const
     return (QFileInfo(dirPath).isDir()? QDir(dirPath).entryList(QDir::Files): QStringList());
 }
 
+bool FileSystemHelper::isReadable(const QString& filePath) const
+{
+    QFileInfo fi(filePath);
+
+    return fi.exists() && fi.isReadable();
+}
+
 bool FileSystemHelper::isRemovable(const QString& filePath) const
 {
     QFileInfo fi(filePath);
@@ -104,9 +111,9 @@ bool FileSystemHelper::remove(const QString& filePath) const
 
 bool FileSystemHelper::rename(const QString& filePath, const QString& newName) const
 {
-    QFile f(filePath);
+    QFileInfo f(filePath);
 
-    return (f.exists() && f.rename(newName));
+    return (f.exists() && QFile::rename(f.absoluteFilePath(), f.absolutePath() + '/' + newName));
 }
 
 bool FileSystemHelper::sdCardExists() const

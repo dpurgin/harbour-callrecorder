@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE bool dirIsEmpty(const QString& dirPath) const;
     Q_INVOKABLE bool exists(const QString& filePath) const;
     Q_INVOKABLE QStringList fileList(const QString& dirPath) const;
+    Q_INVOKABLE bool isReadable(const QString& filePath) const;
     Q_INVOKABLE bool isRemovable(const QString& filePath) const;
     Q_INVOKABLE bool isWritable(const QString& filePath) const;
 
