@@ -70,12 +70,13 @@ Page {
                     text: qsTr('Browse')
 
                     onClicked: {
-                        var dlg = pageStack.push('../DirectoryPickerDialog.qml', {
-                            directoryPath: outputLocationField.text
+                        var dlg = pageStack.push('../dialogs/FilePickerDialog.qml', {
+                            directoryPicker: true,
+                            path: outputLocationField.text
                         });
 
                         dlg.accepted.connect(function() {
-                            outputLocationField.text = dlg.directoryPath;
+                            outputLocationField.text = dlg.absoluteFilePath;
                         })
                     }
                 }
