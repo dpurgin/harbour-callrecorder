@@ -60,6 +60,8 @@ QMLFILES = \
     qml/pages/dialogs/ContactPickerDelegate.qml \
     qml/pages/dialogs/ContactPickerDelegateMenu.qml \
     qml/pages/dialogs/ContactPickerDialog.qml \
+    qml/pages/dialogs/FileNameDialog.qml \
+    qml/pages/dialogs/FilePickerDialog.qml \
     qml/pages/dialogs/PhoneNumbersListDelegate.qml \
     qml/pages/dialogs/PhoneNumbersListDialog.qml \
     qml/pages/settings/About.qml \
@@ -72,8 +74,6 @@ QMLFILES = \
     qml/pages/settings/Storage.qml \
     qml/pages/settings/Translators.qml \
     qml/pages/settings/UserInterface.qml \
-    qml/pages/DirectoryNameDialog.qml \
-    qml/pages/DirectoryPickerDialog.qml \
     qml/pages/EventPage.qml \
     qml/pages/EventPageLandscape.qml \
     qml/pages/EventPagePortrait.qml \
