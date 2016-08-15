@@ -32,6 +32,26 @@
 
 #include "backupexception.h"
 
+class ArchiveReadDeleter
+{
+public:
+    static inline void cleanup(archive* pointer)
+    {
+        if (pointer)
+            archive_read_free(pointer);
+    }
+};
+
+class ArchiveWriteDeleter
+{
+public:
+    static inline void cleanup(archive* pointer)
+    {
+        if (pointer)
+            archive_write_free(pointer);
+    }
+};
+
 BackupWorker::~BackupWorker()
 {
     qDebug();
@@ -92,7 +112,7 @@ void BackupWorker::backup()
     archive_write_close(mArchive);
 }
 
-void BackupWorker::estimateSize()
+void BackupWorker::estimateBackupSize()
 {
     QScopedPointer< Settings > settings(new Settings());
 
@@ -110,6 +130,43 @@ void BackupWorker::estimateSize()
     emit estimatedBackupSizeChanged(totalSize);
 }
 
+void BackupWorker::estimateRestoreSize()
+{
+    qDebug();
+
+    qint64 size = 0;
+
+    QScopedPointer< archive, ArchiveReadDeleter > arc(archive_read_new());
+    archive_read_support_filter_all(arc.data());
+    archive_read_support_format_all(arc.data());
+
+    int result = archive_read_open_filename(arc.data(), mFileName.toUtf8().data(), 32768);
+
+    if (result != ARCHIVE_OK)
+        throw BackupException(BackupHelper::ErrorCode::WrongFileFormat, mFileName);
+
+    archive_entry* entry;
+
+    while (archive_read_next_header(arc.data(), &entry) == ARCHIVE_OK)
+    {
+        qDebug() << archive_entry_pathname(entry);
+
+        size += archive_entry_size(entry);
+    }
+
+    qDebug() << "estimated restore size for" << mFileName << size;
+
+    if (size == 0)
+    {
+        qDebug() << "something went wrong, using archive size as estimate";
+
+        size = QFileInfo(mFileName).size();
+    }
+
+    emit estimatedRestoreSizeChanged(size);
+
+}
+
 void BackupWorker::restore()
 {
 
@@ -125,8 +182,10 @@ void BackupWorker::run()
     {
         if (mMode == Mode::Backup)
             backup();
-        else if (mMode == Mode::EstimateSize)
-            estimateSize();
+        else if (mMode == Mode::EstimateBackupSize)
+            estimateBackupSize();
+        else if (mMode == Mode::EstimateRestoreSize)
+            estimateRestoreSize();
     }
     catch (BackupException& e)
     {

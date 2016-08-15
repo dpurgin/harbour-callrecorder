@@ -34,14 +34,23 @@ public:
     {
         Backup,
         Restore,
-        EstimateSize
+        EstimateBackupSize,
+        EstimateRestoreSize
     };
 
 public:
     BackupWorker(QObject* parent = nullptr)
         : QObject(parent),
           QRunnable(),
-          mMode(Mode::EstimateSize)
+          mMode(Mode::EstimateBackupSize)
+    {
+    }
+
+    BackupWorker(QString fileName, QObject* parent = nullptr)
+        : QObject(parent),
+          QRunnable(),
+          mMode(Mode::EstimateRestoreSize),
+          mFileName(fileName)
     {
     }
 
@@ -65,11 +74,13 @@ signals:
     void progressChanged(int);
     void totalCountChanged(int);
     void estimatedBackupSizeChanged(qint64);
+    void estimatedRestoreSizeChanged(qint64);
 
 private:
     void backup();
     void restore();
-    void estimateSize();
+    void estimateBackupSize();
+    void estimateRestoreSize();
 
     void writeToArchive(QFileInfo fileInfo, QString pathInArchive = QString());
     void writeToArchive(QString fileName, QString pathInArchive = QString());

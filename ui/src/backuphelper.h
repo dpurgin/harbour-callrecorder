@@ -39,6 +39,10 @@ class BackupHelper : public QObject
                READ estimatedBackupSize
                NOTIFY estimatedBackupSizeChanged)
 
+    Q_PROPERTY(qint64 estimatedRestoreSize
+               READ estimatedRestoreSize
+               NOTIFY estimatedRestoreSizeChanged)
+
     Q_PROPERTY(int progress
                READ progress
                NOTIFY progressChanged)
@@ -54,7 +58,8 @@ public:
         FileExists,
         FileNotExists,
         UnableToWrite,
-        UnableToStart
+        UnableToStart,
+        WrongFileFormat
     };
 
     Q_ENUMS(ErrorCode)
@@ -66,10 +71,12 @@ public:
     Q_INVOKABLE void backup(const QString& fileName, bool compress, bool overwrite);
     Q_INVOKABLE void restore(const QString& fileName);
     Q_INVOKABLE void estimateBackupSize();
+    Q_INVOKABLE void estimateRestoreSize(const QString& fileName);
 
     bool busy() const { return mBusy; }
     ErrorCode errorCode() const { return mErrorCode; }
     qint64 estimatedBackupSize() const { return mEstimatedBackupSize; }
+    qint64 estimatedRestoreSize() const { return mEstimatedRestoreSize; }
     int progress() const { return mProgress; }
     int totalCount() const { return mTotalCount; }
 
@@ -77,6 +84,7 @@ signals:
     void busyChanged(bool);
     void errorCodeChanged(ErrorCode);
     void estimatedBackupSizeChanged(qint64);
+    void estimatedRestoreSizeChanged(qint64);
     void totalCountChanged(int);
     void progressChanged(int);
 
@@ -99,6 +107,12 @@ private:
             emit estimatedBackupSizeChanged(mEstimatedBackupSize = size);
     }
 
+    void setEstimatedRestoreSize(qint64 size)
+    {
+        if (size != mEstimatedRestoreSize)
+            emit estimatedRestoreSizeChanged(mEstimatedRestoreSize = size);
+    }
+
     bool tryStartWorker(BackupWorker* worker);
 
 private slots:
@@ -119,6 +133,7 @@ private:
     int mProgress = -1;
     int mTotalCount = -1;
     qint64 mEstimatedBackupSize = -1;
+    qint64 mEstimatedRestoreSize = -1;
 
     ErrorCode mErrorCode = ErrorCode::None;
 };

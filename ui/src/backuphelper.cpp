@@ -28,6 +28,13 @@
 #include "backupexception.h"
 #include "backupworker.h"
 
+void initQ()
+{
+    qRegisterMetaType< BackupHelper::ErrorCode >("ErrorCode");
+}
+
+Q_CONSTRUCTOR_FUNCTION(initQ)
+
 QDebug operator<<(QDebug dbg, BackupHelper::ErrorCode errorCode)
 {
     switch (errorCode)
@@ -37,6 +44,7 @@ QDebug operator<<(QDebug dbg, BackupHelper::ErrorCode errorCode)
         case BackupHelper::ErrorCode::FileNotExists: dbg << "File doesn't exist"; break;
         case BackupHelper::ErrorCode::UnableToWrite: dbg << "Unable to write"; break;
         case BackupHelper::ErrorCode::UnableToStart: dbg << "Unable to start thread"; break;
+        case BackupHelper::ErrorCode::WrongFileFormat: dbg << "Wrong file format"; break;
         default: dbg << "Unknown";
     }
 
@@ -104,7 +112,25 @@ void BackupHelper::estimateBackupSize()
     setErrorCode(ErrorCode::None);
     setBusy(true);
 
+    setEstimatedBackupSize(-1);
+
     if (!tryStartWorker(new BackupWorker()))
+    {
+        setErrorCode(ErrorCode::UnableToStart);
+        setBusy(false);
+    }
+}
+
+void BackupHelper::estimateRestoreSize(const QString& fileName)
+{
+    qDebug();
+
+    setErrorCode(ErrorCode::None);
+    setBusy(true);
+
+    setEstimatedRestoreSize(-1);
+
+    if (!tryStartWorker(new BackupWorker(fileName)))
     {
         setErrorCode(ErrorCode::UnableToStart);
         setBusy(false);
@@ -117,6 +143,8 @@ void BackupHelper::restore(const QString&)
 
 bool BackupHelper::tryStartWorker(BackupWorker* worker)
 {
+    qDebug();
+
     connect(worker, &BackupWorker::started,
             [this]() { setBusy(true); });
 
@@ -131,6 +159,9 @@ bool BackupHelper::tryStartWorker(BackupWorker* worker)
 
     connect(worker, &BackupWorker::estimatedBackupSizeChanged,
             this, &BackupHelper::setEstimatedBackupSize);
+
+    connect(worker, &BackupWorker::estimatedRestoreSizeChanged,
+            this, &BackupHelper::setEstimatedRestoreSize);
 
     return QThreadPool::globalInstance()->tryStart(worker);
 }
