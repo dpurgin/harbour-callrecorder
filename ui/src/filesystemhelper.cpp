@@ -18,6 +18,7 @@
 
 #include "filesystemhelper.h"
 
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -54,8 +55,17 @@ QStringList FileSystemHelper::fileList(const QString& dirPath) const
     return (QFileInfo(dirPath).isDir()? QDir(dirPath).entryList(QDir::Files): QStringList());
 }
 
+bool FileSystemHelper::isFile(const QString& filePath) const
+{
+    qDebug() << filePath;
+
+    return QFileInfo(filePath).isFile();
+}
+
 bool FileSystemHelper::isReadable(const QString& filePath) const
 {
+    qDebug() << filePath;
+
     QFileInfo fi(filePath);
 
     return fi.exists() && fi.isReadable();
