@@ -84,6 +84,7 @@ private:
 
     void writeToArchive(QFileInfo fileInfo, QString pathInArchive = QString());
     void writeToArchive(QString fileName, QString pathInArchive = QString());
+    void writeToArchive(QByteArray data, QString filePathInArchive);
 
 private:
     Mode mMode;

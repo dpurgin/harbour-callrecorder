@@ -18,10 +18,14 @@
 
 #include "backupworker.h"
 
+#include <QDateTime>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QFileInfoList>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QStringBuilder>
 
 #include <archive.h>
@@ -37,6 +41,8 @@ class ArchiveReadDeleter
 public:
     static inline void cleanup(archive* pointer)
     {
+        qDebug();
+
         if (pointer)
             archive_read_free(pointer);
     }
@@ -47,25 +53,28 @@ class ArchiveWriteDeleter
 public:
     static inline void cleanup(archive* pointer)
     {
+        qDebug();
+
         if (pointer)
             archive_write_free(pointer);
+    }
+};
+
+class ArchiveEntryDeleter
+{
+public:
+    static inline void cleanup(archive_entry* pointer)
+    {
+        qDebug();
+
+        if (pointer)
+            archive_entry_free(pointer);
     }
 };
 
 BackupWorker::~BackupWorker()
 {
     qDebug();
-
-    if (mArchiveEntry)
-        archive_entry_free(mArchiveEntry);
-
-    if (mArchive)
-    {
-        if (mMode == Mode::Backup)
-            archive_write_free(mArchive);
-        else if (mMode == Mode::Restore)
-            archive_read_free(mArchive);
-    }
 }
 
 void BackupWorker::backup()
@@ -77,8 +86,11 @@ void BackupWorker::backup()
 
     emit totalCountChanged(fiList.size() + 2);
 
-    mArchive = archive_write_new();
-    mArchiveEntry = archive_entry_new();
+    QScopedPointer< archive, ArchiveWriteDeleter > archiveContainer(
+                mArchive = archive_write_new());
+
+    QScopedPointer< archive_entry, ArchiveEntryDeleter > archiveEntryContainer(
+                mArchiveEntry = archive_entry_new());
 
     if (mCompress)
         archive_write_add_filter_bzip2(mArchive);
@@ -88,12 +100,15 @@ void BackupWorker::backup()
     archive_write_set_format_ustar(mArchive);
 
     int progress = 0;
+    qint64 restoreSize = 0;
 
     archive_write_open_filename(mArchive, mFileName.toUtf8().data());
 
     foreach (auto fi, fiList)
     {
         writeToArchive(fi, "data");
+
+        restoreSize += fi.size();
 
         emit progressChanged(++progress);
     }
@@ -104,10 +119,15 @@ void BackupWorker::backup()
     writeToArchive(LibCallRecorder::settingsFilePath());
     emit progressChanged(++progress);
 
-    qDebug() << "before write archive_write_close()";
+    QJsonObject meta;
+    meta.insert("timeStamp", QDateTime::currentDateTime().toString(Qt::ISODate));
+    meta.insert("producerVersion", QString(VERSION));
+    meta.insert("outputLocation", settings->outputLocation());
+    meta.insert("restoreSize", restoreSize);
 
-    archive_entry_free(mArchiveEntry);
-    mArchiveEntry = nullptr;
+    writeToArchive(QJsonDocument(meta).toJson(), "meta.json");
+
+    qDebug() << "before write archive_write_close()";
 
     archive_write_close(mArchive);
 }
@@ -240,3 +260,16 @@ void BackupWorker::writeToArchive(QString fileName, QString pathInArchive)
     writeToArchive(QFileInfo(fileName), pathInArchive);
 }
 
+void BackupWorker::writeToArchive(QByteArray data, QString filePathInArchive)
+{
+    mArchiveEntry = archive_entry_clear(mArchiveEntry);
+
+    archive_entry_set_pathname(mArchiveEntry, filePathInArchive.toUtf8().data());
+    archive_entry_set_size(mArchiveEntry, data.size());
+    archive_entry_set_filetype(mArchiveEntry, AE_IFREG);
+    archive_entry_set_perm(mArchiveEntry, 0664);
+
+    archive_write_header(mArchive, mArchiveEntry);
+
+    archive_write_data(mArchive, data.constData(), data.size());
+}
