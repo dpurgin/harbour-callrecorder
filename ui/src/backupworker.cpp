@@ -85,7 +85,12 @@ void BackupWorker::backup()
     auto fiList = QDir(settings->outputLocation()).entryInfoList(
                 QDir::Files | QDir::Readable, QDir::NoSort);
 
-    emit totalCountChanged(fiList.size() + 2);
+    // Update total count for UI progress.
+    // fiList.size() is number of recordings.
+    // +2 are settings and database file.
+    // +1 is for preparing metadata file.
+    // +1 is for writing metadata file
+    emit totalCountChanged(fiList.size() + 4);
 
     QScopedPointer< archive, ArchiveWriteDeleter > archiveContainer(
                 mArchive = archive_write_new());
@@ -105,11 +110,35 @@ void BackupWorker::backup()
 
     archive_write_open_filename(mArchive, mFileName.toUtf8().data());
 
+    // Prepare backup metadata file.
+    // This file contains unpacked size and file count
+    // The file is written as the first file in archive to speed up
+    // reading it from compressed archive
+    foreach (auto fi, fiList)
+        restoreSize += fi.size();
+
+    restoreSize += QFileInfo(LibCallRecorder::databaseFilePath()).size() +
+                   QFileInfo(LibCallRecorder::settingsFilePath()).size();
+
+    emit progressChanged(++progress);
+
+    // Write metadata file as the first file in archive
+    // This will speed up loading metadata when restoring
+
+    QJsonObject meta;
+    meta.insert("timeStamp", QDateTime::currentDateTime().toString(Qt::ISODate));
+    meta.insert("producerVersion", QString(VERSION));
+    meta.insert("outputLocation", settings->outputLocation());
+    meta.insert("restoreSize", restoreSize);
+    meta.insert("totalCount", fiList.size() + 2);
+
+    writeToArchive(QJsonDocument(meta).toJson(), "meta.json");
+
+    emit progressChanged(++progress);
+
     foreach (auto fi, fiList)
     {
         writeToArchive(fi, "data");
-
-        restoreSize += fi.size();
 
         emit progressChanged(++progress);
     }
@@ -119,14 +148,6 @@ void BackupWorker::backup()
 
     writeToArchive(LibCallRecorder::settingsFilePath());
     emit progressChanged(++progress);
-
-    QJsonObject meta;
-    meta.insert("timeStamp", QDateTime::currentDateTime().toString(Qt::ISODate));
-    meta.insert("producerVersion", QString(VERSION));
-    meta.insert("outputLocation", settings->outputLocation());
-    meta.insert("restoreSize", restoreSize);
-
-    writeToArchive(QJsonDocument(meta).toJson(), "meta.json");
 
     qDebug() << "before write archive_write_close()";
 
