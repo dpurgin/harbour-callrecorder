@@ -137,6 +137,22 @@ void BackupHelper::estimateRestoreSize(const QString& fileName)
     }
 }
 
+void BackupHelper::readBackupMeta(const QString& fileName)
+{
+    qDebug();
+
+    setErrorCode(ErrorCode::None);
+    setBusy(true);
+
+    setBackupMeta(QString());
+
+    if (!tryStartWorker(new BackupWorker(fileName)))
+    {
+        setErrorCode(ErrorCode::UnableToStart);
+        setBusy(false);
+    }
+}
+
 void BackupHelper::restore(const QString&)
 {
 }
@@ -150,6 +166,9 @@ bool BackupHelper::tryStartWorker(BackupWorker* worker)
 
     connect(worker, &BackupWorker::finished,
             [this](ErrorCode errorCode) { setBusy(false); setErrorCode(errorCode); });
+
+    connect(worker, &BackupWorker::backupMetaChanged,
+            this, &BackupHelper::setBackupMeta);
 
     connect(worker, &BackupWorker::progressChanged,
             this, &BackupHelper::setProgress);

@@ -35,7 +35,8 @@ public:
         Backup,
         Restore,
         EstimateBackupSize,
-        EstimateRestoreSize
+        EstimateRestoreSize,
+        ReadBackupMeta
     };
 
 public:
@@ -49,7 +50,7 @@ public:
     BackupWorker(QString fileName, QObject* parent = nullptr)
         : QObject(parent),
           QRunnable(),
-          mMode(Mode::EstimateRestoreSize),
+          mMode(Mode::ReadBackupMeta),
           mFileName(fileName)
     {
     }
@@ -69,6 +70,7 @@ public:
     void run() override;
 
 signals:
+    void backupMetaChanged(QString);
     void started();
     void finished(BackupHelper::ErrorCode);
     void progressChanged(int);
@@ -81,7 +83,10 @@ private:
     void restore();
     void estimateBackupSize();
     void estimateRestoreSize();
+    void readBackupMeta();
 
+    void extractFromArchive(QIODevice* device);
+    void openArchive();
     void writeToArchive(QFileInfo fileInfo, QString pathInArchive = QString());
     void writeToArchive(QString fileName, QString pathInArchive = QString());
     void writeToArchive(QByteArray data, QString filePathInArchive);

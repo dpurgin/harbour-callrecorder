@@ -18,6 +18,7 @@
 
 #include "backupworker.h"
 
+#include <QBuffer>
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
@@ -187,6 +188,74 @@ void BackupWorker::estimateRestoreSize()
 
 }
 
+void BackupWorker::extractFromArchive(QIODevice* device)
+{
+    qDebug();
+
+    char buffer[32768];
+
+    auto readSize = archive_read_data(mArchive, buffer, sizeof(buffer));
+
+    do
+    {
+        device->write(buffer, readSize);
+
+        readSize = archive_read_data(mArchive, buffer, sizeof(buffer));
+    }
+    while (readSize > 0);
+}
+
+void BackupWorker::openArchive()
+{
+    qDebug();
+
+    QScopedPointer< archive, ArchiveReadDeleter > arc(archive_read_new());
+    archive_read_support_filter_all(arc.data());
+    archive_read_support_format_all(arc.data());
+
+    int result = archive_read_open_filename(arc.data(), mFileName.toUtf8().data(), 32768);
+
+    if (result != ARCHIVE_OK)
+        throw BackupException(BackupHelper::ErrorCode::WrongFileFormat, mFileName);
+
+    mArchive = arc.take();
+}
+
+void BackupWorker::readBackupMeta()
+{
+    qDebug();
+
+    bool metaFound = false;
+
+    openArchive();
+
+    QScopedPointer< archive, ArchiveReadDeleter > archiveContainer(mArchive);
+
+    while (archive_read_next_header(mArchive, &mArchiveEntry) == ARCHIVE_OK && !metaFound)
+    {
+        QString filePath(archive_entry_pathname(mArchiveEntry));
+
+        if (filePath.compare(QLatin1String("meta.json"), Qt::CaseInsensitive) == 0)
+        {
+            QBuffer buffer;
+
+            buffer.open(QIODevice::ReadWrite);
+
+            extractFromArchive(&buffer);
+
+            qDebug() << buffer.data();
+
+            emit backupMetaChanged(QString::fromUtf8(buffer.data()));
+
+            metaFound = true;
+        }
+    }
+
+    if (!metaFound)
+        throw BackupException(BackupHelper::ErrorCode::WrongFileFormat,
+                              QLatin1String("Archive doesn't contain meta.json"));
+}
+
 void BackupWorker::restore()
 {
 
@@ -206,6 +275,8 @@ void BackupWorker::run()
             estimateBackupSize();
         else if (mMode == Mode::EstimateRestoreSize)
             estimateRestoreSize();
+        else if (mMode == Mode::ReadBackupMeta)
+            readBackupMeta();
     }
     catch (BackupException& e)
     {

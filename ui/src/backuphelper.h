@@ -27,6 +27,10 @@ class BackupHelper : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString backupMeta
+               READ backupMeta
+               NOTIFY backupMetaChanged)
+
     Q_PROPERTY(bool busy
                READ busy
                NOTIFY busyChanged)
@@ -72,7 +76,9 @@ public:
     Q_INVOKABLE void restore(const QString& fileName);
     Q_INVOKABLE void estimateBackupSize();
     Q_INVOKABLE void estimateRestoreSize(const QString& fileName);
+    Q_INVOKABLE void readBackupMeta(const QString& fileName);
 
+    QString backupMeta() const { return mBackupMeta; }
     bool busy() const { return mBusy; }
     ErrorCode errorCode() const { return mErrorCode; }
     qint64 estimatedBackupSize() const { return mEstimatedBackupSize; }
@@ -81,6 +87,7 @@ public:
     int totalCount() const { return mTotalCount; }
 
 signals:
+    void backupMetaChanged(QString);
     void busyChanged(bool);
     void errorCodeChanged(ErrorCode);
     void estimatedBackupSizeChanged(qint64);
@@ -89,6 +96,12 @@ signals:
     void progressChanged(int);
 
 private:
+    void setBackupMeta(QString backupMeta)
+    {
+        if (backupMeta != mBackupMeta)
+            emit backupMetaChanged(mBackupMeta = backupMeta);
+    }
+
     void setBusy(bool busy)
     {
         if (busy != mBusy)
@@ -134,6 +147,7 @@ private:
     int mTotalCount = -1;
     qint64 mEstimatedBackupSize = -1;
     qint64 mEstimatedRestoreSize = -1;
+    QString mBackupMeta;
 
     ErrorCode mErrorCode = ErrorCode::None;
 };
