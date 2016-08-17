@@ -27,7 +27,38 @@ import "../../widgets"
 Page
 {
     BackupHelper { id: backupHelper }
-    BackupHelper { id: restoreHelper }
+    BackupHelper
+    {
+        id: restoreHelper
+
+        onBackupMetaChanged:
+        {
+            var meta = JSON.parse(backupMeta);
+
+            restoreMeta.producerVersion = meta['producerVersion'];
+            restoreMeta.restoreSize = meta['restoreSize'];
+            restoreMeta.timeStamp = new Date(meta['timeStamp']);
+        }
+
+        onErrorCodeChanged:
+        {
+            if (errorCode !== BackupHelper.None)
+            {
+                restoreMeta.producerVersion = '';
+                restoreMeta.restoreSize = -1;
+                restoreMeta.timeStamp = new Date();
+            }
+        }
+    }
+
+    QtObject
+    {
+        id: restoreMeta
+
+        property string producerVersion
+        property int restoreSize: -1
+        property date timeStamp
+    }
 
     SilicaFlickable
     {
@@ -238,15 +269,7 @@ Page
 
                 width: parent.width
 
-                onTextChanged:
-                {
-                    if (text.length > 0 &&
-                            fileSystemHelper.isFile(text) &&
-                            fileSystemHelper.isReadable(text))
-                    {
-                        restoreHelper.estimateRestoreSize(text);
-                    }
-                }
+                onTextChanged: restoreHelper.readBackupMeta(text);
             }
 
             Button
@@ -271,19 +294,19 @@ Page
                 height: Theme.paddingLarge
             }
 
-            Item
+            Row
             {
                 x: Theme.horizontalPageMargin
 
+                spacing: Theme.paddingMedium
+
                 width: parent.width - x * 2
-                height: Math.max(restoreBusyIndicator.height, restoreEstimateLabel.height) +
-                        Theme.paddingLarge
+
+                visible: restoreHelper.busy || restoreHelper.errorCode !== BackupHelper.None
 
                 BusyIndicator
                 {
                     id: restoreBusyIndicator
-
-                    anchors.left: parent.left
 
                     size: BusyIndicatorSize.Small
                     running: restoreHelper.busy
@@ -291,80 +314,26 @@ Page
 
                 Label
                 {
-                    text: qsTr('Estimating restored size...')
+                    id: restoreStateLabel
 
-                    anchors
-                    {
-                        left: restoreBusyIndicator.right
-                        right: parent.right
-
-                        leftMargin: Theme.paddingMedium
-
-                    }
+                    width: parent.width - restoreBusyIndicator.width - Theme.paddingMedium
 
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.highlightColor
                     wrapMode: Text.Wrap
-
-                    opacity: restoreHelper.busy? 1: 0
-
-                    Behavior on opacity
-                    {
-                        FadeAnimation { }
-                    }
-                }
-
-                Label
-                {
-                    id: restoreEstimateLabel
-
-                    anchors
-                    {
-                        left: restoreBusyIndicator.right
-                        right: parent.right
-
-                        leftMargin: Theme.paddingMedium
-                    }
-
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.highlightColor
-                    wrapMode: Text.Wrap
-
-                    opacity: restoreHelper.busy? 0: 1
-
-                    Behavior on opacity
-                    {
-                        FadeAnimation { }
-                    }
 
                     states:
                     [
                         State
                         {
-                            when: restoreHelper.estimatedRestoreSize > 0 &&
-                                  restoreHelper.errorCode === BackupHelper.None
+                            when: restoreHelper.busy
 
                             PropertyChanges
                             {
-                                target: restoreEstimateLabel
+                                target: restoreStateLabel
 
-                                text: qsTr('Estimated restored size: %1').arg(
-                                          Format.formatFileSize(restoreHelper.estimatedRestoreSize))
+                                text: qsTr('Checking backup file...')
                             }
-                        },
-
-                        State
-                        {
-                            when: restoreHelper.errorCode === BackupHelper.None &&
-                                  restoreHelper.estimatedRestoreSize < 0
-
-                            PropertyChanges
-                            {
-                                target: restoreEstimateLabel
-
-                                text: qsTr('Select a Call Recorder backup to estimate restored size')
-                            }
-
                         },
 
                         State
@@ -373,7 +342,7 @@ Page
 
                             PropertyChanges
                             {
-                                target: restoreEstimateLabel
+                                target: restoreStateLabel
 
                                 text: qsTr('Selected file is not a valid Call Recorder backup')
                             }
@@ -382,11 +351,39 @@ Page
                 }
             }
 
+            BackupMeta
+            {
+                visible: restoreHelper.backupMeta !== '' &&
+                         restoreHelper.errorCode === BackupHelper.None
+
+                producerVersion: restoreMeta.producerVersion
+                restoreSize: restoreMeta.restoreSize
+                timeStamp: restoreMeta.timeStamp
+            }
+
+            Item
+            {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+
             Button
             {
                 text: qsTr('Restore')
 
                 anchors.horizontalCenter: parent.horizontalCenter
+
+                enabled: restoreHelper.errorCode === BackupHelper.None &&
+                         restoreMeta.restoreSize > 0
+
+                onClicked:
+                {
+                    var config = {
+                        fileName: restorePath.text
+                    };
+
+                    pageStack.push('BackupRestoreSettings.qml', config);
+                }
             }
         }
     }
