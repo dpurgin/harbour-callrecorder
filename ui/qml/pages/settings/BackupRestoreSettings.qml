@@ -57,23 +57,6 @@ Dialog
                 text: qsTr('Backup Information')
             }
 
-            DetailItem
-            {
-                label: qsTr('Program version')
-                value:  producerVersion
-            }
-
-            DetailItem
-            {
-                label: qsTr('Date and time')
-                value: Format.formatDate(timeStamp, Format.Timepoint)
-            }
-
-            DetailItem
-            {
-                label: qsTr('Size')
-                value: Format.formatFileSize(size)
-            }
 
             Item
             {
