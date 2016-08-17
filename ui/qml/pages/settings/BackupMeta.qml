@@ -41,7 +41,7 @@ Column
 
     DetailItem
     {
-        label: qsTr('Size')
+        label: qsTr('Unpacked size')
         value: Format.formatFileSize(restoreSize)
     }
 }
