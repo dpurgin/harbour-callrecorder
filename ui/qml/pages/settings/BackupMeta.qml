@@ -24,6 +24,7 @@ Column
     property string producerVersion
     property int restoreSize
     property date timeStamp
+    property int totalCount
 
     width: parent.width
 
@@ -43,5 +44,11 @@ Column
     {
         label: qsTr('Unpacked size')
         value: Format.formatFileSize(restoreSize)
+    }
+
+    DetailItem
+    {
+        label: qsTr('Files')
+        value: totalCount
     }
 }
