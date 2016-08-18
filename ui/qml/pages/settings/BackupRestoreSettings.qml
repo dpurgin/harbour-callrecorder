@@ -77,6 +77,11 @@ Dialog
                 description: qsTr('Leave all existing audio files intact, you can add them to UI later using the database repair tool in Utilities')
 
                 width: parent.width
+
+                onCheckedChanged:
+                {
+                    acceptDestinationProperties['removeExisting'] = !checked;
+                }
             }
         }
     }

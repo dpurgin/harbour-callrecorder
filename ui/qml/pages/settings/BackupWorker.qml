@@ -26,16 +26,16 @@ Page
     property string fileName
     property bool compress: false
     property bool overwrite: true
+    property string outputLocation
+    property bool removeExisting: true
+
+    property bool isBackup: true
+    readonly property bool isRestore: !isBackup
 
     property alias busy: backupHelper.busy
     property alias errorCode: backupHelper.errorCode
     property alias progress: backupHelper.progress
     property alias operation: backupHelper.operation
-
-    onOperationChanged:
-    {
-        console.log('operation: ' + operation);
-    }
 
     states: [
         State
@@ -122,12 +122,15 @@ Page
 
         PageHeader
         {
-            title: qsTr('Backup')
+            title: isBackup? qsTr('Backup'): qsTr('Restore')
         }
 
         Label
         {
-            text: qsTr('Performing backup. Please do not go back or close the application until the operation is complete')
+            text: isBackup?
+                      qsTr('Performing backup. Please do not go back or close the application until the operation is complete'):
+                      qsTr('Performing restore. Please do not go back or close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behaviour')
+
 
             x: Theme.horizontalPageMargin
             width: parent.width - x * 2
@@ -155,6 +158,11 @@ Page
     onStatusChanged:
     {
         if (status === PageStatus.Activating)
-            backupHelper.backup(fileName, compress, overwrite);
+        {
+            if (isBackup)
+                backupHelper.backup(fileName, compress, overwrite);
+            else if (isRestore)
+                backupHelper.restore(fileName, outputLocation, removeExisting);
+        }
     }
 }

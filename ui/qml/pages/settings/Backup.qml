@@ -21,6 +21,7 @@ import QtQuick 2.2
 import Sailfish.Silica 1.0
 
 import kz.dpurgin.callrecorder.BackupHelper 1.0
+import kz.dpurgin.callrecorder.Settings 1.0
 
 import "../../widgets"
 
@@ -49,6 +50,11 @@ Page
         id: restoreMeta
 
         onChanged: restoreMetaWidget.backupMeta = restoreMeta
+    }
+
+    Settings
+    {
+        id: settings
     }
 
     SilicaFlickable
@@ -367,11 +373,17 @@ Page
 
                 onClicked:
                 {
-                    var config = {
-                        backupMeta: restoreMeta
-                    };
+                    pageStack.push('BackupRestoreSettings.qml', {
+                        acceptDestination: Qt.resolvedUrl('BackupWorker.qml'),
+                        acceptDestinationAction: PageStackAction.Replace,
+                        acceptDestinationProperties: {
+                            isBackup: false,
+                            fileName: restoreMeta.fileName,
+                            outputLocation: settings.outputLocation
+                        },
 
-                    pageStack.push('BackupRestoreSettings.qml', config);
+                        backupMeta: restoreMeta
+                    });
                 }
             }
         }
