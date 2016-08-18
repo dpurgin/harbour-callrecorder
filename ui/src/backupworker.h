@@ -35,7 +35,6 @@ public:
         Backup,
         Restore,
         EstimateBackupSize,
-        EstimateRestoreSize,
         ReadBackupMeta
     };
 
@@ -76,13 +75,11 @@ signals:
     void progressChanged(int);
     void totalCountChanged(int);
     void estimatedBackupSizeChanged(qint64);
-    void estimatedRestoreSizeChanged(qint64);
 
 private:
     void backup();
     void restore();
     void estimateBackupSize();
-    void estimateRestoreSize();
     void readBackupMeta();
 
     void extractFromArchive(QIODevice* device);

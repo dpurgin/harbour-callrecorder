@@ -121,22 +121,6 @@ void BackupHelper::estimateBackupSize()
     }
 }
 
-void BackupHelper::estimateRestoreSize(const QString& fileName)
-{
-    qDebug();
-
-    setErrorCode(ErrorCode::None);
-    setBusy(true);
-
-    setEstimatedRestoreSize(-1);
-
-    if (!tryStartWorker(new BackupWorker(fileName)))
-    {
-        setErrorCode(ErrorCode::UnableToStart);
-        setBusy(false);
-    }
-}
-
 void BackupHelper::readBackupMeta(const QString& fileName)
 {
     qDebug();
@@ -178,9 +162,6 @@ bool BackupHelper::tryStartWorker(BackupWorker* worker)
 
     connect(worker, &BackupWorker::estimatedBackupSizeChanged,
             this, &BackupHelper::setEstimatedBackupSize);
-
-    connect(worker, &BackupWorker::estimatedRestoreSizeChanged,
-            this, &BackupHelper::setEstimatedRestoreSize);
 
     return QThreadPool::globalInstance()->tryStart(worker);
 }

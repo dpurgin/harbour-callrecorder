@@ -172,43 +172,6 @@ void BackupWorker::estimateBackupSize()
     emit estimatedBackupSizeChanged(totalSize);
 }
 
-void BackupWorker::estimateRestoreSize()
-{
-    qDebug();
-
-    qint64 size = 0;
-
-    QScopedPointer< archive, ArchiveReadDeleter > arc(archive_read_new());
-    archive_read_support_filter_all(arc.data());
-    archive_read_support_format_all(arc.data());
-
-    int result = archive_read_open_filename(arc.data(), mFileName.toUtf8().data(), 32768);
-
-    if (result != ARCHIVE_OK)
-        throw BackupException(BackupHelper::ErrorCode::WrongFileFormat, mFileName);
-
-    archive_entry* entry;
-
-    while (archive_read_next_header(arc.data(), &entry) == ARCHIVE_OK)
-    {
-        qDebug() << archive_entry_pathname(entry);
-
-        size += archive_entry_size(entry);
-    }
-
-    qDebug() << "estimated restore size for" << mFileName << size;
-
-    if (size == 0)
-    {
-        qDebug() << "something went wrong, using archive size as estimate";
-
-        size = QFileInfo(mFileName).size();
-    }
-
-    emit estimatedRestoreSizeChanged(size);
-
-}
-
 void BackupWorker::extractFromArchive(QIODevice* device)
 {
     qDebug();
@@ -294,8 +257,6 @@ void BackupWorker::run()
             backup();
         else if (mMode == Mode::EstimateBackupSize)
             estimateBackupSize();
-        else if (mMode == Mode::EstimateRestoreSize)
-            estimateRestoreSize();
         else if (mMode == Mode::ReadBackupMeta)
             readBackupMeta();
     }
