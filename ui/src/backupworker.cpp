@@ -270,7 +270,10 @@ void BackupWorker::restore()
 
         foreach (QFileInfo fi, fiList)
         {
-            outputLocationDir.remove(fi.fileName());
+            qDebug() << "removing" << fi.fileName();
+
+            if (!outputLocationDir.remove(fi.fileName()))
+                qDebug() << "unable to remove file";
 
             emit progressChanged(++progress);
         }
@@ -294,7 +297,7 @@ void BackupWorker::restore()
 
             if (filePath.startsWith(QLatin1String("data/"), Qt::CaseInsensitive))
                 file.setFileName(mOutputLocation + filePath.mid(4));
-            else if (filePath.compare(QLatin1String("settings.ini"), Qt::CaseInsensitive) == 0)
+            else if (filePath.compare(QLatin1String("callrecorder.ini"), Qt::CaseInsensitive) == 0)
                 file.setFileName(LibCallRecorder::settingsFilePath());
             else if (filePath.compare(QLatin1String("callrecorder.db"), Qt::CaseInsensitive) == 0)
                 file.setFileName(LibCallRecorder::databaseFilePath());
