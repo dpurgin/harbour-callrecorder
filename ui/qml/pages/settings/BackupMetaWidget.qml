@@ -21,34 +21,31 @@ import Sailfish.Silica 1.0
 
 Column
 {
-    property string producerVersion
-    property int restoreSize
-    property date timeStamp
-    property int totalCount
+    property BackupMetaObject backupMeta
 
     width: parent.width
 
     DetailItem
     {
         label: qsTr('Program version')
-        value:  producerVersion
+        value:  backupMeta.producerVersion
     }
 
     DetailItem
     {
         label: qsTr('Date and time')
-        value: Format.formatDate(timeStamp, Format.Timepoint)
+        value: Format.formatDate(backupMeta.timeStamp, Format.Timepoint)
     }
 
     DetailItem
     {
         label: qsTr('Unpacked size')
-        value: Format.formatFileSize(restoreSize)
+        value: Format.formatFileSize(backupMeta.restoreSize)
     }
 
     DetailItem
     {
         label: qsTr('Files')
-        value: totalCount
+        value: backupMeta.totalCount
     }
 }

@@ -23,9 +23,7 @@ import "../../widgets"
 
 Dialog
 {
-    property string producerVersion
-    property date timeStamp
-    property int size
+    property alias backupMeta: backupMetaWidget.backupMeta
 
     allowedOrientations: Orientation.All
 
@@ -57,6 +55,10 @@ Dialog
                 text: qsTr('Backup Information')
             }
 
+            BackupMetaWidget
+            {
+                id: backupMetaWidget
+            }
 
             Item
             {

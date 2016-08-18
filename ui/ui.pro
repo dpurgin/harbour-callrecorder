@@ -68,7 +68,8 @@ QMLFILES = \
     qml/pages/settings/AudioSettings.qml \
     qml/pages/settings/Backup.qml \
     qml/pages/settings/BackupFileExists.qml \
-    qml/pages/settings/BackupMeta.qml \
+    qml/pages/settings/BackupMetaObject.qml \
+    qml/pages/settings/BackupMetaWidget.qml \
     qml/pages/settings/BackupRestoreSettings.qml \
     qml/pages/settings/BackupWorker.qml \
     qml/pages/settings/Daemon.qml \

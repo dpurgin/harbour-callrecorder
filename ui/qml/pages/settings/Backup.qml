@@ -33,19 +33,8 @@ Page
 
         onBackupMetaChanged:
         {
-            try
-            {
-                var meta = JSON.parse(backupMeta);
-
-                restoreMeta.producerVersion = meta['producerVersion'];
-                restoreMeta.restoreSize = meta['restoreSize'];
-                restoreMeta.timeStamp = new Date(meta['timeStamp']);
-                restoreMeta.totalCount = meta['totalCount'];
-            }
-            catch (err)
-            {
-                restoreMeta.reset();
-            }
+            restoreMeta.fileName = restorePath.text;
+            restoreMeta.parse(backupMeta);
         }
 
         onErrorCodeChanged:
@@ -55,21 +44,11 @@ Page
         }
     }
 
-    QtObject
+    BackupMetaObject
     {
         id: restoreMeta
 
-        property string producerVersion
-        property int restoreSize: -1
-        property date timeStamp
-        property int totalCount: -1
-
-        function reset()
-        {
-            producerVersion = '';
-            restoreSize = -1;
-            totalCount = -1;
-        }
+        onChanged: restoreMetaWidget.backupMeta = restoreMeta
     }
 
     SilicaFlickable
@@ -363,14 +342,12 @@ Page
                 }
             }
 
-            BackupMeta
+            BackupMetaWidget
             {
+                id: restoreMetaWidget
+
                 visible: restoreHelper.backupMeta !== '' &&
                          restoreHelper.errorCode === BackupHelper.None
-
-                producerVersion: restoreMeta.producerVersion
-                restoreSize: restoreMeta.restoreSize
-                timeStamp: restoreMeta.timeStamp
             }
 
             Item
@@ -391,7 +368,7 @@ Page
                 onClicked:
                 {
                     var config = {
-                        fileName: restorePath.text
+                        backupMeta: restoreMeta
                     };
 
                     pageStack.push('BackupRestoreSettings.qml', config);
