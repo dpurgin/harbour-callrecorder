@@ -30,7 +30,8 @@
 
 void initQ()
 {
-    qRegisterMetaType< BackupHelper::ErrorCode >("ErrorCode");
+    qRegisterMetaType< BackupHelper::Operation >();
+    qRegisterMetaType< BackupHelper::ErrorCode >();
 }
 
 Q_CONSTRUCTOR_FUNCTION(initQ)
@@ -153,6 +154,9 @@ bool BackupHelper::tryStartWorker(BackupWorker* worker)
 
     connect(worker, &BackupWorker::backupMetaChanged,
             this, &BackupHelper::setBackupMeta);
+
+    connect(worker, &BackupWorker::operationChanged,
+            this, &BackupHelper::setOperation);
 
     connect(worker, &BackupWorker::progressChanged,
             this, &BackupHelper::setProgress);

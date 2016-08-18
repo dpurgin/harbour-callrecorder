@@ -26,6 +26,8 @@ class BackupWorker;
 class BackupHelper : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(ErrorCode)
+    Q_ENUMS(Operation)
 
     Q_PROPERTY(QString backupMeta
                READ backupMeta
@@ -42,6 +44,10 @@ class BackupHelper : public QObject
     Q_PROPERTY(qint64 estimatedBackupSize
                READ estimatedBackupSize
                NOTIFY estimatedBackupSizeChanged)
+
+    Q_PROPERTY(Operation operation
+               READ operation
+               NOTIFY operationChanged)
 
     Q_PROPERTY(int progress
                READ progress
@@ -62,7 +68,16 @@ public:
         WrongFileFormat
     };
 
-    Q_ENUMS(ErrorCode)
+    enum class Operation
+    {
+        NotStarted,
+        Preparing,
+        BackingUp,
+        RemovingOldData,
+        Restoring,
+        Complete
+    };
+
 
 public:
     BackupHelper(QObject* parent = nullptr);
@@ -77,18 +92,23 @@ public:
     bool busy() const { return mBusy; }
     ErrorCode errorCode() const { return mErrorCode; }
     qint64 estimatedBackupSize() const { return mEstimatedBackupSize; }
+    Operation operation() const { return mOperation; }
     int progress() const { return mProgress; }
     int totalCount() const { return mTotalCount; }
 
 signals:
     void backupMetaChanged(QString);
     void busyChanged(bool);
-    void errorCodeChanged(ErrorCode);
+    void errorCodeChanged(BackupHelper::ErrorCode);
     void estimatedBackupSizeChanged(qint64);
+    void operationChanged(BackupHelper::Operation);
     void totalCountChanged(int);
     void progressChanged(int);
 
 private:
+    bool tryStartWorker(BackupWorker* worker);
+
+private slots:
     void setBackupMeta(QString backupMeta)
     {
         if (backupMeta != mBackupMeta)
@@ -101,7 +121,7 @@ private:
             emit busyChanged(mBusy = busy);
     }
 
-    void setErrorCode(ErrorCode errorCode)
+    void setErrorCode(BackupHelper::ErrorCode errorCode)
     {
         if (errorCode != mErrorCode)
             emit errorCodeChanged(mErrorCode = errorCode);
@@ -113,9 +133,12 @@ private:
             emit estimatedBackupSizeChanged(mEstimatedBackupSize = size);
     }
 
-    bool tryStartWorker(BackupWorker* worker);
+    void setOperation(BackupHelper::Operation operation)
+    {
+        if (operation != mOperation)
+            emit operationChanged(mOperation = operation);
+    }
 
-private slots:
     void setProgress(int progress)
     {
         if (progress != mProgress)
@@ -136,7 +159,11 @@ private:
     QString mBackupMeta;
 
     ErrorCode mErrorCode = ErrorCode::None;
+    Operation mOperation = Operation::NotStarted;
 };
+
+Q_DECLARE_METATYPE(BackupHelper::ErrorCode)
+Q_DECLARE_METATYPE(BackupHelper::Operation)
 
 QDebug operator<<(QDebug dbg, BackupHelper::ErrorCode errorCode);
 

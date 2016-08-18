@@ -54,6 +54,19 @@ public:
     {
     }
 
+    BackupWorker(QString fileName,
+                 QString outputLocation,
+                 bool removeExisting,
+                 QObject* parent = nullptr)
+        : QObject(parent),
+          QRunnable(),
+          mMode(Mode::Restore),
+          mFileName(fileName),
+          mOutputLocation(outputLocation),
+          mRemoveExisting(removeExisting)
+    {
+    }
+
     BackupWorker(QString fileName, bool compress, QObject* parent = nullptr)
         : QObject(parent),
           QRunnable(),
@@ -72,6 +85,7 @@ signals:
     void backupMetaChanged(QString);
     void started();
     void finished(BackupHelper::ErrorCode);
+    void operationChanged(BackupHelper::Operation);
     void progressChanged(int);
     void totalCountChanged(int);
     void estimatedBackupSizeChanged(qint64);
@@ -92,6 +106,8 @@ private:
     Mode mMode;
     QString mFileName;
     bool mCompress;
+    QString mOutputLocation;
+    bool mRemoveExisting = true;
 
     archive* mArchive = nullptr;
     archive_entry* mArchiveEntry = nullptr;

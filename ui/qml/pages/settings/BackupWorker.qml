@@ -30,17 +30,36 @@ Page
     property alias busy: backupHelper.busy
     property alias errorCode: backupHelper.errorCode
     property alias progress: backupHelper.progress
+    property alias operation: backupHelper.operation
+
+    onOperationChanged:
+    {
+        console.log('operation: ' + operation);
+    }
 
     states: [
         State
         {
-            when: busy
+            when: busy && operation !== BackupHelper.NotStarted
 
             PropertyChanges
             {
                 target: progressBar
 
-                label: qsTr('Running...')
+                label:
+                {
+                    switch (operation)
+                    {
+                        case BackupHelper.Preparing: return qsTr('Preparing...');
+                        case BackupHelper.BackingUp: return qsTr('Making backup...');
+                        case BackupHelper.RemovingOldData: return qsTr('Removing old data...');
+                        case BackupHelper.Restoring: return qsTr('Restoring...');
+                        case BackupHelper.Complete: return qsTr('Complete!')
+                        default:
+                    }
+
+                    return qsTr('Not started');
+                }
             }
         },
 
@@ -72,14 +91,17 @@ Page
                 target: progressBar
 
                 indeterminate: false
+                value: 100
+                maximumValue: 100
+
                 label:
                 {
                     switch (errorCode)
                     {
-                    case BackupHelper.UnableToWrite: return qsTr('Unable to write archive');
-                    case BackupHelper.UnableToStart: return qsTr('Unable to start thread');
-                    case BackupHelper.FileExists: return qsTr('Backup file already exists');
-                    case BackupHelper.FileNotExists: return qsTr('Backup file doesn\'t exist');
+                        case BackupHelper.UnableToWrite: return qsTr('Unable to write archive');
+                        case BackupHelper.UnableToStart: return qsTr('Unable to start thread');
+                        case BackupHelper.FileExists: return qsTr('Backup file already exists');
+                        case BackupHelper.FileNotExists: return qsTr('Backup file doesn\'t exist');
                     }
 
                     return qsTr('Unknown error');

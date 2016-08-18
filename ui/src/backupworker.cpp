@@ -80,17 +80,34 @@ BackupWorker::~BackupWorker()
 
 void BackupWorker::backup()
 {
+    int progress = 0;
+    qint64 restoreSize = 0;
+
+    emit totalCountChanged(-1);
+    emit progressChanged(0);
+    emit operationChanged(BackupHelper::Operation::Preparing);
+
     QScopedPointer< Settings > settings(new Settings());
 
     auto fiList = QDir(settings->outputLocation()).entryInfoList(
                 QDir::Files | QDir::Readable, QDir::NoSort);
 
-    // Update total count for UI progress.
-    // fiList.size() is number of recordings.
-    // +2 are settings and database file.
-    // +1 is for preparing metadata file.
-    // +1 is for writing metadata file
-    emit totalCountChanged(fiList.size() + 4);
+    emit totalCountChanged(fiList.size() + 2);
+
+    // Prepare backup metadata file.
+    // This file contains unpacked size and file count
+    // The file is written as the first file in archive to speed up
+    // reading it from compressed archive
+    foreach (auto fi, fiList)
+    {
+        restoreSize += fi.size();
+        emit progressChanged(++progress);
+    }
+
+    restoreSize += QFileInfo(LibCallRecorder::databaseFilePath()).size() +
+                   QFileInfo(LibCallRecorder::settingsFilePath()).size();
+
+    emit progressChanged(++progress);
 
     QScopedPointer< archive, ArchiveWriteDeleter > archiveContainer(
                 mArchive = archive_write_new());
@@ -105,22 +122,7 @@ void BackupWorker::backup()
 
     archive_write_set_format_ustar(mArchive);
 
-    int progress = 0;
-    qint64 restoreSize = 0;
-
-    archive_write_open_filename(mArchive, mFileName.toUtf8().data());
-
-    // Prepare backup metadata file.
-    // This file contains unpacked size and file count
-    // The file is written as the first file in archive to speed up
-    // reading it from compressed archive
-    foreach (auto fi, fiList)
-        restoreSize += fi.size();
-
-    restoreSize += QFileInfo(LibCallRecorder::databaseFilePath()).size() +
-                   QFileInfo(LibCallRecorder::settingsFilePath()).size();
-
-    emit progressChanged(++progress);
+    archive_write_open_filename(mArchive, mFileName.toUtf8().data());        
 
     // Write metadata file as the first file in archive
     // This will speed up loading metadata when restoring
@@ -134,7 +136,9 @@ void BackupWorker::backup()
 
     writeToArchive(QJsonDocument(meta).toJson(), "meta.json");
 
-    emit progressChanged(++progress);
+    emit progressChanged(progress = 0);
+    emit totalCountChanged(fiList.size() + 2);
+    emit operationChanged(BackupHelper::Operation::BackingUp);
 
     foreach (auto fi, fiList)
     {
@@ -152,6 +156,8 @@ void BackupWorker::backup()
     qDebug() << "before write archive_write_close()";
 
     archive_write_close(mArchive);
+
+    emit operationChanged(BackupHelper::Operation::Complete);
 }
 
 void BackupWorker::estimateBackupSize()
@@ -242,7 +248,101 @@ void BackupWorker::readBackupMeta()
 
 void BackupWorker::restore()
 {
+    qDebug();
 
+    int progress = 0;
+
+    if (mRemoveExisting)
+    {
+        emit operationChanged(BackupHelper::Operation::RemovingOldData);
+
+        emit totalCountChanged(-1);
+        emit progressChanged(progress = 0);
+
+        QDir outputLocationDir(mOutputLocation);
+
+        auto fiList = outputLocationDir.entryInfoList(
+                    QStringList() << QString("*.flac"),
+                    QDir::Files,
+                    QDir::NoSort);
+
+        emit totalCountChanged(fiList.size());
+
+        foreach (QFileInfo fi, fiList)
+        {
+            outputLocationDir.remove(fi.fileName());
+
+            emit progressChanged(++progress);
+        }
+    }
+
+    emit operationChanged(BackupHelper::Operation::Restoring);
+
+    emit totalCountChanged(-1);
+    emit progressChanged(progress = 0);
+
+    openArchive();
+    QScopedPointer< archive, ArchiveReadDeleter > archiveContainer(mArchive);
+
+    while (archive_read_next_header(mArchive, &mArchiveEntry) == ARCHIVE_OK)
+    {
+        QString filePath(archive_entry_pathname(mArchiveEntry));
+
+        if (filePath.compare(QLatin1String("meta.json"), Qt::CaseSensitive) != 0)
+        {
+            QFile file;
+
+            if (filePath.startsWith(QLatin1String("data/"), Qt::CaseInsensitive))
+                file.setFileName(mOutputLocation + filePath.mid(4));
+            else if (filePath.compare(QLatin1String("settings.ini"), Qt::CaseInsensitive) == 0)
+                file.setFileName(LibCallRecorder::settingsFilePath());
+            else if (filePath.compare(QLatin1String("callrecorder.db"), Qt::CaseInsensitive) == 0)
+                file.setFileName(LibCallRecorder::databaseFilePath());
+
+            qDebug() << "extracting" << filePath << "to" << file.fileName();
+
+            if (!file.fileName().isEmpty() && file.open(QFile::WriteOnly))
+            {
+                extractFromArchive(&file);
+
+                file.close();
+
+                file.setPermissions(QFlag(archive_entry_perm(mArchiveEntry)));
+            }
+            else
+            {
+                qDebug() << "unable to write" << file.errorString();
+            }
+
+            emit progressChanged(++progress);
+        }
+        else
+        {
+            qDebug() << "extracting backup metadata";
+
+            QBuffer buffer;
+            buffer.open(QIODevice::ReadWrite);
+
+            extractFromArchive(&buffer);
+
+            QJsonParseError error;
+            QJsonDocument meta(QJsonDocument::fromJson(buffer.data(), &error));
+
+            if (error.error == QJsonParseError::NoError &&
+                    meta.isObject() &&
+                    meta.object().contains("totalCount") &&
+                    meta.object().value("totalCount").isDouble())
+            {
+                emit totalCountChanged(meta.object().value("totalCount").toInt());
+            }
+            else
+            {
+                qDebug() << "malformed metadata file" << error.errorString();
+            }
+        }
+    }
+
+    emit operationChanged(BackupHelper::Operation::Complete);
 }
 
 void BackupWorker::run()
@@ -259,6 +359,8 @@ void BackupWorker::run()
             estimateBackupSize();
         else if (mMode == Mode::ReadBackupMeta)
             readBackupMeta();
+        else if (mMode == Mode::Restore)
+            restore();
     }
     catch (BackupException& e)
     {
