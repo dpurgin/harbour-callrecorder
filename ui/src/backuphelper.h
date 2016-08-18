@@ -85,7 +85,9 @@ public:
 
     Q_INVOKABLE void backup(const QString& fileName, bool compress, bool overwrite);
     Q_INVOKABLE void estimateBackupSize();
-    Q_INVOKABLE void restore(const QString& fileName);
+    Q_INVOKABLE void restore(const QString& fileName,
+                             const QString& outputLocation,
+                             bool removeExisting);
     Q_INVOKABLE void readBackupMeta(const QString& fileName);
 
     QString backupMeta() const { return mBackupMeta; }

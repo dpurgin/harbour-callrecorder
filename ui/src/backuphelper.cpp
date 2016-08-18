@@ -138,8 +138,20 @@ void BackupHelper::readBackupMeta(const QString& fileName)
     }
 }
 
-void BackupHelper::restore(const QString&)
+void BackupHelper::restore(const QString& fileName,
+                           const QString& outputLocation,
+                           bool removeExisting)
 {
+    qDebug();
+
+    setErrorCode(ErrorCode::None);
+    setBusy(true);
+
+    if (!tryStartWorker(new BackupWorker(fileName, outputLocation, removeExisting)))
+    {
+        setErrorCode(ErrorCode::UnableToStart);
+        setBusy(false);
+    }
 }
 
 bool BackupHelper::tryStartWorker(BackupWorker* worker)
