@@ -21,16 +21,88 @@ import Sailfish.Silica 1.0
 
 import kz.dpurgin.callrecorder.Settings 1.0
 
+import "../../widgets"
+
 Page
 {
     SilicaFlickable
     {
         anchors.fill: parent
 
-        PageHeader
+        contentHeight: content.height
+
+        VerticalScrollDecorator { }
+
+        Column
         {
-            id: header
-            title: qsTr('Utilities')
-        }
+            id: content
+
+            width: parent.width
+
+            PageHeader
+            {
+                id: header
+                title: qsTr('Utilities')
+            }
+
+            SectionHeader
+            {
+                text: qsTr('Database Repair')
+            }
+
+            StyledLabel
+            {
+                height: implicitHeight + Theme.paddingLarge
+
+                text: qsTr('If the list of recordings and file storage became inconsistent ' +
+                           '(e.g. a recording was removed from the list but still exists in file storage), ' +
+                           'you should use this tool to fix it')
+
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeExtraSmall
+            }
+
+            TextSwitch
+            {
+                text: qsTr('Delete orphaned list entries')
+                description: qsTr('Remove an entry from the database if there\'s no corresponding recording file on disk')
+
+                width: parent.width
+
+                checked: true
+            }
+
+            ComboBox
+            {
+                label: qsTr('Orphaned files')
+                description:
+                    currentIndex == 0?
+                        qsTr('Recording file will be removed if it\'s not referenced by an entry in the database'):
+                        qsTr('Recording file will be used to restore an entry in the database if there is none')
+
+                width: parent.width
+
+                menu: ContextMenu
+                {
+                    MenuItem { text: qsTr('remove') }
+                    MenuItem { text: qsTr('restore') }
+                }
+            }        
+
+            Item
+            {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+
+            Button
+            {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                text: qsTr('Repair')
+
+                onClicked: pageStack.push('DatabaseRepairWorker.qml')
+            }
+        }    
     }
 }

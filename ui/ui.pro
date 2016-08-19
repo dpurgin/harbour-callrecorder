@@ -71,6 +71,7 @@ QMLFILES = \
     qml/pages/settings/BackupRestoreSettings.qml \
     qml/pages/settings/BackupWorker.qml \
     qml/pages/settings/Daemon.qml \
+    qml/pages/settings/DatabaseRepairWorker.qml \
     qml/pages/settings/License.qml \
     qml/pages/settings/Storage.qml \
     qml/pages/settings/Translators.qml \
