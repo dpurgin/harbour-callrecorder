@@ -18,6 +18,7 @@
 
 #include "filesystemhelper.h"
 
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -31,6 +32,11 @@ FileSystemHelper::FileSystemHelper(QObject *parent) :
     mProgress(0),
     mTotalCount(0)
 {
+}
+
+QString FileSystemHelper::absolutePath(const QString& fileName) const
+{
+    return QFileInfo(fileName).absolutePath();
 }
 
 bool FileSystemHelper::dirIsEmpty(const QString& dirPath) const
@@ -47,6 +53,22 @@ bool FileSystemHelper::exists(const QString& filePath) const
 QStringList FileSystemHelper::fileList(const QString& dirPath) const
 {
     return (QFileInfo(dirPath).isDir()? QDir(dirPath).entryList(QDir::Files): QStringList());
+}
+
+bool FileSystemHelper::isFile(const QString& filePath) const
+{
+    qDebug() << filePath;
+
+    return QFileInfo(filePath).isFile();
+}
+
+bool FileSystemHelper::isReadable(const QString& filePath) const
+{
+    qDebug() << filePath;
+
+    QFileInfo fi(filePath);
+
+    return fi.exists() && fi.isReadable();
 }
 
 bool FileSystemHelper::isRemovable(const QString& filePath) const
@@ -99,9 +121,9 @@ bool FileSystemHelper::remove(const QString& filePath) const
 
 bool FileSystemHelper::rename(const QString& filePath, const QString& newName) const
 {
-    QFile f(filePath);
+    QFileInfo f(filePath);
 
-    return (f.exists() && f.rename(newName));
+    return (f.exists() && QFile::rename(f.absoluteFilePath(), f.absolutePath() + '/' + newName));
 }
 
 bool FileSystemHelper::sdCardExists() const

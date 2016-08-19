@@ -56,6 +56,12 @@ namespace LibCallRecorder
         return translator.take();
     }
 
+    QString databaseFilePath()
+    {
+        return QStandardPaths::writableLocation(QStandardPaths::DataLocation) %
+                QLatin1String("/callrecorder.db");
+    }
+
     void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
     {
         Q_UNUSED(type)
@@ -142,5 +148,12 @@ namespace LibCallRecorder
     void installMessageHandler()
     {
         qInstallMessageHandler(messageHandler);
+    }
+
+    QString settingsFilePath()
+    {
+        return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) %
+                QLatin1Char('/') % qApp->applicationName() %
+                QLatin1String("/callrecorder.ini");
     }
 }

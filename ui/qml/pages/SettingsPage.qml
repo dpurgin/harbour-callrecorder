@@ -28,6 +28,7 @@ Page {
         qsTr('Audio settings'),
         qsTr('User interface'),
         qsTr('Utilities'),
+        qsTr('Backup'),
         qsTr('About')
     ]
 
@@ -66,6 +67,11 @@ Page {
             ListElement {
                 img: 'qrc:/images/icon-m-utilities.png'
                 target: 'Utilities.qml'
+            }
+
+            ListElement {
+                img: 'qrc:/images/icon-m-backup.png'
+                target: 'Backup.qml'
             }
 
             ListElement {

@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,28 +16,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LIBCALLRECORDER_CALLRECORDEREXCEPTION_H
-#define LIBCALLRECORDER_CALLRECORDEREXCEPTION_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <exception>
-
-#include <QString>
-
-#include "config.h"
-
-class LIBCALLRECORDER_DECL CallRecorderException : public std::exception
+Column
 {
-public:
-    CallRecorderException(const QString& what): mWhat(what) { }
-    virtual ~CallRecorderException() throw()
+    property BackupMetaObject backupMeta
+
+    width: parent.width
+
+    DetailItem
     {
+        label: qsTr('Program version')
+        value:  backupMeta.producerVersion
     }
 
-    const char* what() const throw() { return mWhat.toUtf8().data(); }
-    QString qWhat() { return mWhat; }
+    DetailItem
+    {
+        label: qsTr('Date and time')
+        value: Format.formatDate(backupMeta.timeStamp, Format.Timepoint)
+    }
 
-private:
-    QString mWhat;
-};
+    DetailItem
+    {
+        label: qsTr('Unpacked size')
+        value: Format.formatFileSize(backupMeta.restoreSize)
+    }
 
-#endif // LIBCALLRECORDER_CALLRECORDEREXCEPTION_H
+    DetailItem
+    {
+        label: qsTr('Files')
+        value: backupMeta.totalCount
+    }
+}

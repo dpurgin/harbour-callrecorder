@@ -35,6 +35,7 @@ PkgConfigBR:
    - mlocale5
    - sailfishapp >= 1.0.2
    - qtcontacts-sqlite-qt5-extensions >= 0.2.1
+   - libarchive
 
 # Build dependencies without a pkgconfig setup can be listed here
 PkgBR:

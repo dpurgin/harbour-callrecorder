@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,28 +16,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LIBCALLRECORDER_CALLRECORDEREXCEPTION_H
-#define LIBCALLRECORDER_CALLRECORDEREXCEPTION_H
+#ifndef HARBOUR_CALLRECORDER_BACKUPEXCEPTION_H
+#define HARBOUR_CALLRECORDER_BACKUPEXCEPTION_H
 
-#include <exception>
+#include <libcallrecorder/callrecorderexception.h>
 
-#include <QString>
+#include "backuphelper.h"
 
-#include "config.h"
-
-class LIBCALLRECORDER_DECL CallRecorderException : public std::exception
+class BackupException : public CallRecorderException
 {
 public:
-    CallRecorderException(const QString& what): mWhat(what) { }
-    virtual ~CallRecorderException() throw()
+    explicit BackupException(BackupHelper::ErrorCode errorCode, QString what)
+        : CallRecorderException(what),
+          mErrorCode(errorCode)
     {
     }
 
-    const char* what() const throw() { return mWhat.toUtf8().data(); }
-    QString qWhat() { return mWhat; }
+    BackupHelper::ErrorCode errorCode() const { return mErrorCode; }
 
 private:
-    QString mWhat;
+    BackupHelper::ErrorCode mErrorCode = BackupHelper::ErrorCode::None;
 };
 
-#endif // LIBCALLRECORDER_CALLRECORDEREXCEPTION_H
+#endif

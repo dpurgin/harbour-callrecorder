@@ -25,6 +25,9 @@ class QTranslator;
 
 namespace LibCallRecorder
 {
+    QString databaseFilePath();
+    QString settingsFilePath();
+
     QTranslator* createTranslator(const QString& resource,
                                   const QString& path = QLatin1String(TRANSLATIONSDIR));
     void installMessageHandler();
