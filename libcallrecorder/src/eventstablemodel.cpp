@@ -194,6 +194,12 @@ private:
             params->insert(":lineIdentification", lineIdentificationPattern);
         }
 
+        if (filters.contains(EventsTableModel::FileName))
+        {
+            whereStmts << "(Events.FileName = :fileName)";
+            params->insert(":fileName", filters.value(EventsTableModel::FileName).toString());
+        }
+
         if (filters.contains(EventsTableModel::TimeStampOn))
         {
             whereStmts << "(Events.TimeStamp >= :timeStampAfter and"
@@ -414,7 +420,7 @@ private:
     QHash< int, QHash< QString, QVariant > > dataByRowIndex;
     QHash< int, int > oidToRowIndex;
 
-    QHash< EventsTableModel::Filter, QVariant > filters;
+    EventsTableModel::Filters filters;
 
     int pageSize;
 
@@ -486,6 +492,8 @@ void EventsTableModel::filter(const QVariantMap& filters)
     {
         if (cit.key() == QLatin1String("phoneNumber"))
             d->filters.insert(LineIdentification, cit.value());
+        else if (cit.key() == QLatin1String("fileName"))
+            d->filters.insert(FileName, cit.value());
         else if (cit.key() == QLatin1String("onDate"))
             d->filters.insert(TimeStampOn, cit.value());
         else if (cit.key() == QLatin1String("beforeDate"))
@@ -494,6 +502,12 @@ void EventsTableModel::filter(const QVariantMap& filters)
             d->filters.insert(TimeStampAfter, cit.value());
     }
 
+    refresh();
+}
+
+void EventsTableModel::filter(const Filters& filters)
+{
+    d->filters = filters;
     refresh();
 }
 

@@ -40,7 +40,8 @@ public:
         TimeStampOn,
         TimeStampBefore,
         TimeStampAfter,
-        LineIdentification
+        LineIdentification,
+        FileName
     };
 
     enum RecordingState
@@ -58,6 +59,8 @@ public:
         Outgoing,
         Partial
     };
+
+    typedef QHash< Filter, QVariant > Filters;
 
 public:
     EventsTableModel(Database* db, QObject* parent = 0);
@@ -78,6 +81,7 @@ public:
             RecordingState recordingStateId);
 
     Q_INVOKABLE void filter(const QVariantMap& filters);
+    void filter(const Filters& filters);
 
     Q_INVOKABLE bool remove(int oid);
     Q_INVOKABLE bool removeAll();
