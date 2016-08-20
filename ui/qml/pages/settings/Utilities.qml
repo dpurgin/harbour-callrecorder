@@ -62,28 +62,52 @@ Page
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
 
-            TextSwitch
-            {
-                text: qsTr('Delete orphaned list entries')
-                description: qsTr('Remove an entry from the database if there\'s no corresponding recording file on disk')
-
-                width: parent.width
-
-                checked: true
-            }
-
             ComboBox
             {
-                label: qsTr('Orphaned files')
+                id: recordRepairModeCombo
+
+                currentIndex: 1
+
+                label: qsTr('Orphaned records')
+
                 description:
                     currentIndex == 0?
-                        qsTr('Recording file will be removed if it\'s not referenced by an entry in the database'):
-                        qsTr('Recording file will be used to restore an entry in the database if there is none')
+                        qsTr('Entry will be left in the database if there\'s no corresponding recording file on disk'):
+                        qsTr('Entry will be removed from the database if there\'s no corresponding recording file on disk')
 
                 width: parent.width
 
                 menu: ContextMenu
                 {
+                    MenuItem { text: qsTr('skip') }
+                    MenuItem { text: qsTr('remove') }
+                }
+            }
+
+            ComboBox
+            {
+                id: fileRepairModeCombo
+
+                currentIndex: 1
+
+                label: qsTr('Orphaned files')
+                description:
+                {
+                    switch (currentIndex)
+                    {
+                        case 1: return qsTr('Recording file will be removed if it\'s not referenced by an entry in the database');
+                        case 2: return qsTr('Recording file will be used to restore an entry in the database if there is none');
+                        default:
+                    }
+
+                    return qsTr('Recording file will be skipped if it\'s not referenced by an entry in the database');
+                }
+
+                width: parent.width
+
+                menu: ContextMenu
+                {
+                    MenuItem { text: qsTr('skip') }
                     MenuItem { text: qsTr('remove') }
                     MenuItem { text: qsTr('restore') }
                 }
@@ -101,7 +125,13 @@ Page
 
                 text: qsTr('Repair')
 
-                onClicked: pageStack.push('DatabaseRepairWorker.qml')
+                onClicked:
+                {
+                    pageStack.push('DatabaseRepairWorker.qml', {
+                        fileRepairMode: fileRepairModeCombo.currentIndex,
+                        recordRepairMode: recordRepairModeCombo.currentIndex
+                    });
+                }
             }
         }    
     }

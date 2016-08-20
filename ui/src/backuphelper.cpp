@@ -22,19 +22,26 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QThreadPool>
+#include <QtQuick>
 
 #include <libcallrecorder/settings.h>
 
 #include "backupexception.h"
 #include "backupworker.h"
 
-void initQ()
+namespace
 {
-    qRegisterMetaType< BackupHelper::Operation >();
-    qRegisterMetaType< BackupHelper::ErrorCode >();
-}
+    void initQ()
+    {
+        qmlRegisterType< BackupHelper >(
+                    "kz.dpurgin.callrecorder.BackupHelper", 1, 0, "BackupHelper");
 
-Q_CONSTRUCTOR_FUNCTION(initQ)
+        qRegisterMetaType< BackupHelper::Operation >();
+        qRegisterMetaType< BackupHelper::ErrorCode >();
+    }
+
+    Q_CONSTRUCTOR_FUNCTION(initQ)
+}
 
 QDebug operator<<(QDebug dbg, BackupHelper::ErrorCode errorCode)
 {
