@@ -19,11 +19,21 @@
 import QtQuick 2.2
 import Sailfish.Silica 1.0
 
+import kz.dpurgin.callrecorder.DatabaseRepairWorker 1.0
+
 import "../../widgets"
 
 Page
 {
+    property int recordRepairMode: DatabaseRepairWorker.Remove
+    property int fileRepairMode: DatabaseRepairWorker.Remove
+
     allowedOrientations: Orientation.All
+
+    DatabaseRepairWorker
+    {
+        id: worker
+    }
 
     SilicaFlickable
     {
@@ -58,10 +68,49 @@ Page
             {
                 width: parent.width
 
-                indeterminate: true
+                indeterminate: worker.totalCount < 0
 
-                label: qsTr('Working...')
+                minimumValue: 0
+                maximumValue: worker.totalCount
+
+                value: worker.progress
+
+                label:
+                {
+                    if (worker.errorCode === DatabaseRepairWorker.None)
+                    {
+                        switch (worker.operation)
+                        {
+                            case DatabaseRepairWorker.Starting: return qsTr('Starting...');
+                            case DatabaseRepairWorker.ProcessingOrphanedFiles: return qsTr('Processing orphaned files...');
+                            case DatabaseRepairWorker.ProcessingOrphanedRecords: return qsTr('Processing orphaned records...');
+                            case DatabaseRepairWorker.Complete: return qsTr('Complete!');
+                            default:
+                        }
+                    }
+                    else
+                    {
+                        switch (worker.errorCode)
+                        {
+                        case DatabaseRepairWorker.UnableToStart: return qsTr('Unable to start operation!');
+                        case DatabaseRepairWorker.UnableToRetrieveOrphanedRecords: return qsTr('Unable to retrieve orphaned records!');
+                        case DatabaseRepairWorker.UnableToRemoveOrphanedRecord: return qsTr('Unable to remove orphaned record!');
+                        case DatabaseRepairWorker.UnableToRetrieveOrphanedFile: return qsTr('Unable to retrieve orphaned file!');
+                        case DatabaseRepairWorker.UnableToRestoreOrphanedFile: return qsTr('Unable to restore orphaned file!');
+                        case DatabaseRepairWorker.UnhandledException: return qsTr('Unhanled exception!');
+                        default:
+                        }
+                    }
+
+                    return qsTr('Not started');
+                }
             }
         }
+    }
+
+    onStatusChanged:
+    {
+        if (status == PageStatus.Activating)
+            worker.repair(recordRepairMode, fileRepairMode);
     }
 }
