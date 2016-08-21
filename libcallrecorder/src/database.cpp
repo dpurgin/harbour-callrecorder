@@ -24,10 +24,11 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QSqlQuery>
-#include <QStandardPaths>
 #include <QStringBuilder>
+#include <QUuid>
 
 #include "callrecorderexception.h"
+#include "libcallrecorder.h"
 #include "sqlcursor.h"
 
 class Database::DatabasePrivate
@@ -73,7 +74,7 @@ private:
     void setLastError(const QString& error) { lastError = error; }
 
 private:
-    QScopedPointer< QSqlDatabase > db;
+    QSqlDatabase db;
     QString lastError;
 };
 
@@ -84,45 +85,55 @@ Database::Database()
 
     qDebug();
 
-    d->db.reset(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE")));
-
-    QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-
-    QDir locationDir(location);
-
-    if (!locationDir.exists())
+    if (!QSqlDatabase::contains())
     {
-        qDebug() << "Trying to create " << location;
+        d->db = QSqlDatabase::addDatabase("QSQLITE");
 
-        if (!locationDir.mkpath(locationDir.absolutePath()))
-            throw CallRecorderException(QLatin1String("Unable to make path: ") % location);
+        QFileInfo fileInfo(LibCallRecorder::databaseFilePath());
+
+        if (!fileInfo.exists())
+        {
+            if (!fileInfo.absoluteDir().exists())
+            {
+                qDebug() << "Trying to create " << fileInfo.absolutePath();
+
+                if (!fileInfo.absoluteDir().mkpath(fileInfo.absolutePath()))
+                {
+                    throw CallRecorderException(
+                            QLatin1String("Unable to make path: ") % fileInfo.absolutePath());
+                }
+
+            }
+        }
+
+        qDebug() << "Opening database " << LibCallRecorder::databaseFilePath();
+
+        d->db.setDatabaseName(LibCallRecorder::databaseFilePath());
+
+        if (!d->db.open())
+            throw CallRecorderException(QLatin1String("Unable to open database: ") %
+                                        d->db.lastError().text());
+
+        QFile initFile(":/sql/init.sql");
+
+        if (!initFile.open(QFile::ReadOnly))
+            throw CallRecorderException(QLatin1String("Unable to open :/sql/init.sql: ") %
+                                        initFile.errorString());
+
+        QStringList initStatements = QString::fromUtf8(initFile.readAll()).split(QChar(';'));
+
+        initFile.close();
+
+        foreach (QString statement, initStatements)
+        {
+            if (!statement.trimmed().isEmpty() && !execute(statement))
+                throw CallRecorderException(QLatin1String("Unable to execute initializing statement: ") %
+                                            statement %
+                                            lastError());
+        }
     }
-
-    qDebug() << "Opening database " << location % QLatin1String("/callrecorder.db");
-
-    d->db->setDatabaseName(location % QLatin1String("/callrecorder.db"));
-
-    if (!d->db->open())
-        throw CallRecorderException(QLatin1String("Unable to open database: ") %
-                                    d->db->lastError().text());
-
-    QFile initFile(":/sql/init.sql");
-
-    if (!initFile.open(QFile::ReadOnly))
-        throw CallRecorderException(QLatin1String("Unable to open :/sql/init.sql: ") %
-                                    initFile.errorString());
-
-    QStringList initStatements = QString::fromUtf8(initFile.readAll()).split(QChar(';'));
-
-    initFile.close();
-
-    foreach (QString statement, initStatements)
-    {
-        if (!statement.trimmed().isEmpty() && !execute(statement))
-            throw CallRecorderException(QLatin1String("Unable to execute initializing statement: ") %
-                                        statement %
-                                        lastError());
-    }
+    else
+        d->db = QSqlDatabase::database();
 }
 
 Database::~Database()
@@ -130,23 +141,20 @@ Database::~Database()
     qDebug();
 
     Q_CLEANUP_RESOURCE(resource);
-
-    if (d->db->isOpen())
-        d->db->close();
 }
 
 bool Database::execute(const QString& statement, const SqlParameters& params)
 {
     qDebug() << statement;
 
-    QSqlQuery query(*d->db.data());
+    QSqlQuery query(d->db);
 
     return d->prepareAndExecute(statement, params, &query);
 }
 
 int Database::insert(const QString& statement, const SqlParameters& params)
 {
-    QSqlQuery query(*d->db.data());
+    QSqlQuery query(d->db);
 
     if (!d->prepareAndExecute(statement, params, &query))
         return -1;
@@ -161,7 +169,7 @@ QString Database::lastError() const
 
 SqlCursor* Database::select(const QString& statement, const SqlParameters& params)
 {
-    QSqlQuery query(*d->db.data());
+    QSqlQuery query(d->db);
 
     if (!d->prepareAndExecute(statement, params, &query))
         return NULL;
@@ -173,7 +181,7 @@ QStringList Database::tableColumns(const QString& tableName)
 {
     QStringList columns;
 
-    QSqlRecord rec = d->db->record(tableName);
+    QSqlRecord rec = d->db.record(tableName);
 
     for (int c = 0; c < rec.count(); c++)
         columns.append(rec.fieldName(c));
