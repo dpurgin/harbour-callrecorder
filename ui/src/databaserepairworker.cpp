@@ -129,7 +129,7 @@ void DatabaseRepairWorker::repairFiles()
                 if (!file.remove())
                 {
                     throw DatabaseRepairException(
-                                ErrorCode::UnabletoRemoveOrphanedFile, file.errorString());
+                                ErrorCode::UnableToRemoveOrphanedFile, file.errorString());
                 }
             }
             else if (mFileRepairMode == RepairMode::Restore)
@@ -184,13 +184,17 @@ void DatabaseRepairWorker::repairFiles()
                 FLAC__stream_decoder_finish(decoder);
                 FLAC__stream_decoder_delete(decoder);
 
-                events->add(QDateTime::fromString(timeStamp, Qt::ISODate),
-                            phoneNumbers->getIdByLineIdentification(phoneNumber),
-                            EventsTableModel::eventType(eventType),
-                            EventsTableModel::Done,
-                            duration,
-                            fi.fileName(),
-                            fi.size());
+                auto id = events->add(QDateTime::fromString(timeStamp, Qt::ISODate),
+                                      phoneNumbers->getIdByLineIdentification(phoneNumber),
+                                      EventsTableModel::eventType(eventType),
+                                      EventsTableModel::Done,
+                                      duration,
+                                      fi.fileName(),
+                                      fi.size());
+
+                if (id == -1)
+                    throw DatabaseRepairException(ErrorCode::UnableToRestoreOrphanedFile,
+                                                  QLatin1String("Error writing to database"));
             }
         }
 

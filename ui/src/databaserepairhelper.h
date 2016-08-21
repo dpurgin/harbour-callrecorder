@@ -49,7 +49,7 @@ public:
         UnableToRetrieveOrphanedRecords,
         UnableToRemoveOrphanedRecord,
         UnableToRetrieveOrphanedFile,
-        UnabletoRemoveOrphanedFile,
+        UnableToRemoveOrphanedFile,
         UnableToRestoreOrphanedFile,
         UnhandledException
     };
