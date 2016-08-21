@@ -53,15 +53,21 @@ private:
 
         Database::SqlParameters params;
 
+        QStringList columnsList;
+        QStringList valuesList;
+
         for (QVariantMap::const_iterator cit = items.begin();
              cit != items.end();
              ++cit)
         {
             params.insert(QLatin1Char(':') % cit.key(), cit.value());
+
+            columnsList.push_back(cit.key());
+            valuesList.push_back(QLatin1Char(':') % cit.key());
         }
 
-        QString columns = QStringList(items.keys()).join(", ");
-        QString values = QStringList(params.keys()).join(", ");
+        QString columns = columnsList.join(", ");
+        QString values = valuesList.join(", ");
 
         int oid = db->insert(insertStmt.arg(columns).arg(values), params);
 
