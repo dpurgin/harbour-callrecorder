@@ -24,7 +24,11 @@
 #include <QFileInfo>
 #include <QFileInfoList>
 #include <QElapsedTimer>
+#include <QEventLoop>
+#include <QTimer>
 #include <QtQuick>
+
+#include <FLAC/stream_decoder.h>
 
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
@@ -54,6 +58,21 @@ public:
 private:
     ErrorCode mErrorCode = ErrorCode::None;
 };
+
+FLAC__StreamDecoderWriteStatus _flacWriteCallback(const FLAC__StreamDecoder*,
+                                                  const FLAC__Frame*,
+                                                  const FLAC__int32* const[],
+                                                  void*)
+{
+    return FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;
+}
+
+void _flacErrorCallback(const FLAC__StreamDecoder*,
+                        FLAC__StreamDecoderErrorStatus errorStatus,
+                        void*)
+{
+    qDebug() << errorStatus;
+}
 
 DatabaseRepairWorker::DatabaseRepairWorker(RepairMode recordRepairMode,
                                            RepairMode fileRepairMode,
@@ -130,11 +149,48 @@ void DatabaseRepairWorker::repairFiles()
 
                 qDebug() << "restored file parts" << timeStamp << eventType << phoneNumber;
 
+                quint64 duration = 0;
+
+                QByteArray fileName = fi.absoluteFilePath().toUtf8();
+
+                auto* decoder = FLAC__stream_decoder_new();
+                auto decoderStatus = FLAC__stream_decoder_init_file(
+                            decoder,
+                            fileName.constData(),
+                            &_flacWriteCallback,
+                            NULL,
+                            &_flacErrorCallback,
+                            NULL);
+
+                if (decoderStatus == FLAC__STREAM_DECODER_INIT_STATUS_OK &&
+                    FLAC__stream_decoder_process_until_end_of_metadata(decoder) &&
+                    FLAC__stream_decoder_process_single(decoder))
+                {
+                    auto totalSamples = FLAC__stream_decoder_get_total_samples(decoder);
+                    auto sampleRate = FLAC__stream_decoder_get_sample_rate(decoder);
+
+                    qDebug() << "total samples" << totalSamples;
+                    qDebug() << "sample rate" << sampleRate;
+
+                    if (sampleRate > 0)
+                        duration = totalSamples / sampleRate;
+                }
+                else
+                {
+                    qDebug() << "FLAC decoder init status" << decoderStatus;
+                    qDebug() << "FLAC decoder state" << FLAC__stream_decoder_get_state(decoder);
+                }
+
+                FLAC__stream_decoder_finish(decoder);
+                FLAC__stream_decoder_delete(decoder);
+
                 events->add(QDateTime::fromString(timeStamp, Qt::ISODate),
                             phoneNumbers->getIdByLineIdentification(phoneNumber),
                             EventsTableModel::eventType(eventType),
+                            EventsTableModel::Done,
+                            duration,
                             fi.fileName(),
-                            EventsTableModel::Done);
+                            fi.size());
             }
         }
 
