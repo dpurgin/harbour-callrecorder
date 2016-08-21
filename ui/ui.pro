@@ -39,6 +39,7 @@ HEADERS += \
     src/backupexception.h \
     src/backuphelper.h \
     src/backupworker.h \
+    src/databaserepairhelper.h \
     src/databaserepairworker.h \
     src/filerelocationworker.h \
     src/filesystemhelper.h \
@@ -48,6 +49,7 @@ SOURCES += \
     src/backupexception.cpp \
     src/backuphelper.cpp \
     src/backupworker.cpp \
+    src/databaserepairhelper.cpp \
     src/databaserepairworker.cpp \
     src/filerelocationworker.cpp \
     src/filesystemhelper.cpp \

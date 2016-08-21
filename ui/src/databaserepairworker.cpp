@@ -32,26 +32,13 @@
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/sqlcursor.h>
 
-namespace
-{
-    void initQ()
-    {
-        qmlRegisterType< DatabaseRepairWorker >(
-                    "kz.dpurgin.callrecorder.DatabaseRepairWorker", 1, 0, "DatabaseRepairWorker");
-
-        qRegisterMetaType< DatabaseRepairWorker::ErrorCode >();
-        qRegisterMetaType< DatabaseRepairWorker::Operation >();
-        qRegisterMetaType< DatabaseRepairWorker::RepairMode >();
-    }
-
-    Q_CONSTRUCTOR_FUNCTION(initQ)
-}
+using ErrorCode = DatabaseRepairHelper::ErrorCode;
+using Operation = DatabaseRepairHelper::Operation;
 
 class DatabaseRepairException : public CallRecorderException
 {
 public:
-    explicit DatabaseRepairException(DatabaseRepairWorker::ErrorCode errorCode,
-                                     QString what)
+    explicit DatabaseRepairException(ErrorCode errorCode, QString what)
         : CallRecorderException(what),
           mErrorCode(errorCode)
     {
@@ -61,71 +48,35 @@ public:
     {
     }
 
-    DatabaseRepairWorker::ErrorCode errorCode() const { return mErrorCode; }
+    ErrorCode errorCode() const { return mErrorCode; }
 
 private:
-    DatabaseRepairWorker::ErrorCode mErrorCode;
+    ErrorCode mErrorCode = ErrorCode::None;
 };
 
-DatabaseRepairWorker::DatabaseRepairWorker(QObject *parent)
-    : QObject(parent)
+DatabaseRepairWorker::DatabaseRepairWorker(RepairMode recordRepairMode,
+                                           RepairMode fileRepairMode,
+                                           QObject* parent)
+    : QObject(parent),
+      QRunnable(),
+      mRecordRepairMode(recordRepairMode),
+      mFileRepairMode(fileRepairMode)
 {
-    qDebug();
-
-    moveToThread(&mThread);
-
-    connect(&mThread, &QThread::started,
-            this, &DatabaseRepairWorker::doRepair);
+    qDebug();    
 }
 
 DatabaseRepairWorker::~DatabaseRepairWorker()
 {
     qDebug();
-
-    if (mThread.isRunning())
-    {
-        mThread.quit();
-        mThread.wait();
-    }
 }
 
-void DatabaseRepairWorker::doRepair()
+void DatabaseRepairWorker::repairFiles()
 {
     qDebug();
 
-    setErrorCode(ErrorCode::None);
-
-    try
-    {
-        if (mRecordRepairMode != RepairMode::Skip)
-            doRepairRecords();
-
-        if (mFileRepairMode != RepairMode::Skip)
-            doRepairFiles();
-    }
-    catch (DatabaseRepairException& e)
-    {
-        qDebug() << e.qWhat();
-
-        setErrorCode(e.errorCode());
-    }
-    catch (...)
-    {
-        setErrorCode(ErrorCode::UnhandledException);
-    }
-
-    setOperation(Operation::Complete);
-
-    mThread.quit();
-}
-
-void DatabaseRepairWorker::doRepairFiles()
-{
-    qDebug();
-
-    setOperation(Operation::ProcessingOrphanedFiles);
-    setTotalCount(-1);
-    setProgress(-1);
+    emit operationChanged(Operation::ProcessingOrphanedFiles);
+    emit totalCountChanged(-1);
+    emit progressChanged(-1);
 
     QScopedPointer< Database > db(new Database());
     QScopedPointer< EventsTableModel > events(new EventsTableModel(db.data()));
@@ -134,8 +85,10 @@ void DatabaseRepairWorker::doRepairFiles()
     auto fiList = QDir(settings->outputLocation()).entryInfoList(
                 QStringList() << QString("*.flac"), QDir::Files);
 
-    setTotalCount(fiList.size());
-    setProgress(0);
+    int progress = 0;
+
+    emit totalCountChanged(fiList.size());
+    emit progressChanged(progress = 0);
 
     foreach (QFileInfo fi, fiList)
     {
@@ -175,17 +128,17 @@ void DatabaseRepairWorker::doRepairFiles()
             }
         }
 
-        setProgress(progress() + 1);
+        emit progressChanged(++progress);
     }
 }
 
-void DatabaseRepairWorker::doRepairRecords()
+void DatabaseRepairWorker::repairRecords()
 {
     qDebug();
 
-    setTotalCount(-1);
-    setProgress(-1);
-    setOperation(Operation::ProcessingOrphanedRecords);
+    emit totalCountChanged(-1);
+    emit progressChanged(-1);
+    emit operationChanged(Operation::ProcessingOrphanedRecords);
 
     QScopedPointer< Database > db(new Database());
     QScopedPointer< Settings > settings(new Settings());
@@ -197,8 +150,10 @@ void DatabaseRepairWorker::doRepairRecords()
                     ErrorCode::UnableToRetrieveOrphanedRecords, db->lastError());
     }
 
-    setTotalCount(cursor->size());
-    setProgress(0);
+    int progress;
+
+    emit totalCountChanged(cursor->size());
+    emit progressChanged(progress = 0);
 
     QDir outputLocationDir(settings->outputLocation());
 
@@ -225,35 +180,40 @@ void DatabaseRepairWorker::doRepairRecords()
             }
         }
 
-        setProgress(progress() + 1);
+        emit progressChanged(++progress);
     }
 }
 
-void DatabaseRepairWorker::repair(DatabaseRepairWorker::RepairMode recordRepairMode,
-                                  DatabaseRepairWorker::RepairMode fileRepairMode)
+void DatabaseRepairWorker::run()
 {
     qDebug();
 
-    if (!mThread.isRunning())
+    emit started();
+
+    ErrorCode errorCode = ErrorCode::None;
+
+    try
     {
-        setErrorCode(ErrorCode::None);
-        setOperation(Operation::Starting);
+        if (mRecordRepairMode != RepairMode::Skip)
+            repairRecords();
 
-        mRecordRepairMode = recordRepairMode;
-        mFileRepairMode = fileRepairMode;
-
-        mThread.start();
-
-        QElapsedTimer timer;
-        timer.start();
-
-        while (!mThread.isRunning() && !timer.hasExpired(30000))
-            QThread::msleep(1);
-
-        if (!mThread.isRunning())
-        {
-            setErrorCode(ErrorCode::UnableToStart);
-            setOperation(Operation::Complete);
-        }
+        if (mFileRepairMode != RepairMode::Skip)
+            repairFiles();
     }
+    catch (DatabaseRepairException& e)
+    {
+        qDebug() << e.qWhat();
+
+        errorCode = e.errorCode();
+    }
+    catch (...)
+    {
+        errorCode = ErrorCode::UnhandledException;
+    }
+
+    emit operationChanged(Operation::Complete);
+    emit totalCountChanged(1);
+    emit progressChanged(1);
+    emit finished(errorCode);
 }
+

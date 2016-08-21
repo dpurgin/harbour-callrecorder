@@ -19,20 +19,20 @@
 import QtQuick 2.2
 import Sailfish.Silica 1.0
 
-import kz.dpurgin.callrecorder.DatabaseRepairWorker 1.0
+import kz.dpurgin.callrecorder.DatabaseRepairHelper 1.0
 
 import "../../widgets"
 
 Page
 {
-    property int recordRepairMode: DatabaseRepairWorker.Remove
-    property int fileRepairMode: DatabaseRepairWorker.Remove
+    property int recordRepairMode: DatabaseRepairHelper.Remove
+    property int fileRepairMode: DatabaseRepairHelper.Remove
 
     allowedOrientations: Orientation.All
 
-    DatabaseRepairWorker
+    DatabaseRepairHelper
     {
-        id: worker
+        id: helper
     }
 
     SilicaFlickable
@@ -68,37 +68,37 @@ Page
             {
                 width: parent.width
 
-                indeterminate: worker.totalCount < 0
+                indeterminate: helper.totalCount < 0
 
                 minimumValue: 0
-                maximumValue: worker.totalCount
+                maximumValue: helper.totalCount
 
-                value: worker.progress
+                value: helper.progress
 
                 label:
                 {
-                    if (worker.errorCode === DatabaseRepairWorker.None)
+                    if (helper.errorCode === DatabaseRepairHelper.None)
                     {
-                        switch (worker.operation)
+                        switch (helper.operation)
                         {
-                            case DatabaseRepairWorker.Starting: return qsTr('Starting...');
-                            case DatabaseRepairWorker.ProcessingOrphanedFiles: return qsTr('Processing orphaned files...');
-                            case DatabaseRepairWorker.ProcessingOrphanedRecords: return qsTr('Processing orphaned records...');
-                            case DatabaseRepairWorker.Complete: return qsTr('Complete!');
+                            case DatabaseRepairHelper.Starting: return qsTr('Starting...');
+                            case DatabaseRepairHelper.ProcessingOrphanedFiles: return qsTr('Processing orphaned files...');
+                            case DatabaseRepairHelper.ProcessingOrphanedRecords: return qsTr('Processing orphaned records...');
+                            case DatabaseRepairHelper.Complete: return qsTr('Complete!');
                             default:
                         }
                     }
                     else
                     {
-                        switch (worker.errorCode)
+                        switch (helper.errorCode)
                         {
-                        case DatabaseRepairWorker.UnableToStart: return qsTr('Unable to start operation!');
-                        case DatabaseRepairWorker.UnableToRetrieveOrphanedRecords: return qsTr('Unable to retrieve orphaned records!');
-                        case DatabaseRepairWorker.UnableToRemoveOrphanedRecord: return qsTr('Unable to remove orphaned record!');
-                        case DatabaseRepairWorker.UnableToRetrieveOrphanedFile: return qsTr('Unable to retrieve orphaned file!');
-                        case DatabaseRepairWorker.UnableToRestoreOrphanedFile: return qsTr('Unable to restore orphaned file!');
-                        case DatabaseRepairWorker.UnhandledException: return qsTr('Unhanled exception!');
-                        default:
+                            case DatabaseRepairHelper.UnableToStart: return qsTr('Unable to start operation!');
+                            case DatabaseRepairHelper.UnableToRetrieveOrphanedRecords: return qsTr('Unable to retrieve orphaned records!');
+                            case DatabaseRepairHelper.UnableToRemoveOrphanedRecord: return qsTr('Unable to remove orphaned record!');
+                            case DatabaseRepairHelper.UnableToRetrieveOrphanedFile: return qsTr('Unable to retrieve orphaned file!');
+                            case DatabaseRepairHelper.UnableToRestoreOrphanedFile: return qsTr('Unable to restore orphaned file!');
+                            case DatabaseRepairHelper.UnhandledException: return qsTr('Unhanled exception!');
+                            default:
                         }
                     }
 
@@ -111,6 +111,6 @@ Page
     onStatusChanged:
     {
         if (status == PageStatus.Activating)
-            worker.repair(recordRepairMode, fileRepairMode);
+            helper.repair(recordRepairMode, fileRepairMode);
     }
 }
