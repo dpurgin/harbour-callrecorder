@@ -457,15 +457,41 @@ int EventsTableModel::add(QDateTime timeStamp,
                           QString fileName,
                           RecordingState recordingStateId)
 {
-    QVariantMap items;
+    QVariantMap entry;
 
-    items.insert("TimeStamp", timeStamp);
-    items.insert("PhoneNumberID", phoneNumberId);
-    items.insert("EventTypeID", eventTypeId);
-    items.insert("FileName", fileName);
-    items.insert("RecordingStateID", recordingStateId);
+    entry.insert("TimeStamp", timeStamp);
+    entry.insert("PhoneNumberID", phoneNumberId);
+    entry.insert("EventTypeID", eventTypeId);
+    entry.insert("FileName", fileName);
+    entry.insert("RecordingStateID", recordingStateId);
 
-    int oid = d->add(items);
+    return add(entry);
+}
+
+int EventsTableModel::add(QDateTime timeStamp,
+                          int phoneNumberId,
+                          EventType eventTypeId,
+                          RecordingState recordingStateId,
+                          int duration,
+                          QString fileName,
+                          qint64 fileSize)
+{
+    QVariantMap entry;
+
+    entry.insert("TimeStamp", timeStamp);
+    entry.insert("PhoneNumberID", phoneNumberId);
+    entry.insert("EventTypeID", eventTypeId);
+    entry.insert("RecordingStateID", recordingStateId);
+    entry.insert("Duration", duration);
+    entry.insert("FileName", fileName);
+    entry.insert("FileSize", fileSize);
+
+    return add(entry);
+}
+
+int EventsTableModel::add(const QVariantMap& entry)
+{
+    int oid = d->add(entry);
 
     if (oid != -1)
         emit rowCountChanged();

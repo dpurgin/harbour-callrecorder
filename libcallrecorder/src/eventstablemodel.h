@@ -91,6 +91,14 @@ public:
             QString fileName,
             RecordingState recordingStateId);
 
+    int add(QDateTime timeStamp,
+            int phoneNumberId,
+            EventType eventTypeId,
+            RecordingState recordingStateId,
+            int duration,
+            QString fileName,
+            qint64 fileSize);
+
     Q_INVOKABLE void filter(const QVariantMap& filters);
     void filter(const Filters& filters);
 
@@ -112,6 +120,9 @@ signals:
     void rowCountChanged();
 
 public slots:        
+
+private:
+    int add(const QVariantMap& entry);
 
 private:
     class EventsTableModelPrivate;
