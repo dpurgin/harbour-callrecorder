@@ -63,6 +63,17 @@ public:
     typedef QHash< Filter, QVariant > Filters;
 
 public:
+    static EventType eventType(QString eventType)
+    {
+        if (eventType.compare(QLatin1String("in"), Qt::CaseInsensitive) == 0)
+            return Incoming;
+        else if (eventType.compare(QLatin1String("out"), Qt::CaseInsensitive) == 0)
+            return Outgoing;
+
+        return Partial;
+    }
+
+public:
     EventsTableModel(Database* db, QObject* parent = 0);
     virtual ~EventsTableModel();
 
