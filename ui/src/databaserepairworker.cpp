@@ -29,6 +29,7 @@
 #include <libcallrecorder/callrecorderexception.h>
 #include <libcallrecorder/database.h>
 #include <libcallrecorder/eventstablemodel.h>
+#include <libcallrecorder/phonenumberstablemodel.h>
 #include <libcallrecorder/settings.h>
 #include <libcallrecorder/sqlcursor.h>
 
@@ -80,6 +81,7 @@ void DatabaseRepairWorker::repairFiles()
 
     QScopedPointer< Database > db(new Database());
     QScopedPointer< EventsTableModel > events(new EventsTableModel(db.data()));
+    QScopedPointer< PhoneNumbersTableModel > phoneNumbers(new PhoneNumbersTableModel(db.data()));
     QScopedPointer< Settings > settings(new Settings());
 
     auto fiList = QDir(settings->outputLocation()).entryInfoList(
@@ -119,12 +121,20 @@ void DatabaseRepairWorker::repairFiles()
 
                 QString baseName = fi.baseName();
 
-                QString timeStamp = baseName.left(25);
-                QString eventType = fi.baseName().right(fi.baseName().lastIndexOf(QChar('_')) + 1);
-                QString phoneNumber = baseName.mid(timeStamp.length(),
-                                                   baseName.length() - eventType.length() - 1);
+                QString timeStamp = baseName.left(25).replace(QChar('_'), QChar(':'));
+                QString eventType = baseName.mid(baseName.lastIndexOf(QChar('_')) + 1);
+
+                QString phoneNumber = baseName.mid(
+                            timeStamp.length() + 1,
+                            baseName.length() - timeStamp.length() - eventType.length() - 2);
 
                 qDebug() << "restored file parts" << timeStamp << eventType << phoneNumber;
+
+                events->add(QDateTime::fromString(timeStamp, Qt::ISODate),
+                            phoneNumbers->getIdByLineIdentification(phoneNumber),
+                            EventsTableModel::eventType(eventType),
+                            fi.fileName(),
+                            EventsTableModel::Done);
             }
         }
 
