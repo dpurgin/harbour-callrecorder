@@ -61,6 +61,8 @@ RESOURCES += ui.qrc
 QMLFILES = \
     qml/cover/CoverPage.qml \
     qml/pages/dialogs/EventsFilterDialog.qml \
+    qml/pages/dialogs/FileNameDialog.qml \
+    qml/pages/dialogs/FilePickerDialog.qml \
     qml/pages/dialogs/ContactPickerDelegate.qml \
     qml/pages/dialogs/ContactPickerDelegateMenu.qml \
     qml/pages/dialogs/ContactPickerDialog.qml \
