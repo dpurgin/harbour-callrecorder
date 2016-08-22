@@ -27,6 +27,8 @@ import "../../widgets"
 
 Page
 {
+    allowedOrientations: Orientation.All
+
     BackupHelper { id: backupHelper }
     BackupHelper
     {

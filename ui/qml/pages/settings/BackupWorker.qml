@@ -47,6 +47,7 @@ Page
     property alias progress: backupHelper.progress
     property alias operation: backupHelper.operation        
 
+    allowedOrientations: Orientation.All
     backNavigation: !busy && !restoreComplete
 
     states: [

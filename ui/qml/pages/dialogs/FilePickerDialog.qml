@@ -35,6 +35,7 @@ Dialog
 
     property string fileName: absoluteFilePath.substring(absoluteFilePath.lastIndexOf('/') + 1)
 
+    allowedOrientations: Orientation.All
     canAccept: absoluteFilePath !== '' &&
                 (directoryPicker?
                      fileSystemHelper.isWritable(absoluteFilePath):

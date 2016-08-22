@@ -26,6 +26,8 @@ Dialog
 {
     property string fileName
 
+    allowedOrientations: Orientation.All
+
     Column
     {
         anchors.fill: parent
