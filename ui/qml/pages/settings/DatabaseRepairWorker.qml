@@ -30,9 +30,18 @@ Page
 
     allowedOrientations: Orientation.All
 
+    backNavigation: helper.operation === DatabaseRepairHelper.NotStarted ||
+                    helper.operation === DatabaseRepairHelper.Complete
+
     DatabaseRepairHelper
     {
         id: helper
+
+        onOperationChanged:
+        {
+            if (operation == DatabaseRepairHelper.Complete)
+                eventsModel.refresh();
+        }
     }
 
     SilicaFlickable
@@ -56,7 +65,7 @@ Page
 
             StyledLabel
             {
-                text: qsTr('Performing database repair. Please do not go back or close the application until the operation is complete')
+                text: qsTr('Performing database repair. Please do not close the application until the operation is complete')
 
                 height: implicitHeight + Theme.paddingLarge
 
