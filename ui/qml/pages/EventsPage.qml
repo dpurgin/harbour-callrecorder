@@ -188,19 +188,13 @@ Page {
                     }, 10000);
                 }
             }
-        }
-
-        PageHeader {
-            id: header
-
-            title: qsTr('Recordings')
-        }
+        }      
 
         SilicaListView {            
             id: eventsView
 
             anchors {
-                top: header.bottom
+                top: parent.top
                 bottom: dockedPanel.top
                 left: parent.left
                 right: parent.right
@@ -211,6 +205,10 @@ Page {
             VerticalScrollDecorator {}
 
             model: eventsModel
+
+            header: PageHeader {
+                title: qsTr('Recordings')
+            }
 
             delegate: EventsDelegate {
                 id: delegate
