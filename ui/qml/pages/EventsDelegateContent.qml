@@ -20,10 +20,21 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Row {
+    readonly property int thisYear: (new Date()).getFullYear()
+
     width: parent.width
+    height: Theme.itemSizeMedium
 
     Image {
         id: icon
+
+        width: Theme.iconSizeSmallPlus
+        height: parent.height
+
+        fillMode: Image.Pad
+
+        horizontalAlignment: Image.AlignHCenter
+        verticalAlignment: Image.AlignTop
 
         source: {
             if (model.EventTypeID === 1)
@@ -37,6 +48,7 @@ Row {
 
     Column {
         width: parent.width - icon.width - timeStampContainer.width
+        height: parent.height
 
         Row {
             id: otherPartyId
@@ -144,7 +156,9 @@ Row {
         Label {
             id: timeStampDate
 
-            text: Format.formatDate(model.TimeStamp, Formatter.TimepointRelativeCurrentDay)
+            text: (new Date(model.TimeStamp)).getFullYear() === thisYear?
+                      Format.formatDate(model.TimeStamp, Formatter.TimepointRelativeCurrentDay):
+                      Format.formatDate(model.TimeStamp, Formatter.DateMedium)
 
             anchors.right: parent.right
             anchors.rightMargin: Theme.paddingLarge
