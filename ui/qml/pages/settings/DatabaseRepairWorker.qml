@@ -105,6 +105,46 @@ Page
                     return qsTr('Not started');
                 }
             }
+
+            Item
+            {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+
+            DetailItem
+            {
+                label: qsTr('Repaired records')
+                value: helper.repairedRecordsCount
+
+                width: parent.width
+
+                visible: helper.repairedRecordsCount > 0
+
+                opacity: visible? 1: 0
+
+                Behavior on opacity
+                {
+                    FadeAnimator { }
+                }
+            }
+
+            DetailItem
+            {
+                label: qsTr('Repaired files')
+                value: helper.repairedFilesCount
+
+                width: parent.width
+
+                visible: helper.repairedFilesCount > 0
+
+                opacity: visible? 1: 0
+
+                Behavior on opacity
+                {
+                    FadeAnimator { }
+                }
+            }
         }
     }
 

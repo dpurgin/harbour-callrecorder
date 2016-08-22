@@ -67,6 +67,14 @@ void DatabaseRepairHelper::repair(RepairMode recordRepairMode, RepairMode fileRe
     connect(worker.data(), &DatabaseRepairWorker::totalCountChanged,
             this, &DatabaseRepairHelper::setTotalCount);
 
+    connect(worker.data(), &DatabaseRepairWorker::removedFilesCountChanged,
+            this, &DatabaseRepairHelper::setRepairedFilesCount);
+    connect(worker.data(), &DatabaseRepairWorker::restoredFilesCountChanged,
+            this, &DatabaseRepairHelper::setRepairedFilesCount);
+
+    connect(worker.data(), &DatabaseRepairWorker::removedRecordsCountChanged,
+            this, &DatabaseRepairHelper::setRepairedRecordsCount);
+
     if (QThreadPool::globalInstance()->tryStart(worker.data()))
         worker.take();
     else

@@ -46,6 +46,10 @@ signals:
     void progressChanged(int);
     void totalCountChanged(int);
 
+    void removedFilesCountChanged(int);
+    void removedRecordsCountChanged(int);
+    void restoredFilesCountChanged(int);
+
 private:
     void repairFiles();
     void repairRecords();

@@ -107,9 +107,12 @@ void DatabaseRepairWorker::repairFiles()
                 QStringList() << QString("*.flac"), QDir::Files);
 
     int progress = 0;
+    int repairedFilesCount = 0;
 
     emit totalCountChanged(fiList.size());
     emit progressChanged(progress = 0);
+    emit removedFilesCountChanged(0);
+    emit restoredFilesCountChanged(0);
 
     foreach (QFileInfo fi, fiList)
     {
@@ -131,6 +134,8 @@ void DatabaseRepairWorker::repairFiles()
                     throw DatabaseRepairException(
                                 ErrorCode::UnableToRemoveOrphanedFile, file.errorString());
                 }
+
+                emit removedFilesCountChanged(++repairedFilesCount);
             }
             else if (mFileRepairMode == RepairMode::Restore)
             {
@@ -193,8 +198,12 @@ void DatabaseRepairWorker::repairFiles()
                                       fi.size());
 
                 if (id == -1)
+                {
                     throw DatabaseRepairException(ErrorCode::UnableToRestoreOrphanedFile,
                                                   QLatin1String("Error writing to database"));
+                }
+
+                emit restoredFilesCountChanged(++repairedFilesCount);
             }
         }
 
@@ -220,10 +229,12 @@ void DatabaseRepairWorker::repairRecords()
                     ErrorCode::UnableToRetrieveOrphanedRecords, db->lastError());
     }
 
-    int progress;
+    int progress = 0;
+    int removedRecords = 0;
 
     emit totalCountChanged(cursor->size());
     emit progressChanged(progress = 0);
+    emit removedRecordsCountChanged(removedRecords = 0);
 
     QDir outputLocationDir(settings->outputLocation());
 
@@ -247,6 +258,8 @@ void DatabaseRepairWorker::repairRecords()
                     throw DatabaseRepairException(
                                 ErrorCode::UnableToRemoveOrphanedRecord, db->lastError());
                 }
+
+                emit removedRecordsCountChanged(++removedRecords);
             }
         }
 

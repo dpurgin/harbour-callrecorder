@@ -31,12 +31,23 @@ class DatabaseRepairHelper : public QObject
     Q_PROPERTY(ErrorCode errorCode
                READ errorCode
                NOTIFY errorCodeChanged)
+
     Q_PROPERTY(Operation operation
                READ operation
                NOTIFY operationChanged)
+
     Q_PROPERTY(int progress
                READ progress
                NOTIFY progressChanged)
+
+    Q_PROPERTY(int repairedFilesCount
+               READ repairedFilesCount
+               NOTIFY repairedFilesCountChanged)
+
+    Q_PROPERTY(int repairedRecordsCount
+               READ repairedRecordsCount
+               NOTIFY repairedRecordsCountChanged)
+
     Q_PROPERTY(int totalCount
                READ totalCount
                NOTIFY totalCountChanged)
@@ -77,6 +88,8 @@ public:
     ErrorCode errorCode() const { return mErrorCode; }
     Operation operation() const { return mOperation; }
     int progress() const { return mProgress; }
+    int repairedFilesCount() const { return mRepairedFilesCount; }
+    int repairedRecordsCount() const { return mRepairedRecordsCount; }
     int totalCount() const { return mTotalCount; }
 
 public:
@@ -86,6 +99,8 @@ signals:
     void errorCodeChanged(DatabaseRepairHelper::ErrorCode);
     void operationChanged(DatabaseRepairHelper::Operation);
     void progressChanged(int);
+    void repairedFilesCountChanged(int);
+    void repairedRecordsCountChanged(int);
     void totalCountChanged(int);
 
 private slots:
@@ -107,6 +122,18 @@ private slots:
             emit progressChanged(mProgress = progress);
     }
 
+    void setRepairedFilesCount(int count)
+    {
+        if (count != mRepairedFilesCount)
+            emit repairedFilesCountChanged(mRepairedFilesCount = count);
+    }
+
+    void setRepairedRecordsCount(int count)
+    {
+        if (count != mRepairedRecordsCount)
+            emit repairedRecordsCountChanged(mRepairedRecordsCount = count);
+    }
+
     void setTotalCount(int totalCount)
     {
         if (totalCount != mTotalCount)
@@ -120,6 +147,8 @@ private:
     int mProgress = -1;
     int mTotalCount = -1;
 
+    int mRepairedRecordsCount = 0;
+    int mRepairedFilesCount = 0;
 };
 
 Q_DECLARE_METATYPE(DatabaseRepairHelper::ErrorCode)
