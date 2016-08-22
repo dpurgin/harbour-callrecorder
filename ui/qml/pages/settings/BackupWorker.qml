@@ -21,6 +21,8 @@ import Sailfish.Silica 1.0
 
 import kz.dpurgin.callrecorder.BackupHelper 1.0
 
+import "../../widgets"
+
 Page
 {
     property string fileName
@@ -32,10 +34,20 @@ Page
     property bool isBackup: true
     readonly property bool isRestore: !isBackup
 
+    readonly property bool restoreComplete:
+        isRestore && errorCode === BackupHelper.None && operation === BackupHelper.Complete
+
+    onRestoreCompleteChanged:
+    {
+        console.log('restore complete: '+ restoreComplete);
+    }
+
     property alias busy: backupHelper.busy
     property alias errorCode: backupHelper.errorCode
     property alias progress: backupHelper.progress
-    property alias operation: backupHelper.operation
+    property alias operation: backupHelper.operation        
+
+    backNavigation: !busy && !restoreComplete
 
     states: [
         State
@@ -125,20 +137,17 @@ Page
             title: isBackup? qsTr('Backup'): qsTr('Restore')
         }
 
-        Label
+        StyledLabel
         {
             text: isBackup?
-                      qsTr('Performing backup. Please do not go back or close the application until the operation is complete'):
-                      qsTr('Performing restore. Please do not go back or close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behaviour')
+                      qsTr('Performing backup. Please do not close the application until the operation is complete'):
+                      qsTr('Performing restore. Please do not close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behavior.')
 
 
-            x: Theme.horizontalPageMargin
-            width: parent.width - x * 2
             height: implicitHeight + Theme.paddingLarge
 
             color: Theme.highlightColor
             font.pixelSize: Theme.fontSizeSmall
-            wrapMode: Text.Wrap
         }
 
         ProgressBar
@@ -152,6 +161,51 @@ Page
             minimumValue: 0
             maximumValue: backupHelper.totalCount
             value: backupHelper.progress
+        }
+
+        Item
+        {
+            width: parent.width
+            height: Theme.paddingLarge * 2
+        }
+
+        StyledLabel
+        {
+            text: qsTr('Please restart the application')
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+
+            font.pixelSize: Theme.fontSizeSmall
+
+            visible: restoreComplete
+            opacity: visible? 1: 0
+
+            Behavior on opacity
+            {
+                FadeAnimator { }
+            }
+        }
+
+        StyledLabel
+        {
+            text: qsTr('Database, settings and recordings were successfully restored. ' +
+                       'The Call Recorder needs to be restarted to apply the changes. ' +
+                       'If you chose to merge the existing recording files, you should run the ' +
+                       'database repair tool from Utilities after restart.');
+
+            color: Theme.secondaryColor
+
+            height: implicitHeight + Theme.paddingMedium
+
+            font.pixelSize: Theme.fontSizeExtraSmall
+
+            visible: restoreComplete
+            opacity: visible? 1: 0
+
+            Behavior on opacity {
+                FadeAnimator { }
+            }
         }
     }
 
