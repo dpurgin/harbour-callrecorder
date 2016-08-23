@@ -12,4 +12,4 @@ Restart=on-failure
 EnvironmentFile=-/home/nemo/.config/harbour-callrecorder/environment
 
 [Install]
-WantedBy=user-session.target
+WantedBy=post-user-session.target
