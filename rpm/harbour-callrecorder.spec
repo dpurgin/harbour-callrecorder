@@ -79,6 +79,7 @@ systemctl-user daemon-reload
 # install
 if [ $1 = 1 ]; then
     echo "Enabling service..."
+    mkdir -p /home/nemo/.config/systemd/user/post-user-session.target.wants
     chown --recursive nemo:nemo /home/nemo/.config/systemd
 
     systemctl-user enable harbour-callrecorderd
