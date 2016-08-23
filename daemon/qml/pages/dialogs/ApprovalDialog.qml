@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Window 2.0
 import Sailfish.Silica 1.0
 
 import kz.dpurgin.nemomobile.contacts 1.0
@@ -39,7 +38,7 @@ Item {
     property date timeStamp
     property int duration
     property int fileSize
-    property alias lineIdentification: lineIdentificationLabel.text
+    property string lineIdentification
 
     property bool shouldBeVisible
 
@@ -97,7 +96,11 @@ Item {
             id: content
 
             width: parent.width
-            y: Theme.paddingLarge
+
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
 
             Label {
                 text: {
@@ -109,9 +112,8 @@ Item {
                         return qsTr('A call was recorded');
                 }
 
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * x
 
                 horizontalAlignment: Text.AlignHCenter
 
@@ -128,11 +130,10 @@ Item {
             }
 
             Label {
-                id: lineIdentificationLabel
+                text: lineIdentification
 
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * x
 
                 horizontalAlignment: Text.AlignHCenter
 
@@ -148,9 +149,8 @@ Item {
 
                 visible: person !== null
 
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * x
 
                 horizontalAlignment: Text.AlignHCenter
 
@@ -171,9 +171,8 @@ Item {
                       Format.formatDuration(duration, Formatter.DurationShort) + ' \u2022 ' +
                       Format.formatFileSize(fileSize)
 
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * x
 
                 horizontalAlignment: Text.AlignHCenter
 
@@ -190,8 +189,7 @@ Item {
             Row {
                 property real buttonWidth: parent.width / 3
 
-                anchors.left: parent.left
-                anchors.right: parent.right
+                width: parent.width
 
                 Widgets.ApprovalDialogButton {
                     id: storeButton

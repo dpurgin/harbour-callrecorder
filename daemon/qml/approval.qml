@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,8 +24,6 @@ import kz.dpurgin.nemomobile.contacts 1.0
 import "pages/dialogs" as Dialogs
 
 ApplicationWindow {
-    height: 1
-
     initialPage: Component {
         Dialogs.ApprovalDialog {
             objectName: "approvalDialogWindow"
