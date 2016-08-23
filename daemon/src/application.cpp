@@ -181,7 +181,16 @@ Application::Application(int argc, char* argv[])
     connect(d->uiInterface.data(), SIGNAL(SettingsChanged()),
             d->storageLimitTimer.data(), SLOT(start()));
 
-    createApprovalDialog();
+    // The following code block is used for debugging purposes only and MUST be
+    // commented out or removed for any usage of the app
+//#ifdef QT_DEBUG
+//#pragma message "Debugging block is not removed!"
+//    QTimer* timer = new QTimer();
+//    connect(timer, &QTimer::timeout,
+//            [&]() { showApprovalDialog(); });
+//    timer->setSingleShot(true);
+//    timer->start(3000);
+//#endif // QT_DEBUG
 }
 
 Application::~Application()
@@ -624,6 +633,9 @@ Settings* Application::settings() const
 void Application::showApprovalDialog()
 {
     qDebug();
+
+    if (d->approvalView.isNull())
+        createApprovalDialog();
 
     // select next recording requiring approval
 
