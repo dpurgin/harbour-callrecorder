@@ -2,7 +2,7 @@
 Description=Call Recorder Daemon
 Requires=pulseaudio.service
 Requires=dbus.socket
-After=pulseaudio.service
+After=lipstick.service
 
 [Service]
 Type=simple
