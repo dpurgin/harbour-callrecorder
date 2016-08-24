@@ -76,9 +76,9 @@ lupdate_only {
 OTHER_FILES += \
     $${TARGET}.service \
     $${TARGET}-pre.sh \
-    $${QMLFILES} \
+    $${QMLFILES}
 
-TRANSLATIONS += \
+TRANSLATIONS = \
     translations/daemon.ts \
     translations/daemon-cs.ts \
     translations/daemon-da.ts \
@@ -87,19 +87,21 @@ TRANSLATIONS += \
     translations/daemon-es.ts \
     translations/daemon-fi.ts \
     translations/daemon-fr.ts \
-#    translations/daemon-he.ts \
+    translations/daemon-it.ts \
+    translations/daemon-lt.ts \
     translations/daemon-nl.ts \
     translations/daemon-pl.ts \
     translations/daemon-ru.ts \
     translations/daemon-sk.ts \
     translations/daemon-sv.ts \
+    translations/daemon-zh_CN.ts \
     translations/daemon-zh_TW.ts
 
 qm.path = $${TARGETDIR}/translations
 qm.commands += \
     mkdir -p translations; \
     cp --update $${_PRO_FILE_PWD_}/translations/*.ts $${OUT_PWD}/translations/; \
-    lrelease $${OUT_PWD}/translations/*.ts;
+    lrelease -idbased $${OUT_PWD}/translations/*.ts;
 
 QMFILES =
 
