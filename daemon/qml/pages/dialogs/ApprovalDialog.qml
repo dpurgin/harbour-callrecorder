@@ -105,11 +105,23 @@ Item {
             Label {
                 text: {
                     if (eventTypeId == 1)
-                        return qsTr('An incoming call was recorded');
+                    {
+                        //: Info message on top of approval dialog
+                        //% "An incoming call was recorded"
+                        return qsTrId('id-incoming-call-recorded');
+                    }
                     else if (eventTypeId == 2)
-                        return qsTr('An outgoing call was recorded');
+                    {
+                        //: Info message on top of approval dialog
+                        //% "An outgoing call was recorded"
+                        return qsTrId('id-outgoing-call-recorded');
+                    }
                     else
-                        return qsTr('A call was recorded');
+                    {
+                        //: Info message on top of approval dialog
+                        //% "A call was recorded"
+                        return qsTrId('id-call-recorded');
+                    }
                 }
 
                 x: Theme.horizontalPageMargin
@@ -196,7 +208,9 @@ Item {
 
                     width: parent.buttonWidth
 
-                    text: qsTr('Store')
+                    //: Action for saving the recorded call
+                    //% "Store"
+                    text: qsTrId('id-do-store')
                     iconSource: 'image://theme/icon-l-check?#000000'
 
                     onClicked: {
@@ -212,7 +226,9 @@ Item {
 
                     width: parent.buttonWidth
 
-                    text: qsTr('Remove')
+                    //: Action for removing the recorded call
+                    //% "Remove"
+                    text: qsTrId('id-do-remove')
                     iconSource: 'image://theme/icon-l-dismiss?#000000'
 
                     onClicked: {
@@ -228,7 +244,9 @@ Item {
 
                     width: parent.buttonWidth
 
-                    text: qsTr('Ask later')
+                    //: Action for postponing decisions on recorded calls
+                    //% "Ask later"
+                    text: qsTrId('id-do-ask-later')
                     iconSource: 'image://theme/icon-l-clock?#000000'
 
                     onClicked: {
