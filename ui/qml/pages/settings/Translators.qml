@@ -33,7 +33,7 @@ Page {
             PageHeader {
                 //: Page header
                 //% "Translators"
-                title: qsTrId('it-translators')
+                title: qsTrId('id_translators')
             }
 
             Label {
@@ -42,7 +42,7 @@ Page {
 
                 //: Description text on top of the Translators page
                 //% "Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order."
-                text: qsTrId("id-translators-thanks")
+                text: qsTrId("id_translators_thanks")
 
                 font.pixelSize: Theme.fontSizeSmall
 

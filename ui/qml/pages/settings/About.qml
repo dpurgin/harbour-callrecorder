@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Page {
             MenuItem {
                 //- Pull-down menu entry
                 //% Translators
-                text: qsTrId('id-translators')
+                text: qsTrId('id_translators')
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl('Translators.qml'))
                 }
@@ -44,7 +44,7 @@ Page {
             MenuItem {
                 //- Pull-down menu entry
                 //% License
-                text: qsTrId('id-license')
+                text: qsTrId('id_license')
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl('License.qml'))
                 }
@@ -66,7 +66,9 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                title: qsTr('About')
+                //- Page header
+                //% "About"
+                title: qsTrId('id_settings_about')
             }
 
             Column {
@@ -87,7 +89,9 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraLarge
                     color: Theme.primaryColor
 
-                    text: qsTr('Call Recorder')
+                    //- Application title
+                    //% "Call Recorder"
+                    text: qsTrId('id_call_recorder')
 
                     wrapMode: Text.Wrap
                 }
@@ -100,7 +104,9 @@ Page {
                     font.pixelSize: Theme.fontSizeLarge
                     color: Theme.secondaryColor
 
-                    text: qsTr('for SailfishOS')
+                    //- App subtitle on About page
+                    //% "for SailfishOS"
+                    text: qsTrId('id_for_sailfishos')
 
                     wrapMode: Text.Wrap
                 }
@@ -113,7 +119,9 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
 
-                    text: qsTr('Version %1').arg(VERSION)
+                    //- Version on About page
+                    //% "Version %1"
+                    text: qsTrId('id_version').arg(VERSION)
                 }
 
                 Item {
@@ -121,8 +129,10 @@ Page {
                     height: spacerHeight
                 }
 
-                Label {                   
-                    text: qsTr('Copyright \u00a9 2014-2016 Dmitriy Purgin')
+                Label {
+                    //- Copyright string
+                    //% "Copyright \u00a9 2014-2016 Dmitriy Purgin"
+                    text: qsTrId('id_about_copyright')
 
                     horizontalAlignment: Text.AlignHCenter
 
@@ -168,8 +178,10 @@ Page {
                     height: spacerHeight
                 }
 
-                Label {                    
-                    text: qsTr('Thanks to Simonas Leleiva and Juho Hämäläinen')
+                Label {
+                    //- Acknowledgment text on About page
+                    //% "Thanks to Simonas Leleiva and Juho Hämäläinen"
+                    text: qsTrId('id_about_thanks')
 
                     font.pixelSize: Theme.fontSizeExtraSmall
                     width: parent.width
@@ -179,7 +191,9 @@ Page {
                 }
 
                 Label {
-                    text: qsTr('Use pull-down menu to see translators')
+                    //- Clarification text on About page
+                    //% "Use pull-down menu to see translators"
+                    text: qsTrId('id_use_pulldown_translators')
 
                     font.pixelSize: Theme.fontSizeTiny
                     width: parent.width
@@ -214,9 +228,9 @@ Page {
 
                     color: Theme.secondaryColor
 
-                    text: qsTr('This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you ' +
-                               'are welcome to redistribute it under certain conditions; use pull-down menu ' +
-                               'for details')
+                    //- Short GPL disclaimer on About page
+                    //% "This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details"
+                    text: qsTrId('id_gpl_disclaimer')
                 }
             }
         }
