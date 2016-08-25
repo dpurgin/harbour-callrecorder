@@ -33,14 +33,18 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr('Translators')
+                //- Pull-down menu entry
+                //% Translators
+                text: qsTrId('id-translators')
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl('Translators.qml'))
                 }
             }
 
             MenuItem {
-                text: qsTr('License')
+                //- Pull-down menu entry
+                //% License
+                text: qsTrId('id-license')
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl('License.qml'))
                 }
