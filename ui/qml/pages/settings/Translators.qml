@@ -22,198 +22,194 @@ import Sailfish.Silica 1.0
 Page {
     allowedOrientations: Orientation.All
 
-    SilicaFlickable {
+    SilicaListView {
         anchors.fill: parent
 
-        PageHeader {
-            id: header
-            title: qsTr('Translators')
-        }
+        VerticalScrollDecorator {}
 
-        SilicaListView {
-            anchors {
-                top: header.bottom
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
+        header: Column {
+            width: parent.width
+
+            PageHeader {
+                //: Page header
+                //% "Translators"
+                title: qsTrId('it-translators')
             }
 
-            clip: true
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * x
 
-            VerticalScrollDecorator {}
-
-            header: Label {
-                id: disclaimer
-
-                text: qsTr('Thanks to these people the Call Recorder is available in different ' +
-                           'languages. Names and locale codes are listed in alphabetical order.')
+                //: Description text on top of the Translators page
+                //% "Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order."
+                text: qsTrId("id-translators-thanks")
 
                 font.pixelSize: Theme.fontSizeSmall
 
-                width: parent.width
-
                 horizontalAlignment: Text.Center
                 wrapMode: Text.Wrap
-            }                        
+            }
+        }
 
-            model: ListModel {
-                ListElement {
-                    locale: "cs"
-                    translators: [
-                        ListElement { name: "Jozef Mlích" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "da"
-                    translators: [
-                        ListElement { name: "Peter Jespersen" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "de"
-                    translators: [
-                        ListElement { name: "blubdbibub" },
-                        ListElement { name: "peter_berlin" },
-                        ListElement { name: "Timo Könnecke" },
-                        ListElement { name: "Wasilis Mandratzis-Walz" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "de_AT-3"
-                    translators: [
-                        ListElement { name: "N😻p Queen" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "el"
-                    translators: [
-                        ListElement { name: "Wasilis Mandratzis-Walz" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "en"
-                    translators: [
-                        ListElement { name: "Dmitriy Purgin" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "es"
-                    translators: [
-                        ListElement { name: "Carmen Fernández B." }
-                    ]
-                }
-
-                ListElement {
-                    locale: "fi"
-                    translators: [
-                        ListElement { name: "Jukka Aaltonen" },
-                        ListElement { name: "Simo Ruoho" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "fr"
-                    translators: [
-                        ListElement { name: "Jordi" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "it"
-                    translators: [
-                        ListElement { name: "lorenzo facca" },
-                        ListElement { name: "Yuri Bongiorno" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "nl"
-                    translators: [
-                        ListElement { name: "Heimen Stoffels" },
-                        ListElement { name: "HtheB" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "pl"
-                    translators: [
-                        ListElement { name: "szopin" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "ru"
-                    translators: [
-                        ListElement { name: "Dmitriy Purgin" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "sk"
-                    translators: [
-                        ListElement { name: "pyler" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "sv"
-                    translators: [
-                        ListElement { name: "Åke Engelbrektson" }
-                    ]
-                }
-
-                ListElement {
-                    locale: "zh_TW"
-                    translators: [
-                        ListElement { name: "hanhsuan" }
-                    ]
-                }
+        model: ListModel {
+            ListElement {
+                locale: "cs"
+                translators: [
+                    ListElement { name: "Jozef Mlích" }
+                ]
             }
 
-            delegate: Column {
-                width: parent.width - 2 * Theme.paddingLarge
-                height: spacer.height + contentRow.height
-                x: Theme.paddingLarge
+            ListElement {
+                locale: "da"
+                translators: [
+                    ListElement { name: "Peter Jespersen" }
+                ]
+            }
 
-                Item {
-                    id: spacer
+            ListElement {
+                locale: "de"
+                translators: [
+                    ListElement { name: "blubdbibub" },
+                    ListElement { name: "peter_berlin" },
+                    ListElement { name: "Timo Könnecke" },
+                    ListElement { name: "Wasilis Mandratzis-Walz" }
+                ]
+            }
 
-                    width: parent.width
-                    height: Theme.paddingMedium
+            ListElement {
+                locale: "de_AT-3"
+                translators: [
+                    ListElement { name: "N😻p Queen" }
+                ]
+            }
+
+            ListElement {
+                locale: "el"
+                translators: [
+                    ListElement { name: "Wasilis Mandratzis-Walz" }
+                ]
+            }
+
+            ListElement {
+                locale: "en"
+                translators: [
+                    ListElement { name: "Dmitriy Purgin" }
+                ]
+            }
+
+            ListElement {
+                locale: "es"
+                translators: [
+                    ListElement { name: "Carmen Fernández B." }
+                ]
+            }
+
+            ListElement {
+                locale: "fi"
+                translators: [
+                    ListElement { name: "Jukka Aaltonen" },
+                    ListElement { name: "RandomTranslator" },
+                    ListElement { name: "Simo Ruoho" }
+                ]
+            }
+
+            ListElement {
+                locale: "fr"
+                translators: [
+                    ListElement { name: "Jordi" },
+                    ListElement { name: "Kwentin" }
+                ]
+            }
+
+            ListElement {
+                locale: "it"
+                translators: [
+                    ListElement { name: "lorenzo facca" },
+                    ListElement { name: "Yuri Bongiorno" }
+                ]
+            }
+
+            ListElement {
+                locale: "nl"
+                translators: [
+                    ListElement { name: "Heimen Stoffels" },
+                    ListElement { name: "HtheB" }
+                ]
+            }
+
+            ListElement {
+                locale: "pl"
+                translators: [
+                    ListElement { name: "szopin" }
+                ]
+            }
+
+            ListElement {
+                locale: "ru"
+                translators: [
+                    ListElement { name: "Dmitriy Purgin" }
+                ]
+            }
+
+            ListElement {
+                locale: "sk"
+                translators: [
+                    ListElement { name: "pyler" }
+                ]
+            }
+
+            ListElement {
+                locale: "sv"
+                translators: [
+                    ListElement { name: "Åke Engelbrektson" }
+                ]
+            }
+
+            ListElement {
+                locale: "zh_TW"
+                translators: [
+                    ListElement { name: "hanhsuan" }
+                ]
+            }
+        }
+
+        delegate: Column {
+            width: parent.width - 2 * Theme.horizontalPageMargin
+            height: spacer.height + contentRow.height
+            x: Theme.paddingLarge
+
+            Item {
+                id: spacer
+
+                width: parent.width
+                height: Theme.paddingMedium
+            }
+
+            Row {
+                id: contentRow
+
+                width: parent.width
+
+                Label {
+                    text: locale
+
+                    width: parent.width * 0.25
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
+
+                    color: Theme.secondaryColor
                 }
 
-                Row {
-                    id: contentRow
+                Column {
+                    width: parent.width * 0.75
 
-                    width: parent.width
+                    Repeater {
+                        model: translators
 
-                    Label {
-                        text: locale
+                        Label {
+                            text: name
 
-                        width: parent.width * 0.25
-
-                        font.pixelSize: Theme.fontSizeExtraSmall
-
-                        color: Theme.secondaryColor
-                    }
-
-                    Column {
-                        width: parent.width * 0.75
-
-                        Repeater {
-                            model: translators
-
-                            Label {
-                                text: name
-
-                                font.pixelSize: Theme.fontSizeExtraSmall
-                            }
+                            font.pixelSize: Theme.fontSizeExtraSmall
                         }
                     }
                 }
