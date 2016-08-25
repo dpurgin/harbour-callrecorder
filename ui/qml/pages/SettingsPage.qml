@@ -23,13 +23,33 @@ Page {
     id: settingsPage        
 
     property var entries: [
-        qsTr('Recording daemon'),
-        qsTr('Storage'),
-        qsTr('Audio settings'),
-        qsTr('User interface'),
-        qsTr('Utilities'),
-        qsTr('Backup'),
-        qsTr('About')
+        //: Settings item
+        //% "Recording daemon"
+        qsTrId('id_settings_recording_daemon'),
+
+        //: Settings item
+        //% "Storage"
+        qsTrId('id_settings_storage'),
+
+        //: Settings item
+        //% "Audio settings"
+        qsTrId('id_settings_audio_settings'),
+
+        //: Settings item
+        //% "User interface"
+        qsTrId('id_settings_user_interface'),
+
+        //: Settings item
+        //% "Utilities"
+        qsTrId('id_settings_utilities'),
+
+        //: Settings item
+        //% "Backup"
+        qsTrId('id_settings_backup'),
+
+        //: Settings item
+        //% "About"
+        qsTrId('id_settings_about')
     ]
 
     allowedOrientations: Orientation.All
@@ -40,7 +60,9 @@ Page {
         anchors.fill: parent
 
         header: PageHeader {
-            title: qsTr('Settings')
+            //: Settings header
+            //% "Settings"
+            title: qsTrId('id_settings')
         }
 
         model: ListModel {
