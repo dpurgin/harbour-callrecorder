@@ -33,7 +33,9 @@ Page {
         PageHeader {
             id: header
 
-            title: qsTr('User interface')
+            //: Settings item
+            //% "User interface"
+            title: qsTrId('id_settings_user_interface')
         }
 
         ComboBox {
@@ -41,9 +43,13 @@ Page {
 
             anchors.top: header.bottom
 
-            label: qsTr('Locale')
+            //: Settings item
+            //% "Locale"
+            label: qsTrId('Locale')
             value: localeListModel.nativeName(settings.locale)
-            description: qsTr('Please restart the application if the locale is changed')
+            //: Locale change hint
+            //% "Please restart the application if the locale is changed"
+            description: qsTrId('id_locale_description')
 
             menu: ContextMenu {
                 id: localeMenu

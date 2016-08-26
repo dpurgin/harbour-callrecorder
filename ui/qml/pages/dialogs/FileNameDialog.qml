@@ -30,8 +30,12 @@ Dialog {
         DialogHeader {
             id: header
 
-            acceptText: qsTr('Accept')
-            cancelText: qsTr('Cancel')
+            //: Dialog button. This should be the same as the corresponding Sailfish string
+            //% "Accept"
+            acceptText: qsTrId('id_do_accept')
+            //: Dialog button. This should be the same as the corresponding Sailfish string
+            //% "Cancel"
+            cancelText: qsTrId('id_do_cancel')
         }
 
         TextField {

@@ -33,7 +33,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //- Pull-down menu entry
+                //: Pull-down menu entry
                 //% Translators
                 text: qsTrId('id_translators')
                 onClicked: {
@@ -42,7 +42,7 @@ Page {
             }
 
             MenuItem {
-                //- Pull-down menu entry
+                //: Pull-down menu entry
                 //% License
                 text: qsTrId('id_license')
                 onClicked: {
@@ -66,7 +66,7 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                //- Page header
+                //: Page header
                 //% "About"
                 title: qsTrId('id_settings_about')
             }
@@ -89,7 +89,7 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraLarge
                     color: Theme.primaryColor
 
-                    //- Application title
+                    //: Application title
                     //% "Call Recorder"
                     text: qsTrId('id_call_recorder')
 
@@ -104,7 +104,7 @@ Page {
                     font.pixelSize: Theme.fontSizeLarge
                     color: Theme.secondaryColor
 
-                    //- App subtitle on About page
+                    //: App subtitle on About page
                     //% "for SailfishOS"
                     text: qsTrId('id_for_sailfishos')
 
@@ -119,7 +119,7 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.primaryColor
 
-                    //- Version on About page
+                    //: Version on About page
                     //% "Version %1"
                     text: qsTrId('id_version').arg(VERSION)
                 }
@@ -130,7 +130,7 @@ Page {
                 }
 
                 Label {
-                    //- Copyright string
+                    //: Copyright string
                     //% "Copyright \u00a9 2014-2016 Dmitriy Purgin"
                     text: qsTrId('id_about_copyright')
 
@@ -179,7 +179,7 @@ Page {
                 }
 
                 Label {
-                    //- Acknowledgment text on About page
+                    //: Acknowledgment text on About page
                     //% "Thanks to Simonas Leleiva and Juho Hämäläinen"
                     text: qsTrId('id_about_thanks')
 
@@ -191,7 +191,7 @@ Page {
                 }
 
                 Label {
-                    //- Clarification text on About page
+                    //: Clarification text on About page
                     //% "Use pull-down menu to see translators"
                     text: qsTrId('id_use_pulldown_translators')
 
@@ -228,7 +228,7 @@ Page {
 
                     color: Theme.secondaryColor
 
-                    //- Short GPL disclaimer on About page
+                    //: Short GPL disclaimer on About page
                     //% "This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details"
                     text: qsTrId('id_gpl_disclaimer')
                 }

@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,9 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                title: qsTr('Recording daemon')
+                //: Page header
+                //% "Recording daemon"
+                title: qsTrId('id_settings_recording_daemon')
             }
 
             SectionHeader {
@@ -53,8 +55,12 @@ Page {
 
                 checked: systemdUnit.isActive
 
-                text: qsTr('Active')
-                description: qsTr('Capture all incoming and outgoing calls')
+                //: Used on switches
+                //% "Active"
+                text: qsTrId('id_active')
+                //: Description of "Active" switch on Recording Daemon page
+                //% "Capture all incoming and outgoing calls"
+                description: qsTrId('id_daemon_active_description')
 
                 onClicked: {
                     if (systemdUnit.isActive)
@@ -71,8 +77,12 @@ Page {
 
                 checked: systemdUnit.isEnabled
 
-                text: qsTr('Automatic startup')
-                description: qsTr('Start automatically upon reboot')
+                //: Settings item on Recording Daemon page
+                //% "Automatic startup"
+                text: qsTr('id_automatic_startup')
+                //: Automatic startup description
+                //% "Start automatically upon reboot"
+                description: qsTrId('id_automatic_startup_description')
 
                 onClicked: {
                     if (systemdUnit.isEnabled)
@@ -83,22 +93,38 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr('Operation mode')
+                //: Settings item on Recording Daemon page
+                //% "Operation mode"
+                text: qsTrId('id_operation_mode')
             }
 
             ComboBox {
                 id: operationModeCombo
 
-                label: qsTr('Operation mode')
+                //: Settings item on Recording Daemon page
+                //% "Operation mode"
+                label: qsTrId('id_operation_mode')
 
                 description:
                     currentIndex == 0?
-                        qsTr('Record calls to any number except those in the black list'):
-                        qsTr('Do not record anything except numbers in the white list')
+                        //: Black list description
+                        //% "Record calls to any number except those in the black list"
+                        qsTrId('id_black_list_description'):
+                        //: White list description
+                        //% "Do not record anything except numbers in the white list"
+                        qsTrId('id_white_list_description')
 
                 menu: ContextMenu {
-                    MenuItem { text: qsTr('Black list') }
-                    MenuItem { text: qsTr('White list') }
+                    MenuItem {
+                        //: Operation mode
+                        //% "Black list"
+                        text: qsTrId('id_black_list')
+                    }
+                    MenuItem {
+                        //: Operation mode
+                        //% "White list"
+                        text: qsTrId('id_white_list')
+                    }
                 }
 
                 onCurrentIndexChanged: {
@@ -110,7 +136,9 @@ Page {
             }
 
             Button {
-                text: qsTr('Edit list')
+                //: Edit black or white list
+                //% "Edit list"
+                text: qsTrId('id_do_edit_list')
 
                 anchors.horizontalCenter: parent.horizontalCenter
 

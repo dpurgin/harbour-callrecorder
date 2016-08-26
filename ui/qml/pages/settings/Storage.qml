@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/f>.
 */
 
 import QtQuick 2.0
@@ -39,17 +39,23 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: qsTr('Storage')
+                //: Settings item
+                //% "Storage"
+                title: qsTrId('id_settings_storage')
             }
 
             SectionHeader {
-                text: qsTr('Location')
+                //: Section header on Storage Settings page
+                //% "Location"
+                text: qsTrId('id_location')
             }
 
             TextField {
                 id: outputLocationField
 
-                label: qsTr('Location for storing the recordings')
+                //: Description of settings item
+                //% "Location for storing the recordings"
+                label: qsTrId('id_location_description')
 
                 width: parent.width
 
@@ -67,7 +73,9 @@ Page {
                 }
 
                 Button {
-                    text: qsTr('Browse')
+                    //: Browse button
+                    //% "Browse"
+                    text: qsTrId('id_do_browse')
 
                     onClicked: {
                         var dlg = pageStack.push('../dialogs/FilePickerDialog.qml', {
@@ -82,7 +90,9 @@ Page {
                 }
 
                 Button {
-                    text: qsTr('Save')
+                    //: Save action
+                    //% "Save"
+                    text: qsTrId('id_do_save')
 
                     enabled: !outputLocationField.errorHighlight &&
                                 (settings.outputLocation !== outputLocationField.text)
@@ -95,7 +105,9 @@ Page {
 
                         if (!fileSystemHelper.dirIsEmpty(oldLocation))
                         {
-                            remorse.execute(qsTr("Relocating files"), function() {
+                            //: Message when changing output location
+                            //% "Relocating files"
+                            remorse.execute(qsTrId('id_relocating_files'), function() {
                                 fileSystemHelper.relocate(oldLocation, newLocation);
                             });
                         }
@@ -104,7 +116,9 @@ Page {
             }
 
             ProgressBar {
-                label: qsTr('Relocating files')
+                //: Message when changing output location
+                //% "Relocating files"
+                label: qsTrId('id_relocating_files')
 
                 width: parent.width
 
@@ -116,13 +130,17 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr('Storage limits')
+                //: Storage settings entry
+                //% "Storage limits"
+                text: qsTrId('id_storage_limits')
 
                 anchors.rightMargin: Theme.paddingLarge
             }
 
             TextSwitch {
-                text: qsTr('Limit storage by size or age')
+                //: Switch control whether limit storage or not
+                //% "Limit storage by size or age"
+                text: qsTrId('id_do_limit_storage')
 
                 checked: settings.limitStorage
 
@@ -134,7 +152,9 @@ Page {
             ComboBox {
                 id: storageAgeCombo
 
-                label: qsTr('By age')
+                //: Limit type
+                //% "By age"
+                label: qsTrId('id_limit_by_age')
 
                 visible: settings.limitStorage
 
@@ -148,37 +168,49 @@ Page {
                     MenuItem {
                         property int value: 0
 
-                        text: qsTr('no limit')
+                        //: Limit type
+                        //% "no limit"
+                        text: qsTrId('id_limit_none')
                     }
 
                     MenuItem {
                         property int value: 30
 
-                        text: qsTr('30 days')
+                        //: Limit type
+                        //% "30 days"
+                        text: qsTrId('id_limit_days_30')
                     }
 
                     MenuItem {
                         property int value: 90
 
-                        text: qsTr('90 days')
+                        //: Limit type
+                        //% "90 days"
+                        text: qsTrId('id_limit_days_90')
                     }
 
                     MenuItem {
                         property int value: 180
 
-                        text: qsTr('180 days')
+                        //: Limit type
+                        //% "180 days"
+                        text: qsTrId('id_limit_days_180')
                     }
 
                     MenuItem {
                         property int value: 365
 
-                        text: qsTr('365 days')
+                        //: Limit type
+                        //% "365 days"
+                        text: qsTrId('id_limit_days_365')
                     }
 
                     MenuItem {
                         property int value: -1
 
-                        text: qsTr('custom')
+                        //: Limit type
+                        //% "custom"
+                        text: qsTrId('id_limit_custom')
                     }
                 }
 
@@ -191,9 +223,13 @@ Page {
             }
 
             TextField {
-                label: qsTr('Custom age limit in days')
+                //: Text for custom age limit field
+                //% "Custom age limit in days"
+                label: qsTrId('id_custom_age_limit_description')
 
-                placeholderText: qsTr('Custom age limit in days')
+                //: Text for custom age limit field
+                //% "Custom age limit in days"
+                placeholderText: qsTrId('id_custom_age_limit_description')
 
                 text: settings.maxStorageAge
 
@@ -222,7 +258,9 @@ Page {
             ComboBox {
                 id: storageSizeCombo
 
-                label: qsTr('By size')
+                //: Limit type
+                //% "By size"
+                label: qsTrId('id_limit_by_size')
 
                 visible: settings.limitStorage
 
@@ -236,43 +274,57 @@ Page {
                     MenuItem {
                         property int value: 0
 
-                        text: qsTr('no limit')
+                        //: Limit type
+                        //% "no limit"
+                        text: qsTrId('id_limit_none')
                     }
 
                     MenuItem {
                         property int value: 300
 
-                        text: qsTr('300 MB')
+                        //: Limit type
+                        //% "300 MB"
+                        text: qsTrId('id_limit_size_300')
                     }
 
                     MenuItem {
                         property int value: 500
 
-                        text: qsTr('500 MB')
+                        //: Limit type
+                        //% "500 MB"
+                        text: qsTrId('id_limit_size_500')
                     }
 
                     MenuItem {
                         property int value: 1024
 
-                        text: qsTr('1 GB')
+                        //: Limit type
+                        //% "1 GB"
+                        text: qsTrId('id_limit_size_1')
                     }
 
                     MenuItem {
                         property int value: 3072
 
-                        text: qsTr('3 GB')
+                        //: Limit type
+                        //% "3 GB"
+                        text: qsTrId('id_limit_size_3')
                     }
 
                     MenuItem {
                         property int value: 5120
 
-                        text: qsTr('5 GB')
+                        //: Limit type
+                        //% "5 GB"
+                        text: qsTrId('id_limit_size_5')
                     }
 
                     MenuItem {
                         property int value: -1
 
-                        text: qsTr('custom')
+                        //: Limit type
+                        //% "custom"
+                        text: qsTrId('id_limit_custom')
                     }
                 }
 
@@ -288,9 +340,11 @@ Page {
             }
 
             TextField {
-                label: qsTr('Custom size limit in MB')
+                //: Text for custom size limit field
+                //% "Custom size limit in MB"
+                label: qsTrId('id_custom_size_limit_description')
 
-                placeholderText: qsTr('Custom size limit in MB')
+                placeholderText: qsTrId('id_custom_size_limit_description')
 
                 text: settings.maxStorageSize
 
@@ -317,12 +371,18 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr('Approval for storage')
+                //: Settings item on Storage Settings page
+                //% "Approval for storage"
+                text: qsTrId('id_storage_approval')
             }
 
             TextSwitch {
-                text: qsTr('Require approval')
-                description: qsTr('If checked, an approval of storage will be shown after each recorded call')
+                //: Switch control whether to ask for approval for storage
+                //% "Require approval"
+                text: qsTrId('id_do_require_approval')
+                //: Description of "Require approval" switch
+                //% "If checked, an approval of storage will be shown after each recorded call"
+                description: qsTrId('id_approval_description')
 
                 checked: settings.requireApproval
 

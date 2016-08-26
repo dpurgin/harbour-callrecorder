@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,43 +37,61 @@ Page {
             PageHeader {
                 id: pageHeader
 
-                title: qsTr('Audio Settings')
+                //: Settings item
+                //% "Audio settings"
+                title: qsTrId('id_settings_audio_settings')
             }
 
             SectionHeader {
-                text: qsTr('FLAC Encoder')
+                //: Section header on Audio Settings page
+                //% "FLAC Encoder"
+                text: qsTrId('id_flac_encoder')
             }
 
             ComboBox {
                 id: sampleRateCombo
 
-                label: qsTr('Sample rate')
+                //: Settings item on Audio Settings page
+                //% "Sample rate"
+                label: qsTrId('id_sample_rate')
 
                 menu: ContextMenu {
                     id: sampleRateMenu
 
                     MenuItem {
-                        text: qsTr('44.1 kHz')
+                        //: Audio sample rate
+                        //% "44.1 kHz"
+                        text: qsTrId('id_sample_rate_44')
                         property int value: 44100
                     }
                     MenuItem {
-                        text: qsTr('32 kHz')
+                        //: Audio sample rate
+                        //% "32 kHz"
+                        text: qsTrId('id_sample_rate_32')
                         property int value: 32000
                     }
                     MenuItem {
-                        text: qsTr('22.05 kHz')
+                        //: Audio sample rate
+                        //% "22.05 kHz"
+                        text: qsTr('id_sample_rate_22')
                         property int value: 22050
                     }
                     MenuItem {
-                        text: qsTr('16 kHz')
+                        //: Audio sample rate
+                        //% "16 kHz"
+                        text: qsTr('id_sample_rate_16')
                         property int value: 16000
                     }
                     MenuItem {
-                        text: qsTr('11.025 kHz')
+                        //: Audio sample rate
+                        //% "11.025 kHz"
+                        text: qsTr('id_sample_rate_11')
                         property int value: 11025
                     }
                     MenuItem {
-                        text: qsTr('8 kHz')
+                        //: Audio sample rate
+                        //% "8 kHz"
+                        text: qsTr('id_sample_rate_8')
                         property int value: 8000
                     }
                 }
@@ -93,7 +111,9 @@ Page {
                 maximumValue: 8
                 stepSize: 1
 
-                label: qsTr('FLAC compression level')
+                // Settings item on Audio Settings page
+                //% "FLAC compression level"
+                label: qsTrId('id_flac_compression_level')
 
                 value: settings.compression
 
@@ -107,7 +127,7 @@ Page {
 
     Component.onCompleted: {
         sampleRateMenu._foreachMenuItem(function(item, index) {
-            if (item.value == settings.sampleRate)
+            if (item.value === settings.sampleRate)
             {
                 sampleRateCombo.currentIndex = index;
                 return false;
