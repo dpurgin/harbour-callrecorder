@@ -184,7 +184,7 @@ Dialog {
 
                 //: Placeholder for empty list
                 //% "No items in the list"
-                text: qsTr('id_no_items')
+                text: qsTrId('id_no_items')
                 //: Hint for empty phone numbers list
                 //% "Add numbers with field above or use pull-down menu"
                 hintText: qsTrId('id_phone_numbers_hint')

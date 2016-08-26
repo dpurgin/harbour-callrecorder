@@ -227,6 +227,8 @@ Page {
             model: eventsModel
 
             header: PageHeader {
+                id: header
+
                 //% "Recordings"
                 title: qsTrId('id_recordings')
             }
@@ -250,7 +252,7 @@ Page {
                           //% "No recordings meet filter criteria"
                           qsTrId('id_filtered_recordings_placeholder'):
                           //: Placeholder text for empty list of recordings
-                          //% "No calls recorded yet
+                          //% "No calls recorded yet"
                           qsTrId('id_recordings_placeholder')
                 enabled: eventsModel.rowCount === 0
             }
