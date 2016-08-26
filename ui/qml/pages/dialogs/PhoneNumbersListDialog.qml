@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,9 @@ Dialog {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr('Pick from contacts')
+                //: Action in phone numbers list
+                //% "Pick from contacts"
+                text: qsTrId('id_pick_from_contacts')
 
                 onClicked: {
                     var dlg = pageStack.push(Qt.resolvedUrl("ContactPickerDialog.qml"));
@@ -56,7 +58,9 @@ Dialog {
             }
 
             MenuItem {
-                text: qsTr('Copy from white list')
+                //: Action in phone numbers list
+                //% "Copy from white list"
+                text: qsTrId('id_copy_from_whitelist')
                 visible: role == Settings.BlackList
                 enabled: whiteListModel.rowCount > 0
 
@@ -66,7 +70,9 @@ Dialog {
                 }
             }
             MenuItem {
-                text: qsTr('Copy from black list')
+                //: Action in phone numbers list
+                //% "Copy from black list"
+                text: qsTrId('id_copy_from_blacklist')
                 visible: role == Settings.WhiteList
                 enabled: blackListModel.rowCount > 0
 
@@ -76,7 +82,9 @@ Dialog {
                 }
             }
             MenuItem {
-                text: qsTr('Delete all')
+                //: Action to remove everything
+                //% "Delete all"
+                text: qsTrId('id_do_delete_all')
                 enabled: phoneNumbersListView.count !== 0
 
                 onClicked: phoneNumbersListView.model.removeAll()
@@ -86,8 +94,12 @@ Dialog {
         DialogHeader {
             id: header
 
-            acceptText: qsTr('Save')
-            cancelText: qsTr('Cancel')
+            //: Dialog action. Should be equal to the corresponding Sailfish translation
+            //% "Save"
+            acceptText: qsTrId('id_do_save')
+            //: Dialog action. Should be equal to the corresponding Sailfish translation
+            //% "Cancel"
+            cancelText: qsTrId('id_do_cancel')
         }
 
         SilicaListView {
@@ -114,7 +126,10 @@ Dialog {
 
                         width: parent.width - (addButton.visible? addButton.width: 0)
 
-                        placeholderText: qsTr('Enter phone number')
+                        //% "Phone number"
+                        placeholderText: qsTrId('id_phone_number')
+                        //% "Phone number"
+                        label: qsTrId('id_phone_number')
 
                         Behavior on width {
                             NumberAnimation {}
@@ -150,7 +165,9 @@ Dialog {
                 menu: Component {
                     ContextMenu {
                         MenuItem {
-                            text: qsTr('Delete')
+                            //: Delete action
+                            //% "Delete"
+                            text: qsTrId('id_do_delete')
                             onClicked: phoneNumbersListView.model.removeRow(model.index)
                         }
                     }
@@ -165,8 +182,12 @@ Dialog {
             ViewPlaceholder {
                 enabled: phoneNumbersListView.count == 0
 
-                text: qsTr('No items in the list')
-                hintText: qsTr('Add numbers with field above or use pull-down menu')
+                //: Placeholder for empty list
+                //% "No items in the list"
+                text: qsTr('id_no_items')
+                //: Hint for empty phone numbers list
+                //% "Add numbers with field above or use pull-down menu"
+                hintText: qsTrId('id_phone_numbers_hint')
             }
         }
     }

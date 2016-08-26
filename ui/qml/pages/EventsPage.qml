@@ -46,7 +46,9 @@ Page {
 
             PropertyChanges {
                 target: header
-                title: qsTr('Recordings')
+                //: Title for list of recordings
+                //% "Recordings"
+                title: qsTrId('id_recordings')
             }
         },
 
@@ -55,7 +57,9 @@ Page {
 
             PropertyChanges {
                 target: header
-                title: qsTr('Select recordings')
+                //: Title for recordings selection
+                //% "Select recordings"
+                title: qsTrId('id_select_recordings')
             }
         },
 
@@ -64,7 +68,9 @@ Page {
 
             PropertyChanges {
                 target: header
-                title: qsTr('Filtered recordings')
+                //: Title for filtered list of recordings
+                //% "Filtered recordings"
+                title: qsTrId('id_filtered_recordings')
             }
         },
 
@@ -73,7 +79,9 @@ Page {
 
             PropertyChanges {
                 target: header
-                title: qsTr('Select filtered recordings')
+                //: Title for selection in filtered list of recordings
+                //% "Select filtered recordings"
+                title: qsTrId('id_select_filtered_recordings')
             }
         }
     ]
@@ -83,7 +91,8 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr('Settings')
+                //% "Settings"
+                text: qsTrId('id_settings')
 
                 visible: !selectionMode
 
@@ -91,7 +100,9 @@ Page {
             }
 
             MenuItem {
-                text: qsTr('Select recordings')
+                //: Menu item
+                //% "Select recordings"
+                text: qsTrId('id_do_select_recordings')
 
                 visible: !selectionMode
                 enabled: eventsModel.rowCount > 0
@@ -106,7 +117,9 @@ Page {
             }
 
             MenuItem {
-                text: qsTr('Filter')
+                //: Menu item
+                //% "Filter"
+                text: qsTrId('id_do_filter')
                 enabled: filtered || eventsModel.rowCount > 0
                 onClicked: {
                     var config = {};
@@ -167,8 +180,11 @@ Page {
 
             MenuItem {
                 text: filtered?
-                          qsTr('Delete all filtered'):
-                          qsTr('Delete all')
+                          //: Menu item
+                          //% "Delete all filtered"
+                          qsTrId('id_do_delete_all_filtered'):
+                          //% "Delete all"
+                          qsTrId('id_do_delete_all')
 
                 visible: selectionMode
 
@@ -177,8 +193,12 @@ Page {
                 onClicked: {
                     var remorseText =
                             filtered?
-                                qsTr('Deleting all filtered'):
-                                qsTr('Deleting all recordings');
+                                //: Remorse text when deleting all filtered recordings
+                                //% "Deleting all filtered"
+                                qsTrId('id_remorse_deleting_all_filtered'):
+                                //: Remorse text when deleting all recordings
+                                //% "Deleting all recordings"
+                                qsTrId('id_remorse_deleting_all_recordings');
 
                     remorse.execute(remorseText, function() {
                         eventsModel.removeAll();
@@ -207,7 +227,8 @@ Page {
             model: eventsModel
 
             header: PageHeader {
-                title: qsTr('Recordings')
+                //% "Recordings"
+                title: qsTrId('id_recordings')
             }
 
             delegate: EventsDelegate {
@@ -225,8 +246,12 @@ Page {
                 id: eventsViewPlaceholder
 
                 text: filtered?
-                          qsTr('No recordings meet filter criteria'):
-                          qsTr('No calls recorded yet')
+                          //: Placeholder text for empty filtered list of recordings
+                          //% "No recordings meet filter criteria"
+                          qsTrId('id_filtered_recordings_placeholder'):
+                          //: Placeholder text for empty list of recordings
+                          //% "No calls recorded yet
+                          qsTrId('id_recordings_placeholder')
                 enabled: eventsModel.rowCount === 0
             }
         }
@@ -259,7 +284,9 @@ Page {
                                               10000:
                                               5000);
 
-                    remorse.execute(qsTr('Deleting recordings'), function() {
+                    //: Remorse text for deleting recordings
+                    //% "Deleting recordings"
+                    remorse.execute(qsTrId('id_remorse_deleting_recordings'), function() {
                         if (eventsModel.removeOids(selectedOids))
                         {
                             selectedOids = [];

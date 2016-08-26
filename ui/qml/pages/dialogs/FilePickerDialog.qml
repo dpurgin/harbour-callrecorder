@@ -61,8 +61,14 @@ Dialog
             id: header
 
             acceptText: absoluteFilePath !== ''?
-                            qsTr('Select %1').arg(fileName):
-                            qsTr('Select')
+                            //: Action on file picker
+                            //% "Select %1"
+                            qsTrId('id_do_select_file').arg(fileName):
+                            //: Action on file picker
+                            //% "Select"
+                            qsTrId('id_do_select')
+            //% "Cancel"
+            cancelText: qsTrId('id_do_cancel')
         }
 
         SilicaListView
@@ -78,7 +84,9 @@ Dialog
 
             ViewPlaceholder
             {
-                text: qsTr('Directory is empty')
+                //: Placeholder for empty directory in file picker
+                //% "Directory is empty"
+                text: qsTrId('id_directory_empty')
                 enabled: fileModel.count === 0
             }
 
@@ -118,7 +126,13 @@ Dialog
                 {
                     MenuItem
                     {
-                        text: enabled? qsTr('Rename'): qsTr('Renaming is not allowed')
+                        text: enabled?
+                                  //: Action in file picker dialog
+                                  //% "Rename"
+                                  qsTrId('id_do_rename'):
+                                  //: Placeholder for action in file picker dialog
+                                  //% "Renaming is not allowed"
+                                  qsTrId('id_renaming_not_allowed')
 
                         enabled: fileSystemHelper.isWritable(model.absolutePath)
 
@@ -127,7 +141,13 @@ Dialog
 
                     MenuItem
                     {
-                        text: enabled? qsTr('Delete'): qsTr('Removal is not allowed')
+                        text: enabled?
+                                  //: Action in file picker dialog
+                                  //% "Delete"
+                                  qsTrId('id_do_delete'):
+                                  //: Placeholder for action in file picker dialog
+                                  //% "Removal is not allowed"
+                                  qsTrId('id_removal_not_allowed')
 
                         enabled: fileSystemHelper.isRemovable(model.absolutePath)
 
@@ -150,7 +170,9 @@ Dialog
 
                 function deleteFile()
                 {
-                    remorseAction("Deleting", function() {
+                    //: Remorse text when deleting
+                    //% "Deleting"
+                    remorseAction(qsTrId("id_remorse_deleting"), function() {
                         console.log('Removing ' + model.absolutePath);
 
                         fileSystemHelper.remove(model.absolutePath);

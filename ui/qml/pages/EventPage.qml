@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015  Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -57,7 +57,9 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr('Approve and store')
+                //: Action for approve and store on Events page
+                //% "Approve and store"
+                text: qsTrId('id_do_approve_store')
 
                 visible: eventItem.RecordingStateID === 5
 
@@ -70,11 +72,15 @@ Page {
 
                     if (settings.operationMode === Settings.WhiteList && whiteListed)
                     {
-                        result = qsTr('Number is whitelisted')
+                        //: Text for phone number in white list
+                        //% "Number is whitelisted"
+                        result = qsTrId('id_number_whitelisted')
                     }
                     else if (settings.operationMode === Settings.BlackList && blackListed)
                     {
-                        result = qsTr('Number is blacklisted')
+                        //: Text for phone number in black list
+                        //% "Number is blacklisted"
+                        result = qsTrId('id_number_blacklisted')
                     }
 
                     return result;
@@ -84,13 +90,17 @@ Page {
             }
 
             MenuItem {
-                text: qsTr('Always record this number')
+                //: Action for manipulation black/white list
+                //% "Always record this number"
+                text: qsTrId('id_do_record_number')
 
                 visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
                          (settings.operationMode === Settings.BlackList && blackListed)
 
                 onClicked: {
-                    var remorseText = qsTr('Recording %1').arg(
+                    //: Remorse text when manipulationg black/white list
+                    //% "Recording %1"
+                    var remorseText = qsTrId('id_remorse_recording').arg(
                                 eventItem.PhoneNumberIDRepresentation);
 
                     if (settings.operationMode === Settings.WhiteList)
@@ -101,13 +111,17 @@ Page {
             }
 
             MenuItem {
-                text: qsTr('Never record this number')
+                //: Action for manipulation black/white list
+                //% "Never record this number"
+                text: qsTrId('id_do_not_record_number')
 
                 visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
                          (settings.operationMode === Settings.WhiteList && whiteListed)
 
                 onClicked: {
-                    var remorseText = qsTr('Not recording %1').arg(
+                    //: Remorse text when manipulationg black/white list
+                    //% "Not recording %1"
+                    var remorseText = qsTrId('id_remorse_not_recording').arg(
                                 eventItem.PhoneNumberIDRepresentation);
 
                     if (settings.operationMode === Settings.BlackList)
@@ -123,7 +137,9 @@ Page {
             backgroundColor: "#ff1a22"
 
             MenuItem {
-                text: qsTr('Delete')
+                //: Action for deletion
+                //% "Delete"
+                text: qsTrId('id_do_delete')
 
                 color: "#FF8080"
 
@@ -143,11 +159,23 @@ Page {
 
                 title: {
                     if (eventItem.EventTypeID === 1)
-                        return qsTr('Incoming call');
+                    {
+                        //: Call type
+                        //% "Incoming call"
+                        return qsTrId('id_incoming_call');
+                    }
                     else if (eventItem.EventTypeID === 2)
-                        return qsTr('Outgoing call');
+                    {
+                        //: Call type
+                        //% "Outgoing call"
+                        return qsTrId('id_outgoing_call');
+                    }
                     else
-                        return qsTr('Partial call');
+                    {
+                        //: Call type
+                        //% "Partial call"
+                        return qsTrId('id_partial_call');
+                    }
                 }
             }
 
@@ -167,7 +195,9 @@ Page {
 
     function maybeApproveItem()
     {
-        remorse.execute(qsTr('Storing'), function() {
+        //: Remorse text when approving recorded call
+        //% "Storing"
+        remorse.execute(qsTrId('id_remorse_storing'), function() {
             approveEvent(eventItem.ID);
         });
     }
@@ -181,7 +211,9 @@ Page {
 
     function maybeRemoveItem()
     {
-        remorse.execute(qsTr('Deleting'), function() {
+        //: Remorse text when removing recorded cal
+        //% "Deleting"
+        remorse.execute(qsTrId('id_remorse_deleting'), function() {
             removeEvent(eventItem.ID);
             pageStack.pop();
         });

@@ -73,25 +73,25 @@ Page {
                     MenuItem {
                         //: Audio sample rate
                         //% "22.05 kHz"
-                        text: qsTr('id_sample_rate_22')
+                        text: qsTrId('id_sample_rate_22')
                         property int value: 22050
                     }
                     MenuItem {
                         //: Audio sample rate
                         //% "16 kHz"
-                        text: qsTr('id_sample_rate_16')
+                        text: qsTrId('id_sample_rate_16')
                         property int value: 16000
                     }
                     MenuItem {
                         //: Audio sample rate
                         //% "11.025 kHz"
-                        text: qsTr('id_sample_rate_11')
+                        text: qsTrId('id_sample_rate_11')
                         property int value: 11025
                     }
                     MenuItem {
                         //: Audio sample rate
                         //% "8 kHz"
-                        text: qsTr('id_sample_rate_8')
+                        text: qsTrId('id_sample_rate_8')
                         property int value: 8000
                     }
                 }

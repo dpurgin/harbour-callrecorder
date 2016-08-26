@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,7 +69,9 @@ Dialog {
 
 //                    labelVisible: label.length > 0
 
-                    placeholderText: qsTr('Phone number')
+                    //: Placeholder for phone number field
+                    //% "Phone number"
+                    placeholderText: qsTrId('id_phone_number')
 
                     width: parent.width - personButton.width
 
@@ -117,7 +119,9 @@ Dialog {
             }
 
             ValueButton {
-                label: qsTr('On')
+                //: Filter title, "on selected date"
+                //% "On"
+                label: qsTrId('id_filter_on')
                 value: Format.formatDate(onDate, Formatter.DateFull)
 
                 onClicked: {
@@ -135,7 +139,9 @@ Dialog {
             }
 
             ValueButton {
-                label: qsTr('After')
+                //: Filter title, "after selected date"
+                //% "After"
+                label: qsTrId('id_filter_after')
                 value: Format.formatDate(afterDate, Formatter.DateFull)
 
                 onClicked: {
@@ -153,7 +159,9 @@ Dialog {
             }
 
             ValueButton {
-                label: qsTr('Before')
+                //: Filter title, "before selected date"
+                //% "Before"
+                label: qsTrId('id_filter_before')
                 value: Format.formatDate(beforeDate, Formatter.DateFull)
 
                 onClicked: {

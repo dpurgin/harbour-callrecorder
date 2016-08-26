@@ -45,7 +45,9 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr('Startup')
+                //: Section header
+                //% "Startup"
+                text: qsTrId('id_settings_startup')
             }
 
             TextSwitch {
@@ -79,7 +81,7 @@ Page {
 
                 //: Settings item on Recording Daemon page
                 //% "Automatic startup"
-                text: qsTr('id_automatic_startup')
+                text: qsTrId('id_automatic_startup')
                 //: Automatic startup description
                 //% "Start automatically upon reboot"
                 description: qsTrId('id_automatic_startup_description')

@@ -45,7 +45,7 @@ Page {
 
             //: Settings item
             //% "Locale"
-            label: qsTrId('Locale')
+            label: qsTrId('id_locale')
             value: localeListModel.nativeName(settings.locale)
             //: Locale change hint
             //% "Please restart the application if the locale is changed"

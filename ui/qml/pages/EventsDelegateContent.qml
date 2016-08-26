@@ -106,11 +106,23 @@ Row {
                 var result = '';
 
                 if (model.RecordingStateID === 1)
-                    result = qsTr('Armed for recording')
+                {
+                    //: Recording state
+                    //% "Armed for recording"
+                    result = qsTrId('id_armed_for_recording')
+                }
                 else if (model.RecordingStateID === 2)
-                    result = qsTr('Recording in progress')
+                {
+                    //: Recording state
+                    //% "Recording in progress"
+                    result = qsTrId('id_recording_in_progress')
+                }
                 else if (model.RecordingStateID === 3)
-                    result = qsTr('Recording suspended')
+                {
+                    //: Recording state
+                    //% "Recording suspended"
+                    result = qsTrId('id_recording_suspended')
+                }
                 else if (model.RecordingStateID === 4)
                 {
                     result = Format.formatDuration(model.Duration,
@@ -122,7 +134,9 @@ Row {
                 }
                 else if (model.RecordingStateID === 5)
                 {
-                    result = qsTr('Waiting for approval')
+                    //: Recording state
+                    //% "Waiting for approval"
+                    result = qsTrId('id_waiting_for_approval')
                 }
 
                 if (person)

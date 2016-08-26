@@ -24,6 +24,7 @@ import kz.dpurgin.nemomobile.contacts 1.0
 Item {
     property string mode: 'dialpad';
     property alias placeholderText: inputField.placeholderText
+    property alias label: inputField.label
     property string value: '';
 
     width: parent.width
@@ -38,8 +39,6 @@ Item {
             id: inputField
 
             width: parent.width //- modeIcon.width
-
-            placeholderText: qsTr('Search by name or number')
 
             inputMethodHints: mode == 'dialpad'? Qt.ImhDialableCharactersOnly: Qt.ImhNoPredictiveText
 

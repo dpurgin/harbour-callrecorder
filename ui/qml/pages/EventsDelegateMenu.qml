@@ -29,7 +29,8 @@ Component {
                                        blackListModel.contains(model.PhoneNumberID)
 
         MenuItem {
-            text: qsTr('Approve and store')
+            //% "Approve and store"
+            text: qsTrId('id_do_approve_store')
 
             visible: model.RecordingStateID === 5
 
@@ -37,7 +38,8 @@ Component {
         }
 
         MenuItem {
-            text: qsTr('Delete')
+            //% "Delete"
+            text: qsTrId('id_do_delete')
 
             onClicked: maybeRemoveItem()
         }
@@ -48,11 +50,15 @@ Component {
 
                 if (settings.operationMode === Settings.WhiteList && whiteListed)
                 {
-                    result = qsTr('Number is whitelisted')
+                    //: Text for phone number in white list
+                    //% "Number is whitelisted"
+                    result = qsTrId('id_number_whitelisted')
                 }
                 else if (settings.operationMode === Settings.BlackList && blackListed)
                 {
-                    result = qsTr('Number is blacklisted')
+                    //: Text for phone number in black list
+                    //% "Number is blacklisted"
+                    result = qsTrId('id_number_blacklisted')
                 }
 
                 return result;
@@ -62,13 +68,17 @@ Component {
         }
 
         MenuItem {
-            text: qsTr('Always record this number')
+            //: Action for manipulation black/white list
+            //% "Always record this number"
+            text: qsTrId('id_do_record_number')
 
             visible: (settings.operationMode === Settings.WhiteList && !whiteListed) ||
                      (settings.operationMode === Settings.BlackList && blackListed)
 
             onClicked: {
-                var remorseText = qsTr('Recording %1').arg(
+                //: Remorse text when manipulationg black/white list
+                //% "Recording %1"
+                var remorseText = qsTrId('id_remorse_recording').arg(
                             model.PhoneNumberIDRepresentation);
 
                 if (settings.operationMode === Settings.WhiteList)
@@ -79,13 +89,17 @@ Component {
         }
 
         MenuItem {
-            text: qsTr('Never record this number')
+            //: Action for manipulation black/white list
+            //% "Never record this number"
+            text: qsTrId('id_do_not_record_number')
 
             visible: (settings.operationMode === Settings.BlackList && !blackListed) ||
                      (settings.operationMode === Settings.WhiteList && whiteListed)
 
             onClicked: {
-                var remorseText = qsTr('Not recording %1').arg(
+                //: Remorse text when manipulationg black/white list
+                //% "Not recording %1"
+                var remorseText = qsTrId('id_remorse_not_recording').arg(
                             model.PhoneNumberIDRepresentation);
 
                 if (settings.operationMode === Settings.BlackList)

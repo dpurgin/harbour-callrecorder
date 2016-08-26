@@ -23,7 +23,8 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: qsTr('License')
+                //% "License"
+                title: qsTrId('id_license')
             }
 
             Label {

@@ -1,6 +1,6 @@
 /*
     Call Recorder for SailfishOS
-    Copyright (C) 2014-2015 Dmitriy Purgin <dpurgin@gmail.com>
+    Copyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,8 +45,12 @@ Dialog {
 
             width: parent.width            
 
-            placeholderText: qsTr('New name')
-            label: qsTr('New name')
+            //: Text field when renaming file/directory
+            //% "New name"
+            placeholderText: qsTrId('id_new_name')
+            //: Text field when renaming file/directory
+            //% "New name"
+            label: qsTrId('id_new_name')
 
             focus: true
 
