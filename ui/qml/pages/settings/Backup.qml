@@ -73,12 +73,16 @@ Page
 
             PageHeader
             {
-                title: qsTr('Backup')
+                //:
+                //% "Backup"
+                title: qsTrId('id_settings_backup')
             }
 
             StyledLabel
             {
-                text: qsTr('Create a backup to save the recorded calls and settings. Use it later to restore the data on other device or after factory reset.')
+                //: Description of backup page
+                //% "Create a backup to save the recorded calls and settings. Use it later to restore the data on other device or after factory reset."
+                text: qsTrId('id_backup_description')
 
                 height: implicitHeight + Theme.paddingLarge
 
@@ -129,7 +133,9 @@ Page
 
                 Label
                 {
-                    text: qsTr('Estimated backup size: %1').arg(
+                    //: Information label on Backup page
+                    //% "Estimated backup size: %1"
+                    text: qsTrId('id_estimated_backup_size').arg(
                               Format.formatFileSize(backupHelper.estimatedBackupSize))
 
                     anchors
@@ -159,8 +165,10 @@ Page
 
                 text: StandardPaths.documents + '/' + generateBackupFileName()
 
-                label: qsTr('Backup file name')
-                placeholderText: qsTr('Backup file name')
+                //% "Backup file name"
+                label: qsTrId('id_backup_file_name')
+                //% "Backup file name"
+                placeholderText: qsTrId('id_backup_file_name')
 
                 width: parent.width
 
@@ -169,7 +177,8 @@ Page
 
             Button
             {
-                text: qsTr('Browse')
+                //% "Browse"
+                text: qsTrId('id_do_browse')
 
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -189,8 +198,12 @@ Page
             {
                 id: compressSwitch
 
-                text: qsTr('Compress backup')
-                description: qsTr('The backup will be compressed using BZIP2. This slows down the operation significantly and doesn\'t bring much if FLAC compression was already set to maximum in Audio settings.')
+                //: Switch control whether compress backup or not
+                //% "Compress backup"
+                text: qsTrId('id_compress_backup')
+                //: Description of the switch
+                //% "The backup will be compressed using BZIP2. This slows down the operation significantly and doesn\'t bring much if FLAC compression was already set to maximum in Audio settings."
+                description: qsTrId('id_compress_backup_description')
 
                 onCheckedChanged:
                 {
@@ -209,7 +222,9 @@ Page
 
             Button
             {
-                text: qsTr('Backup')
+                //: Backup section header
+                //% "Backup"
+                text: qsTr('id_settings_backup')
 
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -246,12 +261,16 @@ Page
 
             SectionHeader
             {
-                text: qsTr('Restore')
+                //: Restore section header
+                //% "Restore"
+                text: qsTrId('id_restore')
             }
 
             StyledLabel
             {
-                text: qsTr('Select a backup file made by the Call Recorder previously to restore it to this device')
+                //: Restore description
+                //% "Select a backup file made by the Call Recorder previously to restore it to this device."
+                text: qsTrId('id_restore_description')
 
                 height: implicitHeight + Theme.paddingLarge
 
@@ -263,8 +282,11 @@ Page
             {
                 id: restorePath
 
-                label: qsTr('Restore file name')
-                placeholderText: qsTr('Restore file name')
+                //: Label for entering path to restore file
+                //% "Restore file name"
+                label: qsTrId('id_restore_file_name')
+                //% "Restore file name"
+                placeholderText: qsTrId('id_restore_file_name')
 
                 width: parent.width
 
@@ -331,7 +353,9 @@ Page
                             {
                                 target: restoreStateLabel
 
-                                text: qsTr('Checking backup file...')
+                                //: Information label
+                                //% "Checking backup file..."
+                                text: qsTrId('id_checking_backup_file')
                             }
                         },
 
@@ -343,7 +367,9 @@ Page
                             {
                                 target: restoreStateLabel
 
-                                text: qsTr('Selected file is not a valid Call Recorder backup')
+                                //: Information label
+                                //% "Selected file is not a valid Call Recorder backup"
+                                text: qsTrId('id_backup_invalid')
                             }
                         }
                     ]
@@ -366,7 +392,9 @@ Page
 
             Button
             {
-                text: qsTr('Restore')
+                //: Action button
+                //% "Restore"
+                text: qsTrId('id_do_restore')
 
                 anchors.horizontalCenter: parent.horizontalCenter
 
