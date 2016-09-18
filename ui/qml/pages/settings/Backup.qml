@@ -203,7 +203,7 @@ Page
                 //% "Compress backup"
                 text: qsTrId('id_compress_backup')
                 //: Description of the switch
-                //% "The backup will be compressed using BZIP2. This slows down the operation significantly and doesn\'t bring much if FLAC compression was already set to maximum in Audio settings."
+                //% "The backup will be compressed using BZIP2. This slows down the operation significantly and doesn't bring much if FLAC compression was already set to maximum in Audio settings."
                 description: qsTrId('id_compress_backup_description')
 
                 onCheckedChanged:
@@ -436,7 +436,7 @@ Page
     {
         var dt = new Date();
         var dtStr =  '' + dt.getFullYear() +
-                padLeft(dt.getMonth(), '0', 2) +
+                padLeft(dt.getMonth() + 1, '0', 2) +
                 padLeft(dt.getDate(), '0', 2);
 
         return 'callrecorder-' + dtStr + '.tar' + (compressSwitch.checked? '.bz2': '');
