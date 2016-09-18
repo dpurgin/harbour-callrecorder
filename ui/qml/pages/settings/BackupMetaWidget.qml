@@ -27,25 +27,33 @@ Column
 
     DetailItem
     {
-        label: qsTr('Program version')
+        //: Backup file details
+        //% "Program version"
+        label: qsTrId("id_program_version")
         value:  backupMeta.producerVersion
     }
 
     DetailItem
     {
-        label: qsTr('Date and time')
+        //: Backup file details
+        //% "Date and time"
+        label: qsTrId("id_date_and_time")
         value: Format.formatDate(backupMeta.timeStamp, Format.Timepoint)
     }
 
     DetailItem
     {
-        label: qsTr('Unpacked size')
+        //: Backup file details
+        //% "Unpacked size"
+        label: qsTrId("id_unpacked_size")
         value: Format.formatFileSize(backupMeta.restoreSize)
     }
 
     DetailItem
     {
-        label: qsTr('Files')
+        //: Backup file details
+        //% "Files"
+        label: qsTrId('id_files')
         value: backupMeta.totalCount
     }
 }

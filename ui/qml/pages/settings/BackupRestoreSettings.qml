@@ -52,7 +52,9 @@ Dialog
 
             SectionHeader
             {
-                text: qsTr('Backup Information')
+                //: Backup page section header
+                //% "Backupo Information"
+                text: qsTrId("id_backup_information")
             }
 
             BackupMetaWidget
@@ -68,13 +70,19 @@ Dialog
 
             SectionHeader
             {
-                text: qsTr('Restore Settings')
+                //: Backup page secion header
+                //% "Restore Settings"
+                text: qsTrId("id_restore_settings")
             }
 
             TextSwitch
             {
-                text: qsTr('Do not remove existing recordings')
-                description: qsTr('Leave all existing audio files intact, you can add them to UI later using the database repair tool in Utilities')
+                //: Restore settings
+                //% "Do not remove existing recordings"
+                text: qsTrId("id_dont_remove_existing_recordings")
+                //: Restore description
+                //% "Leave all existing audio files intact, you can add them to UI later using the database repair tool in Utilities"
+                description: qsTrId("id_dont_remove_existing_recordigns_description")
 
                 width: parent.width
 

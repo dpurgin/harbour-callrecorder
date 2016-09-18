@@ -63,15 +63,27 @@ Page
                 {
                     switch (operation)
                     {
-                        case BackupHelper.Preparing: return qsTr('Preparing...');
-                        case BackupHelper.BackingUp: return qsTr('Making backup...');
-                        case BackupHelper.RemovingOldData: return qsTr('Removing old data...');
-                        case BackupHelper.Restoring: return qsTr('Restoring...');
-                        case BackupHelper.Complete: return qsTr('Complete!')
+                        //: Backup operation description
+                        //% "Preparing..."
+                        case BackupHelper.Preparing: return qsTrId("id_preparing");
+                        //: Backup operation description
+                        //% "Making backup..."
+                        case BackupHelper.BackingUp: return qsTrId("id_making_backup");
+                        //: Backup operation description
+                        //% "Removing old data..."
+                        case BackupHelper.RemovingOldData: return qsTrId("id_removing_old_data");
+                        //: Backup operation description
+                        //% "Restoring..."
+                        case BackupHelper.Restoring: return qsTrId("id_restoring");
+                        //: Backup operation description
+                        //% "Complete!"
+                        case BackupHelper.Complete: return qsTrId("id_complete");
                         default:
                     }
 
-                    return qsTr('Not started');
+                    //: Backup operation description
+                    //% "Not started"
+                    return qsTrId("id_not_started");
                 }
             }
         },
@@ -84,7 +96,9 @@ Page
             {
                 target: progressBar
 
-                label: qsTr('Complete!')
+                //: Backup operation description
+                //% "Complete!"
+                label: qsTrId('id_complete')
             }
         },
 
@@ -96,7 +110,9 @@ Page
             {
                 target: progressBar
 
-                label: qsTr('Error')
+                //: Backup operation description
+                //% "Error"
+                label: qsTrId("id_error")
             }
 
             PropertyChanges
@@ -111,13 +127,23 @@ Page
                 {
                     switch (errorCode)
                     {
-                        case BackupHelper.UnableToWrite: return qsTr('Unable to write archive');
-                        case BackupHelper.UnableToStart: return qsTr('Unable to start thread');
-                        case BackupHelper.FileExists: return qsTr('Backup file already exists');
-                        case BackupHelper.FileNotExists: return qsTr('Backup file doesn\'t exist');
+                        //: Backup error description
+                        //% "Unable to write archive"
+                        case BackupHelper.UnableToWrite: return qsTrId("id_unable_to_write_archive");
+                        //: Backup error description
+                        //% "Unable to start thread"
+                        case BackupHelper.UnableToStart: return qsTrId("id_unable_to_start_thread");
+                        //: Backup error description
+                        //% "Backup file already exists"
+                        case BackupHelper.FileExists: return qsTrId("id_backup_file_exists");
+                        //: Backup error description
+                        //% "Backup file doesn't exist"
+                        case BackupHelper.FileNotExists: return qsTrId("id_backup_file_not_exists");
                     }
 
-                    return qsTr('Unknown error');
+                    //: Backup error description
+                    //% "Unknown error"
+                    return qsTrId("id_unknown_error");
                 }
             }
         }
@@ -135,14 +161,20 @@ Page
 
         PageHeader
         {
-            title: isBackup? qsTr('Backup'): qsTr('Restore')
+            title: isBackup?
+                       //% "Backup"
+                       qsTrId("id_settings_backup"):
+                       //% "Restore"
+                       qsTrId('id_restore')
         }
 
         StyledLabel
         {
             text: isBackup?
-                      qsTr('Performing backup. Please do not close the application until the operation is complete'):
-                      qsTr('Performing restore. Please do not close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behavior.')
+                      //% "Performing backup. Please do not close the application until the operation is complete."
+                      qsTrId("id_performing_backup_description"):
+                      //% "Performing restore. Please do not close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behavior."
+                      qsTrId("id_performing_restore_description")
 
 
             height: implicitHeight + Theme.paddingLarge
@@ -172,7 +204,8 @@ Page
 
         StyledLabel
         {
-            text: qsTr('Please restart the application')
+            //% "Please restart the application"
+            text: qsTrId("id_restart_app_description")
 
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -190,10 +223,8 @@ Page
 
         StyledLabel
         {
-            text: qsTr('Database, settings and recordings were successfully restored. ' +
-                       'The Call Recorder needs to be restarted to apply the changes. ' +
-                       'If you chose to merge the existing recording files, you should run the ' +
-                       'database repair tool from Utilities after restart.');
+            //% "Database, settings and recordings were successfully restored. The Call Recorder needs to be restarted to apply the changes. If you chose to merge the existing recording files, you should run the database repair tool from Utilities after restart."
+            text: qsTrId("id_restore_success_description");
 
             color: Theme.secondaryColor
 

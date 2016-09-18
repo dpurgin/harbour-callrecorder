@@ -34,12 +34,16 @@ Dialog
 
         DialogHeader
         {
-            acceptText: qsTr('Overwrite')
+            //: Dialog action
+            //% "Overwrite"
+            acceptText: qsTrId("id_do_overwrite")
         }
 
         StyledLabel
         {
-            text: qsTr('Backup will be saved to the following file:')
+            //: Backup file location hint
+            //% "Backup will be saved to the following file:"
+            text: qsTrId("id_backup_location_hint")
         }
 
         StyledLabel
@@ -54,7 +58,9 @@ Dialog
 
         StyledLabel
         {
-            text: qsTr('This file already exists. Do you want to overwrite it?')
+            //: Confirmation to overwrite existing file
+            //% "This file already exists. Do you want to overwrite it?
+            text: qsTrId("id_confirm_overwrite")
         }
 
     }
