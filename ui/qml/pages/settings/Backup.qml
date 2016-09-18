@@ -224,7 +224,7 @@ Page
             {
                 //: Backup section header
                 //% "Backup"
-                text: qsTr('id_settings_backup')
+                text: qsTrId('id_settings_backup')
 
                 anchors.horizontalCenter: parent.horizontalCenter
 

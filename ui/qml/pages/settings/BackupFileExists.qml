@@ -59,7 +59,7 @@ Dialog
         StyledLabel
         {
             //: Confirmation to overwrite existing file
-            //% "This file already exists. Do you want to overwrite it?
+            //% "This file already exists. Do you want to overwrite it?"
             text: qsTrId("id_confirm_overwrite")
         }
 
