@@ -69,7 +69,7 @@ public slots:
     void showApprovalDialog();
 
 private slots:
-    void initVoiceCallManager(const QString& objectPath);
+    void initVoiceCallManagers(const QStringList& modems);
 
     void maybeSwitchProfile();
 

@@ -79,7 +79,7 @@ private:
     QScopedPointer< QtPulseAudioConnection > pulseAudioConnection;
 
     QScopedPointer< QOfonoManager > qofonoManager;
-    QScopedPointer< QOfonoVoiceCallManager > qofonoVoiceCallManager;
+    QHash< QString, QOfonoVoiceCallManager* > qofonoVoiceCallManagers;
 
     QScopedPointer< Settings > settings;
 
@@ -131,8 +131,8 @@ Application::Application(int argc, char* argv[])
     // Ofono availability check removed.
     // See https://github.com/dpurgin/harbour-callrecorder/pull/22
 
-    // check if modems available. If there are modems, take the first one and initialize app with it
-    // If no modems available, wait for first modemAdded and initialize with this one
+    // Check if modems available. If there are modems, initialize app with them.
+    // If no modems available, wait for first modemAdded and initialize with them
 
     QStringList modems = d->qofonoManager->modems();
 
@@ -144,7 +144,7 @@ Application::Application(int argc, char* argv[])
                 this, &Application::onOfonoAvailableChanged);
     }
     else
-        initVoiceCallManager(modems.first());
+        initVoiceCallManagers(modems);
 
 #ifdef QT_DEBUG
     connect(d->dbusAdaptor.data(), &DBusAdaptor::EmulatedVoiceCallAdded,
@@ -196,6 +196,9 @@ Application::Application(int argc, char* argv[])
 Application::~Application()
 {
     qDebug();
+
+    qDeleteAll(d->qofonoVoiceCallManagers);
+    qDeleteAll(d->voiceCallRecorders);
 }
 
 void Application::checkStorageAgeLimits()
@@ -333,32 +336,36 @@ Model* Application::model() const
     return d->model.data();
 }
 
-/// Connects to Ofono voice call add/remove signals using the modem given
-void Application::initVoiceCallManager(const QString& objectPath)
+// Connects to Ofono signals for voice call add/remove using the list of modems
+void Application::initVoiceCallManagers(const QStringList& modems)
 {
-    qDebug() << objectPath;
+    for (const auto& objectPath : modems)
+    {
+        qDebug() << objectPath;
 
-    d->qofonoVoiceCallManager.reset(new QOfonoVoiceCallManager());
+        auto* voiceCallManager = new QOfonoVoiceCallManager();
+        d->qofonoVoiceCallManagers.insert(objectPath, voiceCallManager);
 
-    d->qofonoVoiceCallManager->setModemPath(objectPath);
+        voiceCallManager->setModemPath(objectPath);
 
-    // connect to voice call signals from Ofono voice call manager
+        // connect to voice call signals from Ofono voice call manager
 
-    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callAdded(QString)),
-            this, SLOT(onVoiceCallAdded(QString)));
-    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
-            this, SLOT(onVoiceCallRemoved(QString)));
-    connect(d->qofonoVoiceCallManager.data(), SIGNAL(callRemoved(QString)),
-            this, SLOT(checkStorageLimits()));
+        connect(voiceCallManager, &QOfonoVoiceCallManager::callAdded,
+                this, &Application::onVoiceCallAdded);
+        connect(voiceCallManager, &QOfonoVoiceCallManager::callRemoved,
+                this, &Application::onVoiceCallRemoved);
+        connect(voiceCallManager, &QOfonoVoiceCallManager::callRemoved,
+                this, &Application::checkStorageLimits);
 
-    // check if there are any active calls on start
-    QStringList activeCalls = d->qofonoVoiceCallManager->getCalls();
+        // check if there are any active calls on start
+        QStringList activeCalls = voiceCallManager->getCalls();
 
-    foreach (QString call, activeCalls)
-        onVoiceCallAdded(call);
+        for (const auto& call : activeCalls)
+            onVoiceCallAdded(call);
 
-    // ofono manager is not needed now
-    d->qofonoManager->deleteLater();
+        //TODO: does this lead to problems when removing SIM-cards on-the-fly?
+        d->qofonoManager->deleteLater();
+    }
 }
 
 void Application::maybeSwitchProfile()
@@ -444,7 +451,9 @@ void Application::onApprovalDialogStore(int eventId)
 void Application::onOfonoAvailableChanged(bool available)
 {
     if (available && d->qofonoManager->modems().size() > 0)
-        initVoiceCallManager(d->qofonoManager->modems().first());
+    {
+        initVoiceCallManagers(d->qofonoManager->modems());
+    }
 }
 
 void Application::onPulseAudioCardActiveProfileChanged(QString profileName)
@@ -534,7 +543,7 @@ void Application::onPulseAudioSourceRemoved(QSharedPointer< QtPulseAudioSource >
     qDebug() << QThread::currentThread() << source->index() << source->name();
 }
 
-/// Creates the recorder for a voice call appeared in the system
+// Creates the recorder for a voice call appeared in the system
 void Application::onVoiceCallAdded(const QString& objectPath)
 {
     qDebug() << objectPath;
@@ -563,7 +572,8 @@ void Application::onVoiceCallRecorderStateChanged(VoiceCallRecorder::State state
         d->active = false;
 }
 
-/// Checks whether recorder is active and cleans it up after the voice call was removed from the system
+// Checks whether recorder is active and cleans it up
+// after the voice call was removed from the system
 void Application::onVoiceCallRemoved(const QString& objectPath)
 {
     qDebug() << __PRETTY_FUNCTION__ << objectPath;
