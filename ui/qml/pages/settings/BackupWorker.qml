@@ -131,8 +131,8 @@ Page
                         //% "Unable to write archive"
                         case BackupHelper.UnableToWrite: return qsTrId("id_unable_to_write_archive");
                         //: Backup error description
-                        //% "Unable to start thread"
-                        case BackupHelper.UnableToStart: return qsTrId("id_unable_to_start_thread");
+                        //% "Unable to start operation"
+                        case BackupHelper.UnableToStart: return qsTrId("id_unable_to_start_operation");
                         //: Backup error description
                         //% "Backup file already exists"
                         case BackupHelper.FileExists: return qsTrId("id_backup_file_exists");

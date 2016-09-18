@@ -60,12 +60,16 @@ Page
 
             PageHeader
             {
-                title: qsTr('Database Repair')
+                //: Page header
+                //% "Database Repair"
+                title: qsTrId("id_database_repair")
             }
 
             StyledLabel
             {
-                text: qsTr('Performing database repair. Please do not close the application until the operation is complete')
+                //: Ongoing database repair description
+                //% "Performing database repair. Please do not close the application until the operation is complete."
+                text: qsTrId("id_performing_repair_description")
 
                 height: implicitHeight + Theme.paddingLarge
 
@@ -90,10 +94,18 @@ Page
                     {
                         switch (helper.operation)
                         {
-                            case DatabaseRepairHelper.Starting: return qsTr('Starting...');
-                            case DatabaseRepairHelper.ProcessingOrphanedFiles: return qsTr('Processing orphaned files...');
-                            case DatabaseRepairHelper.ProcessingOrphanedRecords: return qsTr('Processing orphaned records...');
-                            case DatabaseRepairHelper.Complete: return qsTr('Complete!');
+                            //: Database repair progress
+                            //% "Starting..."
+                            case DatabaseRepairHelper.Starting: return qsTrId("id_starting");
+                            //: Database repair progress
+                            //% "Processing orphaned files..."
+                            case DatabaseRepairHelper.ProcessingOrphanedFiles: return qsTrId("id_processing_orphaned_files");
+                            //: Database repair progress
+                            //% "Processing orphaned records..."
+                            case DatabaseRepairHelper.ProcessingOrphanedRecords: return qsTrId("id_processing_orphaned_records");
+                            //: Database repair progress
+                            //% "Complete!"
+                            case DatabaseRepairHelper.Complete: return qsTrId('id_complete');
                             default:
                         }
                     }
@@ -101,17 +113,30 @@ Page
                     {
                         switch (helper.errorCode)
                         {
-                            case DatabaseRepairHelper.UnableToStart: return qsTr('Unable to start operation!');
-                            case DatabaseRepairHelper.UnableToRetrieveOrphanedRecords: return qsTr('Unable to retrieve orphaned records!');
-                            case DatabaseRepairHelper.UnableToRemoveOrphanedRecord: return qsTr('Unable to remove orphaned record!');
-                            case DatabaseRepairHelper.UnableToRetrieveOrphanedFile: return qsTr('Unable to retrieve orphaned file!');
-                            case DatabaseRepairHelper.UnableToRestoreOrphanedFile: return qsTr('Unable to restore orphaned file!');
-                            case DatabaseRepairHelper.UnhandledException: return qsTr('Unhanled exception!');
+                            //: Database repair error description
+                            //% "Unable to start operation"
+                            case DatabaseRepairHelper.UnableToStart: return qsTrId("id_unable_to_start_operation");
+                            //: Database repair error description
+                            //% "Unable to retrieve orphaned records"
+                            case DatabaseRepairHelper.UnableToRetrieveOrphanedRecords: return qsTrId("id_unable_to_retrieve_orphaned_records");
+                            //: Database repair error description
+                            //% "Unable to remove orphaned record"
+                            case DatabaseRepairHelper.UnableToRemoveOrphanedRecord: return qsTrId("id_unable_to_remove_orphaned_record");
+                            //: Database repair error description
+                            //% "Unable to retrieve orphaned file"
+                            case DatabaseRepairHelper.UnableToRetrieveOrphanedFile: return qsTrId("id_unable_to_retrieve_orphaned_file");
+                            //: Database repair error description
+                            //% "Unable to restore orphaned file"
+                            case DatabaseRepairHelper.UnableToRestoreOrphanedFile: return qsTrId("id_unable_to_restore_orphaned_file");
+                            //: Database repair error description
+                            //% "Unknown error"
+                            case DatabaseRepairHelper.UnhandledException: return qsTrId("id_unknown_error");
                             default:
                         }
                     }
 
-                    return qsTr('Not started');
+                    //% "Not started"
+                    return qsTrId("id_not_started");
                 }
             }
 
@@ -123,7 +148,9 @@ Page
 
             DetailItem
             {
-                label: qsTr('Repaired records')
+                //: Count of repaired records
+                //% "Repaired records"
+                label: qsTrId("id_repaired_records")
                 value: helper.repairedRecordsCount
 
                 width: parent.width
@@ -140,7 +167,9 @@ Page
 
             DetailItem
             {
-                label: qsTr('Repaired files')
+                //: Count of repaired files
+                //% "Repaired files"
+                label: qsTrId("id_repaired_files")
                 value: helper.repairedFilesCount
 
                 width: parent.width

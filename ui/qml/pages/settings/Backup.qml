@@ -108,7 +108,8 @@ Page
 
                 Label
                 {
-                    text: qsTr('Estimating backup size...')
+                    //% "Estimating backup size..."
+                    text: qsTrId("id_estimating_backup_size")
 
                     anchors
                     {
@@ -295,7 +296,8 @@ Page
 
             Button
             {
-                text: qsTr('Browse')
+                //% "Browse"
+                text: qsTrId("id_do_browse")
 
                 anchors.horizontalCenter: parent.horizontalCenter
 

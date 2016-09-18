@@ -42,23 +42,27 @@ Page
             width: parent.width
 
             PageHeader
-            {
+            {                
                 id: header
-                title: qsTr('Utilities')
+                //: Page header
+                //% "Utilities"
+                title: qsTrId("id_settings_utilities")
             }
 
             SectionHeader
             {
-                text: qsTr('Database Repair')
+                //: Section header
+                //% "Database Repair"
+                text: qsTrId("id_database_repair")
             }
 
             StyledLabel
             {
                 height: implicitHeight + Theme.paddingLarge
 
-                text: qsTr('If the list of recordings and file storage became inconsistent ' +
-                           '(e.g. a recording was removed from the list but still exists in file storage), ' +
-                           'you should use this tool to fix it')
+                //: Description of database repair
+                //% "If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it"
+                text: qsTrId("id_database_repair_description")
 
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeExtraSmall
@@ -70,19 +74,29 @@ Page
 
                 currentIndex: 1
 
-                label: qsTr('Orphaned records')
+                //: Combobox label
+                //% "Orphaned records"
+                label: qsTrId("id_orphaned_records")
 
                 description:
                     currentIndex == 0?
-                        qsTr('Entry will be left in the database if there\'s no corresponding recording file on disk'):
-                        qsTr('Entry will be removed from the database if there\'s no corresponding recording file on disk')
+                        //: Description of "Skip" option for orphaned records
+                        //% "Entry will be left in the database if there's no corresponding recording file on disk"
+                        qsTrId("id_orphaned_records_skip"):
+                        //: Description of "Remove" option for orphaned records
+                        //% "Entry will be removed from the database if there's no corresponding recording file on disk"
+                        qsTrId("id_orphaned_records_remove")
 
                 width: parent.width
 
                 menu: ContextMenu
                 {
-                    MenuItem { text: qsTr('skip') }
-                    MenuItem { text: qsTr('remove') }
+                    //: "Skip" option for comboboxes (lowercased)
+                    //% "skip"
+                    MenuItem { text: qsTrId('id_combobox_do_skip') }
+                    //: "Remove" option for comboboxes (lowercased)
+                    //% "remove"
+                    MenuItem { text: qsTrId('id_compobox_do_remove') }
                 }
             }
 
@@ -92,26 +106,37 @@ Page
 
                 currentIndex: 1
 
-                label: qsTr('Orphaned files')
+                //: Combobox label
+                //% "Orphaned files"
+                label: qsTrId("id_orphaned_files")
                 description:
                 {
                     switch (currentIndex)
                     {
-                        case 1: return qsTr('Recording file will be removed if it\'s not referenced by an entry in the database');
-                        case 2: return qsTr('Recording file will be used to restore an entry in the database if there is none');
+                        //% "Recording file will be skipped if it's not referenced by an entry in the database"
+                        case 0: return qsTrId("id_orphaned_files_skip");
+                        //% "Recording file will be removed if it's not referenced by an entry in the database"
+                        case 1: return qsTrId("id_orphaned_files_remove");
                         default:
                     }
 
-                    return qsTr('Recording file will be skipped if it\'s not referenced by an entry in the database');
+                    //% "Recording file will be used to restore an entry in the database if there is none"
+                    return qsTrId("id_orphaned_files_restore");
                 }
 
                 width: parent.width
 
                 menu: ContextMenu
                 {
-                    MenuItem { text: qsTr('skip') }
-                    MenuItem { text: qsTr('remove') }
-                    MenuItem { text: qsTr('restore') }
+                    //: "skip" option for comboboxes (lowercased)
+                    //% "skip"
+                    MenuItem { text: qsTrId("id_combobox_do_skip") }
+                    //: "remove" option for comboboxes (lowercased)
+                    //% "remove"
+                    MenuItem { text: qsTrId("id_combobox_do_remove") }
+                    //: "restore" option for comboboxes (lowercased)
+                    //% "restore"
+                    MenuItem { text: qsTrId("id_combobox_do_restore") }
                 }
             }        
 
@@ -125,7 +150,8 @@ Page
             {
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                text: qsTr('Repair')
+                //% "Repair"
+                text: qsTrId('id_do_repair')
 
                 onClicked:
                 {

@@ -131,7 +131,7 @@ Page {
 
                 Label {
                     //: Copyright string
-                    //% "Copyright \u00a9 2014-2016 Dmitriy Purgin"
+                    //% "Copyright © 2014-2016 Dmitriy Purgin"
                     text: qsTrId('id_about_copyright')
 
                     horizontalAlignment: Text.AlignHCenter
