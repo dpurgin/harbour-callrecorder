@@ -117,7 +117,7 @@ lupdate_only {
 
 # to disable building translations every time, comment out the
 # following CONFIG line
-CONFIG += sailfishapp_i18n
+CONFIG += sailfishapp_i18n sailfishapp_i18n_idbased
 TRANSLATIONS += \
     translations/ui.ts \
     translations/ui-cs.ts \
@@ -128,11 +128,13 @@ TRANSLATIONS += \
     translations/ui-es.ts \
     translations/ui-fi.ts \
     translations/ui-fr.ts \
-#    translations/ui-he.ts \
+    translations/ui-hu.ts \
     translations/ui-it.ts \
+    translations/ui-lt.ts \
     translations/ui-nl.ts \
     translations/ui-pl.ts \
     translations/ui-ru.ts \
     translations/ui-sk.ts \
     translations/ui-sv.ts \
+    translations/ui-zh_CN.ts \
     translations/ui-zh_TW.ts
