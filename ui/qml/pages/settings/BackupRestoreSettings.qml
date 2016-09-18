@@ -53,7 +53,7 @@ Dialog
             SectionHeader
             {
                 //: Backup page section header
-                //% "Backupo Information"
+                //% "Backup Information"
                 text: qsTrId("id_backup_information")
             }
 

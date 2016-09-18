@@ -96,7 +96,7 @@ Page
                     MenuItem { text: qsTrId('id_combobox_do_skip') }
                     //: "Remove" option for comboboxes (lowercased)
                     //% "remove"
-                    MenuItem { text: qsTrId('id_compobox_do_remove') }
+                    MenuItem { text: qsTrId('id_combobox_do_remove') }
                 }
             }
 

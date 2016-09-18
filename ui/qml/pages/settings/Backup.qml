@@ -73,7 +73,7 @@ Page
 
             PageHeader
             {
-                //:
+                //: Page header
                 //% "Backup"
                 title: qsTrId('id_settings_backup')
             }
