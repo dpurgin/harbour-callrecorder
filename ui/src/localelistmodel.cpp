@@ -21,6 +21,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QLocale>
+#include <QStandardPaths>
 #include <QStringBuilder>
 #include <QStringList>
 
@@ -29,15 +30,28 @@
 // System locale is always present in the list.
 // All translation files have the following naming convention: ui-<language>_<COUNTRY>.qm.
 // <language>_<COUNTRY> part is fed to QLocale to get locale name. Special cases like dialects (see
-// ui-de_AT-4.qm) are treated separately.
+// ui-de_AT-3.qm) are treated separately.
 LocaleListModel::LocaleListModel(QObject* parent)
     : QAbstractListModel(parent)
 {
     // system locale is always present on the list
+    //: System locale
+    //= id_system
     mLocales.append(QPair< QString, QString >("system", tr("System")));
 
+    // Add user-defined translations
+    QDir dir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+
+    if (dir.entryList(QStringList() << QLatin1String("harbour-callrecorder*.qm"),
+                      QDir::Files | QDir::Readable).size() > 0)
+    {
+        //: User-defined locale
+        //= id_user_defined
+        mLocales.append(QPair< QString, QString >("user", tr("User-defined")));
+    }
+
     // read all .qm files from the following location and transform them into locale list
-    QDir dir(QLatin1String(TRANSLATIONSDIR));
+    dir = QDir(QLatin1String(TRANSLATIONSDIR));
 
     QStringList qmFilter;
     qmFilter << "ui-*.qm";

@@ -45,41 +45,68 @@ namespace LibCallRecorder
         QScopedPointer< Settings > settings(new Settings());
         QScopedPointer< QTranslator > translator(new QTranslator());
 
-        // Check if this specific file name exists.
-        // Useful for non-existent locales like de_AT-3
-        QString fileName(resource % QLatin1Char('-') % settings->locale() % QLatin1String(".qm"));
-
-        qDebug() << "generated file name:" << fileName;
-
-        if (QFile(path + "/" + fileName).exists())
+        // A translator may upload his/her own file for testing to Documents.
+        // Locale will be set to "user" in this case. Try to load this file first
+        if (settings->locale().compare("user", Qt::CaseInsensitive) == 0)
         {
-            qDebug() << "loading translations for " << resource <<
-                        ", file name " << fileName <<
-                        ", translations dir " << path;
+            QDir documentsDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 
-            if (!translator->load(fileName, path))
-                qWarning() << "unable to load file-based translations";
+            QString fileName(QLatin1String("harbour-callrecorder-") %
+                             resource %
+                             QLatin1String(".qm"));
+            QString filePath = documentsDir.absoluteFilePath(fileName);
+
+            qDebug() << "probing user translation:" << filePath;
+
+            if (QFile(filePath).exists())
+            {
+                qDebug() << "loading translation for" << resource << "from" << filePath;
+
+                if (!translator->load(fileName, documentsDir.absolutePath()))
+                    qWarning() << "unable to load user-defined translation";
+            }
         }
-        // If cannot load from specific file, try QLocale-based algorithm
-        else
+
+        // User-defined translation not loaded, try the one installed with the app
+        if (translator->isEmpty())
         {
-            QLocale locale;
+            // Check if this specific file name exists.
+            // Useful for non-existent locales like de_AT-3
+            QString fileName(resource % QLatin1Char('-') % settings->locale() %
+                             QLatin1String(".qm"));
 
-            if (settings->locale().compare("system", Qt::CaseInsensitive) != 0)
-                locale = QLocale(settings->locale());
+            qDebug() << "generated file name:" << fileName;
 
-            qDebug() << "loading translations for " << resource <<
-                        ", locale " << locale <<
-                        ", translations dir " << path;
+            if (QFile(path + "/" + fileName).exists())
+            {
+                qDebug() << "loading translations for " << resource <<
+                            ", file name " << fileName <<
+                            ", translations dir " << path;
 
-            if (!translator->load(locale, resource, "-", path, ".qm"))
-                qWarning() <<  "unable to load QLocale-based translation";
+                if (!translator->load(fileName, path))
+                    qWarning() << "unable to load file-based translations";
+            }
+            // If cannot load from specific file, try QLocale-based algorithm
+            else
+            {
+                QLocale locale;
+
+                if (settings->locale().compare("system", Qt::CaseInsensitive) != 0)
+                    locale = QLocale(settings->locale());
+
+                qDebug() << "loading translations for " << resource <<
+                            ", locale " << locale <<
+                            ", translations dir " << path;
+
+                if (!translator->load(locale, resource, "-", path, ".qm"))
+                    qWarning() <<  "unable to load QLocale-based translation";
+            }
         }
 
         // Fall-back algorithm. Load engineering English
         if (translator->isEmpty())
         {
-            fileName = resource % QLatin1String(".qm");
+            QString fileName = resource % QLatin1String(".qm");
 
             qWarning() << "FALL-BACK: loading translations for " << fileName <<
                         ", translations dir " << path;
