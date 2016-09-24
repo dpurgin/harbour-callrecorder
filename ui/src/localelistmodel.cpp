@@ -36,6 +36,7 @@ LocaleListModel::LocaleListModel(QObject* parent)
 {
     // system locale is always present on the list
     //: System locale
+    //% "System"
     mLocales.append(QPair< QString, QString >("system", qtTrId("id_locale_system")));
 
     // Add user-defined translations
@@ -45,6 +46,7 @@ LocaleListModel::LocaleListModel(QObject* parent)
                       QDir::Files | QDir::Readable).size() > 0)
     {
         //: User-defined locale
+        //% "User-defined"
         mLocales.append(QPair< QString, QString >("user", qtTrId("id_locale_user_defined")));
     }
 
