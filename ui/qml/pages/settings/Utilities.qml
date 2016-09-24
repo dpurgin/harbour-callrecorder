@@ -61,7 +61,7 @@ Page
                 height: implicitHeight + Theme.paddingLarge
 
                 //: Description of database repair
-                //% "If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it"
+                //% "If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it."
                 text: qsTrId("id_database_repair_description")
 
                 color: Theme.highlightColor
