@@ -7,37 +7,37 @@
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="111"/>
         <source>An incoming call was recorded</source>
         <extracomment>Info message on top of approval dialog</extracomment>
-        <translation type="unfinished">Ein eingehender Anruf wurde aufgenommen</translation>
+        <translation>Ein eingehender Anruf wurde aufgenommen</translation>
     </message>
     <message id="id-outgoing-call-recorded">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="117"/>
         <source>An outgoing call was recorded</source>
         <extracomment>Info message on top of approval dialog</extracomment>
-        <translation type="unfinished">Ein ausgehender Anruf wurde aufgenommen</translation>
+        <translation>Ein ausgehender Anruf wurde aufgenommen</translation>
     </message>
     <message id="id-call-recorded">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="123"/>
         <source>A call was recorded</source>
         <extracomment>Info message on top of approval dialog</extracomment>
-        <translation type="unfinished">Ein Anruf wurde aufgenommen</translation>
+        <translation>Ein Anruf wurde aufgenommen</translation>
     </message>
     <message id="id-do-store">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="213"/>
         <source>Store</source>
         <extracomment>Action for saving the recorded call</extracomment>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message id="id-do-remove">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="231"/>
         <source>Remove</source>
         <extracomment>Action for removing the recorded call</extracomment>
-        <translation type="unfinished">Entfernen</translation>
+        <translation>Entfernen</translation>
     </message>
     <message id="id-do-ask-later">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="249"/>
         <source>Ask later</source>
         <extracomment>Action for postponing decisions on recorded calls</extracomment>
-        <translation type="unfinished">Später fragen</translation>
+        <translation>Später fragen</translation>
     </message>
 </context>
 <context>
