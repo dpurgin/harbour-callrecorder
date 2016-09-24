@@ -130,6 +130,13 @@ Page {
             }
 
             ListElement {
+                locale: "lt"
+                translators: [
+                    ListElement { name: "Artūras Janulis" }
+                ]
+            }
+
+            ListElement {
                 locale: "nl"
                 translators: [
                     ListElement { name: "Heimen Stoffels" },
