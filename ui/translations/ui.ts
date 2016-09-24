@@ -45,11 +45,11 @@
     </message>
     <message id="id_do_delete">
         <source>Delete</source>
-        <extracomment>Action for deletion
+        <extracomment>Action in file picker dialog
 ----------
-Action in file picker dialog
+Delete action
 ----------
-Delete action</extracomment>
+Action for deletion</extracomment>
         <translation>Delete</translation>
     </message>
     <message id="id_incoming_call">
@@ -74,9 +74,9 @@ Delete action</extracomment>
     </message>
     <message id="id_remorse_deleting">
         <source>Deleting</source>
-        <extracomment>Remorse text when removing recorded cal
+        <extracomment>Remorse text when deleting
 ----------
-Remorse text when deleting</extracomment>
+Remorse text when removing recorded cal</extracomment>
         <translation>Deleting</translation>
     </message>
     <message id="id_armed_for_recording">
@@ -171,9 +171,9 @@ Remorse text when deleting</extracomment>
     </message>
     <message id="id_settings_recording_daemon">
         <source>Recording daemon</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Recording daemon</translation>
     </message>
     <message id="id_settings_storage">
@@ -193,25 +193,25 @@ Page header</extracomment>
     </message>
     <message id="id_settings_utilities">
         <source>Utilities</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Utilities</translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header
+Backup section header
 ----------
-Backup section header</extracomment>
+Settings item</extracomment>
         <translation>Backup</translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>About</translation>
     </message>
     <message id="id_do_accept">

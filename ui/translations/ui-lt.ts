@@ -45,11 +45,11 @@
     </message>
     <message id="id_do_delete">
         <source>Delete</source>
-        <extracomment>Action for deletion
+        <extracomment>Action in file picker dialog
 ----------
-Action in file picker dialog
+Delete action
 ----------
-Delete action</extracomment>
+Action for deletion</extracomment>
         <translation>Ištrinti</translation>
     </message>
     <message id="id_incoming_call">
@@ -74,9 +74,9 @@ Delete action</extracomment>
     </message>
     <message id="id_remorse_deleting">
         <source>Deleting</source>
-        <extracomment>Remorse text when removing recorded cal
+        <extracomment>Remorse text when deleting
 ----------
-Remorse text when deleting</extracomment>
+Remorse text when removing recorded cal</extracomment>
         <translation>Ištrinama</translation>
     </message>
     <message id="id_armed_for_recording">
@@ -171,9 +171,9 @@ Remorse text when deleting</extracomment>
     </message>
     <message id="id_settings_recording_daemon">
         <source>Recording daemon</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation></translation>
     </message>
     <message id="id_settings_storage">
@@ -193,25 +193,25 @@ Page header</extracomment>
     </message>
     <message id="id_settings_utilities">
         <source>Utilities</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation></translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header
+Backup section header
 ----------
-Backup section header</extracomment>
+Settings item</extracomment>
         <translation></translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Apie</translation>
     </message>
     <message id="id_do_accept">
@@ -917,474 +917,6 @@ Section header</extracomment>
         <source>User-defined</source>
         <extracomment>User-defined locale</extracomment>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>About</name>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Apie</translation>
-    </message>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Skambučių įrašymo programa</translation>
-    </message>
-    <message>
-        <source>for SailfishOS</source>
-        <translation type="vanished">Skirta SailfishOS</translation>
-    </message>
-    <message>
-        <source>Copyright © 2014-2015 Dmitriy Purgin</source>
-        <translation type="vanished">Autorinės teisės   © 2014-2015 Dmitriy Purgin</translation>
-    </message>
-    <message>
-        <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
-        <translation type="vanished">Padėka Simonas Leleiva ir Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="vanished">Versija %1</translation>
-    </message>
-    <message>
-        <source>Translators</source>
-        <translation type="vanished">Vertėjai</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Licenzija</translation>
-    </message>
-    <message>
-        <source>Use pull-down menu to see translators</source>
-        <translation type="vanished">
-Norint pamatyt vertimus, naudokite iškleidžiamą meniu</translation>
-    </message>
-    <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation type="vanished">Ši programa yra be garantijos.Tai nemokama programinė įranga, ją galite laisvai naudoti, spausti iškleidžiamą meniu mygtuką jei nori sužinoti daugiau</translation>
-    </message>
-</context>
-<context>
-    <name>AudioSettings</name>
-    <message>
-        <source>Audio Settings</source>
-        <translation type="vanished">Garso nustatymai</translation>
-    </message>
-    <message>
-        <source>FLAC Encoder</source>
-        <translation type="vanished">Flac </translation>
-    </message>
-    <message>
-        <source>Sample rate</source>
-        <translation type="vanished">Dažnis</translation>
-    </message>
-    <message>
-        <source>FLAC compression level</source>
-        <translation type="vanished">FLAC suspaudimo lygis</translation>
-    </message>
-    <message>
-        <source>44.1 kHz</source>
-        <translation type="vanished">44.1 kHz</translation>
-    </message>
-    <message>
-        <source>32 kHz</source>
-        <translation type="vanished">32 kHz</translation>
-    </message>
-    <message>
-        <source>22.05 kHz</source>
-        <translation type="vanished">22.05 kHz</translation>
-    </message>
-    <message>
-        <source>16 kHz</source>
-        <translation type="vanished">16 kHz</translation>
-    </message>
-    <message>
-        <source>11.025 kHz</source>
-        <translation type="vanished">11.025 kHz</translation>
-    </message>
-    <message>
-        <source>8 kHz</source>
-        <translation type="vanished">8 kHz</translation>
-    </message>
-</context>
-<context>
-    <name>ContactPickerDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Priimti</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">atšaukti</translation>
-    </message>
-    <message>
-        <source>No contacts available</source>
-        <translation type="vanished">Nėra kontaktų</translation>
-    </message>
-</context>
-<context>
-    <name>CoverPage</name>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Skambučių registras</translation>
-    </message>
-</context>
-<context>
-    <name>Daemon</name>
-    <message>
-        <source>Recording daemon</source>
-        <translation type="vanished">Įrašoma deamon</translation>
-    </message>
-    <message>
-        <source>Startup</source>
-        <translation type="vanished">Pradėti</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">Aktyvus</translation>
-    </message>
-    <message>
-        <source>Capture all incoming and outgoing calls</source>
-        <translation type="vanished">Fiksuoti visus įeinančius ir išeinančius skambučius</translation>
-    </message>
-    <message>
-        <source>Automatic startup</source>
-        <translation type="vanished">Automatinis paleidimas</translation>
-    </message>
-    <message>
-        <source>Start automatically upon reboot</source>
-        <translation type="vanished">Pradėti automatiškai, persikrovus</translation>
-    </message>
-    <message>
-        <source>Operation mode</source>
-        <translation type="vanished">Darbo režimas</translation>
-    </message>
-    <message>
-        <source>Record calls to any number except those in the black list</source>
-        <translation type="vanished">Įrašų skambučiai į bet kokį skaičių išskyrus į juodąjį sąrašą</translation>
-    </message>
-    <message>
-        <source>Do not record anything except numbers in the white list</source>
-        <translation type="vanished">Negalima įrašyti nieko, išskyrus skaičių baltąjį sąrašą</translation>
-    </message>
-    <message>
-        <source>Black list</source>
-        <translation type="vanished">Juodas sąrašas</translation>
-    </message>
-    <message>
-        <source>White list</source>
-        <translation type="vanished">baltasis sąrašas
-</translation>
-    </message>
-    <message>
-        <source>Edit list</source>
-        <translation type="vanished">Redaguoti sarašą</translation>
-    </message>
-</context>
-<context>
-    <name>DirectoryNameDialog</name>
-    <message>
-        <source>Directory name</source>
-        <translation type="vanished">Katalogo vardas</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Priimti</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atšaukti</translation>
-    </message>
-</context>
-<context>
-    <name>DirectoryPickerDialog</name>
-    <message>
-        <source>Select %1</source>
-        <translation type="vanished">Pasirinkti %1</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Pasirinkti</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="vanished">Pervandinti</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Ištrinti</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atšaukti</translation>
-    </message>
-</context>
-<context>
-    <name>EventPage</name>
-    <message>
-        <source>Details</source>
-        <translation type="vanished">Detalės</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Ištrinti</translation>
-    </message>
-    <message>
-        <source>Storing</source>
-        <translation type="vanished">Saugoma</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Ištrinama</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegate</name>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Ištrinama</translation>
-    </message>
-    <message>
-        <source>Storing</source>
-        <translation type="vanished">Saugoma</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegateMenu</name>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Ištrinti</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">Neįrašyti šito numerio</translation>
-    </message>
-</context>
-<context>
-    <name>EventsFilterDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Priimti</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atšaukti</translation>
-    </message>
-    <message>
-        <source>Before</source>
-        <translation type="vanished">Prieš</translation>
-    </message>
-    <message>
-        <source>After</source>
-        <translation type="vanished">Po</translation>
-    </message>
-    <message>
-        <source>Phone number</source>
-        <translation type="vanished">Telefono numeris</translation>
-    </message>
-    <message>
-        <source>On</source>
-        <translation type="vanished">įjungta</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation type="vanished">Įrašai</translation>
-    </message>
-    <message>
-        <source>Select recordings</source>
-        <translation type="vanished">Pasirinkti įrašus</translation>
-    </message>
-    <message>
-        <source>Filtered recordings</source>
-        <translation type="vanished">Filtruoti įrašai</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Nustatymai</translation>
-    </message>
-    <message>
-        <source>Filter</source>
-        <translation type="vanished">Filtras</translation>
-    </message>
-    <message>
-        <source>View recordings</source>
-        <translation type="vanished">Žiurėti įrašus</translation>
-    </message>
-    <message>
-        <source>Deleting recordings</source>
-        <translation type="vanished">Ištrinti įrašus</translation>
-    </message>
-    <message>
-        <source>Delete all filtered</source>
-        <translation type="vanished">Ištrinti visus filtruotus</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Ištrinti visus </translation>
-    </message>
-    <message>
-        <source>Deleting all filtered</source>
-        <translation type="vanished">Ištrinti visus filtruotus</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation type="vanished">Ištrinti įrašus</translation>
-    </message>
-</context>
-<context>
-    <name>License</name>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Licenzija</translation>
-    </message>
-</context>
-<context>
-    <name>LocaleListModel</name>
-    <message>
-        <source>System</source>
-        <translation type="vanished">Sistema</translation>
-    </message>
-</context>
-<context>
-    <name>PhoneNumberEntryField</name>
-    <message>
-        <source>Search by name or number</source>
-        <translation type="vanished">Ieškoti pagal numerį</translation>
-    </message>
-</context>
-<context>
-    <name>PhoneNumbersListDialog</name>
-    <message>
-        <source>Copy from white list</source>
-        <translation type="vanished">Kopijuoti iš baltojo sąrašo</translation>
-    </message>
-    <message>
-        <source>Copy from black list</source>
-        <translation type="vanished">Kopijuoti iš juodojo sąrašo</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Ištrinti visus </translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Išsaugoti</translation>
-    </message>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="vanished">įvesti telefono numerį</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Ištrinti</translation>
-    </message>
-    <message>
-        <source>No items in the list</source>
-        <translation type="vanished">Tuščias sąrašas</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atšaukti</translation>
-    </message>
-    <message>
-        <source>Pick from contacts</source>
-        <translation type="vanished">Išsirinkti iš kontakto</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsPage</name>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Nustatymai</translation>
-    </message>
-    <message>
-        <source>Recording daemon</source>
-        <translation type="vanished">Įrašomas deamon</translation>
-    </message>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Saugykla</translation>
-    </message>
-    <message>
-        <source>Audio settings</source>
-        <translation type="vanished">Audio nustatymai</translation>
-    </message>
-    <message>
-        <source>User interface</source>
-        <translation type="vanished">Vartotojo sąsaja</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Apie</translation>
-    </message>
-</context>
-<context>
-    <name>Storage</name>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Saugykla</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="vanished">Vieta</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Ieškoti</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Išsaugoti</translation>
-    </message>
-    <message>
-        <source>By age</source>
-        <translation type="vanished">Pagal amžių</translation>
-    </message>
-    <message>
-        <source>no limit</source>
-        <translation type="vanished">Neribotas</translation>
-    </message>
-    <message>
-        <source>30 days</source>
-        <translation type="vanished">30 dienų</translation>
-    </message>
-    <message>
-        <source>90 days</source>
-        <translation type="vanished">90 dienų</translation>
-    </message>
-    <message>
-        <source>180 days</source>
-        <translation type="vanished">180 dienų</translation>
-    </message>
-    <message>
-        <source>365 days</source>
-        <translation type="vanished">365 dienos</translation>
-    </message>
-    <message>
-        <source>By size</source>
-        <translation type="vanished">Pagal dydį</translation>
-    </message>
-    <message>
-        <source>300 MB</source>
-        <translation type="vanished">300 MB</translation>
-    </message>
-    <message>
-        <source>500 MB</source>
-        <translation type="vanished">500 MB</translation>
-    </message>
-    <message>
-        <source>1 GB</source>
-        <translation type="vanished">1 GB</translation>
-    </message>
-    <message>
-        <source>3 GB</source>
-        <translation type="vanished">3 GB</translation>
-    </message>
-    <message>
-        <source>5 GB</source>
-        <translation type="vanished">5 GB</translation>
     </message>
 </context>
 </TS>

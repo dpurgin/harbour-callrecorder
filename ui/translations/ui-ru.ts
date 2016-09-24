@@ -1,6 +1,8 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ru">
 <context>
-    <name/>
+    <name></name>
     <message id="id_call_recorder">
         <source>Call Recorder</source>
         <extracomment>Application title</extracomment>
@@ -43,11 +45,11 @@
     </message>
     <message id="id_do_delete">
         <source>Delete</source>
-        <extracomment>Action for deletion
+        <extracomment>Action in file picker dialog
 ----------
-Action in file picker dialog
+Delete action
 ----------
-Delete action</extracomment>
+Action for deletion</extracomment>
         <translation>Удалить</translation>
     </message>
     <message id="id_incoming_call">
@@ -72,9 +74,9 @@ Delete action</extracomment>
     </message>
     <message id="id_remorse_deleting">
         <source>Deleting</source>
-        <extracomment>Remorse text when removing recorded cal
+        <extracomment>Remorse text when deleting
 ----------
-Remorse text when deleting</extracomment>
+Remorse text when removing recorded cal</extracomment>
         <translation>Удаление</translation>
     </message>
     <message id="id_armed_for_recording">
@@ -169,9 +171,9 @@ Remorse text when deleting</extracomment>
     </message>
     <message id="id_settings_recording_daemon">
         <source>Recording daemon</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Служба записи</translation>
     </message>
     <message id="id_settings_storage">
@@ -191,25 +193,25 @@ Page header</extracomment>
     </message>
     <message id="id_settings_utilities">
         <source>Utilities</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Утилиты</translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header
+Backup section header
 ----------
-Backup section header</extracomment>
+Settings item</extracomment>
         <translation>Резервная копия</translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>О программе</translation>
     </message>
     <message id="id_do_accept">

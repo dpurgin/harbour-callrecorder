@@ -45,11 +45,11 @@
     </message>
     <message id="id_do_delete">
         <source>Delete</source>
-        <extracomment>Action for deletion
+        <extracomment>Action in file picker dialog
 ----------
-Action in file picker dialog
+Delete action
 ----------
-Delete action</extracomment>
+Action for deletion</extracomment>
         <translation>Διαγραφή</translation>
     </message>
     <message id="id_incoming_call">
@@ -74,9 +74,9 @@ Delete action</extracomment>
     </message>
     <message id="id_remorse_deleting">
         <source>Deleting</source>
-        <extracomment>Remorse text when removing recorded cal
+        <extracomment>Remorse text when deleting
 ----------
-Remorse text when deleting</extracomment>
+Remorse text when removing recorded cal</extracomment>
         <translation>Διαγραφθηκε</translation>
     </message>
     <message id="id_armed_for_recording">
@@ -171,9 +171,9 @@ Remorse text when deleting</extracomment>
     </message>
     <message id="id_settings_recording_daemon">
         <source>Recording daemon</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Εγγραφή δαίμονα</translation>
     </message>
     <message id="id_settings_storage">
@@ -193,25 +193,25 @@ Page header</extracomment>
     </message>
     <message id="id_settings_utilities">
         <source>Utilities</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation></translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header
+Backup section header
 ----------
-Backup section header</extracomment>
+Settings item</extracomment>
         <translation></translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
-        <extracomment>Settings item
+        <extracomment>Page header
 ----------
-Page header</extracomment>
+Settings item</extracomment>
         <translation>Σχετικά με</translation>
     </message>
     <message id="id_do_accept">
@@ -915,453 +915,6 @@ Section header</extracomment>
         <source>User-defined</source>
         <extracomment>User-defined locale</extracomment>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>About</name>
-    <message>
-        <source>Translators</source>
-        <translation type="vanished">Μεταφραστές</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Άδεια Χρήσης</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Σχετικά με</translation>
-    </message>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Εγγραφέας κλήσεων </translation>
-    </message>
-    <message>
-        <source>for SailfishOS</source>
-        <translation type="vanished">για το SailfishOS</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="vanished">Έκδοση %1</translation>
-    </message>
-    <message>
-        <source>Copyright © 2014-2015 Dmitriy Purgin</source>
-        <translation type="vanished">Copyright © 2014-2015 Dmitriy Purgin</translation>
-    </message>
-    <message>
-        <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
-        <translation type="vanished">Ευχαριστώ τους Simonas Leleiva και Juho Hämäläinen</translation>
-    </message>
-    <message>
-        <source>Use pull-down menu to see translators</source>
-        <translation type="vanished">Χρησιμοποιήστε το αναπτυσσόμενο μενού για να δείτε τους μεταφραστές</translation>
-    </message>
-    <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation type="vanished">Το πρόγραμμα έρχεται με ΑΠΟΛΥΤΩΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ. Το παρόν είναι ελεύθερο λογισμικό, και είστε ευπρόσδεκτοι να το αναδιανείμετε κάτω από ορισμένες συνθήκες; Χρησιμοποιήστε το αναπτυσσόμενο μενού για λεπτομέρειες</translation>
-    </message>
-</context>
-<context>
-    <name>AudioSettings</name>
-    <message>
-        <source>Audio Settings</source>
-        <translation type="vanished">Ρυθμίσεις ήχου</translation>
-    </message>
-    <message>
-        <source>FLAC Encoder</source>
-        <translation type="vanished">FLAC Κωδικοποιητής</translation>
-    </message>
-    <message>
-        <source>Sample rate</source>
-        <translation type="vanished">Συχνότητα δειγματοληψίας</translation>
-    </message>
-    <message>
-        <source>FLAC compression level</source>
-        <translation type="vanished">FLAC επίπεδο συμπίεσης</translation>
-    </message>
-</context>
-<context>
-    <name>ContactPickerDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Αποδοχή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>CoverPage</name>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Εγγραφέας κλήσεων </translation>
-    </message>
-</context>
-<context>
-    <name>Daemon</name>
-    <message>
-        <source>Recording daemon</source>
-        <translation type="vanished">Εγγραφή δαίμονα</translation>
-    </message>
-    <message>
-        <source>Startup</source>
-        <translation type="vanished">Εκκινηση</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">Ενεργά</translation>
-    </message>
-    <message>
-        <source>Capture all incoming and outgoing calls</source>
-        <translation type="vanished">Σύλληψη όλων των εισερχόμενων και εξερχόμενων κλήσεων</translation>
-    </message>
-    <message>
-        <source>Automatic startup</source>
-        <translation type="vanished">Αυτόματη εκκίνηση</translation>
-    </message>
-    <message>
-        <source>Start automatically upon reboot</source>
-        <translation type="vanished">Έναρξη αυτόματα με την επανεκκίνηση</translation>
-    </message>
-    <message>
-        <source>Operation mode</source>
-        <translation type="vanished">Τρόπος λειτουργίας</translation>
-    </message>
-    <message>
-        <source>Record calls to any number except those in the black list</source>
-        <translation type="vanished">Εγγραφή κλήσεων προς οποιοδήποτε αριθμό εκτός από εκείνες στη μαύρη λίστα</translation>
-    </message>
-    <message>
-        <source>Do not record anything except numbers in the white list</source>
-        <translation type="vanished">Μην εγγράφετε οτιδήποτε, εκτός από τους αριθμούς στη λευκή λίστα</translation>
-    </message>
-    <message>
-        <source>Black list</source>
-        <translation type="vanished">Μαυρη Λιστα</translation>
-    </message>
-    <message>
-        <source>White list</source>
-        <translation type="vanished">Λευκή Λίστα</translation>
-    </message>
-    <message>
-        <source>Edit list</source>
-        <translation type="vanished">Επεξεργασία λίστας</translation>
-    </message>
-</context>
-<context>
-    <name>DirectoryNameDialog</name>
-    <message>
-        <source>Directory name</source>
-        <translation type="vanished">Ονομα καταλόγου</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Αποδοχή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>DirectoryPickerDialog</name>
-    <message>
-        <source>Select %1</source>
-        <translation type="vanished">Επιλογή %1</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Επιλογή</translation>
-    </message>
-    <message>
-        <source>No nested directories</source>
-        <translation type="vanished">Δεν υπάρχουν ένθετα καταλόγων</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="vanished">Μετονομασία</translation>
-    </message>
-    <message>
-        <source>Renaming is not allowed</source>
-        <translation type="vanished">Μετονομασία δεν επιτρέπεται</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Διαγραφή</translation>
-    </message>
-    <message>
-        <source>Removal is not allowed</source>
-        <translation type="vanished">Διαγραφή δεν επιτρέπεται</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>EventPage</name>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Διαγραφή</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="vanished">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="vanished">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="vanished">Καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">Καμμια καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Διαγραφθηκε</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation type="vanished">Εισερχόμενη κλήση</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation type="vanished">Εξερχόμενη κλήση</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation type="vanished">Μερική κλήση</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegate</name>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Διαγραφθηκε</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegateContent</name>
-    <message>
-        <source>Armed for recording</source>
-        <translation type="vanished">Εξοπλισμένοι για καταγραφή</translation>
-    </message>
-    <message>
-        <source>Recording in progress</source>
-        <translation type="vanished">Καταγραφή σε εξέλιξη</translation>
-    </message>
-    <message>
-        <source>Recording suspended</source>
-        <translation type="vanished">Η καταγραφή αναστέλλεται</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegateMenu</name>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Διαγραφή</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="vanished">Πάντα να καταγράφετε ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="vanished">Καταγραφή %1</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="vanished">Ποτέ μην να μην καταγράφει ο αριθμός αυτός</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">Καμμια καταγραφή %1</translation>
-    </message>
-</context>
-<context>
-    <name>EventsFilterDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Αποδοχή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation type="vanished">Καταγραφές</translation>
-    </message>
-    <message>
-        <source>No calls recorded yet</source>
-        <translation type="vanished">Δεν υπάρχουν κλήσεις που καταγράφονται ακόμα</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Ρυθμίσεις </translation>
-    </message>
-    <message>
-        <source>Select recordings</source>
-        <translation type="vanished">Επιλογή καταγραφων</translation>
-    </message>
-    <message>
-        <source>Deleting recordings</source>
-        <translation type="vanished">Διαγραφή καταγραφών</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Διαγραφή ολων</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation type="vanished">Διαγραφή όλων των καταγραφών</translation>
-    </message>
-</context>
-<context>
-    <name>License</name>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Αδεια</translation>
-    </message>
-</context>
-<context>
-    <name>LocaleListModel</name>
-    <message>
-        <source>System</source>
-        <translation type="vanished">Σύστημα</translation>
-    </message>
-</context>
-<context>
-    <name>PhoneNumberEntryField</name>
-    <message>
-        <source>Search by name or number</source>
-        <translation type="vanished">Αναζήτηση με βάση το όνομα ή τον αριθμό</translation>
-    </message>
-</context>
-<context>
-    <name>PhoneNumbersListDialog</name>
-    <message>
-        <source>Copy from white list</source>
-        <translation type="vanished">Αντιγραφή από την Λευκή Λίστα</translation>
-    </message>
-    <message>
-        <source>Copy from black list</source>
-        <translation type="vanished">Αντιγραφή από την Μαυρη Λιστα</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Διαγραφή ολων</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="vanished">Εισάγετε τον αριθμό τηλεφώνου</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Διαγραφή</translation>
-    </message>
-    <message>
-        <source>No items in the list</source>
-        <translation type="vanished">Δεν υπάρχουν στοιχεία στη λίστα</translation>
-    </message>
-    <message>
-        <source>Add numbers with field above or use pull-down menu</source>
-        <translation type="vanished">Προσθέστε τους αριθμούς στο πεδίο επάνω ή χρησιμοποιήστε το pull-down μενού</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsPage</name>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Ρυθμίσεις </translation>
-    </message>
-    <message>
-        <source>Recording daemon</source>
-        <translation type="vanished">Εγγραφή δαίμονα</translation>
-    </message>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Audio settings</source>
-        <translation type="vanished">Ρυθμίσεις ήχου</translation>
-    </message>
-    <message>
-        <source>User interface</source>
-        <translation type="vanished">Διεπαφή χρήστη</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Σχετικά με</translation>
-    </message>
-</context>
-<context>
-    <name>Storage</name>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="vanished">Τοποθεσία</translation>
-    </message>
-    <message>
-        <source>Location for storing the recordings</source>
-        <translation type="vanished">Τοποθεσία για την αποθήκευση των καταγραφών</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Περιήγηση</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Relocating files</source>
-        <translation type="vanished">Αλλαγή θέσης αρχείων</translation>
-    </message>
-</context>
-<context>
-    <name>Translators</name>
-    <message>
-        <source>Translators</source>
-        <translation type="vanished">Μεταφραστές</translation>
-    </message>
-    <message>
-        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
-        <translation type="vanished">Ευχαριστούμε αυτούς τους ανθρώπους που εκαναν το Call Recorder να είναι διαθέσιμο σε διάφορες γλώσσες. Τα ονόματα και οι κωδικοί τοπικής ρύθμισης αναφέρονται με αλφαβητική σειρά.</translation>
-    </message>
-</context>
-<context>
-    <name>UserInterface</name>
-    <message>
-        <source>User interface</source>
-        <translation type="vanished">Διεπαφή χρήστη</translation>
-    </message>
-    <message>
-        <source>Locale</source>
-        <translation type="vanished">Τοπικα</translation>
-    </message>
-    <message>
-        <source>Please restart the application if the locale is changed</source>
-        <translation type="vanished">Παρακαλούμε να επανεκκινήσετε την εφαρμογή αν οι τοπικές ρυθμίσεις αλλάξουν</translation>
     </message>
 </context>
 </TS>
