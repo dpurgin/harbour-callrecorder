@@ -36,8 +36,7 @@ LocaleListModel::LocaleListModel(QObject* parent)
 {
     // system locale is always present on the list
     //: System locale
-    //= id_system
-    mLocales.append(QPair< QString, QString >("system", tr("System")));
+    mLocales.append(QPair< QString, QString >("system", qtTrId("id_locale_system")));
 
     // Add user-defined translations
     QDir dir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
@@ -46,8 +45,7 @@ LocaleListModel::LocaleListModel(QObject* parent)
                       QDir::Files | QDir::Readable).size() > 0)
     {
         //: User-defined locale
-        //= id_user_defined
-        mLocales.append(QPair< QString, QString >("user", tr("User-defined")));
+        mLocales.append(QPair< QString, QString >("user", qtTrId("id_locale_user_defined")));
     }
 
     // read all .qm files from the following location and transform them into locale list
