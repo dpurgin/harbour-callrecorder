@@ -1,70 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="da">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message id="id-incoming-call-recorded">
-        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="111"/>
+        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="110"/>
         <source>An incoming call was recorded</source>
-        <extracomment>Info message on top of approval dialog</extracomment>
-        <translation>Et indgående opkald blev optaget</translation>
+        <translation>Et indkommende opkald blev optaget</translation>
     </message>
     <message id="id-outgoing-call-recorded">
-        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="117"/>
+        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="115"/>
         <source>An outgoing call was recorded</source>
-        <extracomment>Info message on top of approval dialog</extracomment>
         <translation>Et udgående opkald blev optaget</translation>
     </message>
     <message id="id-call-recorded">
-        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="123"/>
+        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="120"/>
         <source>A call was recorded</source>
-        <extracomment>Info message on top of approval dialog</extracomment>
-        <translation>En samtale blev optaget</translation>
+        <translation>Et opkald blev optaget</translation>
     </message>
     <message id="id-do-store">
-        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="213"/>
+        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="209"/>
         <source>Store</source>
-        <extracomment>Action for saving the recorded call</extracomment>
         <translation>Gem</translation>
     </message>
     <message id="id-do-remove">
-        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="231"/>
+        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="226"/>
         <source>Remove</source>
-        <extracomment>Action for removing the recorded call</extracomment>
         <translation>Fjern</translation>
     </message>
     <message id="id-do-ask-later">
-        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="249"/>
+        <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="243"/>
         <source>Ask later</source>
-        <extracomment>Action for postponing decisions on recorded calls</extracomment>
         <translation>Spørg senere</translation>
-    </message>
-</context>
-<context>
-    <name>ApprovalDialog</name>
-    <message>
-        <source>An incoming call was recorded</source>
-        <translation type="vanished">Et indgående opkald blev optaget</translation>
-    </message>
-    <message>
-        <source>An outgoing call was recorded</source>
-        <translation type="vanished">Et udgående opkald blev optaget</translation>
-    </message>
-    <message>
-        <source>A call was recorded</source>
-        <translation type="vanished">En samtale blev optaget</translation>
-    </message>
-    <message>
-        <source>Store</source>
-        <translation type="vanished">Gem</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Fjern</translation>
-    </message>
-    <message>
-        <source>Ask later</source>
-        <translation type="vanished">Spørg senere</translation>
     </message>
 </context>
 </TS>
