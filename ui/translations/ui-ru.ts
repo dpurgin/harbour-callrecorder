@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru_KZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message id="id_call_recorder">
         <source>Call Recorder</source>
         <extracomment>Application title</extracomment>
@@ -196,16 +194,16 @@ Page header</extracomment>
         <extracomment>Settings item
 ----------
 Page header</extracomment>
-        <translation></translation>
+        <translation>Утилиты</translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
         <extracomment>Settings item
 ----------
-//% &quot;Backup&quot; title: qsTrId(&apos;id_settings_backup&apos;) } StyledLabel { //: Description of backup page //% &quot;Create a backup to save the recorded calls and settings. Use it later to restore the data on other device or after factory reset.&quot; text: qsTrId(&apos;id_backup_description&apos;) height: implicitHeight + Theme.paddingLarge color: Theme.highlightColor font.pixelSize: Theme.fontSizeSmall } Item { x: Theme.horizontalPageMargin width: parent.width - x * 2 height: backupBusyIndicator.height + Theme.paddingLarge BusyIndicator { id: backupBusyIndicator anchors.left: parent.left size: BusyIndicatorSize.Small running: backupHelper.estimatedBackupSize &lt; 0 } Label { //% &quot;Estimating backup size...&quot; text: qsTrId(&quot;id_estimating_backup_size&quot;) anchors { left: backupBusyIndicator.right right: parent.right leftMargin: Theme.paddingMedium } font.pixelSize: Theme.fontSizeSmall color: Theme.highlightColor wrapMode: Text.Wrap opacity: backupHelper.estimatedBackupSize &lt; 0? 1: 0 Behavior on opacity { FadeAnimation { } } } Label { //: Information label on Backup page //% &quot;Estimated backup size: %1&quot; text: qsTrId(&apos;id_estimated_backup_size&apos;).arg( Format.formatFileSize(backupHelper.estimatedBackupSize)) anchors { left: backupBusyIndicator.right right: parent.right leftMargin: Theme.paddingMedium } font.pixelSize: Theme.fontSizeSmall color: Theme.highlightColor wrapMode: Text.Wrap opacity: backupHelper.estimatedBackupSize &lt; 0? 0: 1 Behavior on opacity { FadeAnimation { } } } } TextField { id: backupPath text: StandardPaths.documents + &apos;/&apos; + generateBackupFileName() //% &quot;Backup file name&quot; label: qsTrId(&apos;id_backup_file_name&apos;) //% &quot;Backup file name&quot; placeholderText: qsTrId(&apos;id_backup_file_name&apos;) width: parent.width errorHighlight: !fileSystemHelper.isWritable(fileSystemHelper.absolutePath(text)) } Button { //% &quot;Browse&quot; text: qsTrId(&apos;id_do_browse&apos;) anchors.horizontalCenter: parent.horizontalCenter onClicked: { var dlg = pageStack.push(&apos;../DirectoryPickerDialog.qml&apos;, { directoryPath: fileSystemHelper.absolutePath(backupPath.text) }); dlg.accepted.connect(function() { backupPath.text = dlg.directoryPath + &apos;/&apos; + generateBackupFileName(); }); } } TextSwitch { id: compressSwitch //: Switch control whether compress backup or not //% &quot;Compress backup&quot; text: qsTrId(&apos;id_compress_backup&apos;) //: Description of the switch //% &quot;The backup will be compressed using BZIP2. This slows down the operation significantly and doesn\&apos;t bring much if FLAC compression was already set to maximum in Audio settings.&quot; description: qsTrId(&apos;id_compress_backup_description&apos;) onCheckedChanged: { if (checked &amp;&amp; !endsWith(backupPath.text, &apos;.bz2&apos;)) backupPath.text += &apos;.bz2&apos;; else if (!checked &amp;&amp; endsWith(backupPath.text, &apos;.bz2&apos;)) backupPath.text = backupPath.text.substring(0, backupPath.text.length - 4); } } Item { width: parent.width height: Theme.paddingLarge } Button { //: Backup section header //% &quot;Backup&quot; text: qsTrId(&apos;id_settings_backup&apos;) anchors.horizontalCenter: parent.horizontalCenter enabled: !backupPath.errorHighlight onClicked: { var config = { fileName: backupPath.text, compress: compressSwitch.checked, overwrite: true }; if (fileSystemHelper.exists(backupPath.text)) { pageStack.push(Qt.resolvedUrl(&apos;BackupFileExists.qml&apos;), { acceptDestination: Qt.resolvedUrl(&apos;BackupWorker.qml&apos;), acceptDestinationAction: PageStackAction.Replace, acceptDestinationProperties: config, fileName: backupPath.text }); } else pageStack.push(Qt.resolvedUrl(&apos;BackupWorker.qml&apos;), config); } } Item { width: parent.width height: Theme.paddingLarge } SectionHeader { //: Restore section header //% &quot;Restore&quot; text: qsTrId(&apos;id_restore&apos;) } StyledLabel { //: Restore description //% &quot;Select a backup file made by the Call Recorder previously to restore it to this device.&quot; text: qsTrId(&apos;id_restore_description&apos;) height: implicitHeight + Theme.paddingLarge font.pixelSize: Theme.fontSizeSmall color: Theme.highlightColor } TextField { id: restorePath //: Label for entering path to restore file //% &quot;Restore file name&quot; label: qsTrId(&apos;id_restore_file_name&apos;) //% &quot;Restore file name&quot; placeholderText: qsTrId(&apos;id_restore_file_name&apos;) width: parent.width onTextChanged: restoreHelper.readBackupMeta(text); } Button { //% &quot;Browse&quot; text: qsTrId(&quot;id_do_browse&quot;) anchors.horizontalCenter: parent.horizontalCenter onClicked: { var dlg = pageStack.push(Qt.resolvedUrl(&apos;../dialogs/FilePickerDialog.qml&apos;)); dlg.accepted.connect(function() { restorePath.text = dlg.absoluteFilePath; }) } } Item { width: parent.width height: Theme.paddingLarge } Row { x: Theme.horizontalPageMargin spacing: Theme.paddingMedium width: parent.width - x * 2 visible: restoreHelper.busy || restoreHelper.errorCode !== BackupHelper.None BusyIndicator { id: restoreBusyIndicator size: BusyIndicatorSize.Small running: restoreHelper.busy } Label { id: restoreStateLabel width: parent.width - restoreBusyIndicator.width - Theme.paddingMedium font.pixelSize: Theme.fontSizeSmall color: Theme.highlightColor wrapMode: Text.Wrap states: [ State { when: restoreHelper.busy PropertyChanges { target: restoreStateLabel //: Information label //% &quot;Checking backup file...&quot; text: qsTrId(&apos;id_checking_backup_file&apos;) } }, State { when: restoreHelper.errorCode !== BackupHelper.None PropertyChanges { target: restoreStateLabel //: Information label //% &quot;Selected file is not a valid Call Recorder backup&quot; text: qsTrId(&apos;id_backup_invalid&apos;) } } ] } } BackupMetaWidget { id: restoreMetaWidget visible: restoreHelper.backupMeta !== &apos;&apos; &amp;&amp; restoreHelper.errorCode === BackupHelper.None } Item { width: parent.width height: Theme.paddingLarge } Button { //: Action button //% &quot;Restore&quot; text: qsTrId(&apos;id_do_restore&apos;) anchors.horizontalCenter: parent.horizontalCenter enabled: restoreHelper.errorCode === BackupHelper.None &amp;&amp; restoreMeta.restoreSize &gt; 0 onClicked: { pageStack.push(&apos;BackupRestoreSettings.qml&apos;, { acceptDestination: Qt.resolvedUrl(&apos;BackupWorker.qml&apos;), acceptDestinationAction: PageStackAction.Replace, acceptDestinationProperties: { isBackup: false, fileName: restoreMeta.fileName, outputLocation: settings.outputLocation }, backupMeta: restoreMeta }); } } } } onStatusChanged: { if (status == PageStatus.Active &amp;&amp; backupHelper.estimatedBackupSize &lt; 0) backupHelper.estimateBackupSize(); } function endsWith(str, ends) { return str.substring(str.length - ends.length) === ends; } function generateBackupFileName() { var dt = new Date(); var dtStr = &apos;&apos; + dt.getFullYear() + padLeft(dt.getMonth(), &apos;0&apos;, 2) + padLeft(dt.getDate(), &apos;0&apos;, 2); return &apos;callrecorder-&apos; + dtStr + &apos;.tar&apos; + (compressSwitch.checked? &apos;.bz2&apos;: &apos;&apos;); } function padLeft(str, ch, length) { return (new Array(length - String(str).length + 1)).join(ch) + str; } }
+Page header
 ----------
 Backup section header</extracomment>
-        <translation></translation>
+        <translation>Резервная копия</translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
@@ -343,7 +341,7 @@ Page header</extracomment>
     <message id="id_about_copyright">
         <source>Copyright © 2014-2016 Dmitriy Purgin</source>
         <extracomment>Copyright string</extracomment>
-        <translation>© 2014-2016 Дмитрий Пургин}</translation>
+        <translation>© 2014-2016 Дмитрий Пургин</translation>
     </message>
     <message id="id_about_thanks">
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
@@ -433,7 +431,7 @@ Page header</extracomment>
         <translation>Сжать резервную копию</translation>
     </message>
     <message id="id_compress_backup_description">
-        <source>The backup will be compressed using BZIP2. This slows down the operation significantly and doesn\&apos;t bring much if FLAC compression was already set to maximum in Audio settings.</source>
+        <source>The backup will be compressed using BZIP2. This slows down the operation significantly and doesn&apos;t bring much if FLAC compression was already set to maximum in Audio settings.</source>
         <extracomment>Description of the switch</extracomment>
         <translation>Резервная копия будет сжата с помощью BZIP2. Это существенно замедлит операцию и не имеет большого смысла, если сжатие FLAC уже было установлено на максимум в настройках аудио.</translation>
     </message>
@@ -503,7 +501,7 @@ Page header</extracomment>
         <translation>Файлы</translation>
     </message>
     <message id="id_backup_information">
-        <source>Backupo Information</source>
+        <source>Backup Information</source>
         <extracomment>Backup page section header</extracomment>
         <translation>Информация о резервной копии</translation>
     </message>
@@ -847,9 +845,9 @@ Section header</extracomment>
         <translation>При изменении локализации необходимо перезапустить приложение</translation>
     </message>
     <message id="id_database_repair_description">
-        <source>If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it</source>
+        <source>If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it.</source>
         <extracomment>Description of database repair</extracomment>
-        <translation>Если список записей и хранилище файлов перестали соответствовать друг другу (например, запись удалена из списка, но файл ещё существует), это можно исправить здесь</translation>
+        <translation>Если список записей и хранилище файлов перестали соответствовать друг другу (например, запись удалена из списка, но файл ещё существует), это можно исправить здесь.</translation>
     </message>
     <message id="id_orphaned_records">
         <source>Orphaned records</source>
@@ -873,9 +871,11 @@ Section header</extracomment>
 &quot;skip&quot; option for comboboxes (lowercased)</extracomment>
         <translation>пропустить</translation>
     </message>
-    <message id="id_compobox_do_remove">
+    <message id="id_combobox_do_remove">
         <source>remove</source>
-        <extracomment>&quot;Remove&quot; option for comboboxes (lowercased)</extracomment>
+        <extracomment>&quot;Remove&quot; option for comboboxes (lowercased)
+----------
+&quot;remove&quot; option for comboboxes (lowercased)</extracomment>
         <translation>удалить</translation>
     </message>
     <message id="id_orphaned_files">
@@ -895,11 +895,6 @@ Section header</extracomment>
         <source>Recording file will be used to restore an entry in the database if there is none</source>
         <translation>Файл будет использован, чтобы создать запись в базе данных, если таковой нет</translation>
     </message>
-    <message id="id_combobox_do_remove">
-        <source>remove</source>
-        <extracomment>&quot;remove&quot; option for comboboxes (lowercased)</extracomment>
-        <translation>удалить</translation>
-    </message>
     <message id="id_combobox_do_restore">
         <source>restore</source>
         <extracomment>&quot;restore&quot; option for comboboxes (lowercased)</extracomment>
@@ -909,644 +904,15 @@ Section header</extracomment>
         <source>Repair</source>
         <translation>Восстановить</translation>
     </message>
-</context>
-<context>
-    <name>About</name>
-    <message>
-        <source>Translators</source>
-        <translation type="vanished">Переводчики</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Лицензия</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">О программе</translation>
-    </message>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Запись звонков</translation>
-    </message>
-    <message>
-        <source>for SailfishOS</source>
-        <translation type="vanished">для SailfishOS</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="vanished">Версия %1</translation>
-    </message>
-    <message>
-        <source>Copyright © 2014-2015 Dmitriy Purgin</source>
-        <translation type="vanished">© 2014-2015 Дмитрий Пургин</translation>
-    </message>
-    <message>
-        <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
-        <translation type="vanished">Спасибо Симонасу Лелейве и Юхе Хямяляйнену</translation>
-    </message>
-    <message>
-        <source>Use pull-down menu to see translators</source>
-        <translation type="vanished">Вытяните меню, чтобы узнать о переводчиках</translation>
-    </message>
-    <message>
-        <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
-        <translation type="vanished">Эта программа распространяется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ. Это свободное программное обеспечение, приветствуется её распространение на определённых условиях; вытяните меню, чтобы узнать подробности</translation>
-    </message>
-</context>
-<context>
-    <name>AudioSettings</name>
-    <message>
-        <source>Audio Settings</source>
-        <translation type="vanished">Настройки аудио</translation>
-    </message>
-    <message>
-        <source>FLAC Encoder</source>
-        <translation type="vanished">Кодировщик FLAC</translation>
-    </message>
-    <message>
-        <source>Sample rate</source>
-        <translation type="vanished">Частота дискретизации</translation>
-    </message>
-    <message>
-        <source>FLAC compression level</source>
-        <translation type="vanished">Уровень сжатия FLAC</translation>
-    </message>
-    <message>
-        <source>44.1 kHz</source>
-        <translation type="vanished">44,1 кГц</translation>
-    </message>
-    <message>
-        <source>32 kHz</source>
-        <translation type="vanished">32 кГц</translation>
-    </message>
-    <message>
-        <source>22.05 kHz</source>
-        <translation type="vanished">22,05 кГц</translation>
-    </message>
-    <message>
-        <source>16 kHz</source>
-        <translation type="vanished">16 кГц</translation>
-    </message>
-    <message>
-        <source>11.025 kHz</source>
-        <translation type="vanished">11,025 кГц</translation>
-    </message>
-    <message>
-        <source>8 kHz</source>
-        <translation type="vanished">8 кГц</translation>
-    </message>
-</context>
-<context>
-    <name>ContactPickerDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Принять</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-    <message>
-        <source>No contacts available</source>
-        <translation type="vanished">У вас еще нет контактов</translation>
-    </message>
-</context>
-<context>
-    <name>CoverPage</name>
-    <message>
-        <source>Call Recorder</source>
-        <translation type="vanished">Запись звонков</translation>
-    </message>
-</context>
-<context>
-    <name>Daemon</name>
-    <message>
-        <source>Recording daemon</source>
-        <translation type="vanished">Служба записи</translation>
-    </message>
-    <message>
-        <source>Startup</source>
-        <translation type="vanished">Запуск</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">Включена</translation>
-    </message>
-    <message>
-        <source>Capture all incoming and outgoing calls</source>
-        <translation type="vanished">Записываются все входящие и исходящие звонки</translation>
-    </message>
-    <message>
-        <source>Automatic startup</source>
-        <translation type="vanished">Автозапуск</translation>
-    </message>
-    <message>
-        <source>Start automatically upon reboot</source>
-        <translation type="vanished">Автоматический запуск при перезагрузке</translation>
-    </message>
-    <message>
-        <source>Operation mode</source>
-        <translation type="vanished">Режим работы</translation>
-    </message>
-    <message>
-        <source>Record calls to any number except those in the black list</source>
-        <translation type="vanished">Записываются все номера, кроме указанных в чёрном списке</translation>
-    </message>
-    <message>
-        <source>Do not record anything except numbers in the white list</source>
-        <translation type="vanished">Записываются только номера из белого списка</translation>
-    </message>
-    <message>
-        <source>Black list</source>
-        <translation type="vanished">Чёрный список</translation>
-    </message>
-    <message>
-        <source>White list</source>
-        <translation type="vanished">Белый список</translation>
-    </message>
-    <message>
-        <source>Edit list</source>
-        <translation type="vanished">Редактировать</translation>
-    </message>
-</context>
-<context>
-    <name>DirectoryNameDialog</name>
-    <message>
-        <source>Directory name</source>
-        <translation type="vanished">Имя директории</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Принять</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-</context>
-<context>
-    <name>DirectoryPickerDialog</name>
-    <message>
-        <source>Select %1</source>
-        <translation type="vanished">Выбрать %1</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Выбрать</translation>
-    </message>
-    <message>
-        <source>No nested directories</source>
-        <translation type="vanished">Нет вложенных директорий</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="vanished">Переименовать</translation>
-    </message>
-    <message>
-        <source>Renaming is not allowed</source>
-        <translation type="vanished">Переименование недоступно</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Удалить</translation>
-    </message>
-    <message>
-        <source>Removal is not allowed</source>
-        <translation type="vanished">Удаление недоступно</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-</context>
-<context>
-    <name>EventPage</name>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Удалить</translation>
-    </message>
-    <message>
-        <source>Approve and store</source>
-        <translation type="vanished">Подтвердить и сохранить</translation>
-    </message>
-    <message>
-        <source>Number is whitelisted</source>
-        <translation type="vanished">Номер в белом списке</translation>
-    </message>
-    <message>
-        <source>Number is blacklisted</source>
-        <translation type="vanished">Номер в чёрном списке</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="vanished">Записывать этот номер</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="vanished">Не записывать этот номер</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="vanished">%1 записывается</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">%1 не записывается</translation>
-    </message>
-    <message>
-        <source>Storing</source>
-        <translation type="vanished">Сохранение</translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Удаление</translation>
-    </message>
-    <message>
-        <source>Incoming call</source>
-        <translation type="vanished">Входящий звонок</translation>
-    </message>
-    <message>
-        <source>Outgoing call</source>
-        <translation type="vanished">Исходящий звонок</translation>
-    </message>
-    <message>
-        <source>Partial call</source>
-        <translation type="vanished">Частичная запись</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegate</name>
-    <message>
-        <source>Deleting</source>
-        <translation type="vanished">Удаление</translation>
-    </message>
-    <message>
-        <source>Storing</source>
-        <translation type="vanished">Сохранение</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegateContent</name>
-    <message>
-        <source>Armed for recording</source>
-        <translation type="vanished">Готово к записи</translation>
-    </message>
-    <message>
-        <source>Recording in progress</source>
-        <translation type="vanished">Идёт запись</translation>
-    </message>
-    <message>
-        <source>Recording suspended</source>
-        <translation type="vanished">Запись приостановлена</translation>
-    </message>
-    <message>
-        <source>Waiting for approval</source>
-        <translation type="vanished">Ожидает подтверждения</translation>
-    </message>
-</context>
-<context>
-    <name>EventsDelegateMenu</name>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Удалить</translation>
-    </message>
-    <message>
-        <source>Always record this number</source>
-        <translation type="vanished">Записывать этот номер</translation>
-    </message>
-    <message>
-        <source>Recording %1</source>
-        <translation type="vanished">%1 записывается</translation>
-    </message>
-    <message>
-        <source>Never record this number</source>
-        <translation type="vanished">Не записывать этот номер</translation>
-    </message>
-    <message>
-        <source>Not recording %1</source>
-        <translation type="vanished">%1 не записывается</translation>
-    </message>
-    <message>
-        <source>Approve and store</source>
-        <translation type="vanished">Подтвердить и сохранить</translation>
-    </message>
-    <message>
-        <source>Number is whitelisted</source>
-        <translation type="vanished">Номер в белом списке</translation>
-    </message>
-    <message>
-        <source>Number is blacklisted</source>
-        <translation type="vanished">Номер в чёрном списке</translation>
-    </message>
-</context>
-<context>
-    <name>EventsFilterDialog</name>
-    <message>
-        <source>Accept</source>
-        <translation type="vanished">Принять</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-    <message>
-        <source>Before</source>
-        <translation type="vanished">До</translation>
-    </message>
-    <message>
-        <source>After</source>
-        <translation type="vanished">После</translation>
-    </message>
-    <message>
-        <source>Phone number</source>
-        <translation type="vanished">Номер телефона</translation>
-    </message>
-    <message>
-        <source>On</source>
-        <translation type="vanished">На дату</translation>
-    </message>
-</context>
-<context>
-    <name>EventsPage</name>
-    <message>
-        <source>Recordings</source>
-        <translation type="vanished">Записи</translation>
-    </message>
-    <message>
-        <source>No calls recorded yet</source>
-        <translation type="vanished">Нет записанных звонков</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Настройки</translation>
-    </message>
-    <message>
-        <source>Select recordings</source>
-        <translation type="vanished">Выбрать записи</translation>
-    </message>
-    <message>
-        <source>Filtered recordings</source>
-        <translation type="vanished">Отфильтрованные записи</translation>
-    </message>
-    <message>
-        <source>Select filtered recordings</source>
-        <translation type="vanished">Выбор отфильтрованных записей</translation>
-    </message>
-    <message>
-        <source>Filter</source>
-        <translation type="vanished">Фильтр</translation>
-    </message>
-    <message>
-        <source>No recordings meet filter criteria</source>
-        <translation type="vanished">Нет записей, соответствующих критериям отбора</translation>
-    </message>
-    <message>
-        <source>View recordings</source>
-        <translation type="vanished">Просмотр записей</translation>
-    </message>
-    <message>
-        <source>Deleting recordings</source>
-        <translation type="vanished">Удаление записей</translation>
-    </message>
-    <message>
-        <source>Delete all filtered</source>
-        <translation type="vanished">Удалить отфильтрованные</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Удалить все</translation>
-    </message>
-    <message>
-        <source>Deleting all filtered</source>
-        <translation type="vanished">Удаление отфильтрованных</translation>
-    </message>
-    <message>
-        <source>Deleting all recordings</source>
-        <translation type="vanished">Удаление всех записей</translation>
-    </message>
-</context>
-<context>
-    <name>License</name>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Лицензия</translation>
-    </message>
-</context>
-<context>
-    <name>LocaleListModel</name>
-    <message>
+    <message id="id_locale_system">
         <source>System</source>
+        <extracomment>System locale</extracomment>
         <translation>Системная</translation>
     </message>
-</context>
-<context>
-    <name>PhoneNumberEntryField</name>
-    <message>
-        <source>Search by name or number</source>
-        <translation type="vanished">Искать по имени или номеру</translation>
-    </message>
-</context>
-<context>
-    <name>PhoneNumbersListDialog</name>
-    <message>
-        <source>Copy from white list</source>
-        <translation type="vanished">Скопировать из белого списка</translation>
-    </message>
-    <message>
-        <source>Copy from black list</source>
-        <translation type="vanished">Скопировать из чёрного списка</translation>
-    </message>
-    <message>
-        <source>Delete all</source>
-        <translation type="vanished">Удалить все</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Сохранить</translation>
-    </message>
-    <message>
-        <source>Enter phone number</source>
-        <translation type="vanished">Введите номер</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Удалить</translation>
-    </message>
-    <message>
-        <source>No items in the list</source>
-        <translation type="vanished">Список пуст</translation>
-    </message>
-    <message>
-        <source>Add numbers with field above or use pull-down menu</source>
-        <translation type="vanished">Введите номер в поле ввода или вытяните меню</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-    <message>
-        <source>Pick from contacts</source>
-        <translation type="vanished">Подобрать из контактов</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsPage</name>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Настройки</translation>
-    </message>
-    <message>
-        <source>Recording daemon</source>
-        <translation type="vanished">Служба записи</translation>
-    </message>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Хранение</translation>
-    </message>
-    <message>
-        <source>Audio settings</source>
-        <translation type="vanished">Настройки аудио</translation>
-    </message>
-    <message>
-        <source>User interface</source>
-        <translation type="vanished">Интерфейс пользователя</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">О программе</translation>
-    </message>
-</context>
-<context>
-    <name>Storage</name>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Хранение</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="vanished">Расположение</translation>
-    </message>
-    <message>
-        <source>Location for storing the recordings</source>
-        <translation type="vanished">Расположение записанных файлов</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Обзор</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Сохранить</translation>
-    </message>
-    <message>
-        <source>Relocating files</source>
-        <translation type="vanished">Перемещение файлов</translation>
-    </message>
-    <message>
-        <source>Storage limits</source>
-        <translation type="vanished">Ограничения на объём данных</translation>
-    </message>
-    <message>
-        <source>Limit storage by size or age</source>
-        <translation type="vanished">Ограничивать по размеру или сроку хранения</translation>
-    </message>
-    <message>
-        <source>By age</source>
-        <translation type="vanished">По сроку хранения</translation>
-    </message>
-    <message>
-        <source>no limit</source>
-        <translation type="vanished">без ограничения</translation>
-    </message>
-    <message>
-        <source>30 days</source>
-        <translation type="vanished">30 дней</translation>
-    </message>
-    <message>
-        <source>90 days</source>
-        <translation type="vanished">90 дней</translation>
-    </message>
-    <message>
-        <source>180 days</source>
-        <translation type="vanished">180 дней</translation>
-    </message>
-    <message>
-        <source>365 days</source>
-        <translation type="vanished">365 дней</translation>
-    </message>
-    <message>
-        <source>Custom age limit in days</source>
-        <translation type="vanished">Ограничение в днях</translation>
-    </message>
-    <message>
-        <source>By size</source>
-        <translation type="vanished">По объёму</translation>
-    </message>
-    <message>
-        <source>300 MB</source>
-        <translation type="vanished">300 МБ</translation>
-    </message>
-    <message>
-        <source>500 MB</source>
-        <translation type="vanished">500 МБ</translation>
-    </message>
-    <message>
-        <source>1 GB</source>
-        <translation type="vanished">1 ГБ</translation>
-    </message>
-    <message>
-        <source>3 GB</source>
-        <translation type="vanished">3 ГБ</translation>
-    </message>
-    <message>
-        <source>5 GB</source>
-        <translation type="vanished">5 ГБ</translation>
-    </message>
-    <message>
-        <source>Custom size limit in MB</source>
-        <translation type="vanished">Ограничение на объём в МБ</translation>
-    </message>
-    <message>
-        <source>Approval for storage</source>
-        <translation type="vanished">Подтверждение сохранения</translation>
-    </message>
-    <message>
-        <source>Require approval</source>
-        <translation type="vanished">Запрашивать подтверждение</translation>
-    </message>
-    <message>
-        <source>If checked, an approval of storage will be shown after each recorded call</source>
-        <translation type="vanished">Если включено, то после каждого записанного звонка будет запрашиваться подтверждение на сохранение</translation>
-    </message>
-    <message>
-        <source>custom</source>
-        <translation type="vanished">другое</translation>
-    </message>
-</context>
-<context>
-    <name>Translators</name>
-    <message>
-        <source>Translators</source>
-        <translation type="vanished">Переводчики</translation>
-    </message>
-    <message>
-        <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
-        <translation type="vanished">Программа доступна на разных языках благодаря этим людям. Имена и коды локализаций указаны в алфавитном порядке.</translation>
-    </message>
-</context>
-<context>
-    <name>UserInterface</name>
-    <message>
-        <source>User interface</source>
-        <translation type="vanished">Интерфейс пользователя</translation>
-    </message>
-    <message>
-        <source>Locale</source>
-        <translation type="vanished">Локализация</translation>
-    </message>
-    <message>
-        <source>Please restart the application if the locale is changed</source>
-        <translation type="vanished">При изменении локализации необходимо перезапустить приложение</translation>
+    <message id="id_locale_user_defined">
+        <source>User-defined</source>
+        <extracomment>User-defined locale</extracomment>
+        <translation>Пользовательская</translation>
     </message>
 </context>
 </TS>
