@@ -30,8 +30,13 @@ INCLUDEPATH += \
 LIBS += \
     -L../libcallrecorder -lcallrecorder \
     -L../libcontacts -lcontactcache-qt5 \
-    -larchive
+    -Llib -larchive
 #    -L../nemo-qml-plugin-contacts -lnemocontacts \
+
+provides.path = /usr/share/$${PACKAGE}/lib
+provides.files = lib/libarchive.so.12
+
+INSTALLS += provides
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Werror
 

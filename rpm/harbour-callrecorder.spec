@@ -6,6 +6,8 @@
 Name:       harbour-callrecorder
 
 # >> macros
+%define __provides_exclude_from ^%{_datadir}/.*$
+%define __requires_exclude ^libarchive|libcontactcache-qt5|libcallrecorder|libqtpulse|libnemocontacts.*$
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -14,7 +16,7 @@ Name:       harbour-callrecorder
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
 Version:    0.7.1
-Release:    3
+Release:    4
 Group:      Applications/Communications
 License:    GPLv3
 URL:        https://github.com/dpurgin/harbour-callrecorder
