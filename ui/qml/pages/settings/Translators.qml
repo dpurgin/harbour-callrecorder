@@ -100,13 +100,15 @@ Page {
             ListElement {
                 locale: "es"
                 translators: [
-                    ListElement { name: "Carmen Fernández B." }
+                    ListElement { name: "Carmen Fernández B." },
+                    ListElement { name: "Pedro Antequera" }
                 ]
             }
 
             ListElement {
                 locale: "fi"
                 translators: [
+                    ListElement { name: "juiceme" },
                     ListElement { name: "Jukka Aaltonen" },
                     ListElement { name: "RandomTranslator" },
                     ListElement { name: "Simo Ruoho" }
@@ -122,9 +124,17 @@ Page {
             }
 
             ListElement {
+                locale: "hu"
+                translators: [
+                    ListElement { name: "Miklós Márton" }
+                ]
+            }
+
+            ListElement {
                 locale: "it"
                 translators: [
                     ListElement { name: "lorenzo facca" },
+                    ListElement { name: "palikao" },
                     ListElement { name: "Yuri Bongiorno" }
                 ]
             }
@@ -137,10 +147,18 @@ Page {
             }
 
             ListElement {
+                locale: "ml"
+                translators: [
+                    ListElement { name: "lal883" }
+                ]
+            }
+
+            ListElement {
                 locale: "nl"
                 translators: [
                     ListElement { name: "Heimen Stoffels" },
-                    ListElement { name: "HtheB" }
+                    ListElement { name: "HtheB" },
+                    ListElement { name: "Nathan Follens" }
                 ]
             }
 
@@ -169,6 +187,13 @@ Page {
                 locale: "sv"
                 translators: [
                     ListElement { name: "Åke Engelbrektson" }
+                ]
+            }
+
+            ListElement {
+                locale: "zh_CN"
+                translators: [
+                    ListElement { name: "鸟哥" }
                 ]
             }
 
