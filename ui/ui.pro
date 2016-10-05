@@ -132,6 +132,7 @@ TRANSLATIONS += \
     translations/ui-it.ts \
     translations/ui-lt.ts \
     translations/ui-nl.ts \
+    translations/ui-ml.ts \
     translations/ui-pl.ts \
     translations/ui-ru.ts \
     translations/ui-sk.ts \

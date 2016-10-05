@@ -6,7 +6,7 @@
     <message id="id_call_recorder">
         <source>Call Recorder</source>
         <extracomment>Application title</extracomment>
-        <translation>Oproepopname-applicatie</translation>
+        <translation>Oproepopname</translation>
     </message>
     <message id="id_do_approve_store">
         <source>Approve and store</source>
@@ -31,7 +31,7 @@
     <message id="id_remorse_recording">
         <source>Recording %1</source>
         <extracomment>Remorse text when manipulationg black/white list</extracomment>
-        <translation>Bezig met opnemen van %1</translation>
+        <translation>%1 wordt opgenomen</translation>
     </message>
     <message id="id_do_not_record_number">
         <source>Never record this number</source>
@@ -41,7 +41,7 @@
     <message id="id_remorse_not_recording">
         <source>Not recording %1</source>
         <extracomment>Remorse text when manipulationg black/white list</extracomment>
-        <translation>Niet bezig met opnemen van %1</translation>
+        <translation>%1 wordt niet opgenomen</translation>
     </message>
     <message id="id_do_delete">
         <source>Delete</source>
@@ -97,7 +97,7 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_waiting_for_approval">
         <source>Waiting for approval</source>
         <extracomment>Recording state</extracomment>
-        <translation>Bezig met wachten op toestemming</translation>
+        <translation>Wachten op toestemming</translation>
     </message>
     <message id="id_recordings">
         <source>Recordings</source>
@@ -107,7 +107,7 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_select_recordings">
         <source>Select recordings</source>
         <extracomment>Title for recordings selection</extracomment>
-        <translation>Selecteer opnames</translation>
+        <translation>Selecteer opnamen</translation>
     </message>
     <message id="id_filtered_recordings">
         <source>Filtered recordings</source>
@@ -127,7 +127,7 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_do_select_recordings">
         <source>Select recordings</source>
         <extracomment>Menu item</extracomment>
-        <translation>Selecteer opnames</translation>
+        <translation>Selecteer opnamen</translation>
     </message>
     <message id="id_do_filter">
         <source>Filter</source>
@@ -137,7 +137,7 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_do_delete_all_filtered">
         <source>Delete all filtered</source>
         <extracomment>Menu item</extracomment>
-        <translation>Alle gefilterde opnames verwijderen</translation>
+        <translation>Alle gefilterde opnamen verwijderen</translation>
     </message>
     <message id="id_do_delete_all">
         <source>Delete all</source>
@@ -147,17 +147,17 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_remorse_deleting_all_filtered">
         <source>Deleting all filtered</source>
         <extracomment>Remorse text when deleting all filtered recordings</extracomment>
-        <translation>Bezig met verwijderen van alle gefilterde opnames</translation>
+        <translation>Alle gefilterde opnamen worden verwijderd</translation>
     </message>
     <message id="id_remorse_deleting_all_recordings">
         <source>Deleting all recordings</source>
         <extracomment>Remorse text when deleting all recordings</extracomment>
-        <translation>Bezig met verwijderen van alle opnames</translation>
+        <translation>Alle opnamen worden verwijderd</translation>
     </message>
     <message id="id_filtered_recordings_placeholder">
         <source>No recordings meet filter criteria</source>
         <extracomment>Placeholder text for empty filtered list of recordings</extracomment>
-        <translation>Er zijn geen opnamen die aan uw filtercriteria voldoen</translation>
+        <translation>Er zijn geen opnamen die aan je filtercriteria voldoen</translation>
     </message>
     <message id="id_recordings_placeholder">
         <source>No calls recorded yet</source>
@@ -167,14 +167,14 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_remorse_deleting_recordings">
         <source>Deleting recordings</source>
         <extracomment>Remorse text for deleting recordings</extracomment>
-        <translation>Bezig met verwijderen van opnames</translation>
+        <translation>Bezig met verwijderen van opnamen</translation>
     </message>
     <message id="id_settings_recording_daemon">
         <source>Recording daemon</source>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Opnamedaemon</translation>
     </message>
     <message id="id_settings_storage">
         <source>Storage</source>
@@ -196,7 +196,7 @@ Settings item</extracomment>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Hulpmiddelen</translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
@@ -205,7 +205,7 @@ Settings item</extracomment>
 Backup section header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Back-up</translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
@@ -217,7 +217,7 @@ Settings item</extracomment>
     <message id="id_do_accept">
         <source>Accept</source>
         <extracomment>Dialog button. This should be the same as the corresponding Sailfish string</extracomment>
-        <translation>Accepteren</translation>
+        <translation>Aanvaarden</translation>
     </message>
     <message id="id_do_cancel">
         <source>Cancel</source>
@@ -254,7 +254,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_new_name">
         <source>New name</source>
         <extracomment>Text field when renaming file/directory</extracomment>
-        <translation></translation>
+        <translation>Nieuwe naam</translation>
     </message>
     <message id="id_do_select_file">
         <source>Select %1</source>
@@ -269,7 +269,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_directory_empty">
         <source>Directory is empty</source>
         <extracomment>Placeholder for empty directory in file picker</extracomment>
-        <translation></translation>
+        <translation>Map is leeg</translation>
     </message>
     <message id="id_do_rename">
         <source>Rename</source>
@@ -289,7 +289,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_pick_from_contacts">
         <source>Pick from contacts</source>
         <extracomment>Action in phone numbers list</extracomment>
-        <translation>Kiezen uit de contactpersonenlijst</translation>
+        <translation>Kiezen uit contacten</translation>
     </message>
     <message id="id_copy_from_whitelist">
         <source>Copy from white list</source>
@@ -316,7 +316,7 @@ Save action</extracomment>
     <message id="id_phone_numbers_hint">
         <source>Add numbers with field above or use pull-down menu</source>
         <extracomment>Hint for empty phone numbers list</extracomment>
-        <translation>Voeg telefoonnummers toe middels het veld hierboven of gebruik het trekmenu</translation>
+        <translation>Voeg telefoonnummers toe middels het veld hierboven of gebruik het uittrekmenu</translation>
     </message>
     <message id="id_translators">
         <source>Translators</source>
@@ -343,7 +343,7 @@ Page header</extracomment>
     <message id="id_about_copyright">
         <source>Copyright © 2014-2016 Dmitriy Purgin</source>
         <extracomment>Copyright string</extracomment>
-        <translation>Copyright © 2014-2016 Dmitriy Purgin</translation>
+        <translation>Auteursrecht © 2014-2016 Dmitriy Purgin</translation>
     </message>
     <message id="id_about_thanks">
         <source>Thanks to Simonas Leleiva and Juho Hämäläinen</source>
@@ -358,12 +358,12 @@ Page header</extracomment>
     <message id="id_gpl_disclaimer">
         <source>This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions; use pull-down menu for details</source>
         <extracomment>Short GPL disclaimer on About page</extracomment>
-        <translation>Deze applicatie is ZONDER ENIGE GARANTIE. Dit is vrije software en u mag deze gerust herdistribueren onder bepaalde voorwaarden; gebruik het trekmenu om de details weer te geven</translation>
+        <translation>Deze applicatie is ZONDER ENIGE GARANTIE. Dit is vrije software en je mag deze gerust verspreiden onder bepaalde voorwaarden; gebruik het trekmenu om de details weer te geven</translation>
     </message>
     <message id="id_flac_encoder">
         <source>FLAC Encoder</source>
         <extracomment>Section header on Audio Settings page</extracomment>
-        <translation>FLAC-codeerder</translation>
+        <translation>FLAC-encoder</translation>
     </message>
     <message id="id_sample_rate">
         <source>Sample rate</source>
@@ -407,20 +407,20 @@ Page header</extracomment>
     <message id="id_backup_description">
         <source>Create a backup to save the recorded calls and settings. Use it later to restore the data on other device or after factory reset.</source>
         <extracomment>Description of backup page</extracomment>
-        <translation></translation>
+        <translation>Maak een back-up om de opgenomen oproepen en instellingen op te slaan. Gebruik deze later om de gegevens te herstellen op een ander apparaat, of wanneer je je apparaat hebt hersteld naar de fabrieksinstellingen.</translation>
     </message>
     <message id="id_estimating_backup_size">
         <source>Estimating backup size...</source>
-        <translation></translation>
+        <translation>Back-upgrootte wordt berekend...</translation>
     </message>
     <message id="id_estimated_backup_size">
         <source>Estimated backup size: %1</source>
         <extracomment>Information label on Backup page</extracomment>
-        <translation></translation>
+        <translation>Geschatte back-upgrootte: %1</translation>
     </message>
     <message id="id_backup_file_name">
         <source>Backup file name</source>
-        <translation></translation>
+        <translation>Back-upbestandsnaam</translation>
     </message>
     <message id="id_do_browse">
         <source>Browse</source>
@@ -430,179 +430,179 @@ Page header</extracomment>
     <message id="id_compress_backup">
         <source>Compress backup</source>
         <extracomment>Switch control whether compress backup or not</extracomment>
-        <translation></translation>
+        <translation>Back-up comprimeren</translation>
     </message>
     <message id="id_compress_backup_description">
         <source>The backup will be compressed using BZIP2. This slows down the operation significantly and doesn&apos;t bring much if FLAC compression was already set to maximum in Audio settings.</source>
         <extracomment>Description of the switch</extracomment>
-        <translation></translation>
+        <translation>De back-up zal worden gecomprimeerd met BZIP2. Dit zorgt voor een significante vertraging van de bewerking en biedt niet veel voordelen als de FLAC-compressie al op het maximum is ingesteld in de audio-instellingen.</translation>
     </message>
     <message id="id_restore">
         <source>Restore</source>
         <extracomment>Restore section header</extracomment>
-        <translation></translation>
+        <translation>Herstellen</translation>
     </message>
     <message id="id_restore_description">
         <source>Select a backup file made by the Call Recorder previously to restore it to this device.</source>
         <extracomment>Restore description</extracomment>
-        <translation></translation>
+        <translation>Kies een back-upbestand gemaakt door de oproepopname om deze op dit apparaat te herstellen.</translation>
     </message>
     <message id="id_restore_file_name">
         <source>Restore file name</source>
         <extracomment>Label for entering path to restore file</extracomment>
-        <translation></translation>
+        <translation>Bestandsnaam herstellen</translation>
     </message>
     <message id="id_checking_backup_file">
         <source>Checking backup file...</source>
         <extracomment>Information label</extracomment>
-        <translation></translation>
+        <translation>Back-upbestand wordt gecontroleerd...</translation>
     </message>
     <message id="id_backup_invalid">
         <source>Selected file is not a valid Call Recorder backup</source>
         <extracomment>Information label</extracomment>
-        <translation></translation>
+        <translation>Het geselecteerde bestand is geen geldige oproepopnameback-up</translation>
     </message>
     <message id="id_do_restore">
         <source>Restore</source>
         <extracomment>Action button</extracomment>
-        <translation></translation>
+        <translation>Herstellen</translation>
     </message>
     <message id="id_do_overwrite">
         <source>Overwrite</source>
         <extracomment>Dialog action</extracomment>
-        <translation></translation>
+        <translation>Overschrijven</translation>
     </message>
     <message id="id_backup_location_hint">
         <source>Backup will be saved to the following file:</source>
         <extracomment>Backup file location hint</extracomment>
-        <translation></translation>
+        <translation>De back-up zal worden opgeslagen naar het volgende bestand:</translation>
     </message>
     <message id="id_confirm_overwrite">
         <source>This file already exists. Do you want to overwrite it?</source>
         <extracomment>Confirmation to overwrite existing file</extracomment>
-        <translation></translation>
+        <translation>Dit bestand bestaat al. Wil je het overschrijven?</translation>
     </message>
     <message id="id_program_version">
         <source>Program version</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Programmaversie</translation>
     </message>
     <message id="id_date_and_time">
         <source>Date and time</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Datum en tijd</translation>
     </message>
     <message id="id_unpacked_size">
         <source>Unpacked size</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Uitgepakte grootte</translation>
     </message>
     <message id="id_files">
         <source>Files</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Bestanden</translation>
     </message>
     <message id="id_backup_information">
         <source>Backup Information</source>
         <extracomment>Backup page section header</extracomment>
-        <translation></translation>
+        <translation>Back-upinformatie</translation>
     </message>
     <message id="id_restore_settings">
         <source>Restore Settings</source>
         <extracomment>Backup page secion header</extracomment>
-        <translation></translation>
+        <translation>Instellingen herstellen</translation>
     </message>
     <message id="id_dont_remove_existing_recordings">
         <source>Do not remove existing recordings</source>
         <extracomment>Restore settings</extracomment>
-        <translation></translation>
+        <translation>Bestaande opnamen niet verwijderen</translation>
     </message>
     <message id="id_dont_remove_existing_recordigns_description">
         <source>Leave all existing audio files intact, you can add them to UI later using the database repair tool in Utilities</source>
         <extracomment>Restore description</extracomment>
-        <translation></translation>
+        <translation>Laat alle bestaande audiobestanden intact, je kan ze later toevoegen aan de interface met databaseherstel in de hulpprogramma&apos;s</translation>
     </message>
     <message id="id_preparing">
         <source>Preparing...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Bezig met voorbereiden...</translation>
     </message>
     <message id="id_making_backup">
         <source>Making backup...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Back-up wordt gemaakt...</translation>
     </message>
     <message id="id_removing_old_data">
         <source>Removing old data...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Oude gegevens worden verwijderd...</translation>
     </message>
     <message id="id_restoring">
         <source>Restoring...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Bezig met herstellen...</translation>
     </message>
     <message id="id_complete">
         <source>Complete!</source>
         <extracomment>Backup operation description
 ----------
 Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Klaar!</translation>
     </message>
     <message id="id_not_started">
         <source>Not started</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Niet begonnen</translation>
     </message>
     <message id="id_error">
         <source>Error</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Fout</translation>
     </message>
     <message id="id_unable_to_write_archive">
         <source>Unable to write archive</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>Kan archief niet schrijven</translation>
     </message>
     <message id="id_unable_to_start_operation">
         <source>Unable to start operation</source>
         <extracomment>Backup error description
 ----------
 Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Kan bewerking niet beginnen</translation>
     </message>
     <message id="id_backup_file_exists">
         <source>Backup file already exists</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>Back-upbestand bestaat al</translation>
     </message>
     <message id="id_backup_file_not_exists">
         <source>Backup file doesn&apos;t exist</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>Back-upbestand bestaat niet</translation>
     </message>
     <message id="id_unknown_error">
         <source>Unknown error</source>
         <extracomment>Backup error description
 ----------
 Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Onbekende fout</translation>
     </message>
     <message id="id_performing_backup_description">
         <source>Performing backup. Please do not close the application until the operation is complete.</source>
-        <translation></translation>
+        <translation>Back-up wordt uitgevoerd. Sluit de toepassing niet tot de bewerking voltooid is.</translation>
     </message>
     <message id="id_performing_restore_description">
         <source>Performing restore. Please do not close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behavior.</source>
-        <translation></translation>
+        <translation>Herstel wordt uitgevoerd. Sluit de toepassing niet tot de bewerking voltooid is. Dit kan de gegevens beschadigen en leiden tot onvoorspelbaar gedrag.</translation>
     </message>
     <message id="id_restart_app_description">
         <source>Please restart the application</source>
-        <translation></translation>
+        <translation>Herstart de toepassing</translation>
     </message>
     <message id="id_restore_success_description">
         <source>Database, settings and recordings were successfully restored. The Call Recorder needs to be restarted to apply the changes. If you chose to merge the existing recording files, you should run the database repair tool from Utilities after restart.</source>
-        <translation></translation>
+        <translation>Database, instellingen en opnamen zijn met succes hersteld. Oproepopname moet opnieuw opgestart worden om de wijzigingen door te voeren. Als je ervoor koos de bestaande opnamebestanden samen te voegen moet je na het opnieuw opstarten databaseherstel in de hulpprogramma&apos;s gebruiken.</translation>
     </message>
     <message id="id_settings_startup">
         <source>Startup</source>
@@ -627,7 +627,7 @@ Database repair error description</extracomment>
     <message id="id_automatic_startup_description">
         <source>Start automatically upon reboot</source>
         <extracomment>Automatic startup description</extracomment>
-        <translation>Automatisch opstarten bij toestelopstart</translation>
+        <translation>Automatisch opstarten bij opstarten van apparaat</translation>
     </message>
     <message id="id_operation_mode">
         <source>Operation mode</source>
@@ -664,57 +664,57 @@ Database repair error description</extracomment>
         <extracomment>Page header
 ----------
 Section header</extracomment>
-        <translation></translation>
+        <translation>Databaseherstel</translation>
     </message>
     <message id="id_performing_repair_description">
         <source>Performing database repair. Please do not close the application until the operation is complete.</source>
         <extracomment>Ongoing database repair description</extracomment>
-        <translation></translation>
+        <translation>Databaseherstel wordt uitgevoerd. Sluit de toepassing niet tot de bewerking voltooid is.</translation>
     </message>
     <message id="id_starting">
         <source>Starting...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Bezig met opstarten...</translation>
     </message>
     <message id="id_processing_orphaned_files">
         <source>Processing orphaned files...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Verweesde bestanden worden verwerkt...</translation>
     </message>
     <message id="id_processing_orphaned_records">
         <source>Processing orphaned records...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Verweesde opnamen worden verwerkt...</translation>
     </message>
     <message id="id_unable_to_retrieve_orphaned_records">
         <source>Unable to retrieve orphaned records</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Kan verweesde opnamen niet ophalen</translation>
     </message>
     <message id="id_unable_to_remove_orphaned_record">
         <source>Unable to remove orphaned record</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Kan verweesde opname niet verwijderen</translation>
     </message>
     <message id="id_unable_to_retrieve_orphaned_file">
         <source>Unable to retrieve orphaned file</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Kan verweesd bestand niet ophalen</translation>
     </message>
     <message id="id_unable_to_restore_orphaned_file">
         <source>Unable to restore orphaned file</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Kan verweesd bestand niet verwijderen</translation>
     </message>
     <message id="id_repaired_records">
         <source>Repaired records</source>
         <extracomment>Count of repaired records</extracomment>
-        <translation></translation>
+        <translation>Herstelde opnamen</translation>
     </message>
     <message id="id_repaired_files">
         <source>Repaired files</source>
         <extracomment>Count of repaired files</extracomment>
-        <translation></translation>
+        <translation>Herstelde bestanden</translation>
     </message>
     <message id="id_location">
         <source>Location</source>
@@ -724,7 +724,7 @@ Section header</extracomment>
     <message id="id_location_description">
         <source>Location for storing the recordings</source>
         <extracomment>Description of settings item</extracomment>
-        <translation>Opslaglocatie van de opnames</translation>
+        <translation>Opslaglocatie van de opnamen</translation>
     </message>
     <message id="id_relocating_files">
         <source>Relocating files</source>
@@ -779,7 +779,7 @@ Section header</extracomment>
     <message id="id_custom_age_limit_description">
         <source>Custom age limit in days</source>
         <extracomment>Text for custom age limit field</extracomment>
-        <translation>Aangepast leeftijdslimiet in dagen</translation>
+        <translation>Aangepaste leeftijdslimiet in dagen</translation>
     </message>
     <message id="id_limit_by_size">
         <source>By size</source>
@@ -814,7 +814,7 @@ Section header</extracomment>
     <message id="id_custom_size_limit_description">
         <source>Custom size limit in MB</source>
         <extracomment>Text for custom size limit field</extracomment>
-        <translation>Aangepast groottelimiet in MB</translation>
+        <translation>Aangepaste groottelimiet in MB</translation>
     </message>
     <message id="id_storage_approval">
         <source>Approval for storage</source>
@@ -829,7 +829,7 @@ Section header</extracomment>
     <message id="id_approval_description">
         <source>If checked, an approval of storage will be shown after each recorded call</source>
         <extracomment>Description of &quot;Require approval&quot; switch</extracomment>
-        <translation>Wanneer u dit inschakelt zal er een opslagtoestemming worden weergegeven na elk opgenomen gesprek</translation>
+        <translation>Wanneer je dit inschakelt zal er een opslagtoestemming worden weergegeven na elk opgenomen gesprek</translation>
     </message>
     <message id="id_translators_thanks">
         <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
@@ -849,62 +849,62 @@ Section header</extracomment>
     <message id="id_database_repair_description">
         <source>If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it.</source>
         <extracomment>Description of database repair</extracomment>
-        <translation></translation>
+        <translation>Als de lijst van opnamen en bestandsopslag niet overeenstemmen (bv. wanneer een opname uit de lijst werd verwijderd maar nog aanwezig is in de bestandsopslag) kan je het met dit hulpprogramma oplossen.</translation>
     </message>
     <message id="id_orphaned_records">
         <source>Orphaned records</source>
         <extracomment>Combobox label</extracomment>
-        <translation></translation>
+        <translation>Verweesde opnamen</translation>
     </message>
     <message id="id_orphaned_records_skip">
         <source>Entry will be left in the database if there&apos;s no corresponding recording file on disk</source>
         <extracomment>Description of &quot;Skip&quot; option for orphaned records</extracomment>
-        <translation></translation>
+        <translation>Vermelding zal in de database blijven als er geen opnamebestand op de schijf mee overeenkomt</translation>
     </message>
     <message id="id_orphaned_records_remove">
         <source>Entry will be removed from the database if there&apos;s no corresponding recording file on disk</source>
         <extracomment>Description of &quot;Remove&quot; option for orphaned records</extracomment>
-        <translation></translation>
+        <translation>Vermelding zal verwijderd worden van de database als er geen opnamebestand op de schijf mee overeenkomt</translation>
     </message>
     <message id="id_combobox_do_skip">
         <source>skip</source>
         <extracomment>&quot;Skip&quot; option for comboboxes (lowercased)
 ----------
 &quot;skip&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>overslaan</translation>
     </message>
     <message id="id_combobox_do_remove">
         <source>remove</source>
         <extracomment>&quot;Remove&quot; option for comboboxes (lowercased)
 ----------
 &quot;remove&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>verwijderen</translation>
     </message>
     <message id="id_orphaned_files">
         <source>Orphaned files</source>
         <extracomment>Combobox label</extracomment>
-        <translation></translation>
+        <translation>Verweesde bestanden</translation>
     </message>
     <message id="id_orphaned_files_skip">
         <source>Recording file will be skipped if it&apos;s not referenced by an entry in the database</source>
-        <translation></translation>
+        <translation>Opnamebestand zal overgeslagen worden als er geen vermelding in de database naar verwijst</translation>
     </message>
     <message id="id_orphaned_files_remove">
         <source>Recording file will be removed if it&apos;s not referenced by an entry in the database</source>
-        <translation></translation>
+        <translation>Opnamebestand zal verwijderd worden als er geen vermelding in de database naar verwijst</translation>
     </message>
     <message id="id_orphaned_files_restore">
         <source>Recording file will be used to restore an entry in the database if there is none</source>
-        <translation></translation>
+        <translation>Opnamebestand zal gebruikt worden om een vermelding in de database te herstellen als er geen is</translation>
     </message>
     <message id="id_combobox_do_restore">
         <source>restore</source>
         <extracomment>&quot;restore&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>herstellen</translation>
     </message>
     <message id="id_do_repair">
         <source>Repair</source>
-        <translation></translation>
+        <translation>Herstellen</translation>
     </message>
     <message id="id_locale_system">
         <source>System</source>
@@ -914,7 +914,7 @@ Section header</extracomment>
     <message id="id_locale_user_defined">
         <source>User-defined</source>
         <extracomment>User-defined locale</extracomment>
-        <translation></translation>
+        <translation>Gedefinieerd door gebruiker</translation>
     </message>
 </context>
 </TS>

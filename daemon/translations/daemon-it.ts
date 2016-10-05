@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="it">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="it" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message id="id-incoming-call-recorded">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="111"/>
         <source>An incoming call was recorded</source>
@@ -38,33 +36,6 @@
         <source>Ask later</source>
         <extracomment>Action for postponing decisions on recorded calls</extracomment>
         <translation>Chiedi più tardi</translation>
-    </message>
-</context>
-<context>
-    <name>ApprovalDialog</name>
-    <message>
-        <source>An incoming call was recorded</source>
-        <translation type="vanished">Una chiamata in arrivo è stata registrata</translation>
-    </message>
-    <message>
-        <source>An outgoing call was recorded</source>
-        <translation type="vanished">Una chiamata in uscita è stata registrata</translation>
-    </message>
-    <message>
-        <source>A call was recorded</source>
-        <translation type="vanished">Una chiamata è stata registrata</translation>
-    </message>
-    <message>
-        <source>Store</source>
-        <translation type="vanished">Memorizza</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Rimuovi</translation>
-    </message>
-    <message>
-        <source>Ask later</source>
-        <translation type="vanished">Chiedi più tardi</translation>
     </message>
 </context>
 </TS>

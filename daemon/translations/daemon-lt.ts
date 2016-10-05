@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="lt">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message id="id-incoming-call-recorded">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="111"/>
         <source>An incoming call was recorded</source>
@@ -38,33 +36,6 @@
         <source>Ask later</source>
         <extracomment>Action for postponing decisions on recorded calls</extracomment>
         <translation>Vėliau paklausti</translation>
-    </message>
-</context>
-<context>
-    <name>ApprovalDialog</name>
-    <message>
-        <source>An incoming call was recorded</source>
-        <translation type="vanished">Priimtas skambutis buvo įrašytas</translation>
-    </message>
-    <message>
-        <source>An outgoing call was recorded</source>
-        <translation type="vanished"> Skambutis buvo įrašytas</translation>
-    </message>
-    <message>
-        <source>A call was recorded</source>
-        <translation type="vanished"> Skambutis buvo įrašytas</translation>
-    </message>
-    <message>
-        <source>Store</source>
-        <translation type="vanished">Failų saugykla</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">ištrinti</translation>
-    </message>
-    <message>
-        <source>Ask later</source>
-        <translation type="vanished">Vėliau paklausti</translation>
     </message>
 </context>
 </TS>

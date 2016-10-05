@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de_AT">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de_AT" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message id="id-incoming-call-recorded">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="111"/>
         <source>An incoming call was recorded</source>
@@ -38,33 +36,6 @@
         <source>Ask later</source>
         <extracomment>Action for postponing decisions on recorded calls</extracomment>
         <translation>Frog späda nuamoi</translation>
-    </message>
-</context>
-<context>
-    <name>ApprovalDialog</name>
-    <message>
-        <source>An incoming call was recorded</source>
-        <translation type="vanished">A eigehends Gspräch is aufgnuma woan</translation>
-    </message>
-    <message>
-        <source>An outgoing call was recorded</source>
-        <translation type="vanished">A ausgehends Gspräch is aufgnuma woan</translation>
-    </message>
-    <message>
-        <source>A call was recorded</source>
-        <translation type="vanished">A Gspräch is aufgnuma woan</translation>
-    </message>
-    <message>
-        <source>Store</source>
-        <translation type="vanished">Speichan</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Entferna</translation>
-    </message>
-    <message>
-        <source>Ask later</source>
-        <translation type="vanished">Frog späda nuamoi</translation>
     </message>
 </context>
 </TS>

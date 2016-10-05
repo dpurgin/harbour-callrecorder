@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fi">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fi" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message id="id-incoming-call-recorded">
         <location filename="../qml/pages/dialogs/ApprovalDialog.qml" line="111"/>
         <source>An incoming call was recorded</source>
@@ -38,33 +36,6 @@
         <source>Ask later</source>
         <extracomment>Action for postponing decisions on recorded calls</extracomment>
         <translation>Kysy myöhemmin</translation>
-    </message>
-</context>
-<context>
-    <name>ApprovalDialog</name>
-    <message>
-        <source>An incoming call was recorded</source>
-        <translation type="vanished">Saapuva puhelu tallennettu</translation>
-    </message>
-    <message>
-        <source>An outgoing call was recorded</source>
-        <translation type="vanished">Lähtevä puhelu tallennettu</translation>
-    </message>
-    <message>
-        <source>A call was recorded</source>
-        <translation type="vanished">Puhelu tallennettu</translation>
-    </message>
-    <message>
-        <source>Store</source>
-        <translation type="vanished">Tallenna</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Poista</translation>
-    </message>
-    <message>
-        <source>Ask later</source>
-        <translation type="vanished">Kysy myöhemmin</translation>
     </message>
 </context>
 </TS>

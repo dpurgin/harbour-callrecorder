@@ -174,7 +174,7 @@ Remorse text when removing recorded cal</extracomment>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation>Grabación con daemon</translation>
+        <translation>Grabación en segundo plano</translation>
     </message>
     <message id="id_settings_storage">
         <source>Storage</source>
@@ -196,7 +196,7 @@ Settings item</extracomment>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Utilidades</translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
@@ -205,14 +205,14 @@ Settings item</extracomment>
 Backup section header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Copia de seguridad</translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Acerca de</translation>
     </message>
     <message id="id_do_accept">
         <source>Accept</source>
@@ -254,7 +254,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_new_name">
         <source>New name</source>
         <extracomment>Text field when renaming file/directory</extracomment>
-        <translation></translation>
+        <translation>Nuevo nombre</translation>
     </message>
     <message id="id_do_select_file">
         <source>Select %1</source>
@@ -269,7 +269,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_directory_empty">
         <source>Directory is empty</source>
         <extracomment>Placeholder for empty directory in file picker</extracomment>
-        <translation></translation>
+        <translation>La carpeta está vacía</translation>
     </message>
     <message id="id_do_rename">
         <source>Rename</source>
@@ -407,20 +407,20 @@ Page header</extracomment>
     <message id="id_backup_description">
         <source>Create a backup to save the recorded calls and settings. Use it later to restore the data on other device or after factory reset.</source>
         <extracomment>Description of backup page</extracomment>
-        <translation></translation>
+        <translation>Crea una copia de seguridad para guardar las llamadas grabadas y los ajustes. Úsalo más adelante para restaurar los datos en otro dispositivo o después del reinicio de fábrica.</translation>
     </message>
     <message id="id_estimating_backup_size">
         <source>Estimating backup size...</source>
-        <translation></translation>
+        <translation>Estimando tamaño de la copia de seguridad...</translation>
     </message>
     <message id="id_estimated_backup_size">
         <source>Estimated backup size: %1</source>
         <extracomment>Information label on Backup page</extracomment>
-        <translation></translation>
+        <translation>Tamaño estimado de la copia de seguridad %1</translation>
     </message>
     <message id="id_backup_file_name">
         <source>Backup file name</source>
-        <translation></translation>
+        <translation>Nombre de la copia de seguridad</translation>
     </message>
     <message id="id_do_browse">
         <source>Browse</source>
@@ -430,179 +430,179 @@ Page header</extracomment>
     <message id="id_compress_backup">
         <source>Compress backup</source>
         <extracomment>Switch control whether compress backup or not</extracomment>
-        <translation></translation>
+        <translation>Comprimir copia de seguridad</translation>
     </message>
     <message id="id_compress_backup_description">
         <source>The backup will be compressed using BZIP2. This slows down the operation significantly and doesn&apos;t bring much if FLAC compression was already set to maximum in Audio settings.</source>
         <extracomment>Description of the switch</extracomment>
-        <translation></translation>
+        <translation>La copia de seguridad se comprimirá usando BZIP2. Esto hará que la operación se ralentice de manera significativa, y no ayudará mucho si la compresión FLAC ya estaba ajustada al máximo en los ajustes del audio.</translation>
     </message>
     <message id="id_restore">
         <source>Restore</source>
         <extracomment>Restore section header</extracomment>
-        <translation></translation>
+        <translation>Restaurar</translation>
     </message>
     <message id="id_restore_description">
         <source>Select a backup file made by the Call Recorder previously to restore it to this device.</source>
         <extracomment>Restore description</extracomment>
-        <translation></translation>
+        <translation>Selecciona un fichero de copia de seguridad realizada con Call Recorder para restaurarlo en este dispositivo.</translation>
     </message>
     <message id="id_restore_file_name">
         <source>Restore file name</source>
         <extracomment>Label for entering path to restore file</extracomment>
-        <translation></translation>
+        <translation>Restaurar nombre del fichero</translation>
     </message>
     <message id="id_checking_backup_file">
         <source>Checking backup file...</source>
         <extracomment>Information label</extracomment>
-        <translation></translation>
+        <translation>Comprobando fichero de la copia de seguridad...</translation>
     </message>
     <message id="id_backup_invalid">
         <source>Selected file is not a valid Call Recorder backup</source>
         <extracomment>Information label</extracomment>
-        <translation></translation>
+        <translation>El fichero seleccionado no es una copia de seguridad válida para Call Recorder</translation>
     </message>
     <message id="id_do_restore">
         <source>Restore</source>
         <extracomment>Action button</extracomment>
-        <translation></translation>
+        <translation>Restaurar</translation>
     </message>
     <message id="id_do_overwrite">
         <source>Overwrite</source>
         <extracomment>Dialog action</extracomment>
-        <translation></translation>
+        <translation>Sobreescribir</translation>
     </message>
     <message id="id_backup_location_hint">
         <source>Backup will be saved to the following file:</source>
         <extracomment>Backup file location hint</extracomment>
-        <translation></translation>
+        <translation>La copia de seguridad se guardará en el siguiente fichero:</translation>
     </message>
     <message id="id_confirm_overwrite">
         <source>This file already exists. Do you want to overwrite it?</source>
         <extracomment>Confirmation to overwrite existing file</extracomment>
-        <translation></translation>
+        <translation>El fichero ya existe. ¿Quieres sobreescribirlo?</translation>
     </message>
     <message id="id_program_version">
         <source>Program version</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Versión del programa</translation>
     </message>
     <message id="id_date_and_time">
         <source>Date and time</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Fecha y hora</translation>
     </message>
     <message id="id_unpacked_size">
         <source>Unpacked size</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Tamaño descomprimido</translation>
     </message>
     <message id="id_files">
         <source>Files</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Ficheros</translation>
     </message>
     <message id="id_backup_information">
         <source>Backup Information</source>
         <extracomment>Backup page section header</extracomment>
-        <translation></translation>
+        <translation>Información de la copia de seguridad</translation>
     </message>
     <message id="id_restore_settings">
         <source>Restore Settings</source>
         <extracomment>Backup page secion header</extracomment>
-        <translation></translation>
+        <translation>Ajustes de restauración</translation>
     </message>
     <message id="id_dont_remove_existing_recordings">
         <source>Do not remove existing recordings</source>
         <extracomment>Restore settings</extracomment>
-        <translation></translation>
+        <translation>No eliminar las grabaciones existentes</translation>
     </message>
     <message id="id_dont_remove_existing_recordigns_description">
         <source>Leave all existing audio files intact, you can add them to UI later using the database repair tool in Utilities</source>
         <extracomment>Restore description</extracomment>
-        <translation></translation>
+        <translation>Dejar todos los ficheros de audio existentes intactos, puedes añadirlos a la interfaz de usuario más adelante con la herramienta de reparación de base de datos en Utilidades</translation>
     </message>
     <message id="id_preparing">
         <source>Preparing...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Preparando...</translation>
     </message>
     <message id="id_making_backup">
         <source>Making backup...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Realizando copia de seguridad...</translation>
     </message>
     <message id="id_removing_old_data">
         <source>Removing old data...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Eliminando datos antiguos...</translation>
     </message>
     <message id="id_restoring">
         <source>Restoring...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Restaurando...</translation>
     </message>
     <message id="id_complete">
         <source>Complete!</source>
         <extracomment>Backup operation description
 ----------
 Database repair progress</extracomment>
-        <translation></translation>
+        <translation>¡Completado!</translation>
     </message>
     <message id="id_not_started">
         <source>Not started</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>No iniciado</translation>
     </message>
     <message id="id_error">
         <source>Error</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Error</translation>
     </message>
     <message id="id_unable_to_write_archive">
         <source>Unable to write archive</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>No es posible escribir el fichero</translation>
     </message>
     <message id="id_unable_to_start_operation">
         <source>Unable to start operation</source>
         <extracomment>Backup error description
 ----------
 Database repair error description</extracomment>
-        <translation></translation>
+        <translation>No es posible iniciar la operación</translation>
     </message>
     <message id="id_backup_file_exists">
         <source>Backup file already exists</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>El fichero de la copia de seguridad ya existe</translation>
     </message>
     <message id="id_backup_file_not_exists">
         <source>Backup file doesn&apos;t exist</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>El fichero de la copia de seguridad no existe</translation>
     </message>
     <message id="id_unknown_error">
         <source>Unknown error</source>
         <extracomment>Backup error description
 ----------
 Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Error desconocido</translation>
     </message>
     <message id="id_performing_backup_description">
         <source>Performing backup. Please do not close the application until the operation is complete.</source>
-        <translation></translation>
+        <translation>Realizando copia de seguridad. Por favor, no cierres la aplicación hasta que la operación se complete.</translation>
     </message>
     <message id="id_performing_restore_description">
         <source>Performing restore. Please do not close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behavior.</source>
-        <translation></translation>
+        <translation>Realizando la restauración. Por favor, no cierres la aplicación hasta que la operación se complete. Si lo haces puedes dañar los datos por completo y dar lugar a un comportamiento impredicible.</translation>
     </message>
     <message id="id_restart_app_description">
         <source>Please restart the application</source>
-        <translation></translation>
+        <translation>Por favor, reinicia la aplicación</translation>
     </message>
     <message id="id_restore_success_description">
         <source>Database, settings and recordings were successfully restored. The Call Recorder needs to be restarted to apply the changes. If you chose to merge the existing recording files, you should run the database repair tool from Utilities after restart.</source>
-        <translation></translation>
+        <translation>La base de datos, los ajustes y las grabaciones se han restaurado correctamente. Es necesario reiniciar Call Recorder para aplicar los cambios. Si eliges combinar los ficheros de grabación existentes, debes ejecutar la herramienta de reparación de la base de datos en Utilidades después de reiniciar.</translation>
     </message>
     <message id="id_settings_startup">
         <source>Startup</source>
@@ -664,57 +664,57 @@ Database repair error description</extracomment>
         <extracomment>Page header
 ----------
 Section header</extracomment>
-        <translation></translation>
+        <translation>Reparar base de datos</translation>
     </message>
     <message id="id_performing_repair_description">
         <source>Performing database repair. Please do not close the application until the operation is complete.</source>
         <extracomment>Ongoing database repair description</extracomment>
-        <translation></translation>
+        <translation>Reparando la base de datos. Por favor, no cierres la aplicación hasta que la operación se complete.</translation>
     </message>
     <message id="id_starting">
         <source>Starting...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Iniciando...</translation>
     </message>
     <message id="id_processing_orphaned_files">
         <source>Processing orphaned files...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Procesando ficheros huérfanos...</translation>
     </message>
     <message id="id_processing_orphaned_records">
         <source>Processing orphaned records...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Procesando grabaciones huérfanas...</translation>
     </message>
     <message id="id_unable_to_retrieve_orphaned_records">
         <source>Unable to retrieve orphaned records</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>No es posible recuperar las grabaciones huérfanas</translation>
     </message>
     <message id="id_unable_to_remove_orphaned_record">
         <source>Unable to remove orphaned record</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>No es posible eliminar la grabación huérfana</translation>
     </message>
     <message id="id_unable_to_retrieve_orphaned_file">
         <source>Unable to retrieve orphaned file</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>No es posible recuperar el fichero huérfano</translation>
     </message>
     <message id="id_unable_to_restore_orphaned_file">
         <source>Unable to restore orphaned file</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>No es posible restaurar el fichero huérfano</translation>
     </message>
     <message id="id_repaired_records">
         <source>Repaired records</source>
         <extracomment>Count of repaired records</extracomment>
-        <translation></translation>
+        <translation>Grabaciones reparadas</translation>
     </message>
     <message id="id_repaired_files">
         <source>Repaired files</source>
         <extracomment>Count of repaired files</extracomment>
-        <translation></translation>
+        <translation>Ficheros reparados</translation>
     </message>
     <message id="id_location">
         <source>Location</source>
@@ -749,7 +749,7 @@ Section header</extracomment>
     <message id="id_limit_none">
         <source>no limit</source>
         <extracomment>Limit type</extracomment>
-        <translation>Sin límite</translation>
+        <translation>sin límite</translation>
     </message>
     <message id="id_limit_days_30">
         <source>30 days</source>
@@ -849,62 +849,62 @@ Section header</extracomment>
     <message id="id_database_repair_description">
         <source>If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it.</source>
         <extracomment>Description of database repair</extracomment>
-        <translation></translation>
+        <translation>Si la lista de grabaciones y el almacenamiento de ficheros no son compatibles (por ejemplo, si una grabación fue eliminada de la lista pero aún existe el fichero), debe utilizarse esta herramienta para solucionarlo.</translation>
     </message>
     <message id="id_orphaned_records">
         <source>Orphaned records</source>
         <extracomment>Combobox label</extracomment>
-        <translation></translation>
+        <translation>Grabaciones huérfanas</translation>
     </message>
     <message id="id_orphaned_records_skip">
         <source>Entry will be left in the database if there&apos;s no corresponding recording file on disk</source>
         <extracomment>Description of &quot;Skip&quot; option for orphaned records</extracomment>
-        <translation></translation>
+        <translation>La entrada se quedará en la base de datos si no existe el correspondiente fichero de grabación</translation>
     </message>
     <message id="id_orphaned_records_remove">
         <source>Entry will be removed from the database if there&apos;s no corresponding recording file on disk</source>
         <extracomment>Description of &quot;Remove&quot; option for orphaned records</extracomment>
-        <translation></translation>
+        <translation>La entrada se eliminará de la base de datos si no existe el correspondiente fichero de grabación</translation>
     </message>
     <message id="id_combobox_do_skip">
         <source>skip</source>
         <extracomment>&quot;Skip&quot; option for comboboxes (lowercased)
 ----------
 &quot;skip&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>omitir</translation>
     </message>
     <message id="id_combobox_do_remove">
         <source>remove</source>
         <extracomment>&quot;Remove&quot; option for comboboxes (lowercased)
 ----------
 &quot;remove&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>eliminar</translation>
     </message>
     <message id="id_orphaned_files">
         <source>Orphaned files</source>
         <extracomment>Combobox label</extracomment>
-        <translation></translation>
+        <translation>Ficheros huérfanos</translation>
     </message>
     <message id="id_orphaned_files_skip">
         <source>Recording file will be skipped if it&apos;s not referenced by an entry in the database</source>
-        <translation></translation>
+        <translation>El fichero de grabación será ignorado si no existe una entrada relacionada en la base de datos.</translation>
     </message>
     <message id="id_orphaned_files_remove">
         <source>Recording file will be removed if it&apos;s not referenced by an entry in the database</source>
-        <translation></translation>
+        <translation>La grabación se eliminará si no está relacionada con una entrada de la base de datos</translation>
     </message>
     <message id="id_orphaned_files_restore">
         <source>Recording file will be used to restore an entry in the database if there is none</source>
-        <translation></translation>
+        <translation>El fichero de grabación se usará para restaurar una entrada en la base de datos si no hay ninguna</translation>
     </message>
     <message id="id_combobox_do_restore">
         <source>restore</source>
         <extracomment>&quot;restore&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>restaurar</translation>
     </message>
     <message id="id_do_repair">
         <source>Repair</source>
-        <translation></translation>
+        <translation>Reparar</translation>
     </message>
     <message id="id_locale_system">
         <source>System</source>
@@ -914,7 +914,7 @@ Section header</extracomment>
     <message id="id_locale_user_defined">
         <source>User-defined</source>
         <extracomment>User-defined locale</extracomment>
-        <translation></translation>
+        <translation>Definido por el usuario</translation>
     </message>
 </context>
 </TS>

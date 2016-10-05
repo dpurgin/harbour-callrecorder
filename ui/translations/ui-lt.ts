@@ -6,37 +6,37 @@
     <message id="id_call_recorder">
         <source>Call Recorder</source>
         <extracomment>Application title</extracomment>
-        <translation></translation>
+        <translation>skambučių registras</translation>
     </message>
     <message id="id_do_approve_store">
         <source>Approve and store</source>
         <extracomment>Action for approve and store on Events page</extracomment>
-        <translation></translation>
+        <translation>patvirtinta ir išsaugota</translation>
     </message>
     <message id="id_number_whitelisted">
         <source>Number is whitelisted</source>
         <extracomment>Text for phone number in white list</extracomment>
-        <translation></translation>
+        <translation>Numeris įrašytas į baltąjį sarašą</translation>
     </message>
     <message id="id_number_blacklisted">
         <source>Number is blacklisted</source>
         <extracomment>Text for phone number in black list</extracomment>
-        <translation></translation>
+        <translation>Numeris įrašytas į juodą sarąšą</translation>
     </message>
     <message id="id_do_record_number">
         <source>Always record this number</source>
         <extracomment>Action for manipulation black/white list</extracomment>
-        <translation></translation>
+        <translation>Visalaik įrašyti ši numerį</translation>
     </message>
     <message id="id_remorse_recording">
         <source>Recording %1</source>
         <extracomment>Remorse text when manipulationg black/white list</extracomment>
-        <translation></translation>
+        <translation>Išsaugojama 1%</translation>
     </message>
     <message id="id_do_not_record_number">
         <source>Never record this number</source>
         <extracomment>Action for manipulation black/white list</extracomment>
-        <translation></translation>
+        <translation>niekada įrašykite šio numerio</translation>
     </message>
     <message id="id_remorse_not_recording">
         <source>Not recording %1</source>
@@ -55,17 +55,17 @@ Action for deletion</extracomment>
     <message id="id_incoming_call">
         <source>Incoming call</source>
         <extracomment>Call type</extracomment>
-        <translation></translation>
+        <translation>Ateinantis skambutis</translation>
     </message>
     <message id="id_outgoing_call">
         <source>Outgoing call</source>
         <extracomment>Call type</extracomment>
-        <translation></translation>
+        <translation>Skambinta</translation>
     </message>
     <message id="id_partial_call">
         <source>Partial call</source>
         <extracomment>Call type</extracomment>
-        <translation></translation>
+        <translation>dalinis skambutis</translation>
     </message>
     <message id="id_remorse_storing">
         <source>Storing</source>
@@ -82,22 +82,22 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_armed_for_recording">
         <source>Armed for recording</source>
         <extracomment>Recording state</extracomment>
-        <translation></translation>
+        <translation>Pasiruošta įrašymui</translation>
     </message>
     <message id="id_recording_in_progress">
         <source>Recording in progress</source>
         <extracomment>Recording state</extracomment>
-        <translation></translation>
+        <translation>Įrašas rašomas</translation>
     </message>
     <message id="id_recording_suspended">
         <source>Recording suspended</source>
         <extracomment>Recording state</extracomment>
-        <translation></translation>
+        <translation>įrašas uždraustas</translation>
     </message>
     <message id="id_waiting_for_approval">
         <source>Waiting for approval</source>
         <extracomment>Recording state</extracomment>
-        <translation></translation>
+        <translation>Laukia  jūsų atsakymo</translation>
     </message>
     <message id="id_recordings">
         <source>Recordings</source>
@@ -117,7 +117,7 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_select_filtered_recordings">
         <source>Select filtered recordings</source>
         <extracomment>Title for selection in filtered list of recordings</extracomment>
-        <translation></translation>
+        <translation>Pasirinkti filtruotus įrašus</translation>
     </message>
     <message id="id_settings">
         <source>Settings</source>
@@ -157,12 +157,12 @@ Remorse text when removing recorded cal</extracomment>
     <message id="id_filtered_recordings_placeholder">
         <source>No recordings meet filter criteria</source>
         <extracomment>Placeholder text for empty filtered list of recordings</extracomment>
-        <translation></translation>
+        <translation>Joks įrašas neatitinka filtrų kriterijaus</translation>
     </message>
     <message id="id_recordings_placeholder">
         <source>No calls recorded yet</source>
         <extracomment>Placeholder text for empty list of recordings</extracomment>
-        <translation></translation>
+        <translation>Jokių skambučių dar neįrašyta</translation>
     </message>
     <message id="id_remorse_deleting_recordings">
         <source>Deleting recordings</source>
@@ -174,7 +174,7 @@ Remorse text when removing recorded cal</extracomment>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Įrašoma paslauga</translation>
     </message>
     <message id="id_settings_storage">
         <source>Storage</source>
@@ -196,7 +196,7 @@ Settings item</extracomment>
         <extracomment>Page header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>įrankiai</translation>
     </message>
     <message id="id_settings_backup">
         <source>Backup</source>
@@ -205,7 +205,7 @@ Settings item</extracomment>
 Backup section header
 ----------
 Settings item</extracomment>
-        <translation></translation>
+        <translation>Atsarginė versija</translation>
     </message>
     <message id="id_settings_about">
         <source>About</source>
@@ -224,7 +224,7 @@ Settings item</extracomment>
         <extracomment>Dialog button. This should be the same as the corresponding Sailfish string
 ----------
 Dialog action. Should be equal to the corresponding Sailfish translation</extracomment>
-        <translation></translation>
+        <translation>Atšaukti</translation>
     </message>
     <message id="id_no_contacts_available">
         <source>No contacts available</source>
@@ -254,7 +254,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_new_name">
         <source>New name</source>
         <extracomment>Text field when renaming file/directory</extracomment>
-        <translation></translation>
+        <translation>Naujas kontaktas</translation>
     </message>
     <message id="id_do_select_file">
         <source>Select %1</source>
@@ -269,7 +269,7 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_directory_empty">
         <source>Directory is empty</source>
         <extracomment>Placeholder for empty directory in file picker</extracomment>
-        <translation></translation>
+        <translation>Katalogas tusčias</translation>
     </message>
     <message id="id_do_rename">
         <source>Rename</source>
@@ -279,12 +279,12 @@ Dialog action. Should be equal to the corresponding Sailfish translation</extrac
     <message id="id_renaming_not_allowed">
         <source>Renaming is not allowed</source>
         <extracomment>Placeholder for action in file picker dialog</extracomment>
-        <translation></translation>
+        <translation>Pervadinti negalima</translation>
     </message>
     <message id="id_removal_not_allowed">
         <source>Removal is not allowed</source>
         <extracomment>Placeholder for action in file picker dialog</extracomment>
-        <translation></translation>
+        <translation>Panaikinti negalima</translation>
     </message>
     <message id="id_pick_from_contacts">
         <source>Pick from contacts</source>
@@ -316,7 +316,7 @@ Save action</extracomment>
     <message id="id_phone_numbers_hint">
         <source>Add numbers with field above or use pull-down menu</source>
         <extracomment>Hint for empty phone numbers list</extracomment>
-        <translation></translation>
+        <translation>Pridėti numerius iš viršaus arba pasirinkti iš meniu</translation>
     </message>
     <message id="id_translators">
         <source>Translators</source>
@@ -408,20 +408,20 @@ Norint pamatyt vertimus, naudokite iškleidžiamą meniu</translation>
     <message id="id_backup_description">
         <source>Create a backup to save the recorded calls and settings. Use it later to restore the data on other device or after factory reset.</source>
         <extracomment>Description of backup page</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_estimating_backup_size">
         <source>Estimating backup size...</source>
-        <translation></translation>
+        <translation>Skaičiuojamas atsarginės kopijos dydis</translation>
     </message>
     <message id="id_estimated_backup_size">
         <source>Estimated backup size: %1</source>
         <extracomment>Information label on Backup page</extracomment>
-        <translation></translation>
+        <translation>Skaičiuojamas atsarginės kopijos dydis: 1 %</translation>
     </message>
     <message id="id_backup_file_name">
         <source>Backup file name</source>
-        <translation></translation>
+        <translation>Atsarginės kopijos dydis</translation>
     </message>
     <message id="id_do_browse">
         <source>Browse</source>
@@ -431,179 +431,179 @@ Norint pamatyt vertimus, naudokite iškleidžiamą meniu</translation>
     <message id="id_compress_backup">
         <source>Compress backup</source>
         <extracomment>Switch control whether compress backup or not</extracomment>
-        <translation></translation>
+        <translation>Suspausti atsarginė versija </translation>
     </message>
     <message id="id_compress_backup_description">
         <source>The backup will be compressed using BZIP2. This slows down the operation significantly and doesn&apos;t bring much if FLAC compression was already set to maximum in Audio settings.</source>
         <extracomment>Description of the switch</extracomment>
-        <translation></translation>
+        <translation>Atsarginė kopija bus suspausta naudojant BZIP2 archyvą. Ta žymiai lėtina  operacija ir neduoda daug, jei FLAC suspaudimo jau buvo nustatytas maksimalus Audio nustatymų.</translation>
     </message>
     <message id="id_restore">
         <source>Restore</source>
         <extracomment>Restore section header</extracomment>
-        <translation></translation>
+        <translation>Atkurti</translation>
     </message>
     <message id="id_restore_description">
         <source>Select a backup file made by the Call Recorder previously to restore it to this device.</source>
         <extracomment>Restore description</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_restore_file_name">
         <source>Restore file name</source>
         <extracomment>Label for entering path to restore file</extracomment>
-        <translation></translation>
+        <translation>Atkurti failo vardą</translation>
     </message>
     <message id="id_checking_backup_file">
         <source>Checking backup file...</source>
         <extracomment>Information label</extracomment>
-        <translation></translation>
+        <translation>Tikrinamas atsarginis failas</translation>
     </message>
     <message id="id_backup_invalid">
         <source>Selected file is not a valid Call Recorder backup</source>
         <extracomment>Information label</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_do_restore">
         <source>Restore</source>
         <extracomment>Action button</extracomment>
-        <translation></translation>
+        <translation>Atkurti</translation>
     </message>
     <message id="id_do_overwrite">
         <source>Overwrite</source>
         <extracomment>Dialog action</extracomment>
-        <translation></translation>
+        <translation>Perrašyti</translation>
     </message>
     <message id="id_backup_location_hint">
         <source>Backup will be saved to the following file:</source>
         <extracomment>Backup file location hint</extracomment>
-        <translation></translation>
+        <translation>Atsarginė kopija bus išsaugota į ši failą:</translation>
     </message>
     <message id="id_confirm_overwrite">
         <source>This file already exists. Do you want to overwrite it?</source>
         <extracomment>Confirmation to overwrite existing file</extracomment>
-        <translation></translation>
+        <translation>Šis failas jau yra, ar jus norite jį perrašyti?</translation>
     </message>
     <message id="id_program_version">
         <source>Program version</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Programos versija</translation>
     </message>
     <message id="id_date_and_time">
         <source>Date and time</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Data ir laikas</translation>
     </message>
     <message id="id_unpacked_size">
         <source>Unpacked size</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Neišpakuotas dydis</translation>
     </message>
     <message id="id_files">
         <source>Files</source>
         <extracomment>Backup file details</extracomment>
-        <translation></translation>
+        <translation>Failai</translation>
     </message>
     <message id="id_backup_information">
         <source>Backup Information</source>
         <extracomment>Backup page section header</extracomment>
-        <translation></translation>
+        <translation>Atsarginės kopijos informaicja</translation>
     </message>
     <message id="id_restore_settings">
         <source>Restore Settings</source>
         <extracomment>Backup page secion header</extracomment>
-        <translation></translation>
+        <translation>Atstatyti nustatymus</translation>
     </message>
     <message id="id_dont_remove_existing_recordings">
         <source>Do not remove existing recordings</source>
         <extracomment>Restore settings</extracomment>
-        <translation></translation>
+        <translation>Netrinti egzistuojančius įrašus</translation>
     </message>
     <message id="id_dont_remove_existing_recordigns_description">
         <source>Leave all existing audio files intact, you can add them to UI later using the database repair tool in Utilities</source>
         <extracomment>Restore description</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_preparing">
         <source>Preparing...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Ruošiama..</translation>
     </message>
     <message id="id_making_backup">
         <source>Making backup...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Kuriama atsarginė versija</translation>
     </message>
     <message id="id_removing_old_data">
         <source>Removing old data...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Ištrinama sena infomacija</translation>
     </message>
     <message id="id_restoring">
         <source>Restoring...</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Atkuriama...</translation>
     </message>
     <message id="id_complete">
         <source>Complete!</source>
         <extracomment>Backup operation description
 ----------
 Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Baigta!</translation>
     </message>
     <message id="id_not_started">
         <source>Not started</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Dar neprasidėjo</translation>
     </message>
     <message id="id_error">
         <source>Error</source>
         <extracomment>Backup operation description</extracomment>
-        <translation></translation>
+        <translation>Klaida</translation>
     </message>
     <message id="id_unable_to_write_archive">
         <source>Unable to write archive</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>Negalima įrašyti į archyvą</translation>
     </message>
     <message id="id_unable_to_start_operation">
         <source>Unable to start operation</source>
         <extracomment>Backup error description
 ----------
 Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Neįmanoma pradėti operacijos</translation>
     </message>
     <message id="id_backup_file_exists">
         <source>Backup file already exists</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>Atsarginė kopija jau yra</translation>
     </message>
     <message id="id_backup_file_not_exists">
         <source>Backup file doesn&apos;t exist</source>
         <extracomment>Backup error description</extracomment>
-        <translation></translation>
+        <translation>Atkurtas failas neegzistuoja</translation>
     </message>
     <message id="id_unknown_error">
         <source>Unknown error</source>
         <extracomment>Backup error description
 ----------
 Database repair error description</extracomment>
-        <translation></translation>
+        <translation>nežinoma klaida</translation>
     </message>
     <message id="id_performing_backup_description">
         <source>Performing backup. Please do not close the application until the operation is complete.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_performing_restore_description">
         <source>Performing restore. Please do not close the application until the operation is complete. Doing so may damage the data completely and lead to unpredictable behavior.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_restart_app_description">
         <source>Please restart the application</source>
-        <translation></translation>
+        <translation>Prašome perkrauti programą</translation>
     </message>
     <message id="id_restore_success_description">
         <source>Database, settings and recordings were successfully restored. The Call Recorder needs to be restarted to apply the changes. If you chose to merge the existing recording files, you should run the database repair tool from Utilities after restart.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_settings_startup">
         <source>Startup</source>
@@ -666,57 +666,58 @@ Database repair error description</extracomment>
         <extracomment>Page header
 ----------
 Section header</extracomment>
-        <translation></translation>
+        <translation>Duomenų bazės taisymas</translation>
     </message>
     <message id="id_performing_repair_description">
         <source>Performing database repair. Please do not close the application until the operation is complete.</source>
         <extracomment>Ongoing database repair description</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_starting">
         <source>Starting...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation>Pradėti...</translation>
     </message>
     <message id="id_processing_orphaned_files">
         <source>Processing orphaned files...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_processing_orphaned_records">
         <source>Processing orphaned records...</source>
         <extracomment>Database repair progress</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_unable_to_retrieve_orphaned_records">
         <source>Unable to retrieve orphaned records</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_unable_to_remove_orphaned_record">
         <source>Unable to remove orphaned record</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_unable_to_retrieve_orphaned_file">
         <source>Unable to retrieve orphaned file</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_unable_to_restore_orphaned_file">
         <source>Unable to restore orphaned file</source>
         <extracomment>Database repair error description</extracomment>
-        <translation></translation>
+        <translation>Nepavyko atkurti failo</translation>
     </message>
     <message id="id_repaired_records">
         <source>Repaired records</source>
         <extracomment>Count of repaired records</extracomment>
-        <translation></translation>
+        <translation>Atstatyti įrašai</translation>
     </message>
     <message id="id_repaired_files">
         <source>Repaired files</source>
         <extracomment>Count of repaired files</extracomment>
-        <translation></translation>
+        <translation>Pataisyti failai
+</translation>
     </message>
     <message id="id_location">
         <source>Location</source>
@@ -726,22 +727,22 @@ Section header</extracomment>
     <message id="id_location_description">
         <source>Location for storing the recordings</source>
         <extracomment>Description of settings item</extracomment>
-        <translation></translation>
+        <translation>Vieta kaupti įrašams</translation>
     </message>
     <message id="id_relocating_files">
         <source>Relocating files</source>
         <extracomment>Message when changing output location</extracomment>
-        <translation></translation>
+        <translation>Perkeliami failai</translation>
     </message>
     <message id="id_storage_limits">
         <source>Storage limits</source>
         <extracomment>Storage settings entry</extracomment>
-        <translation></translation>
+        <translation>saugyklos limitai</translation>
     </message>
     <message id="id_do_limit_storage">
         <source>Limit storage by size or age</source>
         <extracomment>Switch control whether limit storage or not</extracomment>
-        <translation></translation>
+        <translation>Saugyklos limitai pagal vieta ar amžių</translation>
     </message>
     <message id="id_limit_by_age">
         <source>By age</source>
@@ -776,12 +777,12 @@ Section header</extracomment>
     <message id="id_limit_custom">
         <source>custom</source>
         <extracomment>Limit type</extracomment>
-        <translation></translation>
+        <translation>pritaikytas</translation>
     </message>
     <message id="id_custom_age_limit_description">
         <source>Custom age limit in days</source>
         <extracomment>Text for custom age limit field</extracomment>
-        <translation></translation>
+        <translation>Pritaikytas amžiaus limitas  dienoms</translation>
     </message>
     <message id="id_limit_by_size">
         <source>By size</source>
@@ -816,97 +817,99 @@ Section header</extracomment>
     <message id="id_custom_size_limit_description">
         <source>Custom size limit in MB</source>
         <extracomment>Text for custom size limit field</extracomment>
-        <translation></translation>
+        <translation>pritaikytas limito dydis MB</translation>
     </message>
     <message id="id_storage_approval">
         <source>Approval for storage</source>
         <extracomment>Settings item on Storage Settings page</extracomment>
-        <translation></translation>
+        <translation>sutikimas dėl saugyklos</translation>
     </message>
     <message id="id_do_require_approval">
         <source>Require approval</source>
         <extracomment>Switch control whether to ask for approval for storage</extracomment>
-        <translation></translation>
+        <translation>Reikalaujama patvirtinimo</translation>
     </message>
     <message id="id_approval_description">
         <source>If checked, an approval of storage will be shown after each recorded call</source>
         <extracomment>Description of &quot;Require approval&quot; switch</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_translators_thanks">
         <source>Thanks to these people the Call Recorder is available in different languages. Names and locale codes are listed in alphabetical order.</source>
         <extracomment>Description text on top of the Translators page</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_locale">
         <source>Locale</source>
         <extracomment>Settings item</extracomment>
-        <translation></translation>
+        <translation>Lokalus</translation>
     </message>
     <message id="id_locale_description">
         <source>Please restart the application if the locale is changed</source>
         <extracomment>Locale change hint</extracomment>
-        <translation></translation>
+        <translation>Prašome perkrauti programą jei vieta pasikeitė</translation>
     </message>
     <message id="id_database_repair_description">
         <source>If the list of recordings and file storage became inconsistent (e.g. a recording was removed from the list but still exists in file storage), you should use this tool to fix it.</source>
         <extracomment>Description of database repair</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_orphaned_records">
         <source>Orphaned records</source>
         <extracomment>Combobox label</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_orphaned_records_skip">
         <source>Entry will be left in the database if there&apos;s no corresponding recording file on disk</source>
         <extracomment>Description of &quot;Skip&quot; option for orphaned records</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_orphaned_records_remove">
         <source>Entry will be removed from the database if there&apos;s no corresponding recording file on disk</source>
         <extracomment>Description of &quot;Remove&quot; option for orphaned records</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message id="id_combobox_do_skip">
         <source>skip</source>
         <extracomment>&quot;Skip&quot; option for comboboxes (lowercased)
 ----------
 &quot;skip&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>praleisti</translation>
     </message>
     <message id="id_combobox_do_remove">
         <source>remove</source>
         <extracomment>&quot;Remove&quot; option for comboboxes (lowercased)
 ----------
 &quot;remove&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>pašalinti</translation>
     </message>
     <message id="id_orphaned_files">
         <source>Orphaned files</source>
         <extracomment>Combobox label</extracomment>
-        <translation></translation>
+        <translation>Likę programos failai</translation>
     </message>
     <message id="id_orphaned_files_skip">
         <source>Recording file will be skipped if it&apos;s not referenced by an entry in the database</source>
-        <translation></translation>
+        <translation>Įrašyti failai bus praleisti  
+jei ji nėra paminėtas kurį į duomenų bazę įsirašo</translation>
     </message>
     <message id="id_orphaned_files_remove">
         <source>Recording file will be removed if it&apos;s not referenced by an entry in the database</source>
-        <translation></translation>
+        <translation>Įrašymo failas bus pašalintas, jei tai ne ta nuoroda iš  duomenų bazės</translation>
     </message>
     <message id="id_orphaned_files_restore">
         <source>Recording file will be used to restore an entry in the database if there is none</source>
-        <translation></translation>
+        <translation>
+Įrašymo failas bus naudojamas atkurti  duomenų bazėje įrašo, jei jo nėra</translation>
     </message>
     <message id="id_combobox_do_restore">
         <source>restore</source>
         <extracomment>&quot;restore&quot; option for comboboxes (lowercased)</extracomment>
-        <translation></translation>
+        <translation>atkurti</translation>
     </message>
     <message id="id_do_repair">
         <source>Repair</source>
-        <translation></translation>
+        <translation>Pataisyti</translation>
     </message>
     <message id="id_locale_system">
         <source>System</source>
@@ -916,7 +919,7 @@ Section header</extracomment>
     <message id="id_locale_user_defined">
         <source>User-defined</source>
         <extracomment>User-defined locale</extracomment>
-        <translation></translation>
+        <translation>Naudotojo nustatymas</translation>
     </message>
 </context>
 </TS>

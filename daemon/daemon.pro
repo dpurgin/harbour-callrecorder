@@ -84,11 +84,14 @@ TRANSLATIONS = \
     translations/daemon-da.ts \
     translations/daemon-de.ts \
     translations/daemon-de_AT-3.ts \
+    translations/daemon-el.ts \
     translations/daemon-es.ts \
     translations/daemon-fi.ts \
     translations/daemon-fr.ts \
+    translations/daemon-hu.ts \
     translations/daemon-it.ts \
     translations/daemon-lt.ts \
+    translations/daemon-ml.ts \
     translations/daemon-nl.ts \
     translations/daemon-pl.ts \
     translations/daemon-ru.ts \
