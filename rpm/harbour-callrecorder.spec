@@ -16,7 +16,7 @@ Name:       harbour-callrecorder
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
 Version:    0.7.1
-Release:    4
+Release:    5
 Group:      Applications/Communications
 License:    GPLv3
 URL:        https://github.com/dpurgin/harbour-callrecorder
@@ -25,7 +25,6 @@ Source100:  harbour-callrecorder.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   qt5-qtmultimedia-plugin-audio-pulseaudio
 Requires:   qt5-qtmultimedia-plugin-mediaservice-gstmediaplayer
-Requires:   gst-plugins-good
 Requires:   nemo-qml-plugin-dbus-qt5
 BuildRequires:  pkgconfig(Qt5Contacts)
 BuildRequires:  pkgconfig(Qt5Core)
