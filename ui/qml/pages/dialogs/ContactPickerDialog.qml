@@ -56,19 +56,32 @@ Dialog {
             cancelText: qsTrId('id_do_cancel')
         }
 
+        SearchField {
+            id: contactSearchField
+
+            anchors.top: header.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
+
         SilicaListView {
-            id: listView
+            id: listView           
+
+            clip: true
 
             anchors {
-                top: header.bottom
+                top: contactSearchField.bottom
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
             }
 
             model: PeopleModel {
+                id: peopleModel
+
                 filterType: PeopleModel.FilterAll
-                requiredProperty: PeopleModel.PhoneNumberRequired
+                requiredProperty: PeopleModel.PhoneNumberRequired                
+                filterPattern: contactSearchField.text
             }
 
             delegate: ContactPickerDelegate { }
