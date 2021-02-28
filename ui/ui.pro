@@ -25,18 +25,10 @@ QT += core quick qml multimedia sql
 
 INCLUDEPATH += \
     ../libcallrecorder/include \
-#    ../nemo-qml-plugin-contacts/nemo-qml-plugin-contacts/src
 
 LIBS += \
     -L../libcallrecorder -lcallrecorder \
-    -L../libcontacts -lcontactcache-qt5 \
     -Llib -larchive
-#    -L../nemo-qml-plugin-contacts -lnemocontacts \
-
-provides.path = /usr/share/$${PACKAGE}/lib
-provides.files = lib/libarchive.so.12
-
-INSTALLS += provides
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Werror
 
