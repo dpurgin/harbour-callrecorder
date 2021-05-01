@@ -179,6 +179,7 @@ Page {
             ListElement {
                 locale: "sk"
                 translators: [
+                    ListElement { name: "Ladislav Hodas" },
                     ListElement { name: "pyler" }
                 ]
             }
