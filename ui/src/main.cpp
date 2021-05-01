@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
         view->rootContext()->setContextProperty("license",
                                                 "Call Recorder for SailfishOS"
-                                                "\nCopyright (C) 2014-2016 Dmitriy Purgin <dpurgin@gmail.com>"
+                                                "\nCopyright (C) 2014-2021 Dmitriy Purgin <dpurgin@gmail.com>"
                                                 "\nhttps://github.com/dpurgin/harbour-callrecorder"
                                                 "\n"
                                                 "\nThis program is free software: you can redistribute it and/or modify"

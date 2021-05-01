@@ -13,7 +13,7 @@ Name:       harbour-callrecorder
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Call Recorder for SailfishOS
-Version:    0.7.3
+Version:    0.7.4
 Release:    1
 Group:      Applications/Communications
 License:    GPLv3
@@ -73,8 +73,19 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
+# >> uninstall pre
+%preun
+
+#uninstall
+if [ $1 = 0 ]; then
+    echo "Stopping service..."
+    systemctl-user stop harbour-callrecorderd
+fi
+# << uninstall pre
+
 %files
 %defattr(-,root,root,-)
+%attr(755,-,-) %{_bindir}
 %{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
