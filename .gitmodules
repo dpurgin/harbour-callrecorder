@@ -1,10 +1,3 @@
 [submodule "qtpulseaudio/qtpulseaudio"]
 	path = qtpulseaudio/qtpulseaudio
 	url = https://github.com/dpurgin/qtpulseaudio.git
-[submodule "libcontacts/libcontacts"]
-	path = libcontacts/libcontacts
-	url = https://github.com/dpurgin/libcontacts.git
-[submodule "nemo-qml-plugin-contacts/nemo-qml-plugin-contacts"]
-	path = nemo-qml-plugin-contacts/nemo-qml-plugin-contacts
-	url = https://github.com/dpurgin/nemo-qml-plugin-contacts.git
-	branch = callrecorder

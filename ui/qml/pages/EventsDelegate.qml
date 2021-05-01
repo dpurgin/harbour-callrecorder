@@ -18,7 +18,7 @@
 
 import QtQuick 2.2
 import Sailfish.Silica 1.0
-import kz.dpurgin.nemomobile.contacts 1.0
+import org.nemomobile.contacts 1.0
 
 ListItem {
     id: delegate

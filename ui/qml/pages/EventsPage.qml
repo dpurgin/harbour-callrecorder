@@ -19,7 +19,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import kz.dpurgin.nemomobile.contacts 1.0
+import org.nemomobile.contacts 1.0
 
 import kz.dpurgin.callrecorder.Settings 1.0
 
