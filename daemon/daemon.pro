@@ -21,7 +21,7 @@ TARGET = $${PACKAGE}d
 target.path = /usr/bin
 
 service.files = $${TARGET}.service
-service.path = /usr/lib/systemd/user
+service.path = $${LIBDIR}/systemd/user
 
 scripts.files = $${TARGET}-pre.sh
 scripts.path = /usr/bin
