@@ -128,20 +128,12 @@ namespace LibCallRecorder
     {
         Q_UNUSED(type)
 
-#ifdef __x86_64__
-        #define ADDRESS quint64
-        const int WIDTH = 16;
-#else
-        #define ADDRESS quint32
-        const int WIDTH = 8;
-#endif
-
         static QMutex mutex;
         QMutexLocker locker(&mutex);
 
         QString threadId = QLatin1String("[0x") %
                 QString::number(
-                    (ADDRESS)QThread::currentThread(), 16).rightJustified(WIDTH, QLatin1Char('0')) %
+                    (ptrdiff_t)QThread::currentThread(), 16).rightJustified(PTRDIFF_WIDTH / 8, QLatin1Char('0')) %
                 QLatin1Char(']');
 
         QString sourceFile(QFileInfo(context.file).fileName() %
