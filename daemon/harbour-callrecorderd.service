@@ -9,7 +9,7 @@ Type=simple
 ExecStartPre=-/usr/bin/harbour-callrecorderd-pre.sh
 ExecStart=/usr/bin/harbour-callrecorderd
 Restart=on-failure
-EnvironmentFile=-/home/nemo/.config/harbour-callrecorder/environment
+EnvironmentFile=-/home/defaultuser/.config/harbour-callrecorder/environment
 
 [Install]
 WantedBy=post-user-session.target
